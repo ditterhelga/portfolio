@@ -157,6 +157,17 @@
         }
 
         #hero {
+            /* Matches text-[2rem]/[2rem] and md:text-[4.75rem]/[5rem] (line-height / font-size) */
+            & .line-bottom {
+                --rotate-row: 1em;
+            }
+
+            @media (min-width: 48rem) {
+                & .line-bottom {
+                    --rotate-row: calc(5em / 4.75);
+                }
+            }
+
             /* Wrapper stays overflow:visible so flex baseline matches text, not box bottom */
             & .hero-rotating-wrap {
                 vertical-align: baseline;
@@ -164,7 +175,8 @@
 
             & .rotating-words {
                 position: relative;
-                height: 1lh;
+                height: var(--rotate-row);
+                line-height: inherit;
                 overflow: hidden;
                 display: inline-block;
             }
@@ -176,8 +188,8 @@
 
             & .phrases span {
                 display: block;
-                height: 1lh;
-                line-height: 1lh;
+                height: var(--rotate-row);
+                line-height: inherit;
             }
 
             /* Hide the sizer span */
@@ -201,13 +213,13 @@
                 transform: translateY(0);
             }
             25%, 45% {
-                transform: translateY(-1lh);
+                transform: translateY(calc(-1 * var(--rotate-row, 1em)));
             }
             50%, 70% {
-                transform: translateY(-2lh);
+                transform: translateY(calc(-2 * var(--rotate-row, 1em)));
             }
             75%, 95% {
-                transform: translateY(-3lh);
+                transform: translateY(calc(-3 * var(--rotate-row, 1em)));
             }
             100% {
                 transform: translateY(0);
