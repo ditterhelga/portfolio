@@ -95,6 +95,36 @@
                 cursor: pointer;
             }
 
+            @media (min-width: 768px) {
+    & nav .menulink {
+        position: relative;
+        font-weight: 400;
+        font-family: var(--font-family-inter);
+        transition: color 0.25s ease;
+    }
+
+    & nav .menulink::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        background-color: #FDE4DF;
+
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    & nav .menulink:hover::after {
+        transform: scaleX(1);
+    }
+
+    & nav .menulink:hover {
+        color: #0016F2;
+    }
+}
 
             &.menu-open {
                 @apply fixed h-screen w-screen px-4 z-50 md:px-12;
