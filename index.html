@@ -201,23 +201,23 @@
     }
 }
 
-        @keyframes rotate-words {
-            0%, 20% {
-                transform: translateY(0);
-            }
-            25%, 45% {
-                transform: translateY(calc(-1 * var(--rotate-row, 1em)));
-            }
-            50%, 70% {
-                transform: translateY(calc(-2 * var(--rotate-row, 1em)));
-            }
-            75%, 95% {
-                transform: translateY(calc(-3 * var(--rotate-row, 1em)));
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
+@keyframes rotate-words {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(calc(-1 * var(--rotate-row)));
+    }
+    50%, 85% {
+        transform: translateY(calc(-2 * var(--rotate-row))); /* держим empath */
+    }
+    90% {
+        transform: translateY(0); /* быстрый возврат */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
 
 
         #about {
@@ -528,7 +528,7 @@
             </h1>
     
             <div class="line-bottom
-            font-family-sofia font-bold uppercase
+            font-family-sofia font-semibold uppercase
             text-[2rem]/[2rem] md:text-[4.75rem]/[5rem]
             tracking-normal">
     <span class="inline-block leading-none">With</span>
