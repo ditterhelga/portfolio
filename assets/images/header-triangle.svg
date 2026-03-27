@@ -1,0 +1,3 @@
+<svg class="w-screen bg-white" viewBox="0 0 100 10">
+    <path d="M0 0 L50 10 L100 0 L100 10 L0 10 Z" fill="#0016F2" shape-rendering="crispEdges"/>
+</svg>
