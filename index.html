@@ -168,10 +168,11 @@
                 }
             }
 
-            /* Wrapper stays overflow:visible so flex baseline matches text, not box bottom */
+            /* Wrapper: overflow visible so flex baseline uses text; clip only on .rotating-words */
             & .hero-rotating-wrap {
-                vertical-align: baseline;
-            }
+    display: flex;
+    align-items: flex-end;
+}
 
             & .rotating-words {
                 position: relative;
@@ -525,7 +526,7 @@
     </header>
 
     <section id="hero" class="flex items-center xl:mt-14">
-        <div class="hero-title w-full ">
+        <div class="hero-title w-full">
             <h1 class="line-top
                        font-family-sofia font-bold uppercase
                        text-[5.5rem]/[5rem]
@@ -533,13 +534,14 @@
                        tracking-[-0.5rem]">
                 product designer
             </h1>
-            <div class="flex items-baseline gap-x-[0.15em]
+    
+            <div class="flex items-end gap-x-[0.15em]
                         line-bottom
                         font-family-sofia font-bold uppercase
                         text-[2rem]/[2rem] md:text-[4.75rem]/[5rem]
                         tracking-normal">
-                <div>With</div>
-                <div class="hero-rotating-wrap inline-block">
+                <div class="inline-block leading-none">With</div>
+                <div class="hero-rotating-wrap flex items-end">
                     <div class="rotating-words">
                         <span class="sizer">engineer's brain</span>
                         <span class="phrases">
