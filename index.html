@@ -157,9 +157,14 @@
         }
 
         #hero {
+            /* Wrapper stays overflow:visible so flex baseline matches text, not box bottom */
+            & .hero-rotating-wrap {
+                vertical-align: baseline;
+            }
+
             & .rotating-words {
                 position: relative;
-                height: 1.5em; /* Adjust based on your font size */
+                height: 1lh;
                 overflow: hidden;
                 display: inline-block;
             }
@@ -171,8 +176,8 @@
 
             & .phrases span {
                 display: block;
-                height: 1.5em; /* Same as container height */
-                line-height: 1.5em; /* Vertically center the text */
+                height: 1lh;
+                line-height: 1lh;
             }
 
             /* Hide the sizer span */
@@ -196,13 +201,13 @@
                 transform: translateY(0);
             }
             25%, 45% {
-                transform: translateY(-1.5em);
+                transform: translateY(-1lh);
             }
             50%, 70% {
-                transform: translateY(-3em);
+                transform: translateY(-2lh);
             }
             75%, 95% {
-                transform: translateY(-4.5em);
+                transform: translateY(-3lh);
             }
             100% {
                 transform: translateY(0);
@@ -516,19 +521,21 @@
                        tracking-[-0.5rem]">
                 product designer
             </h1>
-            <div class="flex gap-x-[0.15em]
+            <div class="flex items-baseline gap-x-[0.15em]
                         line-bottom
                         font-family-sofia font-bold uppercase
                         text-[2rem]/[2rem] md:text-[4.75rem]/[5rem]
                         tracking-normal">
                 <div>With</div>
-                <div class="rotating-words">
-                    <span class="sizer">engineer's brain</span>
-                    <span class="phrases">
+                <div class="hero-rotating-wrap inline-block">
+                    <div class="rotating-words">
+                        <span class="sizer">engineer's brain</span>
+                        <span class="phrases">
                             <span>engineer's brain</span>
                             <span>artist's eye</span>
                             <span>empath's heart</span>
                         </span>
+                    </div>
                 </div>
             </div>
         </div>
