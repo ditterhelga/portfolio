@@ -157,57 +157,49 @@
         }
 
         #hero {
-            /* Matches text-[2rem]/[2rem] and md:text-[4.75rem]/[5rem] (line-height / font-size) */
-            & .line-bottom {
-                --rotate-row: 1em;
-            }
+    & .line-bottom {
+        --rotate-row: 1em;
+    }
 
-            @media (min-width: 48rem) {
-                & .line-bottom {
-                    --rotate-row: calc(5em / 4.75);
-                }
-            }
-
-            /* Wrapper: overflow visible so flex baseline uses text; clip only on .rotating-words */
-            & .hero-rotating-wrap {
-    display: flex;
-    align-items: flex-end;
-}
-
-            & .rotating-words {
-                position: relative;
-                height: var(--rotate-row);
-                line-height: inherit;
-                overflow: hidden;
-                display: inline-block;
-            }
-
-            & .phrases {
-                display: block;
-                animation: rotate-words 8s infinite ease-in-out;
-            }
-
-            & .phrases span {
-                display: block;
-                height: var(--rotate-row);
-                line-height: inherit;
-            }
-
-            /* Hide the sizer span */
-            & .sizer {
-                display: none;
-            }
-
-            /* If you have 3 phrases, adjust accordingly */
-            & .phrases span {
-                /* Your existing styles */
-            }
-
-            /* Optional: Add pause on hover */
-            & .rotating-words:hover .phrases {
-                animation-play-state: paused;
-            }
+    @media (min-width: 48rem) {
+        & .line-bottom {
+            --rotate-row: calc(5em / 4.75);
         }
+    }
+
+    & .hero-rotating-wrap {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .rotating-words {
+        position: relative;
+        height: var(--rotate-row);
+        line-height: inherit;
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .phrases {
+        display: block;
+        animation: rotate-words 8s infinite ease-in-out;
+    }
+
+    & .phrases span {
+        display: block;
+        height: var(--rotate-row);
+        line-height: inherit;
+    }
+
+    & .sizer {
+        display: none;
+    }
+
+    & .rotating-words:hover .phrases {
+        animation-play-state: paused;
+    }
+}
 
         @keyframes rotate-words {
             0%, 20% {
@@ -535,23 +527,22 @@
                 product designer
             </h1>
     
-            <div class="flex items-end gap-x-[0.15em]
-                        line-bottom
-                        font-family-sofia font-bold uppercase
-                        text-[2rem]/[2rem] md:text-[4.75rem]/[5rem]
-                        tracking-normal">
-                <div class="inline-block leading-none">With</div>
-                <div class="hero-rotating-wrap flex items-end">
-                    <div class="rotating-words">
-                        <span class="sizer">engineer's brain</span>
-                        <span class="phrases">
-                            <span>engineer's brain</span>
-                            <span>artist's eye</span>
-                            <span>empath's heart</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
+            <div class="line-bottom
+            font-family-sofia font-bold uppercase
+            text-[2rem]/[2rem] md:text-[4.75rem]/[5rem]
+            tracking-normal">
+    <span class="inline-block leading-none">With</span>
+    <div class="hero-rotating-wrap">
+        <div class="rotating-words">
+            <span class="sizer">engineer's brain</span>
+            <span class="phrases">
+                <span>engineer's brain</span>
+                <span>artist's eye</span>
+                <span>empath's heart</span>
+            </span>
+        </div>
+    </div>
+</div>
         </div>
     </section>
 
