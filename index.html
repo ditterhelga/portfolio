@@ -511,8 +511,80 @@
         }
 
         .line-bottom {
-            color: #4B57C8;
+            color: #2834B8;
         }
+
+        /* ── Hero blob-mask effect ─────────────────────────────────────── */
+        .hero-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #2834B8;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+            top: 0;
+            left: 0;
+        }
+
+        #hero .hero-mask {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        /* Blob layer: #2834B8 base so text reads as dark blue at rest */
+        #hero .blob-layer {
+            position: absolute;
+            inset: 0;
+            background: #2834B8;
+            pointer-events: none;
+        }
+
+        #hero .blob-layer .blob {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            will-change: transform;
+        }
+
+        /* bottom layer – largest, bright blue */
+        #hero .blob-1 {
+            width: 690px; height: 690px;
+            margin: -345px 0 0 -345px;
+            background: #0A43FF;
+        }
+
+        /* middle layer – pink */
+        #hero .blob-2 {
+            width: 420px; height: 420px;
+            margin: -210px 0 0 -210px;
+            background: #FDE4DF;
+        }
+
+        /* top layer – yellow, smallest */
+        #hero .blob-3 {
+            width: 260px; height: 260px;
+            margin: -130px 0 0 -130px;
+            background: #FDC448;
+        }
+
+        /* Screen overlay: white bg + pure black text = text acts as window */
+        #hero .mask-screen {
+            position: relative;
+            background: white;
+            mix-blend-mode: screen;
+        }
+
+        #hero .mask-screen h1 {
+            color: #000;
+            -webkit-text-fill-color: #000;
+        }
+        /* ─────────────────────────────────────────────────────────────── */
 
     </style>
 </head>
@@ -549,13 +621,21 @@
 
     <section id="hero" class="flex items-center xl:mt-14">
         <div class="hero-title w-full">
-            <h1 class="line-top
-                       font-family-sofia font-bold uppercase
-                       text-[5.5rem]/[5rem]
-                       md:text-[11.5rem]/[9.5rem]
-                       tracking-[-0.5rem]">
-                product designer
-            </h1>
+            <div class="hero-mask">
+                <div class="blob-layer" aria-hidden="true">
+                    <div class="blob blob-1"></div>
+                    <div class="blob blob-2"></div>
+                    <div class="blob blob-3"></div>
+                </div>
+                <div class="mask-screen">
+                    <h1 class="font-family-sofia font-bold uppercase
+                               text-[5.5rem]/[5rem]
+                               md:text-[11.5rem]/[9.5rem]
+                               tracking-[-0.5rem]">
+                        product designer
+                    </h1>
+                </div>
+            </div>
     
             <div class="line-bottom
             font-family-sofia font-semibold uppercase
@@ -1054,7 +1134,52 @@
         //     }
         // });
 
+        // Hero blob-mask: blobs follow cursor in blob-layer local space
+        const heroCursor = document.querySelector(".hero-cursor");
+        const heroMask   = document.querySelector("#hero .hero-mask");
+        const blobLayer  = document.querySelector("#hero .blob-layer");
+        const blobs      = document.querySelectorAll("#hero .blob");
+
+        if (heroMask && blobLayer && blobs.length) {
+            heroMask.addEventListener("mouseenter", () => {
+                if (heroCursor) heroCursor.style.display = "block";
+                heroMask.style.cursor = "none";
+            });
+
+            heroMask.addEventListener("mouseleave", () => {
+                if (heroCursor) heroCursor.style.display = "none";
+                heroMask.style.cursor = "";
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                // Move custom cursor — xPercent/yPercent keep it centred
+                if (heroCursor) {
+                    gsap.set(heroCursor, {
+                        x: e.clientX,
+                        y: e.clientY,
+                        xPercent: -50,
+                        yPercent: -50,
+                    });
+                }
+
+                // Blobs live inside blob-layer; convert to its local coords
+                const rect = blobLayer.getBoundingClientRect();
+                const lx = e.clientX - rect.left;
+                const ly = e.clientY - rect.top;
+
+                gsap.to(blobs, {
+                    x: lx,
+                    y: ly,
+                    stagger: 0.08,
+                    duration: 0.65,
+                    ease: "power2.out",
+                    overwrite: "auto",
+                });
+            });
+        }
+
     });
 </script>
+<div class="hero-cursor"></div>
 </body>
 </html>
