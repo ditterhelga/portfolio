@@ -63,7 +63,7 @@
                 font-weight: 400;
                 /*margin: 0;*/
                 color: var(--color-text-primary);
-                background-color: hsl(var(--bg-color));
+                background: linear-gradient(to bottom, #FFFFFF 0px, #F3F6F9 1183px) #F3F6F9;
             }
 
             h1, h2, h3, h4, h5, h6 {
@@ -410,15 +410,18 @@
         }
 
         @utility card-title {
-            @apply text-primary-dark font-family-sofia font-normal text-7xl tracking-[-2px];
+            @apply text-primary-dark font-family-sofia font-normal text-7xl tracking-[-2px]
+            xl:mb-5;
         }
 
         .card-description {
             @apply flex flex-col gap-y-4
+            xl:w-[564px] xl:shrink-0 xl:gap-y-0;
         }
 
         .card-paragraph {
             @apply flex flex-col gap-y-2
+            xl:mb-10;
         }
 
         .card-text {
@@ -431,6 +434,7 @@
             items-center
             gap-x-4
             mt-2
+            xl:mt-0
             uppercase
             font-family-sofia
             text-primary-dark
@@ -444,19 +448,20 @@
         }
 
         .card {
-            @apply  flex flex-col max-w-[1280px]
+            @apply flex flex-col max-w-[1280px]
             mx-auto
-            px-4    sm:px-8
-            pt-14   sm:pt-16
-            pb-12   sm:pb-13
+            px-4 sm:px-8
+            pt-14 sm:pt-16
+            pb-12 sm:pb-13
             gap-y-10
+            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14;
         }
 
         .card-image {
-            @apply rounded-[20px]
+            @apply rounded-[20px] w-full object-cover
             aspect-[1.25]
             md:aspect-[0.84] md:max-w-[322px]
-            xl:aspect-[1.02] xl:max-w-[460px]
+            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0;
         }
 
 
@@ -573,10 +578,11 @@
             background: #FDC448;
         }
 
-        /* Screen overlay: white bg + pure black text = text acts as window */
+        /* Screen overlay: gradient matches page bg so it's invisible outside text */
         #hero .mask-screen {
             position: relative;
-            background: white;
+            background: linear-gradient(to bottom, #FFFFFF 0px, #F3F6F9 1183px) #F3F6F9;
+            background-attachment: fixed;
             mix-blend-mode: screen;
         }
 
@@ -732,7 +738,7 @@
                     </div>
 
                     <div class="card-content">
-                        <img class="card-image" src="assets/images/subway-main.webp" alt="Subway Project" loading="lazy"/>
+                        <img class="card-image" src="assets/images/subway-main.png" alt="Subway Project" loading="lazy"/>
                         <div class="card-description">
                             <h3 class="card-title">Subway</h3>
 
@@ -761,7 +767,7 @@
                     </div>
 
                     <div class="card-content">
-                        <img class="card-image" src="assets/images/billfold-main.webp" alt="Billfold POS Project" loading="lazy">
+                        <img class="card-image" src="assets/images/billfold-main.png" alt="Billfold POS Project" loading="lazy">
                         <div class="card-description">
                             <h3 class="card-title">Billfold POS</h3>
 
@@ -788,7 +794,7 @@
                     </div>
 
                     <div class="card-content">
-                        <img class="card-image" src="assets/images/gazelkin-main.webp" alt="Gazelkin Project" loading="lazy">
+                        <img class="card-image" src="assets/images/gazelkin-main.png" alt="Gazelkin Project" loading="lazy">
                         <div class="card-description">
                             <h3 class="card-title">Gazelkin</h3>
                             <div class="card-paragraph">
@@ -814,7 +820,7 @@
                     </div>
 
                     <div class="card-content">
-                        <img class="card-image" src="assets/images/dreamkas-main.webp" alt="Dreamkas Project" loading="lazy">
+                        <img class="card-image" src="assets/images/dreamkas-main.png" alt="Dreamkas Project" loading="lazy">
                         <div class="card-description">
                             <h3 class="card-title">Dreamkas POS</h3>
 
