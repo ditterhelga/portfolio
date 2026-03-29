@@ -447,6 +447,105 @@
             @apply xs:max-xl:full-bleed xl:rounded-[20px] bg-white;
         }
 
+        /* Work cards: padding lives on .work-card-surface so outer .card can stay a neutral shell */
+        #work .work-cards-stack .card {
+            padding: 0 !important;
+            gap: 0 !important;
+        }
+
+        /* Match page grey so scaled cards don’t sit on a white “slot” (Tailwind bg-white on .card-wrapper) */
+        #work {
+            background-color: #f3f6f9;
+        }
+
+        /* Pull Beyond block up by half the main column gap (gap-y-18 / md:24 / xl:26) */
+        #work + .full-bleed {
+            margin-top: -2.25rem;
+        }
+
+        @media (min-width: 48rem) {
+            #work + .full-bleed {
+                margin-top: -3rem;
+            }
+        }
+
+        @media (min-width: 80rem) {
+            #work + .full-bleed {
+                margin-top: -3.25rem;
+            }
+        }
+
+        /* Sticky stack + scrub fade/scale — desktop only (see GSAP below) */
+        @media (min-width: 1280px) {
+            #work .work-cards-stack {
+                background-color: #f3f6f9;
+            }
+
+            /* Gap (xl:gap-y-16 = 64px) sits between wrappers so #F3F6F9 shows through */
+            #work .work-cards-stack > .card-wrapper {
+                position: relative;
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+            }
+
+            #work .work-cards-stack > .card-wrapper:last-of-type {
+                padding-bottom: calc(5vh + 56px);
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(1) {
+                z-index: 1;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(2) {
+                z-index: 2;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(3) {
+                z-index: 3;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(4) {
+                z-index: 4;
+            }
+
+            /* Shell: fixed 722px slot; page-colored so area around scaled .work-card-surface isn’t white */
+            #work .work-cards-stack .card {
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+                box-sizing: border-box;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow: visible;
+            }
+
+            #work .work-cards-stack .work-card-surface {
+                background-color: #fff;
+                border-radius: 20px;
+                box-sizing: border-box;
+                width: 100%;
+                max-width: 1216px;
+                margin-left: auto;
+                margin-right: auto;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                /* Shrink toward overlap with next card (bottom pinned) so top/sides stay readable */
+                transform-origin: 50% 100%;
+                will-change: transform, opacity;
+                /* Lifts the front card slightly; scales with transform on the same layer */
+                box-shadow: 0 -4px 20px rgba(227, 233, 239, 0.4);
+            }
+
+            /* GSAP ScrollTrigger pin wrapper (when present) */
+            #work .pin-spacer {
+                background-color: #f3f6f9 !important;
+            }
+        }
+
         .card {
             @apply flex flex-col max-w-[1280px]
             mx-auto
@@ -465,31 +564,85 @@
         }
 
 
+        /* Main-xl: beyond-card-xl — gap 32px between image/tag/body/CTA; grid gap-x 48, gap-y 72; column 584px */
         #cards-beyond {
-            @apply flex flex-col gap-y-12 gap-x-12 md:gap-y-14 xl:grid xl:grid-cols-2 xl:gap-y-16;
+            @apply flex flex-col gap-y-12 md:gap-y-14
+            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px];
 
             & > .card-beyond {
-                @apply flex flex-col gap-y-10 card-content sm:!flex-row xl:!flex-col xl:!items-start gap-y-8;
+                @apply flex w-full max-w-full flex-col items-start gap-y-8;
 
                 & > .image-wrapper {
                     @apply overflow-hidden
                     rounded-[20px]
-                    min-w-[288px] aspect-[0.69]
-                    md:min-w-[345px] md:aspect-[0.74]
-                    xl:w-[584px] xl:aspect-[1.25];
+                    w-full
+                    h-[380px]
+                    shrink-0;
 
                     & > img {
                         @apply w-full h-full
                         object-cover object-center
-                        scale-105
-                        md:scale-100
                     }
+                }
+
+                & .card-description {
+                    @apply flex w-full flex-col items-start gap-y-8 text-left;
+                }
+
+                & .card-description p {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 20px;
+                    line-height: 32px;
+                    font-weight: 400;
+                }
+
+                & .card-detail {
+                    margin-top: 0;
                 }
             }
         }
 
         .triag-cut {
             clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Lighter Inter for match CTA copy (thinner than body default) */
+        #match .match-xl-body p {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner a,
+        footer.site-footer .footer-inner .footer-email {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner nav {
+            min-height: 32px;
+            align-items: center;
+        }
+
+        footer.site-footer .footer-inner nav a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-email {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-contact img {
+            display: block;
         }
 
         .line-top {
@@ -729,9 +882,10 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-y-12 xl:gap-y-16">
+        <div class="work-cards-stack flex flex-col gap-y-12 xl:gap-y-16">
             <div class="card-wrapper">
                 <div class="card">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
                     <div class="card-badges">
                         <span class="badge">End-to-end ux design</span>
                         <span class="badge">Restaurant training and operations</span>
@@ -754,12 +908,14 @@
 
                         </div>
                     </div>
+                    </div>
 
                 </div>
             </div>
 
             <div class="card-wrapper">
                 <div class="card">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
                     <div class="card-badges">
                         <span class="badge">Product design</span>
                         <span class="badge">Startup</span>
@@ -782,12 +938,14 @@
                             </div>
                         </div>
                     </div>
+                    </div>
 
                 </div>
             </div>
 
             <div class="card-wrapper">
                 <div class="card">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
                     <div class="card-badges">
                         <span class="badge">Product Design</span>
                         <span class="badge">Logistics & Customer Operations</span>
@@ -807,12 +965,14 @@
                             </div>
                         </div>
                     </div>
+                    </div>
 
                 </div>
             </div>
 
             <div class="card-wrapper">
                 <div class="card">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
                     <div class="card-badges">
                         <span class="badge">Leadership</span>
                         <span class="badge">Product Design</span>
@@ -834,6 +994,7 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -846,11 +1007,14 @@
                  class="flex
                         flex-col
                         gap-y-12
+                        xl:gap-y-16
                         max-w-[1280px]
                         mx-auto
                         pt-14
+                        xl:pt-[104px]
                         px-4
-                        sm:px-8">
+                        sm:px-8
+                        xl:px-8">
 
             <div class="flex flex-col gap-y-6">
                 <div class="text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
@@ -871,10 +1035,10 @@
 
                 <div class="card-beyond">
                     <div class="image-wrapper">
-                        <img src="assets/images/painting-main.webp" alt="Painting"/>
+                        <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
                     </div>
 
-                    <div class="card-description !gap-y-8 sm:!gap-y-12">
+                    <div class="card-description">
                         <div class="card-badges">
                             <span class="badge">My Other Medium</span>
                         </div>
@@ -890,9 +1054,9 @@
 
                 <div class="card-beyond">
                     <div class="image-wrapper">
-                        <img src="assets/images/svale-main.webp" alt="Svale"/>
+                        <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
                     </div>
-                    <div class="card-description !gap-y-8 sm:!gap-y-12">
+                    <div class="card-description">
                         <div class="card-badges">
                             <span class="badge">My entrepreneurial experiment</span>
                         </div>
@@ -910,10 +1074,10 @@
 
                 <div class="card-beyond">
                     <div class="image-wrapper">
-                        <img src="assets/images/painting-main.webp" alt="Painting"/>
+                        <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
                     </div>
 
-                    <div class="card-description !gap-y-8 sm:!gap-y-12">
+                    <div class="card-description">
                         <div class="card-badges">
                             <span class="badge">My Other Medium</span>
                         </div>
@@ -929,9 +1093,9 @@
 
                 <div class="card-beyond">
                     <div class="image-wrapper">
-                        <img src="assets/images/svale-main.webp" alt="Svale"/>
+                        <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
                     </div>
-                    <div class="card-description !gap-y-8 sm:!gap-y-12">
+                    <div class="card-description">
                         <div class="card-badges">
                             <span class="badge">My entrepreneurial experiment</span>
                         </div>
@@ -966,7 +1130,7 @@
                 Is it a match?
             </h1>
 
-            <div class="flex flex-col gap-y-4 sm:hidden">
+            <div class="match-xl-body flex flex-col gap-y-4 sm:hidden">
                 <p>
                     Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
                 </p>
@@ -974,7 +1138,7 @@
                     Send me a message or email at: hello@peppered.design
                 </p>
             </div>
-            <div class="hidden sm:visible sm:flex sm:flex-col sm:gap-y-8 md:max-w-[522px] lg:max-w-[744px]">
+            <div class="match-xl-body hidden sm:flex sm:flex-col sm:gap-y-8 md:max-w-[522px] lg:max-w-[744px]">
                 <p>
                     If you’re looking for a designer who can turn ambiguity into structure, ideas into flows, and research into intuitive product experiences, let’s talk.
                 </p>
@@ -989,28 +1153,32 @@
             </div>
         </section>
 
-        <footer class="bg-blue-dark -mt-24 xl:-mt-26">
-            <div class="flex
-                        flex-col
-                        gap-y-10
-                        py-16
-                        mx-auto
+        <footer class="site-footer w-full bg-blue-dark text-white -mt-24 xl:-mt-26 h-[140px] flex items-center">
+            <div class="footer-inner flex
+                        w-full
                         max-w-[1280px]
-                        text-white
+                        mx-auto
+                        flex-col
+                        items-center
+                        gap-y-8
+                        px-4
                         sm:px-8
                         lg:flex-row
-                        justify-between
+                        lg:items-center
+                        lg:justify-between
+                        lg:gap-y-0
+                        xl:px-12
                         ">
-                <nav class="flex flex-row flex-wrap gap-x-10 gap-y-6 justify-center lg:justify-start ">
-                    <a href="#work">Works</a>
-                    <a href="#about">About</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#resume">Resume</a>
+                <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
+                    <a class="no-underline hover:opacity-90" href="#work">Work</a>
+                    <a class="no-underline hover:opacity-90" href="#about">About</a>
+                    <a class="no-underline hover:opacity-90" href="#contact">Contact</a>
+                    <a class="no-underline hover:opacity-90" href="#resume">Resume</a>
                 </nav>
-                <div class="flex flex-col justify-center items-center gap-x-12 gap-y-10 md:flex-row">
-                    <div>hello@peppered.design</div>
-                    <a href="#linkedin">
-                        <img class="max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
+                <div class="footer-contact flex flex-col items-center gap-x-12 gap-y-8 md:flex-row md:items-center lg:gap-y-0">
+                    <div class="footer-email">hello@peppered.design</div>
+                    <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                        <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
                     </a>
                 </div>
             </div>
@@ -1022,7 +1190,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger);
 
         // Burger and Menu setup
         const menuTween = gsap.timeline({paused: true})
@@ -1108,37 +1276,59 @@
         //     }
         // });
 
-        //
-        // const wrappers = document.querySelectorAll('.card-wrapper');
-        //
-        // wrappers.forEach((wrapper, index) => {
-        //     const card = wrapper.querySelector('.card');
-        //
-        //     if (index === wrappers.length - 1) {
-        //         // gsap.set(card, {opacity: 1, scale: 1}),
-        //         gsap.set(card, {opacity: 1})
-        //     } else {
-        //         gsap.timeline({
-        //             scrollTrigger: {
-        //                 trigger: card,
-        //                 markers: true,
-        //                 start: "bottom center",
-        //                 end: "bottom top",
-        //                 scrub: 0.5,
-        //                 pin: true,
-        //                 pinSpacing: false,
-        //                 // invalidateOnRefresh: true,
-        //                 // anticipatePin: 1
-        //             }
-        //         })
-        //             .fromTo(card,
-        //                 {opacity: 1},
-        //                 {opacity: 0}
-        //                 // {opacity: 1, scale: 1},
-        //                 // {opacity: 0, scale: 0.6, ease: "none"}
-        //             );
-        //     }
-        // });
+        // Work section: sticky stack, fade + scale (desktop only; demo pattern)
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reducedMotion) {
+            ScrollTrigger.matchMedia({
+                "(min-width: 1280px)": function () {
+                    const wrappers = gsap.utils.toArray("#work .work-cards-stack > .card-wrapper");
+                    wrappers.forEach((wrapper, index) => {
+                        const surface = wrapper.querySelector(".work-card-surface");
+                        if (!surface) return;
+
+                        if (index === wrappers.length - 1) {
+                            gsap.set(surface, { opacity: 1, scale: 1 });
+                            return;
+                        }
+
+                        gsap.timeline({
+                            scrollTrigger: {
+                                trigger: wrapper,
+                                /* Pin when card center hits ~44% from viewport top (comfortable read, not flush to browser top) */
+                                start: () =>
+                                    `center top+=${Math.round(window.innerHeight * 0.37)}`,
+                                end: "bottom top",
+                                scrub: true,
+                                pin: true,
+                                pinSpacing: false,
+                                anticipatePin: 1,
+                                invalidateOnRefresh: true,
+                            },
+                        }).fromTo(
+                            surface,
+                            {
+                                opacity: 1,
+                                scale: 1,
+                                transformOrigin: "50% 100%",
+                                force3D: true,
+                            },
+                            {
+                                opacity: 0,
+                                scale: 0.52,
+                                ease: "none",
+                                force3D: true,
+                                transformOrigin: "50% 100%",
+                            },
+                            0
+                        );
+                    });
+                },
+            });
+        }
+
+        window.addEventListener("load", () => {
+            ScrollTrigger.refresh();
+        });
 
         // Hero blob-mask: blobs follow cursor in blob-layer local space
         const heroCursor = document.querySelector(".hero-cursor");
