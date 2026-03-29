@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground 04 — typography</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sofia+Sans+Condensed:wght@600;700&display=swap"
+          rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-family-inter: 'Inter', sans-serif;
+            --font-family-sofia: 'Sofia Sans Condensed', sans-serif;
+        }
+
+        @layer base {
+            body {
+                font-family: var(--font-family-inter);
+                font-size: 1.125rem;
+                line-height: 1.75rem;
+                @apply text-neutral-800 p-8 max-w-prose;
+            }
+
+            h1 {
+                font-family: var(--font-family-sofia);
+                font-weight: 700;
+                @apply text-3xl mb-4;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1>Heading uses Sofia</h1>
+<p>Body copy uses Inter. In <code>@layer base</code>, change <code>font-family</code> on <code>body</code> to <code>system-ui, sans-serif</code> and reload to feel the difference.</p>
+</body>
+</html>

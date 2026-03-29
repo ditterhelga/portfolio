@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground 08 — md: breakpoint</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-neutral-100 p-8 text-neutral-800;
+            }
+        }
+    </style>
+</head>
+<body>
+<p class="mb-4 text-sm text-neutral-600">Resize across ~768px width (Tailwind <code>md</code>).</p>
+<div class="rounded-lg bg-white p-6 shadow max-w-lg">
+    <span class="block md:hidden font-medium text-amber-700">You are on a narrow viewport (default / mobile-first).</span>
+    <span class="hidden md:block font-medium text-emerald-700">You are at <code>md</code> or wider.</span>
+</div>
+</body>
+</html>

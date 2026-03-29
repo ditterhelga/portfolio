@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground 03 — class + nested CSS</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        .box {
+            @apply rounded-lg border-2 border-dashed border-neutral-400 p-4;
+
+            & p {
+                margin-top: 0.5rem;
+            }
+
+            & p:first-child {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-neutral-800 p-8">
+<div class="box max-w-md">
+    <p class="text-lg font-medium">Utility on this line: try adding <code>text-blue-600</code> to the class list.</p>
+    <p>This paragraph is spaced by the nested <code>&amp; p</code> rule in <code>&lt;style&gt;</code>.</p>
+</div>
+</body>
+</html>

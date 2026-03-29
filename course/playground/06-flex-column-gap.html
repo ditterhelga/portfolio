@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground 06 — flex column + gap</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-neutral-100 p-8;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="flex flex-col gap-y-4 max-w-md mx-auto">
+    <div class="rounded-lg bg-white p-4 shadow border border-neutral-200">Card A — change <code>gap-y-4</code> to <code>gap-y-12</code> on the parent.</div>
+    <div class="rounded-lg bg-white p-4 shadow border border-neutral-200">Card B</div>
+    <div class="rounded-lg bg-white p-4 shadow border border-neutral-200">Card C</div>
+</div>
+</body>
+</html>
