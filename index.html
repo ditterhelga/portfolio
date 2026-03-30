@@ -553,12 +553,14 @@
             }
             #work .work-cards-stack .card {
                 max-width: 100% !important;
-            }
-            #work .work-cards-stack .card,
-            #work .work-cards-stack .work-card-surface {
                 height: 900px;
                 min-height: 900px;
                 max-height: 900px;
+            }
+            #work .work-cards-stack .work-card-surface {
+                height: auto !important;
+                min-height: unset !important;
+                max-height: unset !important;
             }
         }
 
@@ -644,8 +646,9 @@
         }
 
         footer.site-footer .footer-inner nav {
-            min-height: 32px;
+            display: flex;
             align-items: center;
+            min-height: 32px;
         }
 
         footer.site-footer .footer-inner nav a {
@@ -761,6 +764,7 @@
         #hero .mask-screen h1 {
             color: #000;
             -webkit-text-fill-color: #000;
+            padding-right: 0.5rem;
         }
         /* ─────────────────────────────────────────────────────────────── */
 
@@ -1174,15 +1178,16 @@
             </div>
         </section>
 
-        <footer class="site-footer w-full bg-blue-dark text-white -mt-24 xl:-mt-26 h-[140px] flex items-center">
-            <div class="footer-inner flex
+        <footer class="site-footer w-full bg-blue-dark text-white -mt-24 xl:-mt-22 flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
+            <div class="footer-inner flex items-center
                         w-full
                         max-w-[1280px]
                         2xl:max-w-[1440px]
                         mx-auto
                         flex-col
                         items-center
-                        gap-y-8
+                        
+                        gap-y-4
                         px-4
                         sm:px-8
                         lg:flex-row
@@ -1198,7 +1203,7 @@
                     <a class="no-underline hover:opacity-90" href="#contact">Contact</a>
                     <a class="no-underline hover:opacity-90" href="#resume">Resume</a>
                 </nav>
-                <div class="footer-contact flex flex-col items-center gap-x-12 gap-y-8 md:flex-row md:items-center lg:gap-y-0">
+                <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
                     <div class="footer-email">hello@peppered.design</div>
                     <a class="flex shrink-0 items-center leading-none" href="#linkedin">
                         <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
