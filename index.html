@@ -38,6 +38,7 @@
             --bg-color: 216, 29%, 97%;
 
             --breakpoint-xs: 20rem;
+            --breakpoint-2xl: 96rem;
         }
 
         @utility full-bleed {
@@ -257,7 +258,8 @@
             md:gap-y-8
             xl:mt-5
             xl:flex-row-reverse
-            xl:gap-x-14;
+            xl:gap-x-14
+            2xl:gap-x-20;
 
 
             .rotating-words {
@@ -398,7 +400,8 @@
         }
 
         @utility card-content {
-            @apply flex flex-col gap-8 items-center sm:flex-row-reverse;
+            @apply flex flex-col gap-8 items-center sm:flex-row-reverse
+            2xl:gap-x-16;
         }
 
         @utility card-badges {
@@ -411,7 +414,8 @@
 
         @utility card-title {
             @apply text-primary-dark font-family-sofia font-normal text-7xl tracking-[-2px]
-            xl:mb-5;
+            xl:mb-5
+            2xl:text-[102px];
         }
 
         .card-description {
@@ -524,9 +528,6 @@
                 border-radius: 20px;
                 box-sizing: border-box;
                 width: 100%;
-                max-width: 1216px;
-                margin-left: auto;
-                margin-right: auto;
                 height: 722px;
                 min-height: 722px;
                 max-height: 722px;
@@ -546,6 +547,21 @@
             }
         }
 
+        @media (min-width: 1536px) {
+            #work .work-cards-stack > .card-wrapper {
+                background-color: #f3f6f9 !important;
+            }
+            #work .work-cards-stack .card {
+                max-width: 100% !important;
+            }
+            #work .work-cards-stack .card,
+            #work .work-cards-stack .work-card-surface {
+                height: 900px;
+                min-height: 900px;
+                max-height: 900px;
+            }
+        }
+
         .card {
             @apply flex flex-col max-w-[1280px]
             mx-auto
@@ -553,21 +569,24 @@
             pt-14 sm:pt-16
             pb-12 sm:pb-13
             gap-y-10
-            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14;
+            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14
+            2xl:max-w-full 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px] 2xl:gap-y-14;
         }
 
         .card-image {
             @apply rounded-[20px] w-full object-cover
             aspect-[1.25]
             md:aspect-[0.84] md:max-w-[322px]
-            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0;
+            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0
+            2xl:h-[488px] 2xl:w-[576px] 2xl:max-w-[576px];
         }
 
 
         /* Main-xl: beyond-card-xl — gap 32px between image/tag/body/CTA; grid gap-x 48, gap-y 72; column 584px */
         #cards-beyond {
             @apply flex flex-col gap-y-12 md:gap-y-14
-            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px];
+            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
+            2xl:gap-x-16 2xl:gap-y-16;
 
             & > .card-beyond {
                 @apply flex w-full max-w-full flex-col items-start gap-y-8;
@@ -748,9 +767,9 @@
     </style>
 </head>
 
-<body class="flex flex-col w-full max-w-[1280px] justify-center align-middle">
+<body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] justify-center align-middle">
 
-<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:gap-y-24 xl:gap-y-26">
+<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:gap-y-24 xl:gap-y-26 2xl:px-0">
 
     <header class="flex pt-8 xl:pt-16">
         <div class="flex justify-between w-full">
@@ -885,7 +904,7 @@
         <div class="work-cards-stack flex flex-col gap-y-12 xl:gap-y-16">
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">End-to-end ux design</span>
                         <span class="badge">Restaurant training and operations</span>
@@ -915,7 +934,7 @@
 
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">Product design</span>
                         <span class="badge">Startup</span>
@@ -945,7 +964,7 @@
 
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">Product Design</span>
                         <span class="badge">Logistics & Customer Operations</span>
@@ -972,7 +991,7 @@
 
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">Leadership</span>
                         <span class="badge">Product Design</span>
@@ -1009,12 +1028,14 @@
                         gap-y-12
                         xl:gap-y-16
                         max-w-[1280px]
+                        2xl:max-w-[1440px]
                         mx-auto
                         pt-14
                         xl:pt-[104px]
                         px-4
                         sm:px-8
-                        xl:px-8">
+                        xl:px-8
+                        2xl:px-[80px]">
 
             <div class="flex flex-col gap-y-6">
                 <div class="text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
@@ -1034,7 +1055,7 @@
             <div id="cards-beyond">
 
                 <div class="card-beyond">
-                    <div class="image-wrapper">
+                    <div class="image-wrapper 2xl:h-[468px]">
                         <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
                     </div>
 
@@ -1053,7 +1074,7 @@
                 </div>
 
                 <div class="card-beyond">
-                    <div class="image-wrapper">
+                    <div class="image-wrapper 2xl:h-[468px]">
                         <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
                     </div>
                     <div class="card-description">
@@ -1073,7 +1094,7 @@
                 </div>
 
                 <div class="card-beyond">
-                    <div class="image-wrapper">
+                    <div class="image-wrapper 2xl:h-[468px]">
                         <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
                     </div>
 
@@ -1092,7 +1113,7 @@
                 </div>
 
                 <div class="card-beyond">
-                    <div class="image-wrapper">
+                    <div class="image-wrapper 2xl:h-[468px]">
                         <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
                     </div>
                     <div class="card-description">
@@ -1157,6 +1178,7 @@
             <div class="footer-inner flex
                         w-full
                         max-w-[1280px]
+                        2xl:max-w-[1440px]
                         mx-auto
                         flex-col
                         items-center
@@ -1168,6 +1190,7 @@
                         lg:justify-between
                         lg:gap-y-0
                         xl:px-12
+                        2xl:px-[80px]
                         ">
                 <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
                     <a class="no-underline hover:opacity-90" href="#work">Work</a>
