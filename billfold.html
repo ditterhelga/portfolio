@@ -80,9 +80,10 @@
                 xl:text-[64px]/[64px];
         }
 
-        /* #overview mobile title: .section-header wins over utilities; force larger xs size */
+        /* #overview / #challenge mobile title: .section-header wins over utilities; force larger xs size */
         @media (max-width: 767px) {
-            #overview .overview-xs-heading {
+            #overview .overview-xs-heading,
+            #challenge .overview-xs-heading {
                 font-size: 52px !important;
                 line-height: 60px !important;
             }
@@ -880,7 +881,7 @@
 
             <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
-                <div class="flex w-full flex-col gap-y-6 md:hidden">
+                <div class="flex w-full flex-col gap-y-6 xs:gap-y-4 md:hidden">
                     <h2 class="section-header overview-xs-heading w-full">Overview</h2>
                     <div class="overview-text-1 font-light text-5/8 min-w-0">
                     <p class="min-w-0">Billfold set out to <span class="font-medium">solve one of the biggest
@@ -907,7 +908,7 @@
                     at the bar, merch booth, or food stand.</p>
                 </div>
 
-                <div class="overview-text-2 order-2 font-light text-5/8 min-w-0 md:order-2 xl:mt-4 2xl:mt-0 2xl:min-w-0">
+                <div class="overview-text-2 order-2 font-light text-5/8 min-w-0 md:order-2 xl:mt-6 2xl:mt-0 xs:max-md:mt-2 2xl:min-w-0">
                     <p class="min-w-0">I designed a <span class="font-medium">cashless payment ecosystem</span>
                     that cut those bottlenecks out of the experience. Using
                     RFID wristbands, dual-screen POS devices, and rugged
@@ -953,16 +954,53 @@
 
         </section>
 
-        <!-- #challenge: text-block, image-block, keyphrase-block -->
-        <section id="challenge" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
-                <h2 class="section-header text-block-heading"></h2>
-                <div class="text-block-body flex flex-col gap-y-2"></div>
+        <!-- #challenge: mirrors #overview layout (text + keyphrase row, image below) -->
+        <section id="challenge" class="flex flex-col items-start gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 xs:gap-y-6 xl:contents 2xl:contents">
+                <h2 class="section-header overview-xs-heading w-full md:mb-2 xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-2 xs:gap-y-4 xl:min-w-0 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">Designing for festivals and stadiums meant <span class="font-medium">building a system that worked under extreme pressure</span>.
+                    At peak times, thousands of guests ordered at once, and even a 2 second delay could ripple into minutes of waiting.
+                    Hardware had to survive weather, glare, and sticky hands, while staff with little training needed to serve quickly and without mistakes.</p>
+                </div>
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0"><span class="font-medium">Guests were no easier: distracted, emotional, and often not fully sober,</span>
+                    they gave only split-second attention to the screen. A single mis-tap could turn a $10 drink into a $100 charge,
+                    with no chance to explain mid-rush. Add failing networks, endless bar lines, and frustrated crowds, and
+                    <span class="font-medium">every transaction carried the risk of slowing the whole event.</span></p>
+                </div>
+                </div>
+                </div>
+
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/logo-billfold-keyphrase.png"
+                         alt="Billfold"
+                         class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">The challenge was clear: <span class="font-medium">design a payment system that worked in chaos</span>
+                    — fast enough to keep lines moving and reliable enough to protect revenue at every transaction.</p>
+                </div>
+
+                <img src="assets/images/challenge-billfold.png"
+                     alt="Billfold challenge"
+                     class="w-full rounded-[20px] object-cover xl:col-start-1 xl:row-start-3 2xl:col-start-1 2xl:row-start-3 xl:mt-10 2xl:mt-0"/>
+
             </div>
-            <div class="image-block">
-                <div class="image-block-placeholder" aria-hidden="true"></div>
+
             </div>
-            <div class="keyphrase-block"></div>
+
         </section>
 
         <!-- #role: text-block, accordion-block -->
