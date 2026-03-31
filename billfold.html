@@ -75,6 +75,15 @@
 
         .section-header {
             @apply font-family-sofia font-normal
+                text-[46px]/[48px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px]
+                2xl:text-[64px]/[64px];
+        }
+
+        /* Hero h1 keeps previous scale; does not use .section-header typography */
+        .billfold-hero-title {
+            @apply font-family-sofia font-normal
                 text-[52px]/[60px]
                 md:text-[60px]/[64px]
                 xl:text-[64px]/[64px];
@@ -804,7 +813,7 @@
         </div>
     </header>
 
-    <main class="flex flex-col gap-y-18 md:gap-y-20 xl:gap-y-26">
+    <main class="flex flex-col gap-y-18 md:gap-y-20 xl:gap-y-26 2xl:gap-y-[120px]">
 
         <!-- #hero: breadcrumbs, page title (h1), hero image or video placeholder -->
         <section id="hero" class="flex flex-col">
@@ -813,7 +822,7 @@
                 <span aria-hidden="true">/</span>
                 <span class="text-[#8A8A8A]">Billfold</span>
             </div>
-            <h1 class="section-header billfold-page-title">Faster lines. Higher sales. Happier crowds.</h1>
+            <h1 class="billfold-hero-title billfold-page-title">Faster lines. Higher sales. Happier crowds.</h1>
             <div class="billfold-hero-media image-block mt-10">
                 <div class="billfold-hero-media-bg full-bleed overflow-hidden bg-[#303030] py-8 md:py-12 xl:py-[80px]">
                     <div class="flex w-full justify-center px-4 sm:px-8 md:px-6 2xl:px-8">
@@ -868,11 +877,11 @@
 
         <section id="overview" class="flex flex-col items-start">
 
-            <div class="w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px]">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
-                <div class="flex w-full flex-col gap-y-6 xs:gap-y-4 md:hidden">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                     <h2 class="section-header w-full">Overview</h2>
                     <div class="overview-text-1 font-light text-5/8 min-w-0">
                     <p class="min-w-0">Billfold set out to <span class="font-medium">solve one of the biggest
@@ -885,10 +894,10 @@
                     </div>
                 </div>
 
-                <h2 class="section-header hidden w-full md:order-0 md:mb-2 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Overview</h2>
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Overview</h2>
 
-                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col 2xl:row-start-2">
-                <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px] 2xl:row-start-2">
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 hidden md:order-1 md:block 2xl:min-w-0">
                     <p class="min-w-0">Billfold set out to <span class="font-medium">solve one of the biggest
                     frustrations in live events: slow, unreliable payments
@@ -899,7 +908,7 @@
                     at the bar, merch booth, or food stand.</p>
                 </div>
 
-                <div class="overview-text-2 order-2 font-light text-5/8 min-w-0 md:order-2 xl:mt-6 2xl:mt-0 xs:max-md:mt-2 2xl:min-w-0">
+                <div class="overview-text-2 order-2 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
                     <p class="min-w-0">I designed a <span class="font-medium">cashless payment ecosystem</span>
                     that cut those bottlenecks out of the experience. Using
                     RFID wristbands, dual-screen POS devices, and rugged
@@ -910,17 +919,19 @@
                 </div>
                 </div>
 
+                <div class="flex w-full min-w-0 flex-col gap-y-[16px] md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px]">
                 <img src="assets/images/hand-billfold.png"
                      alt="Billfold POS device"
-                     class="overview-img-1 order-1 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-10 xl:aspect-[1048/656] 2xl:mt-14 2xl:w-full"/>
+                     class="overview-img-1 order-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
 
-                <div class="order-4 flex w-full flex-col gap-y-8 md:order-5 md:flex-row md:gap-x-4 md:items-start xl:mt-4 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px]">
+                <div class="order-4 flex w-full flex-col gap-y-[16px] md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/RFID_Wristband_billfold.png"
                              alt="Billfold RFID wristband"
                              class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                         <img src="assets/images/festival-billfold.png"
                              alt="Festival crowd"
                              class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
                 </div>
                 </div>
 
@@ -948,14 +959,14 @@
         <!-- #challenge: mirrors #overview layout (text + keyphrase row, image below) -->
         <section id="challenge" class="flex flex-col items-start gap-y-10 md:gap-y-12 xl:gap-y-14">
 
-            <div class="w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px]">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 xs:gap-y-6 xl:contents 2xl:contents">
-                <h2 class="section-header w-full md:mb-2 xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-2 xs:gap-y-4 xl:min-w-0 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:min-w-0 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
                     <p class="min-w-0">Designing for festivals and stadiums meant <span class="font-medium">building a system that worked under extreme pressure</span>.
                     At peak times, thousands of guests ordered at once, and even a 2 second delay could ripple into minutes of waiting.
@@ -986,7 +997,7 @@
 
                 <img src="assets/images/challenge-billfold.png"
                      alt="Billfold challenge"
-                     class="w-full rounded-[20px] object-cover xl:col-start-1 xl:row-start-3 2xl:col-start-1 2xl:row-start-3 xl:mt-10 2xl:mt-0"/>
+                     class="mt-4 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
 
             </div>
 
@@ -994,25 +1005,27 @@
 
         </section>
 
-        <section id="my-part" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+        <section id="my-part" class="flex flex-col gap-y-0">
+            <div class="flex w-full max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
             <h2 class="section-header w-full">My Part in This</h2>
 
-            <div class="w-full max-w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
-                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col">
-                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col">
+            <div class="w-full max-w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
                         <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                             <div class="my-part-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
                                 <p class="min-w-0">I joined Billfold when there was <span class="font-medium">no design team, no interface, and no real product, just a vision, a rough hardware prototype, and the urgency to move fast.</span> From that starting point, my role was to transform a raw idea into something real, usable, and resilient enough for the chaos of live events.</p>
                             </div>
-                            <div class="my-part-text-2 font-light text-5/8 min-w-0 xl:mt-6 2xl:mt-0 2xl:min-w-0">
+                            <div class="my-part-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
                                 <p class="min-w-0">For several years, <span class="font-medium">I was the sole designer on the team</span>, responsible for everything from early research and wireframes to polished prototypes and final UI. I created design systems, explored countless edge cases, and ensured consistency across hundreds of vendor- and guest-facing screens.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
 
-            <div class="flex w-full flex-col gap-y-6 xl:gap-y-10">
+            <div class="mt-10 flex w-full flex-col gap-y-6 md:mt-12 xl:mt-14 xl:gap-y-10">
             <button type="button" id="my-part-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="my-part-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="my-part-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1067,31 +1080,33 @@
             </script>
         </section>
 
-        <section id="map-image">
+        <section id="map-image" class="-mt-[48px] md:-mt-[40px] xl:-mt-[64px] 2xl:-mt-[80px]">
             <img class="w-full rounded-[20px] object-cover" src="assets/images/map-billfold.png" alt="Billfold system map"/>
         </section>
 
         <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
-        <section id="research" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 -mt-2 md:mt-0">
+        <section id="research" class="flex flex-col gap-y-0 -mt-2 md:mt-0">
+            <div class="flex w-full max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
             <h2 class="section-header w-full">Research & Discovery</h2>
 
-            <div class="w-full max-w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
-                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col">
-                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col">
+            <div class="w-full max-w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
                         <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                             <div class="research-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
                                 <p class="min-w-0">Since I couldn’t attend US festivals in person, <span class="font-medium">research had to happen remotely.</span> I worked closely with PMs, event staff, and engineers to understand how payments broke down during live events, and what vendors and guests struggled with the most. Feedback came from videos, on-site reports, and rapid loops between design and deployment.</p>
                             </div>
-                            <div class="research-text-2 font-light text-5/8 min-w-0 xl:mt-6 2xl:mt-0 2xl:min-w-0">
+                            <div class="research-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
                                 <p class="min-w-0">This process helped me uncover the real conditions the product had to survive: sun glare on screens, beer-soaked hardware, distracted and impatient guests, and staff with minimal training. <span class="font-medium">By combining remote insights with field feedback, I could translate messy realities into design principles the team could build on.</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
 
-            <div class="flex w-full max-w-full flex-col gap-y-[40px] 2xl:gap-y-[48px] xl:max-w-[856px] 2xl:max-w-[1048px]">
-                <div class="flex w-full flex-col gap-y-0">
+            <div class="mt-10 flex w-full max-w-full flex-col gap-y-6 md:mt-12 xl:mt-14 xl:gap-y-10 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6">
                     <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-1">
                         <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                             <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1104,7 +1119,7 @@
                     <div id="research-acc-panel-1-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                         <div class="min-h-0 overflow-hidden">
                             <div id="research-acc-panel-1" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
-                                <div class="flex flex-col gap-y-4 pt-4 font-light text-5/8">
+                                <div class="flex flex-col gap-y-4 font-light text-5/8">
                                     <div>
                                         <span class="font-medium">Remote observations</span><br/>
                                         Analyzed staff videos and on-site recordings to see how devices performed during rush hours and where transactions failed.
@@ -1127,7 +1142,7 @@
                     </div>
                 </div>
 
-                <div class="flex w-full flex-col gap-y-0">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6">
                     <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-2">
                         <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                             <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1140,7 +1155,7 @@
                     <div id="research-acc-panel-2-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                         <div class="min-h-0 overflow-hidden">
                             <div id="research-acc-panel-2" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
-                                <div class="flex flex-col gap-y-4 pt-4 font-light text-5/8">
+                                <div class="flex flex-col gap-y-4 font-light text-5/8">
                                     <div>
                                         <span class="font-medium">Speed was everything</span><br/>
                                         Transactions needed to complete in under two seconds to keep lines moving.
@@ -1171,7 +1186,7 @@
             <img
                 src="assets/images/festival-man-billfold.png"
                 alt="Billfold at festival"
-                class="w-full rounded-[20px] object-cover max-md:h-[clamp(184px,calc(184px+150*(100vw-20rem)/28rem),334px)] md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:max-w-[856px] xl:h-[376px] 2xl:max-w-[1048px] 2xl:h-[496px]"
+                class="mt-10 w-full rounded-[20px] object-cover max-md:h-[clamp(184px,calc(184px+150*(100vw-20rem)/28rem),334px)] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
             />
 
             <script>
@@ -1216,18 +1231,18 @@
 
         <section id="ecosystem" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
-            <div class="w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px]">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 xs:gap-y-6 xl:contents 2xl:contents">
-                <h2 class="section-header w-full md:mb-2 xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Billfold Ecosystem</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Billfold Ecosystem</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-2 xs:gap-y-4 xl:col-start-1 xl:row-start-2 xl:min-w-0 2xl:col-start-1 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:col-start-1 xl:row-start-2 xl:min-w-0 2xl:col-start-1 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
                     <p class="min-w-0">From guests trying to buy a drink, to bartenders rushing through hundreds of orders and organizers keeping the entire event under control, <span class="font-medium">every part of the system had to work together in real time.</span> The goal was to remove friction wherever it appeared.</p>
                 </div>
-                <div class="overview-text-2 font-light text-5/8 min-w-0 xl:mt-6 2xl:mt-0 2xl:min-w-0">
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
                     <p class="min-w-0">That meant <span class="font-medium">making payments effortless for guests, reducing stress and mistakes for staff, and giving organizers the visibility they never had before.</span> By unifying these perspectives, Billfold turned a chaotic process into one seamless flow.</p>
                 </div>
                 </div>
@@ -1287,29 +1302,29 @@
 
         <section id="vendor-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
-            <div class="w-full flex flex-col gap-y-0 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px]">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-0 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
-                <div class="flex w-full flex-col md:hidden">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                     <h2 class="section-header w-full">The Vendor Experience</h2>
                 </div>
 
-                <h2 class="section-header hidden w-full md:order-0 md:mb-2 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Vendor Experience</h2>
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Vendor Experience</h2>
 
-                <div class="mt-6 flex w-full min-w-0 flex-col md:mt-0 xl:min-w-0 xl:flex-col 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-[48px] md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col xl:flex-col 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">For bartenders and waiters, <span class="font-medium">speed was everything.</span><br/>
 At peak hours, a single extra tap or a confusing screen could slow the entire line and frustrate hundreds of guests. The vendor-facing POS had to be <span class="font-medium">simple enough to learn in minutes and reliable enough to handle non-stop orders all night.</span></p>
                 </div>
 
-                <div class="overview-text-2 order-3 mt-[32px] block font-light text-5/8 min-w-0 md:order-2 md:mt-0 xl:mt-6 2xl:mt-0 2xl:min-w-0">
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
                     <p class="min-w-0">Designing for this reality meant <span class="font-medium">focusing on clarity, error-prevention, and speed above all else.</span> Every interaction was reduced to the essentials, giving staff confidence under pressure and keeping drinks flowing even in the busiest rush.</p>
                 </div>
                 </div>
 
-                <div class="flex flex-col order-4 mt-[48px] md:order-3 md:mt-[48px] md:mb-[48px]">
+                <div class="flex w-full flex-col order-3 md:order-3">
             <button type="button" id="vendor-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="vendor-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="vendor-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1321,8 +1336,8 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
             <div id="vendor-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                 <div class="min-h-0 overflow-hidden">
-                    <div id="vendor-exp-acc-panel" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
-                        <div class="flex flex-col gap-y-4 pt-[32px] font-light text-5/8">
+                    <div id="vendor-exp-acc-panel" data-open="0" class="w-full max-w-full pt-6 pb-2 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
                             <div>
                                 <span class="font-medium">Dual-Screen Layout</span><br/>
                                 We used a hardware setup with two screens back-to-back (one facing staff, one facing guest). I crafted the UI so that each side showed only relevant information. This prevented accidental taps and made interactions clear for both parties.
@@ -1349,17 +1364,19 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
             </div>
                 </div>
 
+                <div class="order-4 flex w-full min-w-0 flex-col gap-y-[16px] md:order-4 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px]">
                 <img src="assets/images/vendor-billfold.png"
                      alt="Vendor-facing Billfold POS"
-                     class="overview-img-1 order-2 mt-[32px] w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-0 md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-4 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
 
-                <div class="order-5 mt-[48px] flex w-full flex-col gap-y-[32px] md:order-5 md:mt-4 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:mt-4 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px]">
+                <div class="order-5 mt-0 flex w-full flex-col gap-y-[16px] md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/barmen-phone-billfold.png"
                              alt="Bartender using Billfold on phone"
                              class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                         <img src="assets/images/barmen-billfold.png"
                              alt="Bartenders at Billfold POS"
                              class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
                 </div>
                 </div>
 
@@ -1390,7 +1407,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
         <!-- #role: text-block, accordion-block -->
         <section id="role" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
+            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <h2 class="section-header text-block-heading"></h2>
                 <div class="text-block-body flex flex-col gap-y-2"></div>
             </div>
@@ -1402,7 +1419,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
         <!-- #content-section-1: text-block, optional accordion, optional keyphrase, 1–3 images -->
         <section id="content-section-1" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
+            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <h2 class="section-header text-block-heading"></h2>
                 <div class="text-block-body flex flex-col gap-y-2"></div>
             </div>
@@ -1422,7 +1439,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
         <!-- #content-section-2: text-block, optional accordion, optional keyphrase, 1–3 images -->
         <section id="content-section-2" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
+            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <h2 class="section-header text-block-heading"></h2>
                 <div class="text-block-body flex flex-col gap-y-2"></div>
             </div>
@@ -1438,7 +1455,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
         <!-- #content-section-3: text-block, optional accordion, optional keyphrase, 1–3 images -->
         <section id="content-section-3" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
+            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <h2 class="section-header text-block-heading"></h2>
                 <div class="text-block-body flex flex-col gap-y-2"></div>
             </div>
@@ -1457,7 +1474,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
         <!-- #results: text-block, image-block, keyphrase-block -->
         <section id="results" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
+            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <h2 class="section-header text-block-heading"></h2>
                 <div class="text-block-body flex flex-col gap-y-2"></div>
             </div>
