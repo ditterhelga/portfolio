@@ -776,7 +776,7 @@
 
 <body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto">
 
-<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:px-6 md:gap-y-24 xl:gap-y-26 2xl:px-8">
+<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:px-6 md:gap-y-24 xl:gap-y-26 2xl:px-0">
 
     <header class="flex pt-8 xl:pt-16">
         <div class="flex justify-between w-full">
@@ -868,15 +868,13 @@
 
         <section id="overview" class="flex flex-col items-start">
 
-            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-6 2xl:gap-y-8">
+            <div class="w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px]">
 
-            <!-- Title (full width) -->
-            <h2 class="section-header w-full">Overview</h2>
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-10 overflow-hidden md:max-w-full xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 xl:gap-y-10 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[40px]">
-
-                <!-- Text (order 1 by default; xl col1 row1) -->
-                <div class="grid min-w-0 grid-cols-1 gap-y-4 font-light text-5/8 xl:col-start-1 xl:row-start-1 2xl:grid 2xl:grid-cols-2 2xl:gap-x-[56px] 2xl:gap-y-0">
+                <div class="flex w-full flex-col gap-y-6 md:hidden">
+                    <h2 class="section-header w-full">Overview</h2>
+                    <div class="overview-text-1 font-light text-5/8 min-w-0">
                     <p class="min-w-0">Billfold set out to <span class="font-medium">solve one of the biggest
                     frustrations in live events: slow, unreliable payments
                     that created long lines and lost sales.</span> Traditional
@@ -884,7 +882,24 @@
                     stalled, hardware failed, and both guests and vendors
                     paid the price. Every minute in line was money not spent
                     at the bar, merch booth, or food stand.</p>
+                    </div>
+                </div>
 
+                <h2 class="section-header hidden w-full md:order-0 md:mb-2 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Overview</h2>
+
+                <div class="md:contents xl:flex xl:min-w-0 xl:flex-col 2xl:row-start-2">
+                <div class="md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 hidden md:order-1 md:block 2xl:min-w-0">
+                    <p class="min-w-0">Billfold set out to <span class="font-medium">solve one of the biggest
+                    frustrations in live events: slow, unreliable payments
+                    that created long lines and lost sales.</span> Traditional
+                    card readers couldn't handle peak demand, transactions
+                    stalled, hardware failed, and both guests and vendors
+                    paid the price. Every minute in line was money not spent
+                    at the bar, merch booth, or food stand.</p>
+                </div>
+
+                <div class="overview-text-2 font-light text-5/8 min-w-0 md:order-2 xl:mt-4 2xl:mt-0 2xl:min-w-0">
                     <p class="min-w-0">I designed a <span class="font-medium">cashless payment ecosystem</span>
                     that cut those bottlenecks out of the experience. Using
                     RFID wristbands, dual-screen POS devices, and rugged
@@ -893,29 +908,29 @@
                     and gave organizers real-time data across every
                     vendor.</span></p>
                 </div>
-
-                <!-- Images: max-md after text; md after keyphrase; xl col1 row2 -->
-                <div class="flex w-full min-w-0 flex-col gap-y-4 md:w-full md:max-w-full md:order-3 xl:order-none xl:col-start-1 xl:row-start-2">
-                    <img src="assets/images/hand-billfold.png"
-                         alt="Billfold POS device"
-                         class="aspect-[1048/656] w-full rounded-[20px] object-cover"/>
-
-                    <div class="flex w-full items-start gap-x-4 md:w-full">
-                        <img src="assets/images/RFID_Wristband_billfold.png"
-                             alt="Billfold RFID wristband"
-                             class="aspect-square md:w-[268px] md:h-[268px] xl:w-[328px] shrink-0 min-w-0 rounded-[20px] object-cover 2xl:w-[400px]"/>
-                        <img src="assets/images/festival-billfold.png"
-                             alt="Festival crowd"
-                             class="aspect-[632/400] flex-1 min-w-0 h-[268px] md:h-[268px] rounded-[20px] object-cover"/>
-                    </div>
                 </div>
 
-                <!-- Keyphrase: md between text and images; xl col2 -->
-                <div class="min-w-0 self-start rounded-[20px] bg-[#ECF1F4]
-                            px-[40px] pt-[48px] pb-[56px]
+                <img src="assets/images/hand-billfold.png"
+                     alt="Billfold POS device"
+                     class="overview-img-1 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-10 xl:aspect-[1048/656] 2xl:mt-14 2xl:w-full"/>
+
+                <div class="flex w-full flex-col gap-y-8 md:order-5 md:flex-row md:gap-x-4 md:items-start xl:mt-4 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px]">
+                        <img src="assets/images/RFID_Wristband_billfold.png"
+                             alt="Billfold RFID wristband"
+                             class="overview-img-2 w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:aspect-square md:flex-none md:h-[268px] md:w-[268px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/festival-billfold.png"
+                             alt="Festival crowd"
+                             class="overview-img-3 w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-auto md:h-[268px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            md:order-2 xl:order-none
-                            xl:col-start-2 xl:row-start-1 xl:row-span-2">
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
                     <img src="assets/images/logo-billfold-keyphrase.png"
                          alt="Billfold"
                          class="h-[56px] w-[30px] shrink-0"/>
