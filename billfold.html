@@ -872,7 +872,7 @@
         </section>
 
         <section id="pos-image">
-            <img class="w-full rounded-[20px] object-cover" src="assets/images/customer-pos-billfold.png" alt="Billfold POS device"/>
+            <img class="w-full rounded-[20px] object-cover" src="assets/images/main-billfold.png" alt="Billfold POS device"/>
         </section>
 
         <section id="overview" class="flex flex-col items-start">
@@ -1003,6 +1003,230 @@
 
         </section>
 
+        <section id="my-part" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <h2 class="section-header w-full">My Part in This</h2>
+
+            <div class="w-full max-w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col">
+                        <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="my-part-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">I joined Billfold when there was <span class="font-medium">no design team, no interface, and no real product, just a vision, a rough hardware prototype, and the urgency to move fast.</span> From that starting point, my role was to transform a raw idea into something real, usable, and resilient enough for the chaos of live events.</p>
+                            </div>
+                            <div class="my-part-text-2 font-light text-5/8 min-w-0 xl:mt-6 2xl:mt-0 2xl:min-w-0">
+                                <p class="min-w-0">For several years, <span class="font-medium">I was the sole designer on the team</span>, responsible for everything from early research and wireframes to polished prototypes and final UI. I created design systems, explored countless edge cases, and ensured consistency across hundreds of vendor- and guest-facing screens.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex w-full flex-col gap-y-6 xl:gap-y-10">
+            <button type="button" id="my-part-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="my-part-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="my-part-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I got it done</span>
+            </button>
+
+            <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="my-part-acc-panel" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Remote research workflow</span><br/>
+                                Designed everything from Russia while events happened in the US. I couldn’t just pop into a festival, so I relied on user videos, staff feedback, and constant iteration with engineers on-site.
+                            </div>
+                            <div>
+                                <span class="font-medium">End-to-end design</span><br/>
+                                Created flows, wireframes, and polished prototypes for both vendor and guest-facing tools.
+                            </div>
+                            <div>
+                                <span class="font-medium">Real-world constraints</span><br/>
+                                Designed for sun glare, rushed taps, drunk users, hardware quirks, and unpredictable environments.
+                            </div>
+                            <div>
+                                <span class="font-medium">Tight collaboration</span><br/>
+                                Partnered closely with founders and engineers to adapt quickly between live events.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('my-part-acc-btn');
+                    var wrap = document.getElementById('my-part-acc-panel-wrap');
+                    var panel = document.getElementById('my-part-acc-panel');
+                    var arrow = document.getElementById('my-part-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="map-image" class="max-md:-mt-8 xl:-mt-[52px] 2xl:-mt-[52px]">
+            <img
+                class="w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] md:h-auto xl:h-[688px] 2xl:h-[768px]"
+                src="assets/images/map-billfold.png"
+                alt="Billfold system map"
+            />
+        </section>
+
+        <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
+        <section id="research" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 -mt-2 md:mt-0">
+            <h2 class="section-header w-full">Research & Discovery</h2>
+
+            <div class="w-full max-w-full flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-6 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col">
+                        <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="research-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">Since I couldn’t attend US festivals in person, <span class="font-medium">research had to happen remotely.</span> I worked closely with PMs, event staff, and engineers to understand how payments broke down during live events, and what vendors and guests struggled with the most. Feedback came from videos, on-site reports, and rapid loops between design and deployment.</p>
+                            </div>
+                            <div class="research-text-2 font-light text-5/8 min-w-0 xl:mt-6 2xl:mt-0 2xl:min-w-0">
+                                <p class="min-w-0">This process helped me uncover the real conditions the product had to survive: sun glare on screens, beer-soaked hardware, distracted and impatient guests, and staff with minimal training. <span class="font-medium">By combining remote insights with field feedback, I could translate messy realities into design principles the team could build on.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex w-full max-w-full flex-col gap-y-[40px] 2xl:gap-y-[48px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <div class="flex w-full flex-col gap-y-0">
+                    <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-1">
+                        <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                            <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span>
+                    </button>
+
+                    <div id="research-acc-panel-1-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                        <div class="min-h-0 overflow-hidden">
+                            <div id="research-acc-panel-1" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                <div class="flex flex-col gap-y-4 pt-4 font-light text-5/8">
+                                    <div>
+                                        <span class="font-medium">Remote observations</span><br/>
+                                        Analyzed staff videos and on-site recordings to see how devices performed during rush hours and where transactions failed.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Feedback loops</span><br/>
+                                        Collected input from PMs, event organizers, and engineers after each live deployment to capture recurring pain points.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Scenario mapping</span><br/>
+                                        Broke down critical moments like bar rushes, entry bottlenecks, and late-night crowd surges to identify risks.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Environment factors</span><br/>
+                                        Studied how sun, glare, sticky hands, and loud settings shaped what people noticed (or missed) on the screen.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex w-full flex-col gap-y-0">
+                    <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-2">
+                        <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                            <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I discovered</span>
+                    </button>
+
+                    <div id="research-acc-panel-2-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                        <div class="min-h-0 overflow-hidden">
+                            <div id="research-acc-panel-2" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                <div class="flex flex-col gap-y-4 pt-4 font-light text-5/8">
+                                    <div>
+                                        <span class="font-medium">Speed was everything</span><br/>
+                                        Transactions needed to complete in under two seconds to keep lines moving.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Guests paid no attention</span><br/>
+                                        Distracted, emotional, or drunk, they missed instructions and made constant mistakes.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Vendors had no training</span><br/>
+                                        Temporary staff needed flows that were self-explanatory from the first tap.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Hardware fought back</span><br/>
+                                        Sun glare, spills, and poor connections constantly pushed the system to fail.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Errors cost real money</span><br/>
+                                        Every mis-tap or failed charge meant delays, complaints, and lost sales.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <img
+                src="assets/images/festival-man-billfold.png"
+                alt="Billfold at festival"
+                class="w-full rounded-[20px] object-cover max-md:h-[clamp(184px,calc(184px+150*(100vw-20rem)/28rem),334px)] md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:max-w-[856px] xl:h-[376px] 2xl:max-w-[1048px] 2xl:h-[496px]"
+            />
+
+            <script>
+                (function () {
+                    var allBtns = Array.from(document.querySelectorAll("#research [data-research-acc-btn]"));
+
+                    allBtns.forEach(function (btn) {
+                        var panelId = btn.getAttribute("aria-controls");
+                        if (!panelId) return;
+                        var wrap = document.getElementById(panelId + "-wrap");
+                        var panel = document.getElementById(panelId);
+                        var arrow = btn.querySelector("[data-research-acc-arrow]");
+                        if (!wrap || !panel) return;
+
+                        btn.addEventListener("click", function () {
+                            var expanded = btn.getAttribute("aria-expanded") === "true";
+                            var next = !expanded;
+
+                            // collapse all others first
+                            allBtns.forEach(function (otherBtn) {
+                                if (otherBtn === btn) return;
+                                var otherId = otherBtn.getAttribute("aria-controls");
+                                var otherWrap = document.getElementById(otherId + "-wrap");
+                                var otherPanel = document.getElementById(otherId);
+                                var otherArrow = otherBtn.querySelector("[data-research-acc-arrow]");
+                                otherBtn.setAttribute("aria-expanded", "false");
+                                if (otherWrap) otherWrap.setAttribute("data-open", "0");
+                                if (otherPanel) otherPanel.setAttribute("data-open", "0");
+                                if (otherArrow) otherArrow.classList.remove("rotate-180");
+                            });
+
+                            // toggle clicked one
+                            btn.setAttribute("aria-expanded", String(next));
+                            wrap.setAttribute("data-open", next ? "1" : "0");
+                            panel.setAttribute("data-open", next ? "1" : "0");
+                            if (arrow) arrow.classList.toggle("rotate-180", next);
+                        });
+                    });
+                })();
+            </script>
+        </section>
+
         <!-- #role: text-block, accordion-block -->
         <section id="role" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
             <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
@@ -1012,24 +1236,6 @@
             <div class="accordion-block flex flex-col rounded-[20px] bg-white overflow-hidden">
                 <button type="button" class="accordion-trigger flex w-full items-center justify-between gap-x-4 px-4 py-4 text-left font-family-sofia text-primary-dark md:px-6 md:py-5" aria-expanded="false" aria-controls="billfold-acc-role"></button>
                 <div id="billfold-acc-role" class="accordion-panel px-4 pb-4 md:px-6 md:pb-5" hidden></div>
-            </div>
-        </section>
-
-        <!-- #research: text-block, accordion-block, image-block -->
-        <section id="research" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
-                <h2 class="section-header text-block-heading"></h2>
-                <div class="text-block-body flex flex-col gap-y-2"></div>
-            </div>
-            <div class="accordion-block flex flex-col rounded-[20px] bg-white overflow-hidden">
-                <button type="button" class="accordion-trigger flex w-full items-center justify-between gap-x-4 px-4 py-4 text-left font-family-sofia text-primary-dark md:px-6 md:py-5" aria-expanded="false" aria-controls="billfold-acc-research"></button>
-                <div id="billfold-acc-research" class="accordion-panel px-4 pb-4 md:px-6 md:pb-5" hidden></div>
-            </div>
-            <div class="image-block">
-                <div class="image-block-row flex flex-col gap-y-4 md:flex-row md:gap-x-6 xl:gap-x-8">
-                    <div class="image-block-placeholder flex-1" aria-hidden="true"></div>
-                    <div class="image-block-placeholder flex-1" aria-hidden="true"></div>
-                </div>
             </div>
         </section>
 
