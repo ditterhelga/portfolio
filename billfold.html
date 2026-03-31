@@ -80,6 +80,14 @@
                 xl:text-[64px]/[64px];
         }
 
+        /* #overview mobile title: .section-header wins over utilities; force larger xs size */
+        @media (max-width: 767px) {
+            #overview .overview-xs-heading {
+                font-size: 52px !important;
+                line-height: 60px !important;
+            }
+        }
+
         .billfold-page-title {
             @apply font-medium;
         }
@@ -873,7 +881,7 @@
             <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-4 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full flex-col gap-y-6 md:hidden">
-                    <h2 class="section-header w-full">Overview</h2>
+                    <h2 class="section-header overview-xs-heading w-full">Overview</h2>
                     <div class="overview-text-1 font-light text-5/8 min-w-0">
                     <p class="min-w-0">Billfold set out to <span class="font-medium">solve one of the biggest
                     frustrations in live events: slow, unreliable payments
@@ -887,8 +895,8 @@
 
                 <h2 class="section-header hidden w-full md:order-0 md:mb-2 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Overview</h2>
 
-                <div class="md:contents xl:flex xl:min-w-0 xl:flex-col 2xl:row-start-2">
-                <div class="md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col 2xl:row-start-2">
+                <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 hidden md:order-1 md:block 2xl:min-w-0">
                     <p class="min-w-0">Billfold set out to <span class="font-medium">solve one of the biggest
                     frustrations in live events: slow, unreliable payments
@@ -899,7 +907,7 @@
                     at the bar, merch booth, or food stand.</p>
                 </div>
 
-                <div class="overview-text-2 font-light text-5/8 min-w-0 md:order-2 xl:mt-4 2xl:mt-0 2xl:min-w-0">
+                <div class="overview-text-2 order-2 font-light text-5/8 min-w-0 md:order-2 xl:mt-4 2xl:mt-0 2xl:min-w-0">
                     <p class="min-w-0">I designed a <span class="font-medium">cashless payment ecosystem</span>
                     that cut those bottlenecks out of the experience. Using
                     RFID wristbands, dual-screen POS devices, and rugged
@@ -912,20 +920,20 @@
 
                 <img src="assets/images/hand-billfold.png"
                      alt="Billfold POS device"
-                     class="overview-img-1 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-10 xl:aspect-[1048/656] 2xl:mt-14 2xl:w-full"/>
+                     class="overview-img-1 order-1 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-10 xl:aspect-[1048/656] 2xl:mt-14 2xl:w-full"/>
 
-                <div class="flex w-full flex-col gap-y-8 md:order-5 md:flex-row md:gap-x-4 md:items-start xl:mt-4 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px]">
+                <div class="order-4 flex w-full flex-col gap-y-8 md:order-5 md:flex-row md:gap-x-4 md:items-start xl:mt-4 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px]">
                         <img src="assets/images/RFID_Wristband_billfold.png"
                              alt="Billfold RFID wristband"
-                             class="overview-img-2 w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:aspect-square md:flex-none md:h-[268px] md:w-[268px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                         <img src="assets/images/festival-billfold.png"
                              alt="Festival crowd"
-                             class="overview-img-3 w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-auto md:h-[268px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                             class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
                 </div>
                 </div>
 
-                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
-                            px-[56px] pt-[56px] pb-[64px]
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
                             md:order-3 md:mt-4 xl:mt-0
                             xl:col-start-2
