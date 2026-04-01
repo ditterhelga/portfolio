@@ -879,7 +879,7 @@
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-8 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                     <h2 class="section-header w-full">Overview</h2>
@@ -919,10 +919,10 @@
                 </div>
                 </div>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-[16px] md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <div class="flex w-full min-w-0 flex-col gap-y-[16px] md:order-4 md:gap-y-[16px] xl:gap-y-[16px] xl:gap-y-0 2xl:gap-y-[16px]">
                 <img src="assets/images/hand-billfold.png"
                      alt="Billfold POS device"
-                     class="overview-img-1 order-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+                     class="overview-img-1 order-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
 
                 <div class="order-4 flex w-full flex-col gap-y-[16px] md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/RFID_Wristband_billfold.png"
@@ -938,7 +938,7 @@
                 <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            md:order-3 md:mt-4 xl:mt-0
+                            md:order-3 md:mt-0 xl:mt-0
                             xl:col-start-2
                             2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
                             2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
@@ -1037,7 +1037,7 @@
 
             <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                 <div class="min-h-0 overflow-hidden">
-                    <div id="my-part-acc-panel" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                    <div id="my-part-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                         <div class="flex flex-col gap-y-4 font-light text-5/8">
                             <div>
                                 <span class="font-medium">Remote research workflow</span><br/>
@@ -1080,8 +1080,8 @@
             </script>
         </section>
 
-        <section id="map-image" class="-mt-[48px] md:-mt-[40px] xl:-mt-[64px] 2xl:-mt-[80px]">
-            <img class="w-full rounded-[20px] object-cover" src="assets/images/map-billfold.png" alt="Billfold system map"/>
+        <section id="map-image" class="-mt-[48px] md:-mt-[40px] xl:-mt-[64px] 2xl:-mt-[80px] md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[688px]" src="assets/images/map-billfold.png" alt="Billfold system map"/>
         </section>
 
         <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
@@ -1106,7 +1106,7 @@
             </div>
 
             <div class="mt-10 flex w-full max-w-full flex-col gap-y-6 md:mt-12 xl:mt-14 xl:gap-y-10 xl:max-w-[856px] 2xl:max-w-[1048px]">
-                <div class="flex w-full flex-col gap-y-4 md:gap-y-6">
+                <div class="flex w-full flex-col gap-y-6">
                     <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-1">
                         <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                             <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1118,7 +1118,7 @@
 
                     <div id="research-acc-panel-1-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                         <div class="min-h-0 overflow-hidden">
-                            <div id="research-acc-panel-1" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                            <div id="research-acc-panel-1" data-open="0" class="w-full max-w-full pt-4 pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                                 <div class="flex flex-col gap-y-4 font-light text-5/8">
                                     <div>
                                         <span class="font-medium">Remote observations</span><br/>
@@ -1142,7 +1142,7 @@
                     </div>
                 </div>
 
-                <div class="flex w-full flex-col gap-y-4 md:gap-y-6">
+                <div class="flex w-full flex-col gap-y-6">
                     <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-2">
                         <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                             <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1154,7 +1154,7 @@
 
                     <div id="research-acc-panel-2-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                         <div class="min-h-0 overflow-hidden">
-                            <div id="research-acc-panel-2" data-open="0" class="w-full max-w-full pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                            <div id="research-acc-panel-2" data-open="0" class="w-full max-w-full pt-4 pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                                 <div class="flex flex-col gap-y-4 font-light text-5/8">
                                     <div>
                                         <span class="font-medium">Speed was everything</span><br/>
@@ -1324,7 +1324,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col order-3 md:order-3">
+                <div class="flex w-full flex-col gap-y-6 order-3 md:order-3">
             <button type="button" id="vendor-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="vendor-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="vendor-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1336,7 +1336,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
             <div id="vendor-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                 <div class="min-h-0 overflow-hidden">
-                    <div id="vendor-exp-acc-panel" data-open="0" class="w-full max-w-full pt-6 pb-2 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                    <div id="vendor-exp-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-1 opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                         <div class="flex flex-col gap-y-4 font-light text-5/8">
                             <div>
                                 <span class="font-medium">Dual-Screen Layout</span><br/>
