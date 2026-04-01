@@ -75,7 +75,7 @@
 
         .section-header {
             @apply font-family-sofia font-normal
-                text-[46px]/[48px]
+                text-[56px]/[88px]
                 md:text-[60px]/[64px]
                 xl:text-[64px]/[64px]
                 2xl:text-[64px]/[64px];
@@ -872,14 +872,14 @@
         </section>
 
         <section id="pos-image">
-            <img class="w-full rounded-[20px] object-cover" src="assets/images/main-billfold.png" alt="Billfold POS device"/>
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656]" src="assets/images/main-billfold.png" alt="Billfold POS device"/>
         </section>
 
         <section id="overview" class="flex flex-col items-start">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                     <h2 class="section-header w-full">Overview</h2>
@@ -908,7 +908,7 @@
                     at the bar, merch booth, or food stand.</p>
                 </div>
 
-                <div class="overview-text-2 order-2 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                <div class="overview-text-2 order-3 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
                     <p class="min-w-0">I designed a <span class="font-medium">cashless payment ecosystem</span>
                     that cut those bottlenecks out of the experience. Using
                     RFID wristbands, dual-screen POS devices, and rugged
@@ -919,23 +919,21 @@
                 </div>
                 </div>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-[16px] md:order-4 md:gap-y-[16px] xl:gap-y-[16px] xl:gap-y-0 2xl:gap-y-[16px]">
                 <img src="assets/images/hand-billfold.png"
                      alt="Billfold POS device"
-                     class="overview-img-1 order-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
 
-                <div class="order-4 flex w-full flex-col gap-y-[16px] md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/RFID_Wristband_billfold.png"
                              alt="Billfold RFID wristband"
                              class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                         <img src="assets/images/festival-billfold.png"
                              alt="Festival crowd"
-                             class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
-                </div>
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
                 </div>
                 </div>
 
-                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                <div class="order-4 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
                             md:order-3 md:mt-4 xl:mt-0
@@ -957,11 +955,11 @@
         </section>
 
         <!-- #challenge: mirrors #overview layout (text + keyphrase row, image below) -->
-        <section id="challenge" class="flex flex-col items-start gap-y-10 md:gap-y-12 xl:gap-y-14">
+        <section id="challenge" class="flex flex-col items-start gap-y-8 md:gap-y-12 xl:gap-y-14">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 max-md:gap-y-0 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
                 <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
@@ -984,7 +982,7 @@
                 <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            md:mt-4 xl:mt-0
+                            mt-8 md:mt-4 xl:mt-0
                             xl:col-start-2 xl:row-start-2 xl:row-span-2
                             2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
                             2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
@@ -997,7 +995,7 @@
 
                 <img src="assets/images/challenge-billfold.png"
                      alt="Billfold challenge"
-                     class="mt-4 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
+                     class="mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
 
             </div>
 
@@ -1186,7 +1184,7 @@
             <img
                 src="assets/images/festival-man-billfold.png"
                 alt="Billfold at festival"
-                class="mt-10 w-full rounded-[20px] object-cover max-md:h-[clamp(184px,calc(184px+150*(100vw-20rem)/28rem),334px)] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
+                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
             />
 
             <script>
@@ -1251,7 +1249,7 @@
                 <div class="flex w-full min-w-0 flex-col gap-y-6 md:gap-y-0 border-t py-6 md:py-0 border-[#E9E9E9] mt-[32px] xl:mt-[40px] md:flex-row md:h-[320px] md:items-center md:gap-x-[40px] xl:col-start-1 xl:row-start-3 xl:gap-x-[24px] 2xl:col-start-1 2xl:row-start-3 2xl:h-[378px] 2xl:gap-x-[140px]">
                     <img src="assets/images/Vendor-Facing POS.png"
                          alt="Vendor-facing POS tablet interface"
-                         class="shrink-0 object-contain bg-transparent w-[264px] h-[256px] md:w-[264px] md:h-[256px] xl:w-[344px] xl:h-[247px] 2xl:w-[376px] 2xl:h-[272px]"/>
+                         class="mx-auto md:mx-0 shrink-0 object-contain bg-transparent w-[264px] h-[256px] md:w-[264px] md:h-[256px] xl:w-[344px] xl:h-[247px] 2xl:w-[376px] 2xl:h-[272px]"/>
                     <div class="flex min-w-0 flex-col gap-y-[16px]">
                         <div class="font-medium">Vendor-Facing POS</div>
                         <p class="font-light text-5/8">The tablet interface used by bartenders and cashiers. Designed to be ultra-fast and error-proof so staff with little training could serve hundreds of guests without slowing down.</p>
@@ -1261,17 +1259,17 @@
                 <div class="flex w-full min-w-0 flex-col gap-y-6 md:gap-y-0 border-t py-6 md:py-0 border-[#E9E9E9] md:flex-row md:h-[320px] md:items-center md:gap-x-[40px] xl:col-start-1 xl:row-start-4 xl:gap-x-[24px] 2xl:col-start-1 2xl:row-start-4 2xl:h-[378px] 2xl:gap-x-[140px]">
                     <img src="assets/images/Guest-Facing Screen.png"
                          alt="Guest-facing screen display"
-                         class="shrink-0 object-contain bg-transparent w-[264px] h-[256px] md:w-[264px] md:h-[256px] xl:w-[344px] xl:h-[247px] 2xl:w-[376px] 2xl:h-[272px]"/>
+                         class="mx-auto md:mx-0 shrink-0 object-contain bg-transparent w-[264px] h-[256px] md:w-[264px] md:h-[256px] xl:w-[344px] xl:h-[247px] 2xl:w-[376px] 2xl:h-[272px]"/>
                     <div class="flex min-w-0 flex-col gap-y-[16px]">
                         <div class="font-medium">Guest-Facing Screen</div>
                         <p class="font-light text-5/8">A display facing the customer that shows the order, confirms payment instantly, reduces mistakes, and gives guests confidence that every tap went through.</p>
                     </div>
                 </div>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-6 md:gap-y-0 border-t py-6 md:py-0 border-b border-[#E9E9E9] md:flex-row md:h-[320px] md:items-center md:gap-x-[40px] xl:col-start-1 xl:row-start-5 xl:gap-x-[24px] 2xl:col-start-1 2xl:row-start-5 2xl:h-[378px] 2xl:gap-x-[140px]">
+                <div class="hidden md:flex w-full min-w-0 flex-col gap-y-6 md:gap-y-0 border-t py-6 md:py-0 border-b border-[#E9E9E9] md:flex-row md:h-[320px] md:items-center md:gap-x-[40px] xl:col-start-1 xl:row-start-5 xl:gap-x-[24px] 2xl:col-start-1 2xl:row-start-5 2xl:h-[378px] 2xl:gap-x-[140px]">
                     <img src="assets/images/Wristband Registration Kiosk.png"
                          alt="Wristband registration kiosk"
-                         class="shrink-0 object-contain bg-transparent w-[264px] h-[256px] md:w-[264px] md:h-[256px] xl:w-[344px] xl:h-[247px] 2xl:w-[376px] 2xl:h-[272px]"/>
+                         class="mx-auto md:mx-0 shrink-0 object-contain bg-transparent w-[264px] h-[256px] md:w-[264px] md:h-[256px] xl:w-[344px] xl:h-[247px] 2xl:w-[376px] 2xl:h-[272px]"/>
                     <div class="flex min-w-0 flex-col gap-y-[16px]">
                         <div class="font-medium">Wristband Registration Kiosk</div>
                         <p class="font-light text-5/8">A self-service station at the entrance where guests link their bank card to an RFID wristband. This one-time setup meant no wallets or phones needed inside the event, just tap and go.</p>
@@ -1281,7 +1279,7 @@
                 <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            md:mt-4 xl:mt-0
+                            mt-2 md:mt-4 xl:mt-0
                             xl:col-start-2 xl:row-start-2 xl:row-span-4
                             2xl:col-start-2 2xl:row-start-2 2xl:row-span-4 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
                             2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
@@ -1297,7 +1295,7 @@
         </section>
 
         <section id="festival-girl-image">
-            <img class="w-full rounded-[20px] object-cover" src="assets/images/festival-girl-billfold.png" alt="Billfold at festival"/>
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/festival-girl-billfold.png" alt="Billfold at festival"/>
         </section>
 
         <section id="vendor-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1312,7 +1310,7 @@
 
                 <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Vendor Experience</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-[48px] md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col xl:flex-col 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">For bartenders and waiters, <span class="font-medium">speed was everything.</span><br/>
@@ -1324,7 +1322,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col gap-y-6 order-3 md:order-3">
+                <div class="flex w-full flex-col gap-y-6 order-4 mt-5 md:order-3 md:mt-0">
             <button type="button" id="vendor-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="vendor-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="vendor-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1364,15 +1362,15 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
             </div>
                 </div>
 
-                <div class="order-4 flex w-full min-w-0 flex-col gap-y-[16px] md:order-4 md:-mt-6 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 md:-mt-6 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                 <img src="assets/images/vendor-billfold.png"
                      alt="Vendor-facing Billfold POS"
-                     class="overview-img-1 order-4 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
 
-                <div class="order-5 mt-0 flex w-full flex-col gap-y-[16px] md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/barmen-phone-billfold.png"
                              alt="Bartender using Billfold on phone"
-                             class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="hidden md:block overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                         <img src="assets/images/barmen-billfold.png"
                              alt="Bartenders at Billfold POS"
                              class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
