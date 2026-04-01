@@ -1403,6 +1403,302 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
             </script>
         </section>
 
+        <section id="guest-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">The Guest-Facing Screen</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Guest-Facing Screen</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col xl:flex-col 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">For guests, confidence was everything. In the middle of a noisy crowd, they needed to know their order was right and their payment went through, without second-guessing or asking staff. <span class="font-medium">The customer-facing screen had to remove doubt in an environment where attention lasted only a second.</span></p>
+                </div>
+
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">That meant showing the right information at the right time: clear totals, instant confirmation, and feedback that felt effortless. <span class="font-medium">The goal was simple — make every tap trustworthy, so guests could spend less time worrying about payments and more time enjoying the event.</span></p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col gap-y-6 order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="guest-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="guest-exp-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="guest-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span>
+            </button>
+
+            <div id="guest-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="guest-exp-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Live Order Display</span><br/>
+                                As each item was added, it appeared in real-time on the guest screen — e.g., “Beer ×2 – $12.” This gave guests a transparent, receipt-like view of their order and helped prevent confusion or disputes.
+                            </div>
+                            <div>
+                                <span class="font-medium">Simple, Confident Checkout</span><br/>
+                                Once the order was ready, the screen showed a clear total and prompt: “Total $24. Tap wristband to pay.” After payment, it instantly confirmed with a big green checkmark.
+                            </div>
+                            <div>
+                                <span class="font-medium">Kind Error Feedback</span><br/>
+                                If a tap failed (e.g., card declined), the screen showed clear, neutral messaging like “Card declined – try another card.” The goal was to resolve the moment without confusion or embarrassment — tone and clarity mattered as much as the UX flow.
+                            </div>
+                            <div>
+                                <span class="font-medium">Subtle Promotions (Billfold Engage)</span><br/>
+                                During idle times, the screen could display sponsor promos or venue messages. I designed a banner area that appeared only when no transaction was in progress, and kept it visually quiet to avoid distracting from the main task flow.
+                            </div>
+                            <div>
+                                <span class="font-medium">One-Tap Donations (Billfold Give)</span><br/>
+                                After checkout, at select events, guests could choose to round up their total and donate spare change to charity. I’m proud that this design led to a surprisingly high opt-in rate – it turns out many people in a good mood at a festival are happy to donate their spare change if you make it one tap.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 md:-mt-6 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <img src="assets/images/customer-pos-billfold.png"
+                     alt="Guest-facing Billfold customer POS screen"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+
+                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/bar-billfold.png"
+                             alt="Bar environment with Billfold"
+                             class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/customer-billfold.png"
+                             alt="Guest using Billfold customer-facing screen"
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+                </div>
+
+                <div class="order-3 hidden min-w-0 w-full md:order-3 md:mt-4 md:block xl:mt-0 xl:col-start-2 2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none"
+                     aria-hidden="true"></div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('guest-exp-acc-btn');
+                    var wrap = document.getElementById('guest-exp-acc-panel-wrap');
+                    var panel = document.getElementById('guest-exp-acc-panel');
+                    var arrow = document.getElementById('guest-exp-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="kiosk-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">The Guest Journey: Check-In Kiosks</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Guest Journey: Check-In Kiosks</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col xl:flex-col 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">The first impression of any event happens at the gate. Guests arriving with excitement don't want to stand in another long line just to set up a wristband. The self-check-in kiosk had to make registration quick, intuitive, and foolproof, so thousands of people could flow through without bottlenecks.</p>
+                </div>
+
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">The design challenge was to guide distracted guests through a one-time setup in under 20 sec. Clear instructions, simple steps, and instant feedback made it possible. <span class="font-medium">Once their card was linked to the RFID wristband, guests could put wallets and phones away and just tap to pay.</span></p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col gap-y-6 order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="kiosk-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="kiosk-exp-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="kiosk-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span>
+            </button>
+
+            <div id="kiosk-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="kiosk-exp-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Fast Flow</span><br/>
+                                I designed the flow to have as few steps as possible. Tap your wristband to start → Swipe or insert your credit card (or select Apple/Google Pay) → (Optional: enter your phone or email if you want a receipt) → Done — enjoy the event. It typically took less than a minute.
+                            </div>
+                            <div>
+                                <span class="font-medium">Clarity and Reassurance</span><br/>
+                                Each step included a progress indicator (“Step 2 of 3”) so users understood that the flow was quick and simple. We used clear visuals — such as an icon of a wristband being tapped or a credit card — to make the process intuitive at a glance. At the end, the confirmation screen told them their wristband was now their wallet. For added reassurance, if they entered contact info, we sent a confirmation text with a link.
+                            </div>
+                            <div>
+                                <span class="font-medium">UX for Difficult Environments</span><br/>
+                                These kiosks might be used in sunlight or at night by thousands of attendees, some of whom might not speak English well (especially at international events). We allowed users to choose their language at the start, and I ensured the UI used simple phrasing, large text, and universal icons.
+                            </div>
+                            <div>
+                                <span class="font-medium">No Bottlenecks</span><br/>
+                                Recognizing that check-in could become a bottleneck itself, we designed the system to support multiple kiosks and roaming staff with handheld versions. The software was identical across both. My flows had to account for someone starting at a kiosk and possibly finishing with staff assistance.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 md:-mt-6 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <img src="assets/images/kiosk-billfold.png"
+                     alt="Billfold check-in kiosk"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+
+                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/kiosk-billfold-img.png"
+                             alt="Billfold kiosk interface detail"
+                             class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/man-kiosk-billfold.png"
+                             alt="Guest using Billfold check-in kiosk"
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+                </div>
+
+                <div class="order-3 hidden min-w-0 w-full md:order-3 md:mt-4 md:block xl:mt-0 xl:col-start-2 2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none"
+                     aria-hidden="true"></div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('kiosk-exp-acc-btn');
+                    var wrap = document.getElementById('kiosk-exp-acc-panel-wrap');
+                    var panel = document.getElementById('kiosk-exp-acc-panel');
+                    var arrow = document.getElementById('kiosk-exp-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="results-impact" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden">
+
+                <h2 class="section-header w-full">Results in the Real World</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:gap-y-[48px] 2xl:gap-y-[48px]">
+                <div class="flex flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="font-light text-5/8 min-w-0">
+                    <p class="min-w-0">Billfold grew from a fragile prototype into the <span class="font-medium">payment backbone of major festivals and stadiums</span>, built to handle the moments when thousands of guests order at once. Even under peak demand, <span class="font-medium">transactions cleared in under 2 seconds</span>, and sales continued seamlessly through network drops thanks to offline resilience. <span class="font-medium">Bartenders finally could focus on serving and guests on enjoying the night.</span></p>
+                </div>
+
+                <div class="font-light text-5/8 min-w-0">
+                    <p class="min-w-0">The business impact was undeniable: <span class="font-medium">guests spent up to 60% more, transactions increased by 23%</span>, and organizers reported double-digit revenue growth after switching to Billfold. Tips doubled, queues shrank, and vendors finally had a system they could trust under pressure. <span class="font-medium">Today, it’s still running at large events worldwide</span>, a direct result of design choices made to balance speed, clarity, and resilience.</p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col gap-y-6 mt-5 md:mt-0">
+            <button type="button" id="results-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="results-exp-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="results-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span>
+            </button>
+
+            <div id="results-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="results-exp-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Faster service at scale</span><br/>
+                                Transactions that once took ~1 minute on credit card readers were cut to under 2 seconds with RFID wristbands. At peak hours, bartenders could process more than 200 orders per hour, shrinking bar lines and keeping guests in the show instead of stuck in queues.
+                            </div>
+                            <div>
+                                <span class="font-medium">Higher guest confidence & spending</span><br/>
+                                Guests no longer worried about wallets, phones, or failed card swipes. Clear on-screen confirmations made every tap trustworthy. This simplicity drove behavior change: per-person spend rose by 60% at some venues, and RFID users spent over 2× more than card users at large festivals.
+                            </div>
+                            <div>
+                                <span class="font-medium">Boosted vendor performance & tips</span><br/>
+                                For staff, the POS became a tool they could learn in minutes. Error-proof buttons, minimal steps, and offline fail-safes kept service flowing even in chaos. Bartenders not only served faster but also saw their tips double on average, since seamless payments let guests tip without friction.
+                            </div>
+                            <div>
+                                <span class="font-medium">Revenue growth for organizers</span><br/>
+                                Removing bottlenecks directly impacted the bottom line. Events using Billfold reported up to 79% higher total revenue, driven by faster throughput, more transactions, and increased per-guest spend.
+                            </div>
+                            <div>
+                                <span class="font-medium">Resilient operations in chaos</span><br/>
+                                Even when Wi-Fi crashed, Billfold didn’t. POS devices cached transactions locally and synced when back online, ensuring 99% offline success. For organizers, this reliability meant no sales lost during network failures — and real-time dashboards finally gave visibility across every vendor and location.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:w-full md:min-w-0 md:flex-col gap-y-4 md:gap-y-6 xl:gap-y-8">
+                <img src="assets/images/festival-pos-billfold.png"
+                     alt="Festival POS with Billfold"
+                     class="w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[704/440] xl:aspect-[856/539]"/>
+                <img src="assets/images/results-billfold.png"
+                     alt="Billfold results and impact"
+                     class="w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[704/440] xl:aspect-[856/539]"/>
+                </div>
+                </div>
+
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('results-exp-acc-btn');
+                    var wrap = document.getElementById('results-exp-acc-panel-wrap');
+                    var panel = document.getElementById('results-exp-acc-panel');
+                    var arrow = document.getElementById('results-exp-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
         <!-- #role: text-block, accordion-block -->
         <section id="role" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
             <div class="text-block flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
