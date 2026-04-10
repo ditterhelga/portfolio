@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Subway — Olga Pertseva</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <!-- tools -->
+    <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="assets/js/global-lenis.js" defer></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --font-family-sofia: 'Sofia Sans Condensed', sans-serif;
+            --font-family-inter: 'Inter', sans-serif;
+
+            --color-text-primary: #302F2F;
+            --color-primary-dark: #3B47C2;
+            --color-primary-light: #0016F2;
+            --color-pink-badge: #FDE4DF;
+            --color-blue-light: #8891D6;
+            --color-blue-dark: #040989;
+            --color-accent-yellow: #FDC448;
+
+            --bg-color: 216, 29%, 97%;
+
+            --breakpoint-xs: 20rem;
+            --breakpoint-2xl: 96rem;
+        }
+
+        @utility full-bleed {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @layer base {
+            html {
+                /*position: absolute;*/
+                /*width: 100%;*/
+                /*height: 100%;*/
+                /*overflow-y: scroll;*/
+            }
+
+            body {
+                font-family: var(--font-family-inter);
+                font-size: 1.25rem;
+                line-height: 2rem;
+                letter-spacing: 0px;
+                font-weight: 400;
+                /*margin: 0;*/
+                color: var(--color-text-primary);
+                background: #FFFFFF;
+                overflow-x: hidden;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Sofia Sans Condensed', sans-serif;
+            }
+        }
+
+        .section-header {
+            @apply font-family-sofia font-normal
+                text-[56px]/[88px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px]
+                2xl:text-[64px]/[64px];
+        }
+
+        /* Hero h1 keeps previous scale; does not use .section-header typography */
+        .subway-hero-title {
+            @apply font-family-sofia font-normal
+                text-[52px]/[60px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px];
+        }
+
+        .subway-page-title {
+            @apply font-medium;
+        }
+
+        header {
+            @apply flex z-10;
+            /*py-8 md:py-13*/
+
+            & .logo img {
+                height: 63px;
+                width: auto;
+                transition: opacity 0.3s ease, filter 0.6s ease;
+            }
+
+            & #burger {
+                @apply z-20;
+                cursor: pointer;
+            }
+
+            @media (min-width: 768px) {
+    & nav .menulink {
+        position: relative;
+        font-weight: 400;
+        font-family: var(--font-family-inter);
+        transition: color 0.25s ease;
+    }
+
+    & nav .menulink::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        background-color: #FDE4DF;
+
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    & nav .menulink:hover::after {
+        transform: scaleX(1);
+    }
+
+    & nav .menulink:hover {
+        color: #0016F2;
+    }
+}
+
+            &.menu-open {
+                @apply fixed h-screen w-screen px-4 z-50 md:px-12;
+                inset: 0;
+
+                background: var(--color-primary-dark);
+
+                /* ensure content becomes visible when menu is open */
+                & .logo, nav {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                & .logo img {
+                    filter: brightness(0) invert(1);
+                }
+
+                & > #burger {
+                    @apply right-4;
+
+                    & svg rect {
+                        fill: rgba(255, 255, 255, 0.2);
+                    }
+
+                    & svg path {
+                        stroke: white;
+                    }
+                }
+
+                & > div {
+                    @apply flex-col;
+
+                    & > nav {
+                        @apply flex flex-col justify-center gap-y-8 h-screen;
+
+                        & a {
+                            @apply w-full md:h-full text-center;
+                        }
+                    }
+                }
+
+                & .menulink {
+                    font-family: 'Sofia Sans Condensed', sans-serif;
+                    font-size: 4rem;
+                    font-weight: 700;
+                    color: white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    letter-spacing: -0.02em;
+                    transition: transform 0.3s ease, color 0.3s ease;
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                & .menulink:hover {
+                    color: #FDC448;
+                    transform: translateY(-5px);
+                }
+            }
+        }
+
+        #hero {
+    & .line-bottom {
+        --rotate-row: 1em;
+    }
+
+    @media (min-width: 48rem) {
+        & .line-bottom {
+            --rotate-row: calc(5em / 4.75);
+        }
+    }
+
+    & .hero-rotating-wrap {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .rotating-words {
+        position: relative;
+        height: var(--rotate-row);
+        line-height: inherit;
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .phrases {
+        display: block;
+        animation: rotate-words 8s infinite ease-in-out;
+    }
+
+    & .phrases span {
+        display: block;
+        height: var(--rotate-row);
+        line-height: inherit;
+    }
+
+    & .sizer {
+        display: none;
+    }
+
+    & .rotating-words:hover .phrases {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes rotate-words {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(calc(-1 * var(--rotate-row)));
+    }
+    50%, 85% {
+        transform: translateY(calc(-2 * var(--rotate-row))); /* держим empath */
+    }
+    90% {
+        transform: translateY(0); /* быстрый возврат */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+        #about {
+            @apply flex
+            flex-col
+            gap-y-6
+            md:gap-y-8
+            xl:mt-5
+            xl:flex-row-reverse
+            xl:gap-x-14
+            2xl:gap-x-20;
+
+
+            .rotating-words {
+                position: relative;
+                display: inline-block;
+                white-space: nowrap;
+            }
+
+            .rotating-words .sizer {
+                visibility: hidden;
+                white-space: nowrap;
+            }
+
+            .rotating-words .phrases {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+
+            .rotating-words .phrases > span {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                letter-spacing: 0.02em;
+                display: block;
+                font-weight: 700;
+                color: #4B57C8;
+                opacity: 0;
+                animation: wordReveal 9s infinite;
+            }
+
+            .rotating-words .phrases > span:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            .rotating-words .phrases > span:nth-child(2) {
+                animation-delay: 3s;
+            }
+
+            .rotating-words .phrases > span:nth-child(3) {
+                animation-delay: 6s;
+            }
+
+            @keyframes wordReveal {
+                0% {
+                    opacity: 0;
+                    transform: translateY(24px);
+                    letter-spacing: 0.02em;
+                }
+                8% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    letter-spacing: -0.02em;
+                }
+                30% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    letter-spacing: -0.02em;
+                }
+                36% {
+                    opacity: 0;
+                    transform: translateY(-18px);
+                    letter-spacing: -0.02em;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-18px);
+                    letter-spacing: -0.02em;
+                }
+            }
+
+            .button-about {
+                /*relative*/
+                @apply  inline-flex
+                border-none
+                bg-primary-dark
+                rounded-full
+                w-[120px] h-[120px]
+                mt-4
+                ml-40
+                md:w-[150px] md:h-[150px]
+                md:mt-11.25
+                md:ml-62
+                xl:mt-0
+                xl:ml-0
+                cursor-pointer
+                text-white;
+                /*overflow: hidden;*/
+                /*position: relative;*/
+                /*display: inline-flex;*/
+                align-items: center;
+                justify-content: center;
+                transition: background 300ms, transform 200ms;
+                font-weight: 600;
+                font-family: 'Sofia Sans Condensed', sans-serif;
+
+                text {
+                    fill: white;
+                    font-size: 64px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    animation: rotate 25s linear infinite;
+                    transform-origin: center;
+                }
+
+                .text-circle {
+                    transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+                    transform-origin: center;
+                }
+
+                .arrow-icon {
+                    stroke-width: 10;
+                    stroke: var(--color-primary-dark);
+                    transition: stroke 300ms, transform 300ms;
+                }
+
+                &:hover {
+                    @apply bg-accent-yellow;
+
+                    transform: scale(1.2);
+
+                    .text-circle {
+                        transform: rotate(90deg);
+                    }
+
+                    .arrow-icon {
+                        stroke: var(--color-accent-yellow);
+                    }
+                }
+            }
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @utility card-content {
+            @apply flex flex-col gap-8 items-center sm:flex-row-reverse
+            2xl:gap-x-16;
+        }
+
+        @utility card-badges {
+            @apply flex flex-row flex-wrap gap-4 justify-items-start;
+
+            & .badge {
+                @apply rounded-full bg-pink-badge text-blue-light uppercase !text-lg font-family-sofia font-normal py-1 px-5;
+            }
+        }
+
+        @utility card-title {
+            @apply text-primary-dark font-family-sofia font-normal text-7xl tracking-[-2px]
+            xl:mb-5
+            2xl:text-[102px];
+        }
+
+        .card-description {
+            @apply flex flex-col gap-y-4
+            xl:w-[564px] xl:shrink-0 xl:gap-y-0;
+        }
+
+        .card-paragraph {
+            @apply flex flex-col gap-y-2
+            xl:mb-10;
+        }
+
+        .card-text {
+            @apply font-light;
+        }
+
+        .card-detail {
+            @apply flex
+            flex-row
+            items-center
+            gap-x-4
+            mt-2
+            xl:mt-0
+            uppercase
+            font-family-sofia
+            text-primary-dark
+            font-normal
+            text-[1.5rem]/6
+            tracking-wider;
+        }
+
+        .card-wrapper {
+            @apply xs:max-xl:full-bleed xl:rounded-[20px] bg-white;
+        }
+
+        /* Work cards: padding lives on .work-card-surface so outer .card can stay a neutral shell */
+        #work .work-cards-stack .card {
+            padding: 0 !important;
+            gap: 0 !important;
+        }
+
+        /* Match page grey so scaled cards don’t sit on a white “slot” (Tailwind bg-white on .card-wrapper) */
+        #work {
+            background-color: #f3f6f9;
+        }
+
+        /* Pull Beyond block up by half the main column gap (gap-y-18 / md:24 / xl:26) */
+        #work + .full-bleed {
+            margin-top: -2.25rem;
+        }
+
+        @media (min-width: 48rem) {
+            #work + .full-bleed {
+                margin-top: -3rem;
+            }
+        }
+
+        @media (min-width: 80rem) {
+            #work + .full-bleed {
+                margin-top: -3.25rem;
+            }
+        }
+
+        /* Sticky stack + scrub fade/scale — desktop only (see GSAP below) */
+        @media (min-width: 1280px) {
+            #work .work-cards-stack {
+                background-color: #f3f6f9;
+            }
+
+            /* Gap (xl:gap-y-16 = 64px) sits between wrappers so #F3F6F9 shows through */
+            #work .work-cards-stack > .card-wrapper {
+                position: relative;
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+            }
+
+            #work .work-cards-stack > .card-wrapper:last-of-type {
+                padding-bottom: calc(5vh + 56px);
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(1) {
+                z-index: 1;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(2) {
+                z-index: 2;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(3) {
+                z-index: 3;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(4) {
+                z-index: 4;
+            }
+
+            /* Shell: fixed 722px slot; page-colored so area around scaled .work-card-surface isn’t white */
+            #work .work-cards-stack .card {
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+                box-sizing: border-box;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow: visible;
+            }
+
+            #work .work-cards-stack .work-card-surface {
+                background-color: #fff;
+                border-radius: 20px;
+                box-sizing: border-box;
+                width: 100%;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                /* Shrink toward overlap with next card (bottom pinned) so top/sides stay readable */
+                transform-origin: 50% 100%;
+                will-change: transform, opacity;
+                /* Lifts the front card slightly; scales with transform on the same layer */
+                box-shadow: 0 -4px 20px rgba(227, 233, 239, 0.4);
+            }
+
+            /* GSAP ScrollTrigger pin wrapper (when present) */
+            #work .pin-spacer {
+                background-color: #f3f6f9 !important;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            #work .work-cards-stack > .card-wrapper {
+                background-color: #f3f6f9 !important;
+            }
+            #work .work-cards-stack .card {
+                max-width: 100% !important;
+                height: 900px;
+                min-height: 900px;
+                max-height: 900px;
+            }
+            #work .work-cards-stack .work-card-surface {
+                height: auto !important;
+                min-height: unset !important;
+                max-height: unset !important;
+            }
+        }
+
+        .card {
+            @apply flex flex-col max-w-[1280px]
+            mx-auto
+            px-4 sm:px-8
+            pt-14 sm:pt-16
+            pb-12 sm:pb-13
+            gap-y-10
+            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14
+            2xl:max-w-full 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px] 2xl:gap-y-14;
+        }
+
+        .card-image {
+            @apply rounded-[20px] w-full object-cover
+            aspect-[1.25]
+            md:aspect-[0.84] md:max-w-[322px]
+            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0
+            2xl:h-[488px] 2xl:w-[576px] 2xl:max-w-[576px];
+        }
+
+
+        /* Main-xl: beyond-card-xl — gap 32px between image/tag/body/CTA; grid gap-x 48, gap-y 72; column 584px */
+        #cards-beyond {
+            @apply flex flex-col gap-y-12 md:gap-y-14
+            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
+            2xl:gap-x-16 2xl:gap-y-16;
+
+            & > .card-beyond {
+                @apply flex w-full max-w-full flex-col items-start gap-y-8;
+
+                & > .image-wrapper {
+                    @apply overflow-hidden
+                    rounded-[20px]
+                    w-full
+                    h-[380px]
+                    shrink-0;
+
+                    & > img {
+                        @apply w-full h-full
+                        object-cover object-center
+                    }
+                }
+
+                & .card-description {
+                    @apply flex w-full flex-col items-start gap-y-8 text-left;
+                }
+
+                & .card-description p {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 20px;
+                    line-height: 32px;
+                    font-weight: 400;
+                }
+
+                & .card-detail {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        .triag-cut {
+            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Lighter Inter for match CTA copy (thinner than body default) */
+        #match .match-xl-body p {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner a,
+        footer.site-footer .footer-inner .footer-email {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner nav {
+            display: flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner nav a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-email {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-contact img {
+            display: block;
+        }
+
+        .line-top {
+            background: linear-gradient(
+                90deg,
+                #E8C76D 0%,
+                #A7B4E8 10%,
+                #6C8BE8 20%,
+                #5573DD 30%,
+                #4C62D1 40%,
+                #4E5AC8 50%,
+                #5152BF 60%,
+                #554CB6 65%,
+                #5A47AD 70%,
+                #5F42A4 75%,
+                #643D9B 80%,
+                #693892 85%,
+                #6E3389 90%,
+                #732E80 95%,
+                #782977 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .line-bottom {
+            color: #2834B8;
+        }
+
+        /* ── Hero blob-mask effect ─────────────────────────────────────── */
+        .hero-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #2834B8;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+            top: 0;
+            left: 0;
+        }
+
+        #hero .hero-mask {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        /* Blob layer: #2834B8 base so text reads as dark blue at rest */
+        #hero .blob-layer {
+            position: absolute;
+            inset: 0;
+            background: #2834B8;
+            pointer-events: none;
+        }
+
+        #hero .blob-layer .blob {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            will-change: transform;
+        }
+
+        /* bottom layer – largest, bright blue */
+        #hero .blob-1 {
+            width: 690px; height: 690px;
+            margin: -345px 0 0 -345px;
+            background: #0A43FF;
+        }
+
+        /* middle layer – pink */
+        #hero .blob-2 {
+            width: 420px; height: 420px;
+            margin: -210px 0 0 -210px;
+            background: #FDE4DF;
+        }
+
+        /* top layer – yellow, smallest */
+        #hero .blob-3 {
+            width: 260px; height: 260px;
+            margin: -130px 0 0 -130px;
+            background: #FDC448;
+        }
+
+        /* Screen overlay: gradient matches page bg so it's invisible outside text */
+        #hero .mask-screen {
+            position: relative;
+            background: #FFFFFF;
+            background-attachment: fixed;
+            mix-blend-mode: screen;
+        }
+
+        #hero .mask-screen h1 {
+            color: #000;
+            -webkit-text-fill-color: #000;
+            padding-right: 0.5rem;
+        }
+        /* ─────────────────────────────────────────────────────────────── */
+
+    </style>
+</head>
+
+<body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto">
+
+<div class="flex flex-col px-4 sm:px-8 md:px-6 2xl:px-0">
+
+    <header class="flex pt-8 xl:pt-16">
+        <div class="flex justify-between w-full">
+            <div id="logo" class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.svg" alt="Olga Pertseva"/>
+                </a>
+            </div>
+
+            <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
+                <a href="#work"    class="menulink">Work</a>
+                <a href="#about"   class="menulink">About</a>
+                <a href="#contact" class="menulink">Contact</a>
+                <a href="#resume"  class="menulink">Resume</a>
+            </nav>
+        </div>
+
+        <div id="burger" class="fixed right-4 md:hidden">
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect width="56" height="56" rx="16" fill="#FDE4DF"/>
+                <path id="burgertop" d="M13.417 17.0625H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgermiddle" d="M13.417 38.9375H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgerbottom" d="M13.417 28H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </header>
+
+<main class="flex flex-col gap-y-18 md:gap-y-24 xl:gap-y-26 2xl:gap-y-[120px] mt-16 md:mt-18 xl:mt-18 2xl:mt-22">
+        <aside id="case-side-nav" class="hidden xl:block" aria-label="Case study sections">
+            <button type="button" id="case-side-nav-toggle" class="case-side-nav-toggle" aria-expanded="true" aria-controls="case-side-nav-menu" aria-label="Toggle section navigation">
+                <img src="assets/images/arrow-down.svg" alt="" aria-hidden="true" class="case-side-nav-toggle-icon"/>
+            </button>
+            <nav id="case-side-nav-menu">
+                <span class="case-side-nav-indicator" aria-hidden="true"></span>
+                <a href="#overview" data-target="overview" class="case-side-nav-link">Context</a>
+                <a href="#my-part" data-target="my-part" class="case-side-nav-link">My Role</a>
+                <a href="#research" data-target="research" class="case-side-nav-link">Research</a>
+                <a href="#vendor-experience" data-target="vendor-experience" class="case-side-nav-link">Solution</a>
+                <a href="#results-real-world" data-target="results-real-world" class="case-side-nav-link">Impact</a>
+            </nav>
+        </aside>
+
+        <!-- #hero: breadcrumbs, page title (h1), hero image or video placeholder -->
+        <section id="hero" class="flex flex-col">
+            <div class="subway-breadcrumbs mb-6 md:mb-4 font-light text-5/8 flex flex-row flex-wrap items-center gap-x-2" aria-label="Breadcrumb">
+                <a class="no-underline hover:opacity-90" href="index.html#work">Work</a>
+                <span aria-hidden="true">/</span>
+                <span class="text-[#8A8A8A]">Subway</span>
+            </div>
+            <h1 class="subway-hero-title subway-page-title">Two platforms. Zero confusion. 40% faster onboarding.</h1>
+            <div class="subway-hero-media image-block mt-10">
+                <div class="subway-hero-media-bg full-bleed overflow-hidden bg-[#1A3716] py-8 md:py-12 xl:py-[80px]">
+                    <div class="flex w-full justify-center px-4 sm:px-8 md:px-6 2xl:px-8">
+                        <img class="w-full max-w-[1280px] rounded-[20px] object-cover xl:aspect-[1168/616] 2xl:max-w-[1440px]" src="assets/images/subway-hero.png" alt="Subway hero image"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- #intro: left — logo + description; right — metadata (role, timeline, tools); below — large image -->
+        <section id="intro" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 bg-white">
+            <div class="intro-grid flex flex-col gap-y-10 xl:flex-row xl:gap-x-6 2xl:gap-x-16 xl:items-start">
+                <div class="intro-left flex flex-col gap-y-8 xl:max-w-[496px] 2xl:max-w-[688px] xl:shrink-0">
+                    <div class="intro-logo">
+                        <img class="w-[232px] h-auto" src="assets/images/subway-logo.png" alt="Subway logo"/>
+                    </div>
+                    <div class="intro-description flex flex-col gap-y-2 text-5/8 font-light">
+                        <p>I designed <span class="font-medium">Subway Russia's first digital platforms</span>: one to train employees and another to support franchise owners.</p>
+                        <p>They transformed scattered manuals into structured, step-by-step digital flows that helped users move from "Where do I start?" to <span class="font-medium">feeling confident on the job from day one</span>.</p>
+                    </div>
+                </div>
+                <div class="intro-right metadata-block xl:max-w-[704px] 2xl:max-w-[688px] xl:shrink-0 xl:pt-[128px] 2xl:pt-0">
+                    <div class="metadata-grid grid grid-cols-1 gap-y-4">
+                        <div class="metadata-role flex flex-col gap-y-2">
+                            <p class="text-5/8"><span class="font-medium">Role:</span> Lead UX/UI Designer. Research, information architecture, wireframing, prototyping, visual design, usability testing.</p>
+                        </div>
+                        <div class="metadata-timeline flex flex-col gap-y-2">
+                            <p class="text-5/8"><span class="font-medium">Team:</span> PMs, developers, content writers, training and methodology experts, franchise support</p>
+                        </div>
+                        <div class="metadata-tools flex flex-col gap-y-2">
+                            <p class="text-5/8"><span class="font-medium">Timeline:</span> 12 months</p>
+                        </div>
+                        <div class="metadata-impact flex flex-col gap-y-4">
+                            <div class="font-medium">Impact</div>
+                            <p class="text-5/8">• Employees: <span class="font-medium text-[#146209]">40%</span> faster onboarding · <span class="font-medium text-[#146209]">60%</span> boost in successful certifications</p>
+                            <p class="text-5/8">• Franchisees: <span class="font-medium text-[#146209]">30%</span> faster store launches · More autonomy in daily operations</p>
+                            <p class="text-5/8">• HQ: <span class="font-medium text-[#146209]">40%</span> fewer support requests · Lower training costs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pos-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-intro-main.png" alt="Subway POS device"/>
+        </section>
+
+        <section id="overview" class="flex flex-col items-start">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Overview</h2>
+                    <div class="overview-text-1 font-light text-5/8 min-w-0">
+                    <p class="min-w-0">Subway Russia needed to modernize how over <span class="font-medium">6,000 employees and hundreds of franchise owners learned, onboarded, and operated their stores</span>, ensuring every location could follow the same clear standards instead of relying on outdated offline processes.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Overview</h2>
+
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px] 2xl:row-start-2">
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 hidden md:order-1 md:block 2xl:min-w-0">
+                    <p class="min-w-0">Subway Russia needed to modernize how over <span class="font-medium">6,000 employees and hundreds of franchise owners learned, onboarded, and operated their stores</span>, ensuring every location could follow the same clear standards instead of relying on outdated offline processes.</p>
+                </div>
+
+                <div class="overview-text-2 order-3 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0"><span class="font-medium">The existing approach wasn't digital:</span> it relied on thick manuals, scattered PDFs, and in-person sessions. It was inconsistent, impossible to track, and costly, leading to repeated failures, high turnover, and delayed launches.</p>
+                </div>
+                </div>
+
+                <img src="assets/images/subway-overview-main.png"
+                     alt="Subway POS device"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+
+                <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/subway-overview-side-1.png"
+                             alt="Subway RFID wristband"
+                             class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/subway-overview-side-2.png"
+                             alt="Festival crowd"
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+
+                <div class="order-4 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/subway-keyphrase-logo.png"
+                         alt="Subway"
+                         class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">I created two connected platforms, giving 400+ Subway restaurants a <span class="font-medium">simple hub for all training, resources, and progress tracking</span>, accessible from any device.</p>
+                </div>
+            </div>
+
+            </div>
+
+        </section>
+
+        <!-- #challenge: mirrors #overview layout (text + keyphrase row, image below) -->
+        <section id="challenge" class="flex flex-col items-start gap-y-8 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 max-md:gap-y-0 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-4 xl:gap-y-6 2xl:gap-y-[40px] xl:min-w-0 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0"><span class="font-medium">No system, high stakes.</span> Employees, often in their first jobs, needed quick, motivating lessons to perform effectively from day one. Franchise owners, investing in new businesses, needed structure, reliable resources, and clear guidance to avoid costly mistakes when opening and running their stores.</p>
+                </div>
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0"><span class="font-medium">Two audiences, very different needs.</span> Balancing trust, clarity, and motivation for two very different journeys became the core design challenge.</p>
+                </div>
+                </div>
+                </div>
+
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            mt-8 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/subway-keyphrase-logo.png"
+                         alt="Subway"
+                         class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">Balancing <span class="font-medium">trust, clarity, and motivation</span>, for two very different journeys, that was the real design challenge.</p>
+                </div>
+
+                <img src="assets/images/subway-challenge-main.png"
+                     alt="Subway challenge"
+                     class="mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
+
+            </div>
+
+            </div>
+
+        </section>
+
+<section id="my-part" class="flex flex-col gap-y-0 pb-[26px] md:pb-[29px] xl:pb-[38px] 2xl:pb-[43px]">
+            <div class="flex w-full max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+            <h2 class="section-header w-full">My Part in This</h2>
+
+            <div class="w-full max-w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
+                        <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="my-part-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">I led the design from start to finish, <span class="font-medium">shaping the vision, running research, and making sure we didn't just ship another tool, but a system franchisees and employees could truly rely on every day.</span></p>
+                            </div>
+                            <div class="my-part-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">I collaborated with training and methodology experts to translate scattered content into a clear system, <span class="font-medium">worked with PMs and developers</span> to shape strategy and refine flows, and presented decisions to stakeholders.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="mt-10 flex w-full flex-col md:mt-12 xl:mt-14">
+            <button type="button" id="my-part-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="my-part-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="my-part-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">HOW I GOT IT DONE</span>
+            </button>
+
+            <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="my-part-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">User research</span><br/>
+                                I interviewed employees and franchisees to uncover gaps in training, confidence, and daily workflows. This shaped where digital tools could add real value.
+                            </div>
+                            <div>
+                                <span class="font-medium">Content &amp; methodology</span><br/>
+                                I partnered with Subway's trainers and methodology experts to transform offline manuals and ad-hoc materials into structured, digestible content people could actually follow.
+                            </div>
+                            <div>
+                                <span class="font-medium">UX &amp; UI design</span><br/>
+                                I created flows, wireframes, and a design system that worked across mobile and desktop, keeping usability simple for non-tech-savvy employees.
+                            </div>
+                            <div>
+                                <span class="font-medium">Testing &amp; validation</span><br/>
+                                I built prototypes, tested them with internal users, and iterated to ensure the tools were intuitive and motivating.
+                            </div>
+                            <div>
+                                <span class="font-medium">Collaboration &amp; delivery</span><br/>
+                                I worked closely with PMs, developers, and the digital director to align platform strategy, refine flows, and present design decisions to stakeholders.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('my-part-acc-btn');
+                    var wrap = document.getElementById('my-part-acc-panel-wrap');
+                    var panel = document.getElementById('my-part-acc-panel');
+                    var arrow = document.getElementById('my-part-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="map-image" data-parallax-wrap class="-mt-[38px] md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-map.png" alt="Subway system map"/>
+        </section>
+
+        <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
+        <section id="research" class="flex flex-col gap-y-0 -mt-2 md:mt-0">
+            <div class="flex w-full max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+            <h2 class="section-header w-full">Research & Discovery</h2>
+
+            <div class="w-full max-w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
+                        <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="research-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">This project began with in-depth research across employees, franchisees, and internal teams <span class="font-medium">to understand how onboarding and daily operations really worked in practice, and why they often broke down.</span></p>
+                            </div>
+                            <div class="research-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">I didn't just collect pain points. I wanted to see how people actually learned, how franchisees tried to pass knowledge down, and <span class="font-medium">what would make both groups feel supported instead of overwhelmed.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="mt-10 flex w-full max-w-full flex-col gap-y-6 md:mt-12 xl:mt-14 xl:gap-y-10 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <div class="flex w-full flex-col gap-y-6">
+                    <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-1">
+                        <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                            <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span>
+                    </button>
+
+                    <div id="research-acc-panel-1-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                        <div class="min-h-0 overflow-hidden">
+                            <div id="research-acc-panel-1" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                    <div>
+                                        <span class="font-medium">Spoke to employees</span><br/>
+                                        Interviewed staff across different stores to see how they used current training, what confused them, and what helped.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Observed live sessions</span><br/>
+                                        Joined a few in-person classes, which revealed how outdated and chaotic the process felt.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Partnered with trainers &amp; methodology experts</span><br/>
+                                        Reviewed onboarding decks and materials to spot gaps, unclear steps, and mismatches with operations.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Franchisee perspective</span><br/>
+                                        Spoke with owners to map their onboarding journey, understand the lack of structure, and see how they passed knowledge to staff without a central system.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex w-full flex-col gap-y-6">
+                    <button type="button" data-research-acc-btn class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel-2">
+                        <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                            <svg data-research-acc-arrow class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I discovered</span>
+                    </button>
+
+                    <div id="research-acc-panel-2-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                        <div class="min-h-0 overflow-hidden">
+                            <div id="research-acc-panel-2" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                    <div>
+                                        <span class="font-medium">Overwhelming for new hires</span><br/>
+                                        Staff had to memorize too much at once, while managers rarely had time for one-on-one support.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">No single source of truth</span><br/>
+                                        Content lived in scattered PDFs, decks, videos, and emails, leaving people to guess which version was "correct."
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Franchisees lacked a roadmap</span><br/>
+                                        Owners juggled calls, brochures, and emails, often unsure of the right steps to launch or run a store.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Digital confidence was uneven</span><br/>
+                                        Some users were comfortable with digital tools, others were intimidated by anything beyond WhatsApp.
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Training felt disconnected from reality</span><br/>
+                                        Materials didn't match the pace of running a store, making it hard to apply theory on the floor.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <img
+                src="assets/images/subway-research-main.png"
+                alt="Subway at festival"
+                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
+            />
+
+            <script>
+                (function () {
+                    var allBtns = Array.from(document.querySelectorAll("#research [data-research-acc-btn]"));
+
+                    allBtns.forEach(function (btn) {
+                        var panelId = btn.getAttribute("aria-controls");
+                        if (!panelId) return;
+                        var wrap = document.getElementById(panelId + "-wrap");
+                        var panel = document.getElementById(panelId);
+                        var arrow = btn.querySelector("[data-research-acc-arrow]");
+                        if (!wrap || !panel) return;
+
+                        btn.addEventListener("click", function () {
+                            var expanded = btn.getAttribute("aria-expanded") === "true";
+                            var next = !expanded;
+
+                            // collapse all others first
+                            allBtns.forEach(function (otherBtn) {
+                                if (otherBtn === btn) return;
+                                var otherId = otherBtn.getAttribute("aria-controls");
+                                var otherWrap = document.getElementById(otherId + "-wrap");
+                                var otherPanel = document.getElementById(otherId);
+                                var otherArrow = otherBtn.querySelector("[data-research-acc-arrow]");
+                                otherBtn.setAttribute("aria-expanded", "false");
+                                if (otherWrap) otherWrap.setAttribute("data-open", "0");
+                                if (otherPanel) otherPanel.setAttribute("data-open", "0");
+                                if (otherArrow) otherArrow.classList.remove("rotate-180");
+                            });
+
+                            // toggle clicked one
+                            btn.setAttribute("aria-expanded", String(next));
+                            wrap.setAttribute("data-open", next ? "1" : "0");
+                            panel.setAttribute("data-open", next ? "1" : "0");
+                            if (arrow) arrow.classList.toggle("rotate-180", next);
+                        });
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="ecosystem" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Understanding the Users</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-4 xl:gap-y-6 2xl:gap-y-[40px] xl:col-start-1 xl:row-start-2 xl:min-w-0 2xl:col-start-1 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">Understanding users wasn't just research, <span class="font-medium">it was about stepping into their shoes and feeling their daily struggles.</span> Employees were often teenagers in their first jobs, nervous and unsure, while franchise owners carried the weight of running an entire business.</p>
+                </div>
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">My role was to <span class="font-medium">turn these emotions into design</span>: anxiety became progress indicators, lack of time became quick access, and scattered knowledge became one source of truth. <span class="font-medium">Every feature mapped directly to a human frustration.</span></p>
+                </div>
+                </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-[48px] md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] mt-[32px] xl:mt-[40px] xl:col-start-1 xl:row-start-3 2xl:col-start-1 2xl:row-start-3">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/subway-users-employees.svg"
+                             alt="Vendor-facing POS tablet interface"
+                             class="w-[88px] h-[88px] shrink-0 object-contain"/>
+                        <div class="font-medium leading-tight self-center">Employees UX Findings</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
+                        <p><span class="font-medium">Instead of building skills, the process crushed motivation.</span> New hires got lost in confusing materials, failed tests, and repeated mistakes, while managers kept reteaching the same basics. Hours were lost, turnover rose, and stores paid the price in productivity and profit.</p>
+                    </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-[48px] md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] xl:col-start-1 xl:row-start-4 2xl:col-start-1 2xl:row-start-4">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/subway-users-franchisees.svg"
+                             alt="Guest-facing screen display"
+                             class="w-[88px] h-[88px] shrink-0 object-contain"/>
+                        <div class="font-medium leading-tight self-center">Franchisees UX Findings</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
+                        <p><span class="font-medium">Franchisees described the journey as confusing, stressful, and lonely.</span> Steps weren't clear, updates got buried, and constant calls to HQ slowed launches, increased risks, and cost revenue on both sides.</p>
+                    </div>
+                </div>
+
+                <div class="flex md:grid w-full min-w-0 gap-y-6 border-t border-b border-[#E9E9E9] pt-[48px] pb-[48px] md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] xl:col-start-1 xl:row-start-5 2xl:col-start-1 2xl:row-start-5">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/subway-users-hq.svg"
+                             alt="Wristband registration kiosk"
+                             class="w-[88px] h-[88px] shrink-0 object-contain"/>
+                        <div class="font-medium leading-tight self-center">Subway HQ UX Findings</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
+                        <p><span class="font-medium">HQ carried the weight of broken processes every day.</span> Teams spent hours answering repeat questions and resending documents instead of focusing on growth. Valuable time and resources drained into support, making scaling slower and more expensive.</p>
+                    </div>
+                </div>
+
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            mt-2 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-4
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-4 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <p class="font-light text-5/8">"Before research, we saw 'employees' and 'franchisees' as abstract groups. After Olga's work, they became real people with voices and needs we couldn't ignore."</p>
+                    <div class="flex items-center gap-x-4 pt-2">
+                        <img src="assets/images/Bolotov.png"
+                             alt="Dmitry Bolotov"
+                             class="w-12 h-12 rounded-full object-cover shrink-0"/>
+                        <div class="text-[14px] leading-[20px] font-normal text-black">
+                            <div>Dmitry Bolotov</div>
+                            <div>Head Of Digital Marketing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+        </section>
+
+        <section id="festival-girl-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-learning.png" alt="Subway at festival"/>
+        </section>
+
+        <section id="vendor-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Clear Learning Journey</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Clear Learning Journey</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">I created a guided <span class="font-medium">dashboard that replaces guesswork with clarity,</span> showing progress, upcoming exams, and next steps in one place. Employees no longer waste time searching or waiting for managers to explain what to do.</p>
+                </div>
+
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">The courses page works as a <span class="font-medium">structured learning map</span> with visual cards, short lessons, and quick quizzes. Each module turned overwhelming manuals into steady progress and visible confidence.</p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
+            <button type="button" id="vendor-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="vendor-exp-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="vendor-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+            </button>
+
+            <div id="vendor-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="vendor-exp-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Progress visibility</span><br/>
+                                A clear dashboard made next steps obvious and reduced uncertainty from day one.
+                            </div>
+                            <div>
+                                <span class="font-medium">Structured courses</span><br/>
+                                Learning modules turned large manuals into short, achievable steps.
+                            </div>
+                            <div>
+                                <span class="font-medium">Quick feedback loops</span><br/>
+                                Assessments and progress indicators helped users improve continuously.
+                            </div>
+                            <div>
+                                <span class="font-medium">Confidence by design</span><br/>
+                                Every screen reduced friction and reinforced that progress was possible.
+                            </div>
+                            <div>
+                                <span class="font-medium">Scalable patterns</span><br/>
+                                Reusable UI patterns kept the experience consistent across learning flows.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <img src="assets/images/subway-learning-main.png"
+                     alt="Vendor-facing Subway POS"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+
+                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/subway-learning-side-1.png"
+                             alt="Bartender using Subway on phone"
+                             class="hidden md:block overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/subway-learning-side-2.png"
+                             alt="Bartenders at Subway POS"
+                             class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+                </div>
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/subway-keyphrase-logo.png"
+                         alt="Subway"
+                         class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">Clear dashboards and step-by-step courses transformed scattered materials into a <span class="font-medium">simple journey where progress is visible and learning feels achievable.</span></p>
+                </div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('vendor-exp-acc-btn');
+                    var wrap = document.getElementById('vendor-exp-acc-panel-wrap');
+                    var panel = document.getElementById('vendor-exp-acc-panel');
+                    var arrow = document.getElementById('vendor-exp-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="guest-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Motivation &amp; Gamification</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Motivation &amp; Gamification</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">I added a <span class="font-medium">motivation layer to keep training engaging.</span> Instead of another chore, it became something people wanted to complete: with "Sub" points to collect, milestone badges to unlock, and progress worth celebrating.</p>
+                </div>
+
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0"><span class="font-medium">Exams no longer felt overwhelming</span> with quick retakes and instant feedback. <span class="font-medium">Leaderboards introduced friendly competition</span> between stores and regions, making learning more playful and social.</p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="guest-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="guest-exp-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="guest-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+            </button>
+
+            <div id="guest-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="guest-exp-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Points and rewards</span><br/>
+                                Progress linked to visible rewards made completion feel worthwhile.
+                            </div>
+                            <div>
+                                <span class="font-medium">Low-friction assessments</span><br/>
+                                Quick retakes and instant feedback reduced fear and kept momentum high.
+                            </div>
+                            <div>
+                                <span class="font-medium">Healthy competition</span><br/>
+                                Leaderboards encouraged engagement across teams and regions.
+                            </div>
+                            <div>
+                                <span class="font-medium">Milestone framing</span><br/>
+                                Milestones helped users perceive progress as achievable and motivating.
+                            </div>
+                            <div>
+                                <span class="font-medium">Engaging visual language</span><br/>
+                                Friendly visuals made training feel less like a chore and more like progress.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <img src="assets/images/subway-gamification-main.png"
+                     alt="Guest-facing Subway customer POS screen"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+
+                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/subway-gamification-side-1.png"
+                             alt="Bar environment with Subway"
+                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                        <img src="assets/images/subway-gamification-side-2.png"
+                             alt="Guest using Subway customer-facing screen"
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                </div>
+                </div>
+                </div>
+
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/subway-keyphrase-logo.png"
+                         alt="Subway"
+                         class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">When progress feels visible and rewarded, people keep going. <span class="font-medium">Gamification made learning simple, engaging, and satisfying to complete.</span></p>
+                </div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('guest-exp-acc-btn');
+                    var wrap = document.getElementById('guest-exp-acc-panel-wrap');
+                    var panel = document.getElementById('guest-exp-acc-panel');
+                    var arrow = document.getElementById('guest-exp-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="employee-office-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/employee-office-subway.png" alt="Employee office at Subway"/>
+        </section>
+
+        <section id="kiosk-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Operational Clarity</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Operational Clarity</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">Without the system, <span class="font-medium">opening a new store felt like solving a puzzle without the picture.</span> Instructions were buried in scattered PDFs, long email chains, and phone calls to HQ. Franchisees lost weeks chasing answers and never felt sure what step came next.</p>
+                </div>
+
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">The platform became a single source of truth with a comprehensive knowledge base, practical courses, and live webinars all in one place. <span class="font-medium">Franchisees could finally find answers without calling HQ and move through openings with confidence.</span></p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="kiosk-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="kiosk-exp-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="kiosk-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span>
+            </button>
+
+            <div id="kiosk-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="kiosk-exp-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Single source of truth</span><br/>
+                                Consolidated resources and guidance in one platform.
+                            </div>
+                            <div>
+                                <span class="font-medium">Step-by-step guidance</span><br/>
+                                Clear flows reduced uncertainty across store opening and operations.
+                            </div>
+                            <div>
+                                <span class="font-medium">Practical enablement</span><br/>
+                                Courses and webinars turned policy into actionable daily practice.
+                            </div>
+                            <div>
+                                <span class="font-medium">Reduced support dependency</span><br/>
+                                Better self-service meant fewer calls to HQ and faster decisions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                <img src="assets/images/subway-operations-main.png"
+                     alt="Subway check-in kiosk"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                </div>
+                </div>
+
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <p class="font-light text-5/8">"The portal guided me step by step through opening my store — every answer I needed was right there."</p>
+                    <div class="flex items-center gap-x-4 pt-2">
+                        <img src="assets/images/vasiliy.png"
+                             alt="Vasiliy Semyonov"
+                             class="w-12 h-12 rounded-full object-cover shrink-0"/>
+                        <div class="text-[14px] leading-[20px] font-normal text-black">
+                            <div>Vasiliy Semyonov</div>
+                            <div>Franchisee</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('kiosk-exp-acc-btn');
+                    var wrap = document.getElementById('kiosk-exp-acc-panel-wrap');
+                    var panel = document.getElementById('kiosk-exp-acc-panel');
+                    var arrow = document.getElementById('kiosk-exp-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="brand-standard" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">One Brand, One Standard</h2>
+                    </div>
+
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">One Brand, One Standard</h2>
+
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Each store once interpreted brand standards differently. Marketing materials, training quality, and compliance <span class="font-medium">varied from region to region, leading to a fragmented customer experience.</span></p>
+                            </div>
+
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">The platform <span class="font-medium">ensured every franchisee had access to the same guidelines, campaigns, and training.</span> Standards were unified, so no matter the location, customers experienced the same brand quality and service.</p>
+                            </div>
+                        </div>
+
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                            <img src="assets/images/subway-branding-main.png"
+                                 alt="Subway branding standards"
+                                 class="overview-img-1 order-4 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="branding-long-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-branding-long.png" alt="Subway branding in use"/>
+        </section>
+
+        <section id="results-real-world" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Results for Employees:<br/>From Overload to Confidence</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for Employees:<br/>From Overload to Confidence</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">Before, onboarding dragged on for weeks, with managers repeating the same explanations and new hires left guessing. With the new platform, learning became self-paced and structured — <span class="font-medium">employees could move quickly through lessons and arrive on shift prepared.</span></p>
+                </div>
+
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">Onboarding time dropped by <span class="font-medium">40%</span>, and successful certification rates rose by over <span class="font-medium">60%</span>. Progress tracking built confidence, <span class="font-medium">overall training costs fell by a third.</span> Managers no longer had to repeat basics, saving hours each week.</p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="results-real-world-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="results-real-world-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="results-real-world-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">IMPACT IN DETAILS</span>
+            </button>
+
+            <div id="results-real-world-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="results-real-world-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Faster onboarding</span><br/>
+                                Training time dropped by ~40%, letting employees get onto the floor weeks sooner and reducing lost productivity.
+                            </div>
+                            <div>
+                                <span class="font-medium">Higher certification success</span><br/>
+                                Pass rates rose by 60%, cutting down re-tests and boosting overall training efficiency.
+                            </div>
+                            <div>
+                                <span class="font-medium">Lower training costs</span><br/>
+                                Digital certification reduced expenses by a third, replacing repetitive manual checks.
+                            </div>
+                            <div>
+                                <span class="font-medium">Manager relief</span><br/>
+                                Freed up hours each week as managers no longer had to reteach basics, focusing instead on coaching and performance.
+                            </div>
+                            <div>
+                                <span class="font-medium">Consistent knowledge</span><br/>
+                                Standardized onboarding ensured every store followed the same playbook, reducing costly errors.
+                            </div>
+                            <div>
+                                <span class="font-medium">Confidence on day one</span><br/>
+                                Clear progress tracking gave new hires visible milestones, lowering anxiety and turnover risk.
+                            </div>
+                            <div>
+                                <span class="font-medium">Engagement that lasts</span><br/>
+                                Gamified features like badges and leaderboards turned training from a chore into a motivator.
+                            </div>
+                            <div>
+                                <span class="font-medium">Scalable system</span><br/>
+                                A digital platform that worked across devices and regions, allowing Subway to train thousands without extra effort.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <img src="assets/images/subway-results-main.png"
+                     alt="Subway results and impact"
+                     class="order-2 py-8 w-full rounded-[20px] object-contain md:hidden"/>
+
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/subway-results-side-1.png"
+                             alt="Festival POS with Subway"
+                             class="hidden md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/subway-results-main.png"
+                             alt="Subway results and impact"
+                             class="hidden w-full rounded-[20px] object-contain md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+                </div>
+                </div>
+                </div>
+
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('results-real-world-acc-btn');
+                    var wrap = document.getElementById('results-real-world-acc-panel-wrap');
+                    var panel = document.getElementById('results-real-world-acc-panel');
+                    var arrow = document.getElementById('results-real-world-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="results-hq-franchisees" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Results for HQ and Franchisees:<br/>From Uncertainty to Control</h2>
+                    </div>
+
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for HQ and Franchisees:<br/>From Uncertainty to Control</h2>
+
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">With all resources in one place, franchisees could finally stop chasing scattered answers and focus on running their business. <span class="font-medium">Store launches became up to 30% faster,</span> and everyday operations felt smoother and more predictable.</p>
+                            </div>
+
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">At the same time, HQ saw <span class="font-medium">support requests drop by 40%</span>, saving hundreds of hours. Instead of fielding repetitive questions, teams could focus on higher-value work like marketing, growth programs, and supporting more franchisees at scale.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
+                            <button type="button" id="results-hq-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="results-hq-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="results-hq-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">impact in details</span>
+                            </button>
+
+                            <div id="results-hq-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="results-hq-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div>
+                                                <span class="font-medium">Centralized resources</span><br/>
+                                                Replaced scattered PDFs, emails, and outdated files with a single hub where everything was always up to date.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Step-by-step guidance</span><br/>
+                                                Gave owners a clear roadmap for opening and running stores, making launches smoother and more predictable.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Live and ongoing support</span><br/>
+                                                Webinars and online courses replaced one-off phone calls, helping owners stay aligned with brand updates.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Independence from HQ</span><br/>
+                                                Most answers became self-service, reducing back-and-forth calls and giving owners more control.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Consistency at scale</span><br/>
+                                                Ensured every new store opened with the same level of quality and compliance, no matter the region.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Support overload reduced</span><br/>
+                                                Repetitive questions dropped as franchisees found answers in the portal, freeing HQ staff for strategic work.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Clear visibility</span><br/>
+                                                HQ could track progress across stores, spotting gaps before they became compliance issues.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Brand and operations aligned</span><br/>
+                                                Standardized resources meant stores applied rules consistently, protecting brand trust.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Efficient scaling</span><br/>
+                                                New store openings became repeatable instead of one-off struggles, making expansion faster and more sustainable.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <img src="assets/images/subway-results-main-2.png"
+                             alt="HQ and franchisee results"
+                             class="order-2 py-8 w-full rounded-[20px] object-contain md:hidden"/>
+
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                            <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                                <img src="assets/images/subway-results-side-2.png"
+                                     alt="Franchisee results visual"
+                                     class="hidden md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                                <img src="assets/images/subway-results-main-2.png"
+                                     alt="HQ and franchisee results"
+                                     class="hidden w-full rounded-[20px] object-contain md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('results-hq-acc-btn');
+                    var wrap = document.getElementById('results-hq-acc-panel-wrap');
+                    var panel = document.getElementById('results-hq-acc-panel');
+                    var arrow = document.getElementById('results-hq-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="reflections" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 mb-[80px] xl:mb-[120px]">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Reflections &amp; Learnings</h2>
+                    </div>
+
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Reflections &amp; Learnings</h2>
+
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">I’ve always believed <span class="font-medium">design is about helping people.</span> Not in an abstract sense, but in the small, everyday ways that make work less frustrating and more meaningful. For me, <span class="font-medium">the best projects are the ones where I can take away friction, make someone’s job easier, or give them the confidence to grow.</span></p>
+                            </div>
+
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">Subway showed me that design goes deeper than tasks and screens — it shapes trust, motivation, and culture. Supporting employees while giving franchisees confidence wasn’t just a design challenge, <span class="font-medium">it reminded me why I love this work: to make jobs easier and workplaces stronger.</span></p>
+                            </div>
+                        </div>
+
+                        <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+                            <button type="button" id="reflections-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="reflections-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="reflections-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">More reflections</span>
+                            </button>
+
+                            <div id="reflections-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="reflections-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div>
+                                                <span class="font-medium">Designing for real people, not just roles</span><br/>
+                                                Frontline employees had very different needs from HQ managers. Seeing their daily struggles taught me to design beyond "personas" and focus on lived experience.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Motivation is as important as usability</span><br/>
+                                                A usable tool isn't enough if people don't feel encouraged to use it. Leaderboards, streaks, and small wins showed me how design can shape behavior and keep people engaged.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Simplicity is harder than complexity</span><br/>
+                                                Onboarding looked like "just training modules," but making them clear, consistent, and motivating across hundreds of stores was a complex puzzle - and a rewarding one.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Cross-functional teamwork makes or breaks impact</span><br/>
+                                                This project wouldn't work without aligning content, training, and development. I learned how to translate business language into design decisions everyone could rally around.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Design influences culture, not just tasks</span><br/>
+                                                By reducing confusion and supporting trust between employees and HQ, design played a role in how people felt about their jobs. That's the kind of impact I want to keep creating.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                            <img src="assets/images/girl-food-subway.png"
+                                 alt="Reflections image"
+                                 class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                        </div>
+                    </div>
+
+                    <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                                max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                                flex flex-col gap-y-6
+                                md:order-3 md:mt-4 xl:mt-0
+                                xl:col-start-2 xl:row-start-2 xl:row-span-2
+                                2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                                2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                        <img src="assets/images/subway-keyphrase-logo.png"
+                             alt="Subway"
+                             class="h-[56px] w-[30px] shrink-0"/>
+                        <p class="font-light text-5/8">Helping others feel confident turned out to be the most rewarding part.</p>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('reflections-acc-btn');
+                    var wrap = document.getElementById('reflections-acc-panel-wrap');
+                    var panel = document.getElementById('reflections-acc-panel');
+                    var arrow = document.getElementById('reflections-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <!-- #next-project: previous / next project navigation -->
+        <section id="next-project" class="flex flex-col gap-y-6 md:gap-y-8 mb-[-120px] md:mb-[-80px] xl:mb-[-104px] 2xl:mb-[-120px]">
+            <nav class="next-project-nav flex flex-col gap-y-6 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8" aria-label="Adjacent projects">
+                <a class="next-project-link next-project-prev card-detail no-underline" href="#"></a>
+                <a class="next-project-link next-project-next card-detail no-underline sm:text-right" href="#"></a>
+            </nav>
+        </section>
+
+    </main>
+
+</div>
+
+    <style>
+        .proj-nav-link { position: relative; }
+        .proj-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0; bottom: -7px;
+            width: 100%; height: 3px;
+            background-color: var(--color-accent-yellow);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .proj-nav-link-right::after { transform-origin: right; }
+        .group:hover .proj-nav-link::after { transform: scaleX(1); }
+
+        #case-side-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 320px;
+            padding: 48px 56px 56px 56px;
+            background: #FFFFFF;
+            border: 1px solid #DEE6F5;
+            border-radius: 20px;
+            z-index: 0;
+            opacity: 0;
+            --case-nav-overlap-opacity: 1;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity 0.55s ease, transform 0.55s ease, height 0.25s ease, padding 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        #case-side-nav.is-visible {
+            opacity: var(--case-nav-overlap-opacity);
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        #case-side-nav nav {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: opacity 0.3s ease, max-height 0.3s ease, transform 0.3s ease;
+            max-height: 420px;
+            overflow: visible;
+        }
+
+        #case-side-nav .case-side-nav-toggle {
+            position: absolute;
+            top: 64px;
+            right: 56px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            cursor: pointer;
+            transition: color 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+            z-index: 2;
+            padding: 0;
+            transform: translateY(-50%);
+        }
+
+        #case-side-nav .case-side-nav-toggle-icon {
+            width: 16px;
+            height: 22px;
+            display: block;
+            opacity: 1;
+            filter: none;
+            transition: none;
+        }
+
+        #case-side-nav .case-side-nav-toggle:hover {
+            background-color: transparent;
+        }
+
+        #case-side-nav .case-side-nav-toggle:hover .case-side-nav-toggle-icon {
+            filter: brightness(0) saturate(100%) invert(15%) sepia(97%) saturate(6437%) hue-rotate(232deg) brightness(99%) contrast(118%);
+        }
+
+        #case-side-nav.is-collapsed {
+            padding: 24px 56px;
+        }
+
+        #case-side-nav.is-collapsed nav {
+            opacity: 1;
+            max-height: 32px;
+            transform: translateY(0);
+            gap: 0;
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-toggle {
+            top: 40px;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-indicator {
+            opacity: 0 !important;
+        }
+
+        #case-side-nav .case-side-nav-indicator {
+            position: absolute;
+            left: -57px;
+            top: 0;
+            width: 6px;
+            height: 40px;
+            border-radius: 3px;
+            background: var(--color-accent-yellow);
+            transform: translateY(0);
+            opacity: 0;
+            transition: transform 0.35s ease, opacity 0.2s ease;
+            will-change: transform;
+        }
+
+        #case-side-nav .case-side-nav-link {
+            position: relative;
+            display: block;
+            font-size: 1.25rem;
+            line-height: 2rem;
+            font-weight: 300;
+            color: #667284;
+            text-decoration: none;
+            opacity: 1;
+            max-height: 40px;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: color 0.25s ease, opacity 0.25s ease, max-height 0.25s ease, transform 0.25s ease;
+        }
+
+        #case-side-nav .case-side-nav-link:hover {
+            color: #0016F2;
+        }
+
+        #case-side-nav .case-side-nav-link.is-active {
+            color: #0016F2;
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-link {
+            opacity: 0;
+            max-height: 0;
+            pointer-events: none;
+            transform: translateY(-4px);
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-link.is-active {
+            color: #667284;
+            opacity: 1;
+            max-height: 40px;
+            pointer-events: auto;
+            transform: translateY(0);
+            padding-right: 32px;
+        }
+
+        main img,
+        main [class*="bg-[#ECF1F4]"] {
+            position: relative;
+            z-index: 2;
+        }
+
+        [data-parallax-wrap] {
+            overflow: hidden;
+            position: relative;
+            z-index: 4;
+        }
+
+        [data-parallax-image] {
+            will-change: transform;
+            transform: scale(1.08);
+            transform-origin: center;
+            position: relative;
+            z-index: 4;
+        }
+
+        #map-image,
+        #map-image img {
+            position: relative;
+            z-index: 3;
+        }
+
+        @media (min-width: 1536px) {
+            #case-side-nav {
+                width: 352px;
+            }
+        }
+    </style>
+    <div class="full-bleed bg-[#FFF2D7] h-[128px] flex items-center px-6 sm:px-8 md:px-10 xl:px-0 2xl:px-0">
+        <div class="w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto flex items-center justify-between xl:px-6 2xl:px-0">
+            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+                <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 13L1 7L7 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
+                    </svg>
+                </span>
+                <span class="proj-nav-link font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Previous<span class="hidden min-[500px]:inline"> Project</span></span>
+            </a>
+            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+                <span class="proj-nav-link proj-nav-link-right font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Next<span class="hidden min-[500px]:inline"> Project</span></span>
+                <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L7 7L1 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="site-footer full-bleed bg-[#0007B2] text-white mt-0 xl:mt-0 flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
+        <div class="footer-inner flex items-center
+                w-full
+                max-w-[1280px]
+                2xl:max-w-[1440px]
+                mx-auto
+                flex-col
+                items-center
+                gap-y-4
+                px-4
+                sm:px-8
+                lg:flex-row
+                lg:items-center
+                lg:justify-between
+                lg:gap-y-0
+                xl:px-6
+                2xl:px-0
+                ">
+            <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#work">Work</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#about">About</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#contact">Contact</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#resume">Resume</a>
+            </nav>
+            <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
+                <div class="footer-email transition-colors duration-300 hover:text-accent-yellow">hello@peppered.design</div>
+                <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                    <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        const menuTween = gsap.timeline({paused: true})
+            .to(".menulink", {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                stagger: 0.1,
+                ease: "power2.out"
+            })
+            .to("#burgermiddle", {opacity:0, duration: .25}, 0)
+            .to("#burgertop", {y: "10.9375px", transformOrigin:"50% 50%", rotation: 45, duration: .25}, 0)
+            .to("#burgerbottom", {transformOrigin:"50% 50%", rotation: -45, duration: .25}, 0);
+
+        const header = document.querySelector("header");
+        let isMenuOpen = false;
+
+        const burger = document.querySelector("#burger");
+        if (burger && header) {
+            burger.addEventListener("click", (event) => {
+                event.stopPropagation();
+                document.body.parentElement.classList.toggle('stop-scrolling');
+                header.classList.toggle("menu-open");
+                if (!isMenuOpen) {
+                    menuTween.restart();
+                } else {
+                    menuTween.reverse();
+                }
+                isMenuOpen = !isMenuOpen;
+            });
+            document.querySelectorAll('header nav .menulink').forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (isMenuOpen) {
+                        document.body.parentElement.classList.remove('stop-scrolling');
+                        menuTween.reverse();
+                        header.classList.remove('menu-open');
+                        isMenuOpen = false;
+                    }
+                });
+            });
+        }
+
+        document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
+            const id = trigger.getAttribute("aria-controls");
+            const panel = id ? document.getElementById(id) : null;
+            if (!panel) return;
+            trigger.addEventListener("click", () => {
+                const expanded = trigger.getAttribute("aria-expanded") === "true";
+                trigger.setAttribute("aria-expanded", String(!expanded));
+                panel.hidden = expanded;
+            });
+        });
+
+        if (!reducedMotion) {
+            const parallaxImages = gsap.utils.toArray("[data-parallax-image]");
+            parallaxImages.forEach((img) => {
+                const wrap = img.closest("[data-parallax-wrap]") || img.parentElement;
+                if (!wrap) return;
+                gsap.fromTo(
+                    img,
+                    { yPercent: -14, scale: 1.12 },
+                    {
+                        yPercent: 14,
+                        scale: 1.12,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: wrap,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true,
+                        },
+                    }
+                );
+            });
+        }
+
+        const sideNav = document.getElementById("case-side-nav");
+        const overviewSection = document.getElementById("overview");
+        const overviewCard = overviewSection ? overviewSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
+        const reflectionsSection = document.getElementById("reflections");
+        const reflectionsCard = reflectionsSection ? reflectionsSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
+        const sectionIds = ["overview", "my-part", "research", "vendor-experience", "results-real-world"];
+        const sectionNodes = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+        const sideNavLinks = sideNav ? Array.from(sideNav.querySelectorAll(".case-side-nav-link")) : [];
+        const sideNavIndicator = sideNav ? sideNav.querySelector(".case-side-nav-indicator") : null;
+        const sideNavToggle = document.getElementById("case-side-nav-toggle");
+        const sideNavMenu = document.getElementById("case-side-nav-menu");
+        const overlapBlockers = Array.from(document.querySelectorAll(
+            '#map-image, #map-image img, [data-parallax-wrap], [data-parallax-wrap] img, main section > img, main img.overview-img-1, main img.overview-img-2, main img.overview-img-3, main [class*="bg-[#ECF1F4]"]'
+        ));
+
+        if (sideNav && overviewSection && overviewCard && reflectionsSection && sideNavLinks.length) {
+            const STICKY_OFFSET = 120;
+            const SCROLL_OFFSET = 120;
+            const INITIAL_GAP = 48;
+            const END_OFFSET = 120;
+            const ANCHOR_HOLD_MS = 700;
+            let ticking = false;
+            let visible = false;
+            let initialDocTop = 0;
+            let initialized = false;
+            let pendingAnchorDocTop = null;
+            let pendingAnchorUntil = 0;
+
+            function clamp(value, min, max) {
+                return Math.min(Math.max(value, min), max);
+            }
+
+            function absTop(node) {
+                return node.getBoundingClientRect().top + window.scrollY;
+            }
+
+            function setActiveLink(scrollY) {
+                const markerY = scrollY + window.innerHeight * 0.35;
+                let activeId = "overview";
+                sectionNodes.forEach((node) => {
+                    if (node && absTop(node) <= markerY) {
+                        activeId = node.id;
+                    }
+                });
+                let activeLink = null;
+                sideNavLinks.forEach((link) => {
+                    const isActive = link.getAttribute("data-target") === activeId;
+                    link.classList.toggle("is-active", isActive);
+                    if (isActive) activeLink = link;
+                });
+                if (sideNavIndicator && activeLink && sideNavMenu) {
+                    const menuRect = sideNavMenu.getBoundingClientRect();
+                    const activeRect = activeLink.getBoundingClientRect();
+                    const indicatorHeight = sideNavIndicator.offsetHeight || 40;
+                    const activeCenterY = activeRect.top - menuRect.top + activeRect.height / 2;
+                    const indicatorY = activeCenterY - indicatorHeight / 2;
+                    sideNavIndicator.style.transform = "translateY(" + indicatorY + "px)";
+                    sideNavIndicator.style.opacity = sideNav.classList.contains("is-collapsed") ? "0" : "1";
+                }
+                return activeId;
+            }
+
+            function ensureInitialized() {
+                if (initialized) return;
+                const cardTop = absTop(overviewCard);
+                initialDocTop = cardTop + overviewCard.offsetHeight + INITIAL_GAP;
+                initialized = true;
+            }
+
+            function setupSmoothScroll() {
+                function easeInOutCubic(t) {
+                    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                }
+
+                function smoothScrollTo(targetTop, onComplete) {
+                    if (typeof window.__pepperedLenisScrollTo === "function") {
+                        const didScroll = window.__pepperedLenisScrollTo(targetTop, {
+                            immediate: false,
+                            force: true
+                        });
+                        if (didScroll) {
+                            if (typeof window.__pepperedLenisOnScrollComplete === "function") {
+                                window.__pepperedLenisOnScrollComplete(onComplete);
+                            } else if (typeof onComplete === "function") {
+                                window.setTimeout(onComplete, 850);
+                            }
+                            return;
+                        }
+                    }
+
+                    const startTop = window.scrollY || window.pageYOffset;
+                    const distance = targetTop - startTop;
+                    if (Math.abs(distance) < 1) {
+                        if (typeof onComplete === "function") onComplete();
+                        return;
+                    }
+                    const duration = 800;
+                    const startTime = performance.now();
+
+                    function tick(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = easeInOutCubic(progress);
+                        window.scrollTo(0, startTop + distance * eased);
+                        if (progress < 1) {
+                            window.requestAnimationFrame(tick);
+                        } else if (typeof onComplete === "function") {
+                            onComplete();
+                        }
+                    }
+
+                    window.requestAnimationFrame(tick);
+                }
+
+                sideNavLinks.forEach((link) => {
+                    link.addEventListener("click", (event) => {
+                        event.preventDefault();
+                        const targetId = link.getAttribute("data-target");
+                        if (!targetId) return;
+                        const targetNode = document.getElementById(targetId);
+                        if (!targetNode) return;
+                        const targetTop = absTop(targetNode) - SCROLL_OFFSET;
+                        const useKeyphraseLanding = targetId === "ecosystem" || targetId === "results-real-world";
+                        if (!useKeyphraseLanding) {
+                            pendingAnchorDocTop = null;
+                            pendingAnchorUntil = 0;
+                        }
+                        if (sideNav.classList.contains("is-collapsed")) {
+                            sideNav.classList.remove("is-collapsed");
+                            if (sideNavToggle) sideNavToggle.setAttribute("aria-expanded", "true");
+                        }
+                        requestUpdate();
+                        const clampedTop = Math.max(0, targetTop);
+                        smoothScrollTo(clampedTop, () => {
+                            if (!useKeyphraseLanding) return;
+                            const anchorTop = getSectionKeyphraseAnchorTop(targetId);
+                            if (anchorTop === null) return;
+                            pendingAnchorDocTop = anchorTop;
+                            pendingAnchorUntil = performance.now() + ANCHOR_HOLD_MS;
+                            requestUpdate();
+                        });
+                    });
+                });
+            }
+
+            function setupCollapseToggle() {
+                if (!sideNavToggle) return;
+                sideNavToggle.addEventListener("click", () => {
+                    const isCollapsed = sideNav.classList.toggle("is-collapsed");
+                    sideNavToggle.setAttribute("aria-expanded", String(!isCollapsed));
+                    requestUpdate();
+                    window.setTimeout(requestUpdate, 320);
+                });
+            }
+
+            function getSectionKeyphraseAnchorTop(sectionId) {
+                if (sectionId !== "ecosystem" && sectionId !== "results-real-world") return null;
+                const targetSection = document.getElementById(sectionId);
+                if (!targetSection) return null;
+                const localCard = targetSection.querySelector('div[class*="bg-[#ECF1F4]"]');
+                if (!localCard) return null;
+                return absTop(localCard) + localCard.offsetHeight + INITIAL_GAP;
+            }
+
+            function overlapRatio(a, b) {
+                const overlapWidth = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+                const overlapHeight = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+                return (overlapWidth * overlapHeight) / Math.max(1, a.width * a.height);
+            }
+
+            function getOverlapOpacity() {
+                const navRect = sideNav.getBoundingClientRect();
+                if (!navRect.width || !navRect.height) return 1;
+                let maxRatio = 0;
+                overlapBlockers.forEach((blocker) => {
+                    if (!blocker) return;
+                    const rect = blocker.getBoundingClientRect();
+                    if (rect.bottom <= 0 || rect.top >= window.innerHeight || rect.right <= 0 || rect.left >= window.innerWidth) return;
+                    maxRatio = Math.max(maxRatio, overlapRatio(navRect, rect));
+                });
+                return clamp(1 - maxRatio * 0.7, 0.45, 1);
+            }
+
+            function updateSideNav() {
+                ticking = false;
+                if (window.innerWidth < 1280) {
+                    sideNav.classList.remove("is-visible");
+                    visible = false;
+                    initialized = false;
+                    return;
+                }
+
+                const scrollY = window.scrollY || window.pageYOffset;
+                const overviewTop = absTop(overviewSection);
+                const startThreshold = overviewTop - SCROLL_OFFSET;
+                const shouldShow = scrollY >= startThreshold;
+
+                if (!shouldShow) {
+                    sideNav.classList.remove("is-visible");
+                    visible = false;
+                    initialized = false;
+                    pendingAnchorDocTop = null;
+                    pendingAnchorUntil = 0;
+                    sideNav.style.setProperty("--case-nav-overlap-opacity", "1");
+                    return;
+                }
+
+                ensureInitialized();
+
+                if (!visible) {
+                    visible = true;
+                    sideNav.classList.add("is-visible");
+                }
+
+                const cardRect = overviewCard.getBoundingClientRect();
+                const navHeight = sideNav.offsetHeight;
+                const reflectionsTop = absTop(reflectionsSection);
+                const reflectionsStop = reflectionsCard
+                    ? absTop(reflectionsCard) + reflectionsCard.offsetHeight + INITIAL_GAP
+                    : reflectionsTop - END_OFFSET - navHeight;
+                const docBottomLimit = document.documentElement.scrollHeight - navHeight - 24;
+                const maxDocTop = clamp(reflectionsStop, initialDocTop, docBottomLimit);
+                const stickyDocTop = scrollY + STICKY_OFFSET;
+                setActiveLink(scrollY);
+                let preferredDocTop = stickyDocTop;
+                if (pendingAnchorDocTop !== null) {
+                    if (performance.now() <= pendingAnchorUntil) {
+                        preferredDocTop = pendingAnchorDocTop;
+                    } else {
+                        pendingAnchorDocTop = null;
+                        pendingAnchorUntil = 0;
+                    }
+                }
+                const navDocTop = clamp(preferredDocTop, initialDocTop, maxDocTop);
+                sideNav.style.left = cardRect.left + "px";
+                sideNav.style.top = (navDocTop - scrollY) + "px";
+                sideNav.style.setProperty("--case-nav-overlap-opacity", String(getOverlapOpacity()));
+            }
+
+            function requestUpdate() {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(updateSideNav);
+            }
+
+            window.addEventListener("scroll", requestUpdate, { passive: true });
+            window.addEventListener("resize", requestUpdate);
+            sideNav.addEventListener("transitionend", (event) => {
+                if (event.propertyName === "max-height" || event.propertyName === "padding" || event.propertyName === "height" || event.propertyName === "transform") {
+                    requestUpdate();
+                }
+            });
+            setupSmoothScroll();
+            setupCollapseToggle();
+            requestUpdate();
+        }
+    });
+</script>
+</body>
+</html>

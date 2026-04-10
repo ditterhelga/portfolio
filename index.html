@@ -361,13 +361,22 @@
                 font-weight: 600;
                 font-family: 'Sofia Sans Condensed', sans-serif;
 
+                svg {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    overflow: visible;
+                }
+
                 text {
                     fill: white;
                     font-size: 64px;
                     font-weight: 600;
+                    font-family: 'Sofia Sans Condensed', sans-serif;
                     text-transform: uppercase;
                     animation: rotate 25s linear infinite;
-                    transform-origin: center;
+                    transform-origin: 50% 50%;
+                    transform-box: fill-box;
                 }
 
                 .text-circle {
@@ -866,8 +875,11 @@
                     </defs>
                     <circle cx="250" cy="250" r="140" fill="white"/>
                     <g class="text-circle">
-                        <text textLength="1000">
-                            <textPath xlink:href="#text-circle" aria-label="Click if you're curious">
+                        <text>
+                            <textPath href="#text-circle"
+                                      xlink:href="#text-circle"
+                                      startOffset="0%"
+                                      aria-label="Click if you're curious">
                                 Click if you're curious
                             </textPath>
                         </text>
