@@ -1,0 +1,2522 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Gazelkin — Olga Pertseva</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <!-- tools -->
+    <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="assets/js/global-lenis.js" defer></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --font-family-sofia: 'Sofia Sans Condensed', sans-serif;
+            --font-family-inter: 'Inter', sans-serif;
+
+            --color-text-primary: #302F2F;
+            --color-primary-dark: #3B47C2;
+            --color-primary-light: #0016F2;
+            --color-pink-badge: #FDE4DF;
+            --color-blue-light: #8891D6;
+            --color-blue-dark: #040989;
+            --color-accent-yellow: #FDC448;
+
+            --bg-color: 216, 29%, 97%;
+
+            --breakpoint-xs: 20rem;
+            --breakpoint-2xl: 96rem;
+        }
+
+        @utility full-bleed {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @layer base {
+            html {
+                /*position: absolute;*/
+                /*width: 100%;*/
+                /*height: 100%;*/
+                /*overflow-y: scroll;*/
+            }
+
+            body {
+                font-family: var(--font-family-inter);
+                font-size: 1.25rem;
+                line-height: 2rem;
+                letter-spacing: 0px;
+                font-weight: 400;
+                /*margin: 0;*/
+                color: var(--color-text-primary);
+                background: #FFFFFF;
+                overflow-x: hidden;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Sofia Sans Condensed', sans-serif;
+            }
+        }
+
+        .section-header {
+            @apply font-family-sofia font-normal
+                text-[56px]/[88px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px]
+                2xl:text-[64px]/[64px];
+        }
+
+        @media (max-width: 767px) {
+            .results-mobile-tight {
+                line-height: 1.02 !important;
+            }
+        }
+
+        /* Hero h1 keeps previous scale; does not use .section-header typography */
+        .gazelkin-hero-title {
+            @apply font-family-sofia font-normal
+                text-[52px]/[60px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px];
+        }
+
+        .gazelkin-page-title {
+            @apply font-medium;
+        }
+
+        header {
+            @apply flex z-10;
+            /*py-8 md:py-13*/
+
+            & .logo img {
+                height: 63px;
+                width: auto;
+                transition: opacity 0.3s ease, filter 0.6s ease;
+            }
+
+            & #burger {
+                @apply z-20;
+                cursor: pointer;
+            }
+
+            @media (min-width: 768px) {
+    & nav .menulink {
+        position: relative;
+        font-weight: 400;
+        font-family: var(--font-family-inter);
+        transition: color 0.25s ease;
+    }
+
+    & nav .menulink::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        background-color: #FDE4DF;
+
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    & nav .menulink:hover::after {
+        transform: scaleX(1);
+    }
+
+    & nav .menulink:hover {
+        color: #0016F2;
+    }
+}
+
+            &.menu-open {
+                @apply fixed h-screen w-screen px-4 z-50 md:px-12;
+                inset: 0;
+
+                background: var(--color-primary-dark);
+
+                /* ensure content becomes visible when menu is open */
+                & .logo, nav {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                & .logo img {
+                    filter: brightness(0) invert(1);
+                }
+
+                & > #burger {
+                    @apply right-4;
+
+                    & svg rect {
+                        fill: rgba(255, 255, 255, 0.2);
+                    }
+
+                    & svg path {
+                        stroke: white;
+                    }
+                }
+
+                & > div {
+                    @apply flex-col;
+
+                    & > nav {
+                        @apply flex flex-col justify-center gap-y-8 h-screen;
+
+                        & a {
+                            @apply w-full md:h-full text-center;
+                        }
+                    }
+                }
+
+                & .menulink {
+                    font-family: 'Sofia Sans Condensed', sans-serif;
+                    font-size: 4rem;
+                    font-weight: 700;
+                    color: white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    letter-spacing: -0.02em;
+                    transition: transform 0.3s ease, color 0.3s ease;
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                & .menulink:hover {
+                    color: #FDC448;
+                    transform: translateY(-5px);
+                }
+            }
+        }
+
+        #hero {
+    & .line-bottom {
+        --rotate-row: 1em;
+    }
+
+    @media (min-width: 48rem) {
+        & .line-bottom {
+            --rotate-row: calc(5em / 4.75);
+        }
+    }
+
+    & .hero-rotating-wrap {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .rotating-words {
+        position: relative;
+        height: var(--rotate-row);
+        line-height: inherit;
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .phrases {
+        display: block;
+        animation: rotate-words 8s infinite ease-in-out;
+    }
+
+    & .phrases span {
+        display: block;
+        height: var(--rotate-row);
+        line-height: inherit;
+    }
+
+    & .sizer {
+        display: none;
+    }
+
+    & .rotating-words:hover .phrases {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes rotate-words {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(calc(-1 * var(--rotate-row)));
+    }
+    50%, 85% {
+        transform: translateY(calc(-2 * var(--rotate-row))); /* держим empath */
+    }
+    90% {
+        transform: translateY(0); /* быстрый возврат */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+        #about {
+            @apply flex
+            flex-col
+            gap-y-6
+            md:gap-y-8
+            xl:mt-5
+            xl:flex-row-reverse
+            xl:gap-x-14
+            2xl:gap-x-20;
+
+
+            .rotating-words {
+                position: relative;
+                display: inline-block;
+                white-space: nowrap;
+            }
+
+            .rotating-words .sizer {
+                visibility: hidden;
+                white-space: nowrap;
+            }
+
+            .rotating-words .phrases {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+
+            .rotating-words .phrases > span {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                letter-spacing: 0.02em;
+                display: block;
+                font-weight: 700;
+                color: #4B57C8;
+                opacity: 0;
+                animation: wordReveal 9s infinite;
+            }
+
+            .rotating-words .phrases > span:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            .rotating-words .phrases > span:nth-child(2) {
+                animation-delay: 3s;
+            }
+
+            .rotating-words .phrases > span:nth-child(3) {
+                animation-delay: 6s;
+            }
+
+            @keyframes wordReveal {
+                0% {
+                    opacity: 0;
+                    transform: translateY(24px);
+                    letter-spacing: 0.02em;
+                }
+                8% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    letter-spacing: -0.02em;
+                }
+                30% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    letter-spacing: -0.02em;
+                }
+                36% {
+                    opacity: 0;
+                    transform: translateY(-18px);
+                    letter-spacing: -0.02em;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-18px);
+                    letter-spacing: -0.02em;
+                }
+            }
+
+            .button-about {
+                /*relative*/
+                @apply  inline-flex
+                border-none
+                bg-primary-dark
+                rounded-full
+                w-[120px] h-[120px]
+                mt-4
+                ml-40
+                md:w-[150px] md:h-[150px]
+                md:mt-11.25
+                md:ml-62
+                xl:mt-0
+                xl:ml-0
+                cursor-pointer
+                text-white;
+                /*overflow: hidden;*/
+                /*position: relative;*/
+                /*display: inline-flex;*/
+                align-items: center;
+                justify-content: center;
+                transition: background 300ms, transform 200ms;
+                font-weight: 600;
+                font-family: 'Sofia Sans Condensed', sans-serif;
+
+                text {
+                    fill: white;
+                    font-size: 64px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    animation: rotate 25s linear infinite;
+                    transform-origin: center;
+                }
+
+                .text-circle {
+                    transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+                    transform-origin: center;
+                }
+
+                .arrow-icon {
+                    stroke-width: 10;
+                    stroke: var(--color-primary-dark);
+                    transition: stroke 300ms, transform 300ms;
+                }
+
+                &:hover {
+                    @apply bg-accent-yellow;
+
+                    transform: scale(1.2);
+
+                    .text-circle {
+                        transform: rotate(90deg);
+                    }
+
+                    .arrow-icon {
+                        stroke: var(--color-accent-yellow);
+                    }
+                }
+            }
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @utility card-content {
+            @apply flex flex-col gap-8 items-center sm:flex-row-reverse
+            2xl:gap-x-16;
+        }
+
+        @utility card-badges {
+            @apply flex flex-row flex-wrap gap-4 justify-items-start;
+
+            & .badge {
+                @apply rounded-full bg-pink-badge text-blue-light uppercase !text-lg font-family-sofia font-normal py-1 px-5;
+            }
+        }
+
+        @utility card-title {
+            @apply text-primary-dark font-family-sofia font-normal text-7xl tracking-[-2px]
+            xl:mb-5
+            2xl:text-[102px];
+        }
+
+        .card-description {
+            @apply flex flex-col gap-y-4
+            xl:w-[564px] xl:shrink-0 xl:gap-y-0;
+        }
+
+        .card-paragraph {
+            @apply flex flex-col gap-y-2
+            xl:mb-10;
+        }
+
+        .card-text {
+            @apply font-light;
+        }
+
+        .card-detail {
+            @apply flex
+            flex-row
+            items-center
+            gap-x-4
+            mt-2
+            xl:mt-0
+            uppercase
+            font-family-sofia
+            text-primary-dark
+            font-normal
+            text-[1.5rem]/6
+            tracking-wider;
+        }
+
+        .card-wrapper {
+            @apply xs:max-xl:full-bleed xl:rounded-[20px] bg-white;
+        }
+
+        /* Work cards: padding lives on .work-card-surface so outer .card can stay a neutral shell */
+        #work .work-cards-stack .card {
+            padding: 0 !important;
+            gap: 0 !important;
+        }
+
+        /* Match page grey so scaled cards don’t sit on a white “slot” (Tailwind bg-white on .card-wrapper) */
+        #work {
+            background-color: #f3f6f9;
+        }
+
+        /* Pull Beyond block up by half the main column gap (gap-y-18 / md:24 / xl:26) */
+        #work + .full-bleed {
+            margin-top: -2.25rem;
+        }
+
+        @media (min-width: 48rem) {
+            #work + .full-bleed {
+                margin-top: -3rem;
+            }
+        }
+
+        @media (min-width: 80rem) {
+            #work + .full-bleed {
+                margin-top: -3.25rem;
+            }
+        }
+
+        /* Sticky stack + scrub fade/scale — desktop only (see GSAP below) */
+        @media (min-width: 1280px) {
+            #work .work-cards-stack {
+                background-color: #f3f6f9;
+            }
+
+            /* Gap (xl:gap-y-16 = 64px) sits between wrappers so #F3F6F9 shows through */
+            #work .work-cards-stack > .card-wrapper {
+                position: relative;
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+            }
+
+            #work .work-cards-stack > .card-wrapper:last-of-type {
+                padding-bottom: calc(5vh + 56px);
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(1) {
+                z-index: 1;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(2) {
+                z-index: 2;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(3) {
+                z-index: 3;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(4) {
+                z-index: 4;
+            }
+
+            /* Shell: fixed 722px slot; page-colored so area around scaled .work-card-surface isn’t white */
+            #work .work-cards-stack .card {
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+                box-sizing: border-box;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow: visible;
+            }
+
+            #work .work-cards-stack .work-card-surface {
+                background-color: #fff;
+                border-radius: 20px;
+                box-sizing: border-box;
+                width: 100%;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                /* Shrink toward overlap with next card (bottom pinned) so top/sides stay readable */
+                transform-origin: 50% 100%;
+                will-change: transform, opacity;
+                /* Lifts the front card slightly; scales with transform on the same layer */
+                box-shadow: 0 -4px 20px rgba(227, 233, 239, 0.4);
+            }
+
+            /* GSAP ScrollTrigger pin wrapper (when present) */
+            #work .pin-spacer {
+                background-color: #f3f6f9 !important;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            #work .work-cards-stack > .card-wrapper {
+                background-color: #f3f6f9 !important;
+            }
+            #work .work-cards-stack .card {
+                max-width: 100% !important;
+                height: 900px;
+                min-height: 900px;
+                max-height: 900px;
+            }
+            #work .work-cards-stack .work-card-surface {
+                height: auto !important;
+                min-height: unset !important;
+                max-height: unset !important;
+            }
+        }
+
+        .card {
+            @apply flex flex-col max-w-[1280px]
+            mx-auto
+            px-4 sm:px-8
+            pt-14 sm:pt-16
+            pb-12 sm:pb-13
+            gap-y-10
+            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14
+            2xl:max-w-full 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px] 2xl:gap-y-14;
+        }
+
+        .card-image {
+            @apply rounded-[20px] w-full object-cover
+            aspect-[1.25]
+            md:aspect-[0.84] md:max-w-[322px]
+            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0
+            2xl:h-[488px] 2xl:w-[576px] 2xl:max-w-[576px];
+        }
+
+
+        /* Main-xl: beyond-card-xl — gap 32px between image/tag/body/CTA; grid gap-x 48, gap-y 72; column 584px */
+        #cards-beyond {
+            @apply flex flex-col gap-y-12 md:gap-y-14
+            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
+            2xl:gap-x-16 2xl:gap-y-16;
+
+            & > .card-beyond {
+                @apply flex w-full max-w-full flex-col items-start gap-y-8;
+
+                & > .image-wrapper {
+                    @apply overflow-hidden
+                    rounded-[20px]
+                    w-full
+                    h-[380px]
+                    shrink-0;
+
+                    & > img {
+                        @apply w-full h-full
+                        object-cover object-center
+                    }
+                }
+
+                & .card-description {
+                    @apply flex w-full flex-col items-start gap-y-8 text-left;
+                }
+
+                & .card-description p {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 20px;
+                    line-height: 32px;
+                    font-weight: 400;
+                }
+
+                & .card-detail {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        .triag-cut {
+            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Lighter Inter for match CTA copy (thinner than body default) */
+        #match .match-xl-body p {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner a,
+        footer.site-footer .footer-inner .footer-email {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner nav {
+            display: flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner nav a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-email {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-contact img {
+            display: block;
+        }
+
+        .line-top {
+            background: linear-gradient(
+                90deg,
+                #E8C76D 0%,
+                #A7B4E8 10%,
+                #6C8BE8 20%,
+                #5573DD 30%,
+                #4C62D1 40%,
+                #4E5AC8 50%,
+                #5152BF 60%,
+                #554CB6 65%,
+                #5A47AD 70%,
+                #5F42A4 75%,
+                #643D9B 80%,
+                #693892 85%,
+                #6E3389 90%,
+                #732E80 95%,
+                #782977 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .line-bottom {
+            color: #2834B8;
+        }
+
+        /* ── Hero blob-mask effect ─────────────────────────────────────── */
+        .hero-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #2834B8;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+            top: 0;
+            left: 0;
+        }
+
+        #hero .hero-mask {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        /* Blob layer: #2834B8 base so text reads as dark blue at rest */
+        #hero .blob-layer {
+            position: absolute;
+            inset: 0;
+            background: #2834B8;
+            pointer-events: none;
+        }
+
+        #hero .blob-layer .blob {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            will-change: transform;
+        }
+
+        /* bottom layer – largest, bright blue */
+        #hero .blob-1 {
+            width: 690px; height: 690px;
+            margin: -345px 0 0 -345px;
+            background: #0A43FF;
+        }
+
+        /* middle layer – pink */
+        #hero .blob-2 {
+            width: 420px; height: 420px;
+            margin: -210px 0 0 -210px;
+            background: #FDE4DF;
+        }
+
+        /* top layer – yellow, smallest */
+        #hero .blob-3 {
+            width: 260px; height: 260px;
+            margin: -130px 0 0 -130px;
+            background: #FDC448;
+        }
+
+        /* Screen overlay: gradient matches page bg so it's invisible outside text */
+        #hero .mask-screen {
+            position: relative;
+            background: #FFFFFF;
+            background-attachment: fixed;
+            mix-blend-mode: screen;
+        }
+
+        #hero .mask-screen h1 {
+            color: #000;
+            -webkit-text-fill-color: #000;
+            padding-right: 0.5rem;
+        }
+        /* ─────────────────────────────────────────────────────────────── */
+
+    </style>
+</head>
+
+<body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto">
+
+<div class="flex flex-col px-4 sm:px-8 md:px-6 2xl:px-0">
+
+    <header class="flex pt-8 xl:pt-16">
+        <div class="flex justify-between w-full">
+            <div id="logo" class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.svg" alt="Olga Pertseva"/>
+                </a>
+            </div>
+
+            <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
+                <a href="#work"    class="menulink">Work</a>
+                <a href="#about"   class="menulink">About</a>
+                <a href="#contact" class="menulink">Contact</a>
+                <a href="#resume"  class="menulink">Resume</a>
+            </nav>
+        </div>
+
+        <div id="burger" class="fixed right-4 md:hidden">
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect width="56" height="56" rx="16" fill="#FDE4DF"/>
+                <path id="burgertop" d="M13.417 17.0625H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgermiddle" d="M13.417 38.9375H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgerbottom" d="M13.417 28H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </header>
+
+<main class="flex flex-col gap-y-18 md:gap-y-24 xl:gap-y-26 2xl:gap-y-[120px] mt-16 md:mt-18 xl:mt-18 2xl:mt-22">
+        <aside id="case-side-nav" class="hidden xl:block" aria-label="Case study sections">
+            <button type="button" id="case-side-nav-toggle" class="case-side-nav-toggle" aria-expanded="true" aria-controls="case-side-nav-menu" aria-label="Toggle section navigation">
+                <img src="assets/images/arrow-down.svg" alt="" aria-hidden="true" class="case-side-nav-toggle-icon"/>
+            </button>
+            <nav id="case-side-nav-menu">
+                <span class="case-side-nav-indicator" aria-hidden="true"></span>
+                <a href="#overview" data-target="overview" class="case-side-nav-link">Context</a>
+                <a href="#my-part" data-target="my-part" class="case-side-nav-link">My Role</a>
+                <a href="#research" data-target="research" class="case-side-nav-link">Research</a>
+                <a href="#learning" data-target="learning" class="case-side-nav-link">Solution</a>
+                <a href="#results-drivers" data-target="impact" class="case-side-nav-link">Impact</a>
+            </nav>
+        </aside>
+
+        <!-- #hero: breadcrumbs, page title (h1), hero image or video placeholder -->
+        <section id="hero" class="flex flex-col">
+            <div class="gazelkin-breadcrumbs mb-6 md:mb-4 font-light text-5/8 flex flex-row flex-wrap items-center gap-x-2" aria-label="Breadcrumb">
+                <a class="no-underline hover:opacity-90" href="index.html#work">Work</a>
+                <span aria-hidden="true">/</span>
+                <span class="text-[#8A8A8A]">Gazelkin Logistics</span>
+            </div>
+            <h1 class="gazelkin-hero-title gazelkin-page-title">Turning a fragmented logistics network into a single, intelligent ecosystem.</h1>
+            <div class="gazelkin-hero-media image-block mt-10">
+                <div class="gazelkin-hero-media-bg full-bleed overflow-hidden bg-[#ECF1F4] py-8 md:py-12 xl:py-[80px]">
+                    <div class="flex w-full justify-center px-4 sm:px-8 md:px-6 2xl:px-8">
+                        <img class="w-full max-w-[1280px] rounded-[20px] object-cover xl:aspect-[1168/616] 2xl:max-w-[1440px]" src="assets/images/gazelkin-hero.png" alt="Gazelkin driver using the mobile app"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- #intro: left — logo + description; right — metadata -->
+        <section id="intro" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="intro-grid flex flex-col gap-y-10 xl:flex-row xl:gap-x-6 2xl:gap-x-16 xl:items-start">
+                <div class="intro-left flex flex-col gap-y-8 xl:max-w-[496px] 2xl:max-w-[688px] xl:shrink-0">
+                    <div class="intro-logo">
+                        <img class="w-[310px] max-w-full h-auto" src="assets/images/gazelkin-client-logo.png" alt="Gazelkin logo"/>
+                    </div>
+                    <div class="intro-description flex flex-col gap-y-2 text-5/8 font-light">
+                        <p>I designed a <span class="font-medium">connected service ecosystem for a transportation company</span> — connecting 700 vehicles, 150 operators, and customers with tools that finally worked together.</p>
+                        <p>Ending the era of &ldquo;Let me call the driver&rdquo; and &ldquo;Where&rsquo;s that spreadsheet?&rdquo;</p>
+                    </div>
+                </div>
+                <div class="intro-right metadata-block xl:max-w-[704px] 2xl:max-w-[688px] xl:shrink-0 xl:pt-[128px] 2xl:pt-0">
+                    <div class="metadata-grid grid grid-cols-1 gap-y-4">
+                        <div class="metadata-role flex flex-col gap-y-2">
+                            <p class="text-5/8"><span class="font-medium">Role:</span> Lead Product Designer — full ownership across all user-facing platforms</p>
+                        </div>
+                        <div class="metadata-timeline flex flex-col gap-y-2">
+                            <p class="text-5/8"><span class="font-medium">Team:</span> PMs, developers, business stakeholders, frontline teams across operations and support</p>
+                        </div>
+                        <div class="metadata-tools flex flex-col gap-y-2">
+                            <p class="text-5/8"><span class="font-medium">Timeline:</span> 1.5 years, full-time on-site</p>
+                        </div>
+                        <div class="metadata-impact flex flex-col gap-y-4">
+                            <div class="font-medium">Impact</div>
+                            <p class="text-5/8">• <span class="font-medium text-[#660002]">45%</span> fewer dispatcher calls · <span class="font-medium text-[#660002]">92%</span> driver app adoption in 3 weeks</p>
+                            <p class="text-5/8">• <span class="font-medium text-[#660002]">65%</span> fewer customer callbacks · <span class="font-medium text-[#660002]">40%</span> faster order processing</p>
+                            <p class="text-5/8">• <span class="font-medium text-[#660002]">70%</span> fewer delivery errors</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gazelkin-lead-strip">
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-lead-dashboard.png" alt="Gazelkin logistics operations"/>
+        </section>
+
+        <section id="overview" class="flex flex-col items-start">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Overview</h2>
+                    <div class="overview-text-1 font-light text-5/8 min-w-0">
+                    <p class="min-w-0">Gazelkin is one of the <span class="font-medium">largest urban cargo transportation companies</span> in Russia, handling thousands of deliveries every day. But while its operations scaled rapidly, its digital infrastructure didn&rsquo;t. There was <span class="font-medium">no single system to connect drivers, dispatchers, call centers, and customers,</span> each relied on separate, outdated processes.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Overview</h2>
+
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px] 2xl:row-start-2">
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 hidden md:order-1 md:block 2xl:min-w-0">
+                    <p class="min-w-0">Gazelkin is one of the <span class="font-medium">largest urban cargo transportation companies</span> in Russia, handling thousands of deliveries every day. But while its operations scaled rapidly, its digital infrastructure didn&rsquo;t. There was <span class="font-medium">no single system to connect drivers, dispatchers, call centers, and customers,</span> each relied on separate, outdated processes.</p>
+                </div>
+
+                <div class="overview-text-2 order-3 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">To support this growing network, I led a full UX transformation. I built an <span class="font-medium">end-to-end digital ecosystem</span> that connected every role in real time and replaced scattered tools with <span class="font-medium">a single source of truth</span>. From dispatch to delivery, information started to flow automatically — reducing coordination time, errors, and daily chaos.</p>
+                </div>
+                </div>
+
+                <img src="assets/images/gazelkin-overview-hero-drivers.png"
+                     alt="Gazelkin drivers"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+
+                <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/gazelkin-overview-mover.png"
+                             alt="Driver loading cargo"
+                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:min-w-0 2xl:w-full 2xl:flex-none 2xl:object-cover"/>
+                        <img src="assets/images/gazelkin-overview-call-center.png"
+                             alt="Call center operator"
+                             class="hidden aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:block md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                </div>
+                </div>
+
+                <div class="order-4 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/gazelkin-keyphrase-mark.png"
+                         alt=""
+                         class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">I created a <span class="font-medium">connected ecosystem for Gazelkin&rsquo;s drivers, dispatchers, call center, and customers,</span> powering thousands of daily deliveries with real-time visibility and seamless coordination.</p>
+                </div>
+            </div>
+
+            </div>
+
+        </section>
+
+        <section id="challenge" class="flex flex-col items-start gap-y-8 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 max-md:gap-y-0 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-4 xl:gap-y-6 2xl:gap-y-[40px] xl:min-w-0 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">The reality on the ground was messy. <span class="font-medium">Orders lived in chats, calls, and operator memory, with no shared system or structured data.</span> There were no user flows, no design system, and no UI foundations — everything had to be built from zero.</p>
+                </div>
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">At the same time, the <span class="font-medium">people using these tools were low-tech and under constant pressure.</span> Drivers had zero app experience. Operators juggled calls, notes, and mental math all day. New tools couldn&rsquo;t add confusion; they had to feel intuitive and trustworthy from day one.</p>
+                </div>
+                </div>
+                </div>
+
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            mt-8 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/gazelkin-keyphrase-mark.png"
+                         alt=""
+                         class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">A <span class="font-medium">fragmented system</span> with no shared data, no design foundation, and <span class="font-medium">users under constant pressure,</span> this was the real challenge.</p>
+                </div>
+
+                <img src="assets/images/gazelkin-challenge-team.png"
+                     alt="Gazelkin team at work"
+                     class="mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
+
+            </div>
+
+            </div>
+
+        </section>
+
+<section id="my-part" class="flex flex-col gap-y-0">
+            <div class="flex w-full max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+            <h2 class="section-header w-full">My Part in This</h2>
+
+            <div class="w-full max-w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
+                        <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="my-part-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">I worked across <span class="font-medium">every part of the system</span>: from the driver app to the customer site. To understand what really needed fixing, I spent time with drivers, operators, and dispatchers, <span class="font-medium">watching how they worked and where things broke down.</span></p>
+                            </div>
+                            <div class="my-part-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">It wasn&rsquo;t just about making screens look better, it was about <span class="font-medium">creating tools people actually wanted to use, even if they didn&rsquo;t trust tech to begin with.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="mt-6 flex w-full flex-col md:mt-8 xl:mt-10">
+            <button type="button" id="my-part-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="my-part-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="my-part-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">HOW I GOT IT DONE</span>
+            </button>
+
+            <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="my-part-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div>
+                                <span class="font-medium">Field research</span><br/>
+                                I mapped workflows on-site with drivers, operators, and dispatchers to see how information really moved through calls, chats, and spreadsheets.
+                            </div>
+                            <div>
+                                <span class="font-medium">Product &amp; systems design</span><br/>
+                                I shaped IA, flows, and UI across driver tools, operator dashboards, and customer touchpoints so roles stayed aligned in real time.
+                            </div>
+                            <div>
+                                <span class="font-medium">Prototyping &amp; validation</span><br/>
+                                I tested early builds with frontline teams and iterated until flows felt obvious under pressure, not just in the office.
+                            </div>
+                            <div>
+                                <span class="font-medium">Cross-functional delivery</span><br/>
+                                I partnered with PMs and engineers to ship incrementally, prioritize blockers, and keep business stakeholders aligned with what we learned in the field.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('my-part-acc-btn');
+                    var wrap = document.getElementById('my-part-acc-panel-wrap');
+                    var panel = document.getElementById('my-part-acc-panel');
+                    var arrow = document.getElementById('my-part-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="gazelkin-strip-map">
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-process-map.png" alt="Operations map and dashboards"/>
+        </section>
+
+        <section id="research" class="flex flex-col gap-y-0 -mt-2 md:mt-0">
+            <div class="flex w-full max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+            <h2 class="section-header w-full">Research &amp; Discovery</h2>
+
+            <div class="w-full max-w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
+                        <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="research-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">To design tools that worked in real operational chaos, I had to understand how Gazelkin&rsquo;s logistics actually functioned day to day. I started by <span class="font-medium">mapping existing workflows, sitting with drivers, operators, and dispatchers, and observing</span> how information moved through chats, calls, and mental shortcuts.</p>
+                            </div>
+                            <div class="research-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">Alongside on-site observations, I conducted <span class="font-medium">stakeholder interviews, desk research, and process audits</span> to understand the company&rsquo;s scaling challenges. By combining what people said with what they actually did, I identified <span class="font-medium">critical pain points, defined key user groups,</span> and set the direction for a whole system.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="mt-10 flex w-full max-w-full flex-col gap-y-6 md:mt-12 xl:mt-14 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <button type="button" id="research-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="research-acc-panel">
+                    <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                        <svg id="research-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span>
+                </button>
+
+                <div id="research-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                    <div class="min-h-0 overflow-hidden">
+                        <div id="research-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                            <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                <div>
+                                    <span class="font-medium">Shadowing &amp; contextual inquiry</span><br/>
+                                    I rode along on routes and sat next to operators to capture how exceptions were handled when systems failed.
+                                </div>
+                                <div>
+                                    <span class="font-medium">Process mapping</span><br/>
+                                    I turned informal habits into explicit journey maps so gaps between tools and reality were visible to the whole team.
+                                </div>
+                                <div>
+                                    <span class="font-medium">Stakeholder alignment</span><br/>
+                                    I ran structured interviews with dispatch, support, and leadership to connect business KPIs with frontline friction.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <img
+                src="assets/images/gazelkin-research-operations.png"
+                alt="Dispatcher during research"
+                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
+            />
+
+            <script>
+                (function () {
+                    var btn = document.getElementById("research-acc-btn");
+                    var wrap = document.getElementById("research-acc-panel-wrap");
+                    var panel = document.getElementById("research-acc-panel");
+                    var arrow = document.getElementById("research-acc-arrow");
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener("click", function () {
+                        var expanded = btn.getAttribute("aria-expanded") === "true";
+                        var next = !expanded;
+                        btn.setAttribute("aria-expanded", String(next));
+                        wrap.setAttribute("data-open", next ? "1" : "0");
+                        panel.setAttribute("data-open", next ? "1" : "0");
+                        if (arrow) arrow.classList.toggle("rotate-180", next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="research-scope-note" class="w-full">
+            <div class="mx-auto flex w-full max-w-[1280px] 2xl:max-w-[1440px] flex-col gap-y-4 rounded-[20px] bg-[#ECF1F4] px-6 py-12 text-center font-light text-5/8 text-[#303030] sm:px-8 md:px-10 md:py-14 xl:px-[80px] xl:py-16 2xl:px-[80px]">
+                <p class="text-[1.25rem] leading-8"><span aria-hidden="true">👋</span> Quick note before we start…</p>
+                <p>This case study covers the driver app and call center interface, but represents <span class="font-medium">just part of a larger transformation</span>. In parallel, I also led the redesign of the <span class="font-medium">customer-facing website and mobile app,</span> making it easier for people to book services, track deliveries, and get help without calling support.</p>
+                <p>I also collaborated with developers on refining the <span class="font-medium">internal logistics tool,</span> improving task visibility, fixing major UX blockers, and helping dispatchers work with less chaos. I&rsquo;m still organizing those flows, decisions, and results, and will be updating this case study soon with the full story.</p>
+            </div>
+        </section>
+
+        <section id="users-gazelkin" class="flex flex-col gap-y-0">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Understanding the Users</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:col-start-1 xl:row-start-2 xl:row-span-3 xl:min-h-0">
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-4 xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">The real insights didn&rsquo;t come from surveys, they came from <span class="font-medium">sitting in the call center at rush hour and riding along with drivers.</span> I watched operators manage a city&rsquo;s worth of deliveries through chat groups and memory. I saw drivers scribbling notes, calling in for updates, hoping nothing changed mid-route.</p>
+                </div>
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">These weren&rsquo;t abstract &ldquo;user groups&rdquo;, they were <span class="font-medium">people holding a complex system together through sheer effort.</span> What I saw in the field shaped every decision. My job was to <span class="font-medium">turn that invisible work into clear, reliable tools,</span> so every feature solved a real problem I&rsquo;d seen myself.</p>
+                </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-0 md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] mt-0 xl:mt-0">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/gazelkin-persona-driver.png" alt="" class="w-[88px] h-[88px] shrink-0 object-contain rounded-full"/>
+                        <div class="font-medium leading-tight self-center">Drivers UX Findings</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-6 font-light text-5/8">
+                        <p class="pb-3 md:pb-4 xl:pb-4"><span class="font-medium">Information gaps and low digital literacy made every delivery a guessing game.</span> Drivers relied on calls, notes, and memory to navigate their day — missing updates, making errors, and working without visibility into what came next.</p>
+                        <div class="flex flex-col gap-y-0">
+                        <button type="button" id="gzk-drv-meth-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="gzk-drv-meth-panel">
+                            <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                <svg id="gzk-drv-meth-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Methodology</span>
+                        </button>
+                        <div id="gzk-drv-meth-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                            <div class="min-h-0 overflow-hidden">
+                                <div id="gzk-drv-meth-panel" data-open="0" class="w-full max-w-full pt-4 pb-6 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                    <div class="flex flex-col gap-y-3 text-5/8">
+                                        <div><span class="font-medium">Ride-alongs</span><br/>Documented real routes, interruptions, and hand-offs between dispatch and drivers.</div>
+                                        <div><span class="font-medium">Call shadowing</span><br/>Captured how exceptions were communicated when systems disagreed with reality.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="flex flex-col gap-y-0">
+                        <button type="button" id="gzk-drv-det-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="gzk-drv-det-panel">
+                            <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                <svg id="gzk-drv-det-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                        </button>
+                        <div id="gzk-drv-det-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                            <div class="min-h-0 overflow-hidden">
+                                <div id="gzk-drv-det-panel" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                    <div class="flex flex-col gap-y-3 text-5/8">
+                                        <div><span class="font-medium">Fragmented updates</span><br/>Critical route changes often arrived late or through informal channels.</div>
+                                        <div><span class="font-medium">Cognitive load</span><br/>Drivers balanced paper lists, phone calls, and app notifications simultaneously.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-0 md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] mt-0">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/gazelkin-persona-operator.png" alt="" class="w-[88px] h-[88px] shrink-0 object-contain"/>
+                        <div class="font-medium leading-tight self-center">Operators UX Findings</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-6 font-light text-5/8">
+                        <p class="pb-3 md:pb-4 xl:pb-4"><span class="font-medium">Every delivery passed through their heads.</span> Operators were bombarded with calls and messages, constantly interrupted, and forced to keep the entire operation in their memory, without any shared system to lean on.</p>
+                        <div class="flex flex-col gap-y-0">
+                        <button type="button" id="gzk-op-meth-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="gzk-op-meth-panel">
+                            <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                <svg id="gzk-op-meth-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Methodology</span>
+                        </button>
+                        <div id="gzk-op-meth-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                            <div class="min-h-0 overflow-hidden">
+                                <div id="gzk-op-meth-panel" data-open="0" class="w-full max-w-full pt-4 pb-6 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                    <div class="flex flex-col gap-y-3 text-5/8">
+                                        <div><span class="font-medium">Desk observation</span><br/>Tracked multitasking patterns across ticketing, telephony, and spreadsheets.</div>
+                                        <div><span class="font-medium">Journey workshops</span><br/>Mapped escalation paths with supervisors to align UI states with SLA reality.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="flex flex-col gap-y-0">
+                        <button type="button" id="gzk-op-det-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="gzk-op-det-panel">
+                            <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                <svg id="gzk-op-det-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                        </button>
+                        <div id="gzk-op-det-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                            <div class="min-h-0 overflow-hidden">
+                                <div id="gzk-op-det-panel" data-open="0" class="w-full max-w-full pt-4 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                    <div class="flex flex-col gap-y-3 text-5/8">
+                                        <div><span class="font-medium">Invisible glue work</span><br/>Operators memorized exceptions that never made it into official tools.</div>
+                                        <div><span class="font-medium">Tool fragmentation</span><br/>Multiple monitors still required mental joins between systems.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            mt-2 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-3
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-3 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <p class="font-light text-5/8">&ldquo;I do six or seven jobs a day. If I miss something, it&rsquo;s my fault, even if no one told me about the change. The customer doesn&rsquo;t care where the mistake happened, they blame me.&rdquo;</p>
+                    <div class="text-[14px] leading-[20px] font-normal text-black">
+                        <div>Kirill</div>
+                        <div>Driver, St. Petersburg</div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    function wireAccordion(btnId, wrapId, panelId, arrowId) {
+                        var btn = document.getElementById(btnId);
+                        var wrap = document.getElementById(wrapId);
+                        var panel = document.getElementById(panelId);
+                        var arrow = document.getElementById(arrowId);
+                        if (!btn || !wrap || !panel) return;
+                        btn.addEventListener('click', function () {
+                            var expanded = btn.getAttribute('aria-expanded') === 'true';
+                            var next = !expanded;
+                            btn.setAttribute('aria-expanded', String(next));
+                            wrap.setAttribute('data-open', next ? '1' : '0');
+                            panel.setAttribute('data-open', next ? '1' : '0');
+                            if (arrow) arrow.classList.toggle('rotate-180', next);
+                        });
+                    }
+                    wireAccordion('gzk-drv-meth-btn', 'gzk-drv-meth-panel-wrap', 'gzk-drv-meth-panel', 'gzk-drv-meth-arrow');
+                    wireAccordion('gzk-drv-det-btn', 'gzk-drv-det-panel-wrap', 'gzk-drv-det-panel', 'gzk-drv-det-arrow');
+                    wireAccordion('gzk-op-meth-btn', 'gzk-op-meth-panel-wrap', 'gzk-op-meth-panel', 'gzk-op-meth-arrow');
+                    wireAccordion('gzk-op-det-btn', 'gzk-op-det-panel-wrap', 'gzk-op-det-panel', 'gzk-op-det-arrow');
+                })();
+            </script>
+        </section>
+
+        <section id="gazelkin-personas-hero">
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-personas-hero-driver.png" alt="Driver in delivery van"/>
+        </section>
+
+                <section id="learning" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Designing for the Road, Not the Office</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Designing for the Road, Not the Office</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">The driver interface wasn&rsquo;t designed in a vacuum, it was shaped by <span class="font-medium">real routes, real constraints, and the daily rhythm of delivery work.</span> Each feature had a clear purpose: <span class="font-medium">reduce confusion, save time, and build trust.</span> The focus was on practical solutions that fit into how drivers actually worked, not how we wished they did.</p>
+                </div>
+
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">Each decision addressed a <span class="font-medium">specific pain point</span>, from missed updates to unclear job details and constant back-and-forth with dispatch. <span class="font-medium">Together, these changes turned a messy process into a structured, reliable tool.</span></p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+            <button type="button" id="road-decisions-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="road-decisions-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="road-decisions-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed Design Decisions</span>
+            </button>
+
+            <div id="road-decisions-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="road-decisions-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Job clarity first</span><br/>Structured job cards so drivers always saw status, pickup, and delivery in one glance.</div>
+                            <div><span class="font-medium">Offline-tolerant flows</span><br/>Reduced dependency on perfect connectivity for critical steps.</div>
+                            <div><span class="font-medium">Human tone</span><br/>Microcopy reflected how dispatchers actually spoke on the radio.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:order-4 md:gap-y-[16px]">
+                <img src="assets/images/gazelkin-road-app-hero.png"
+                     alt="Driver app on device in vehicle"
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+
+                <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/gazelkin-road-drivers-collab.png"
+                             alt="Drivers reviewing the app together"
+                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:min-w-0 2xl:w-full 2xl:flex-none 2xl:object-cover"/>
+                        <img src="assets/images/gazelkin-road-hand-device.png"
+                             alt="Driver using phone in cab"
+                             class="hidden aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:block md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col gap-y-6 md:gap-y-8 xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] font-light text-5/8 order-5 md:order-5">
+                    <p class="min-w-0">Even though the driver app solved the core problems, I often think about what I&rsquo;d improve if I were designing it today.</p>
+                    <p class="min-w-0">With more time and resources, there are features that could make the experience even clearer, safer, and more motivating for drivers.</p>
+                </div>
+
+                <div class="flex w-full flex-col order-6 mt-5 mb-0 md:order-6 md:mt-0">
+            <button type="button" id="road-add-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="road-add-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="road-add-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I&rsquo;d Add Today</span>
+            </button>
+
+            <div id="road-add-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="road-add-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Proactive nudges</span><br/>Smarter reminders before risk moments (traffic, late pickup windows).</div>
+                            <div><span class="font-medium">Earnings transparency</span><br/>Even richer breakdowns per job to reinforce trust.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+                </div>
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/gazelkin-keyphrase-mark.png" alt="" class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">Drivers adopted the app immediately, without training, and quickly embraced it as <span class="font-medium">something that made their days easier.</span></p>
+                </div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    function wire(btnId, wrapId, panelId, arrowId) {
+                        var btn = document.getElementById(btnId);
+                        var wrap = document.getElementById(wrapId);
+                        var panel = document.getElementById(panelId);
+                        var arrow = document.getElementById(arrowId);
+                        if (!btn || !wrap || !panel) return;
+                        btn.addEventListener('click', function () {
+                            var expanded = btn.getAttribute('aria-expanded') === 'true';
+                            var next = !expanded;
+                            btn.setAttribute('aria-expanded', String(next));
+                            wrap.setAttribute('data-open', next ? '1' : '0');
+                            panel.setAttribute('data-open', next ? '1' : '0');
+                            if (arrow) arrow.classList.toggle('rotate-180', next);
+                        });
+                    }
+                    wire('road-decisions-acc-btn', 'road-decisions-acc-panel-wrap', 'road-decisions-acc-panel', 'road-decisions-acc-arrow');
+                    wire('road-add-acc-btn', 'road-add-acc-panel-wrap', 'road-add-acc-panel', 'road-add-acc-arrow');
+                })();
+            </script>
+        </section>
+
+        <section id="operator" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Optimizing the Operator Experience</h2>
+                </div>
+
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Optimizing the Operator Experience</h2>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0"><span class="font-medium">Operators were the ones holding everything together.</span> They worked through calls, chats, and sheer memory to keep deliveries moving, making quick decisions without the tools to support them. It was fast, messy, and exhausting — but they made it work.</p>
+                </div>
+
+                <div class="overview-text-2 order-2 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">My goal was to take that invisible, improvised process and turn it into a clear, structured flow. Instead of juggling a dozen tabs and phone calls, <span class="font-medium">operators now had one place that guided their actions,</span> reduced mental load, and gave them confidence.</p>
+                </div>
+                </div>
+
+                <div class="flex w-full flex-col mt-5 mb-0 md:mt-0">
+            <button type="button" id="op-decisions-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="op-decisions-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="op-decisions-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed Design Decisions</span>
+            </button>
+
+            <div id="op-decisions-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="op-decisions-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Single queue truth</span><br/>Unified statuses so everyone referenced the same delivery state.</div>
+                            <div><span class="font-medium">Escalation clarity</span><br/>Surfaced severity so operators could triage without re-reading threads.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+
+                <div class="w-full">
+                <img src="assets/images/gazelkin-operator-focus.png"
+                     alt="Operator at workstation"
+                     class="overview-img-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                </div>
+
+                <div class="flex w-full flex-col gap-y-6 md:gap-y-8 xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] font-light text-5/8">
+                    <p class="min-w-0">I&rsquo;m proud of how much the tools improved operators&rsquo; daily work, giving structure to what used to be improvised under pressure.</p>
+                    <p class="min-w-0">But with distance, I can see new opportunities to push the experience even further.</p>
+                </div>
+
+                <div class="flex w-full flex-col mt-5 mb-0 md:mt-0">
+            <button type="button" id="op-add-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="op-add-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="op-add-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I&rsquo;d Add Today</span>
+            </button>
+
+            <div id="op-add-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="op-add-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Predictive alerts</span><br/>Highlighting risk before it hits the call queue.</div>
+                            <div><span class="font-medium">Collaboration traces</span><br/>Lightweight history of who changed what for faster handoffs.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+                </div>
+
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                            flex flex-col gap-y-6
+                            md:order-3 md:mt-4 xl:mt-0
+                            xl:col-start-2 xl:row-start-2 xl:row-span-2
+                            2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/gazelkin-keyphrase-mark.png" alt="" class="h-[56px] w-[30px] shrink-0"/>
+                    <p class="font-light text-5/8">Operators could finally focus on <span class="font-medium">resolving real issues</span> rather than relaying information.</p>
+                </div>
+            </div>
+
+            </div>
+
+            <script>
+                (function () {
+                    function wire(btnId, wrapId, panelId, arrowId) {
+                        var btn = document.getElementById(btnId);
+                        var wrap = document.getElementById(wrapId);
+                        var panel = document.getElementById(panelId);
+                        var arrow = document.getElementById(arrowId);
+                        if (!btn || !wrap || !panel) return;
+                        btn.addEventListener('click', function () {
+                            var expanded = btn.getAttribute('aria-expanded') === 'true';
+                            var next = !expanded;
+                            btn.setAttribute('aria-expanded', String(next));
+                            wrap.setAttribute('data-open', next ? '1' : '0');
+                            panel.setAttribute('data-open', next ? '1' : '0');
+                            if (arrow) arrow.classList.toggle('rotate-180', next);
+                        });
+                    }
+                    wire('op-decisions-acc-btn', 'op-decisions-acc-panel-wrap', 'op-decisions-acc-panel', 'op-decisions-acc-arrow');
+                    wire('op-add-acc-btn', 'op-add-acc-panel-wrap', 'op-add-acc-panel', 'op-add-acc-arrow');
+                })();
+            </script>
+        </section>
+
+        <section id="gazelkin-strip-dashboards">
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-results-dashboards-wide.png" alt="Operations dashboards"/>
+        </section>
+
+<section id="results-drivers" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+
+    <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+
+    <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+
+        <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+            <h2 class="section-header w-full max-md:leading-[1.02] results-mobile-tight">Results for Drivers: Less Chaos, More Delivery</h2>
+        </div>
+
+        <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for Drivers: Less Chaos, More Delivery</h2>
+
+        <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+        <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+            <p class="min-w-0">As soon as the app made it into drivers&rsquo; hands, it began to <span class="font-medium">resolve real pain points, and the impact was evident on day one.</span> Drivers no longer had to rely on constant calls or vague instructions: essential info and updates became available at their fingertips.</p>
+        </div>
+
+        <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+            <p class="min-w-0">Because drivers got clearer workflows, transparent earnings, and better feedback loops, <span class="font-medium">miscommunications dropped, productivity rose, and trust in the system increased.</span> Over just a few weeks, the data showed that the new solution wasn&rsquo;t just nice to have — it made their work measurably easier and more reliable.</p>
+        </div>
+        </div>
+
+        <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+    <button type="button" id="res-drv-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="res-drv-acc-panel">
+        <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+            <svg id="res-drv-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span>
+    </button>
+
+    <div id="res-drv-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+        <div class="min-h-0 overflow-hidden">
+            <div id="res-drv-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <div class="flex flex-col gap-y-4 font-light text-5/8">
+                    <div><span class="font-medium">Fewer coordination calls</span><br/>Self-serve status cut repetitive check-ins with dispatch.</div>
+                    <div><span class="font-medium">Higher completion rates</span><br/>Drivers finished more jobs per shift with fewer returns.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+
+        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+        <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                <img src="assets/images/gazelkin-results-driver-portrait.png"
+                     alt="Driver portrait"
+                     class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                <img src="assets/images/gazelkin-results-driver-scene.png"
+                     alt="Drivers in the field"
+                     class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+        </div>
+        </div>
+        </div>
+
+        <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                    max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                    flex flex-col gap-y-6
+                    mt-2 md:mt-4 xl:mt-0
+                    xl:col-start-2 xl:row-start-2 xl:row-span-2
+                    2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                    2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+            <p class="font-light text-5/8">&ldquo;Feels good not having to stop and call someone for every little thing.&rdquo;</p>
+            <div class="text-[14px] leading-[20px] font-normal text-black">
+                <div>Stanislav</div>
+                <div>Driver, St. Petersburg</div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        (function () {
+            var btn = document.getElementById('res-drv-acc-btn');
+            var wrap = document.getElementById('res-drv-acc-panel-wrap');
+            var panel = document.getElementById('res-drv-acc-panel');
+            var arrow = document.getElementById('res-drv-acc-arrow');
+            if (!btn || !wrap || !panel) return;
+            btn.addEventListener('click', function () {
+                var expanded = btn.getAttribute('aria-expanded') === 'true';
+                var next = !expanded;
+                btn.setAttribute('aria-expanded', String(next));
+                wrap.setAttribute('data-open', next ? '1' : '0');
+                panel.setAttribute('data-open', next ? '1' : '0');
+                if (arrow) arrow.classList.toggle('rotate-180', next);
+            });
+        })();
+    </script>
+</section>
+
+<section id="results-operators" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+    <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+        <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                <h2 class="section-header w-full max-md:leading-[1.02] results-mobile-tight">Results for Operators: Calm in the Control Room</h2>
+            </div>
+
+            <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for Operators: Calm in the Control Room</h2>
+
+            <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                    <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                        <p class="min-w-0">Before the redesign, operators were buried under repetitive calls, manual order tracking, and constant stress from unpredictable schedules. <span class="font-medium">Every day felt like firefighting</span> — answering the same questions, updating spreadsheets, and managing chaos instead of operations.</p>
+                    </div>
+
+                    <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                        <p class="min-w-0">With the <span class="font-medium">new dashboard, daily workflows became structured and transparent.</span> Real-time driver statuses, instant alerts, and automated route updates turned routine control into proactive management.</p>
+                    </div>
+                </div>
+
+                <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+                    <button type="button" id="res-op-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="res-op-acc-panel">
+                        <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                            <svg id="res-op-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span>
+                    </button>
+
+                    <div id="res-op-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                        <div class="min-h-0 overflow-hidden">
+                            <div id="res-op-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                    <div><span class="font-medium">Shared situational awareness</span><br/>Everyone referenced the same live map of exceptions.</div>
+                                    <div><span class="font-medium">Less swivel-chair work</span><br/>Fewer hops between spreadsheets and telephony.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                    <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/gazelkin-results-operator-portrait.png"
+                             alt="Operator portrait"
+                             class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/gazelkin-results-operator-scene.png"
+                             alt="Operators at work"
+                             class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                        max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                        flex flex-col gap-y-6
+                        mt-2 md:mt-4 xl:mt-0
+                        xl:col-start-2 xl:row-start-2 xl:row-span-2
+                        2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                        2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                <p class="font-light text-5/8">&ldquo;We used to get so many complaints because the prices didn&rsquo;t match or orders got mixed up. Now everything&rsquo;s clear, and the calls go smoother.&rdquo;</p>
+                <div class="text-[14px] leading-[20px] font-normal text-black">
+                    <div>Viktoria</div>
+                    <div>Operator, St. Petersburg</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var btn = document.getElementById('res-op-acc-btn');
+            var wrap = document.getElementById('res-op-acc-panel-wrap');
+            var panel = document.getElementById('res-op-acc-panel');
+            var arrow = document.getElementById('res-op-acc-arrow');
+            if (!btn || !wrap || !panel) return;
+            btn.addEventListener('click', function () {
+                var expanded = btn.getAttribute('aria-expanded') === 'true';
+                var next = !expanded;
+                btn.setAttribute('aria-expanded', String(next));
+                wrap.setAttribute('data-open', next ? '1' : '0');
+                panel.setAttribute('data-open', next ? '1' : '0');
+                if (arrow) arrow.classList.toggle('rotate-180', next);
+            });
+        })();
+    </script>
+</section>
+
+<section id="business-impact" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+    <div class="flex w-full max-w-full flex-col gap-y-8 md:gap-y-[48px] xl:gap-y-[48px] 2xl:gap-y-[48px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+        <h2 class="section-header w-full">Business Impact</h2>
+        <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
+            <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] font-light text-5/8">
+                <p class="min-w-0 2xl:min-w-0">The redesign turned Gazelkin into a <span class="font-medium">unified, data-driven logistics ecosystem.</span> Real-time synchronization across driver, operator, dispatcher, and customer tools made <span class="font-medium">operations faster, communication seamless, and data transparent.</span></p>
+                <p class="min-w-0 2xl:min-w-0">Automation reduced manual work, improved accuracy, and <span class="font-medium">enabled smarter, scalable growth.</span> The new connected system strengthened efficiency, customer trust, and brand consistency across every touchpoint.</p>
+            </div>
+        </div>
+        <div class="flex w-full flex-col mt-5 mb-0 md:mt-0">
+            <button type="button" id="biz-impact-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="biz-impact-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="biz-impact-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span>
+            </button>
+            <div id="biz-impact-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="biz-impact-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Dispatcher load</span><br/>Meaningful drop in repetitive coordination calls after launch.</div>
+                            <div><span class="font-medium">Adoption</span><br/>Drivers picked up the app in weeks without formal classroom training.</div>
+                            <div><span class="font-medium">Quality</span><br/>Fewer customer callbacks tied to unclear order or pricing state.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full max-w-full xl:max-w-[856px] 2xl:max-w-[1048px]">
+            <img src="assets/images/gazelkin-business-impact-delivery.png" alt="Delivery in motion" class="w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var btn = document.getElementById('biz-impact-acc-btn');
+            var wrap = document.getElementById('biz-impact-acc-panel-wrap');
+            var panel = document.getElementById('biz-impact-acc-panel');
+            var arrow = document.getElementById('biz-impact-acc-arrow');
+            if (!btn || !wrap || !panel) return;
+            btn.addEventListener('click', function () {
+                var expanded = btn.getAttribute('aria-expanded') === 'true';
+                var next = !expanded;
+                btn.setAttribute('aria-expanded', String(next));
+                wrap.setAttribute('data-open', next ? '1' : '0');
+                panel.setAttribute('data-open', next ? '1' : '0');
+                if (arrow) arrow.classList.toggle('rotate-180', next);
+            });
+        })();
+    </script>
+</section>
+
+<section id="reflections" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Reflections &amp; Learnings</h2>
+                    </div>
+
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Reflections &amp; Learnings</h2>
+
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Gazelkin reinforced something I keep coming back to: <span class="font-medium">operations software is only as good as the clarity it gives people under pressure.</span> Drivers, operators, and dispatchers were not asking for novelty — they needed fewer interruptions, less guesswork, and a shared picture of what was happening on the ground.</p>
+                            </div>
+
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">The hardest part was not drawing screens; it was <span class="font-medium">stitching fragmented workflows into one believable system</span> that teams could trust day after day. When that trust showed up in calmer calls, faster handoffs, and fewer “what now?” moments, <span class="font-medium">it felt like design doing what it is supposed to do.</span></p>
+                            </div>
+                        </div>
+
+                        <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+                            <button type="button" id="reflections-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="reflections-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="reflections-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">More reflections</span>
+                            </button>
+
+                            <div id="reflections-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="reflections-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div>
+                                                <span class="font-medium">Field reality beats desk assumptions</span><br/>
+                                                Small delays, unclear pricing, and noisy communication showed up in interviews long before they showed up in tickets. Designing from those moments kept the work grounded.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Two audiences, one operational truth</span><br/>
+                                                Drivers and operators needed different surfaces, but they had to stay aligned. The breakthrough was making status, exceptions, and accountability visible in both places without duplication.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Speed is a trust product</span><br/>
+                                                When updates felt immediate and legible, people stopped improvising workarounds. Trust came from responsiveness as much as from visual polish.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Details are the system</span><br/>
+                                                Microcopy, notification timing, and default states were where the experience succeeded or failed. Logistics UX is mostly edge cases handled gracefully.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                            <img src="assets/images/gazelkin-reflections-logistics.png"
+                                 alt="Logistics operations and reflection"
+                                 class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                        </div>
+                    </div>
+
+                    <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                                max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
+                                flex flex-col gap-y-6
+                                md:order-3 md:mt-4 xl:mt-0
+                                xl:col-start-2 xl:row-start-2 xl:row-span-2
+                                2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                                2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                        <img src="assets/images/gazelkin-keyphrase-mark.png"
+                             alt="Gazelkin"
+                             class="h-[56px] w-[30px] shrink-0"/>
+                        <p class="font-light text-5/8">When the work quietly removes friction from someone&rsquo;s day, <span class="font-medium">that is the outcome I want to keep chasing.</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('reflections-acc-btn');
+                    var wrap = document.getElementById('reflections-acc-panel-wrap');
+                    var panel = document.getElementById('reflections-acc-panel');
+                    var arrow = document.getElementById('reflections-acc-arrow');
+                    if (!btn || !wrap || !panel) return;
+                    btn.addEventListener('click', function () {
+                        var expanded = btn.getAttribute('aria-expanded') === 'true';
+                        var next = !expanded;
+                        btn.setAttribute('aria-expanded', String(next));
+                        wrap.setAttribute('data-open', next ? '1' : '0');
+                        panel.setAttribute('data-open', next ? '1' : '0');
+                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    });
+                })();
+            </script>
+        </section>
+
+        <section id="gazelkin-hard-way" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 mb-[80px] xl:mb-[120px]">
+            <div class="w-full flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-10 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+                <h2 class="section-header w-full">What I learned the hard way</h2>
+                <div class="flex w-full flex-col gap-y-6 font-light text-5/8 md:gap-y-8 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                    <p class="min-w-0 2xl:min-w-0">This project taught me one of the <span class="font-medium">toughest lessons in my career</span>, that even the most thoughtful, well-tested <span class="font-medium">design can&rsquo;t survive when the business behind it is unstable.</span> The UX worked, the data proved it, and people loved using the tools. But when internal processes, incentives, and leadership alignment start to collapse, even great design can&rsquo;t hold everything together.</p>
+                    <p class="min-w-0 2xl:min-w-0">It&rsquo;s a hard truth that changed how I think about impact. I realized that sustainable design isn&rsquo;t just about what users do, it&rsquo;s about what the organization is capable of maintaining. The full story is something I usually share in person, but it shaped how I now approach every project: with <span class="font-medium">equal attention to systems, people, and the business reality around them.</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- #next-project: previous / next project navigation -->
+        <section id="next-project" class="flex flex-col gap-y-6 md:gap-y-8 mb-[-120px] md:mb-[-80px] xl:mb-[-104px] 2xl:mb-[-120px]">
+            <nav class="next-project-nav flex flex-col gap-y-6 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8" aria-label="Adjacent projects">
+                <a class="next-project-link next-project-prev card-detail no-underline" href="#"></a>
+                <a class="next-project-link next-project-next card-detail no-underline sm:text-right" href="#"></a>
+            </nav>
+        </section>
+
+    </main>
+
+</div>
+
+    <style>
+        .proj-nav-link { position: relative; }
+        .proj-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0; bottom: -7px;
+            width: 100%; height: 3px;
+            background-color: var(--color-accent-yellow);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .proj-nav-link-right::after { transform-origin: right; }
+        .group:hover .proj-nav-link::after { transform: scaleX(1); }
+
+        #case-side-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 320px;
+            padding: 48px 56px 56px 56px;
+            background: #FFFFFF;
+            border: 1px solid #DEE6F5;
+            border-radius: 20px;
+            z-index: 0;
+            opacity: 0;
+            --case-nav-overlap-opacity: 1;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity 0.55s ease, transform 0.55s ease, height 0.25s ease, padding 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        #case-side-nav.is-visible {
+            opacity: var(--case-nav-overlap-opacity);
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        #case-side-nav nav {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: opacity 0.3s ease, max-height 0.3s ease, transform 0.3s ease;
+            max-height: 420px;
+            overflow: visible;
+        }
+
+        #case-side-nav .case-side-nav-toggle {
+            position: absolute;
+            top: 64px;
+            right: 56px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            cursor: pointer;
+            transition: color 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+            z-index: 2;
+            padding: 0;
+            transform: translateY(-50%);
+        }
+
+        #case-side-nav .case-side-nav-toggle-icon {
+            width: 16px;
+            height: 22px;
+            display: block;
+            opacity: 1;
+            filter: none;
+            transition: none;
+        }
+
+        #case-side-nav .case-side-nav-toggle:hover {
+            background-color: transparent;
+        }
+
+        #case-side-nav .case-side-nav-toggle:hover .case-side-nav-toggle-icon {
+            filter: brightness(0) saturate(100%) invert(15%) sepia(97%) saturate(6437%) hue-rotate(232deg) brightness(99%) contrast(118%);
+        }
+
+        #case-side-nav.is-collapsed {
+            padding: 24px 56px;
+        }
+
+        #case-side-nav.is-collapsed nav {
+            opacity: 1;
+            max-height: 32px;
+            transform: translateY(0);
+            gap: 0;
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-toggle {
+            top: 40px;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-indicator {
+            opacity: 0 !important;
+        }
+
+        #case-side-nav .case-side-nav-indicator {
+            position: absolute;
+            left: -57px;
+            top: 0;
+            width: 6px;
+            height: 40px;
+            border-radius: 3px;
+            background: var(--color-accent-yellow);
+            transform: translateY(0);
+            opacity: 0;
+            transition: transform 0.35s ease, opacity 0.2s ease;
+            will-change: transform;
+        }
+
+        #case-side-nav .case-side-nav-link {
+            position: relative;
+            display: block;
+            font-size: 1.25rem;
+            line-height: 2rem;
+            font-weight: 300;
+            color: #667284;
+            text-decoration: none;
+            opacity: 1;
+            max-height: 40px;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: color 0.25s ease, opacity 0.25s ease, max-height 0.25s ease, transform 0.25s ease;
+        }
+
+        #case-side-nav .case-side-nav-link:hover {
+            color: #0016F2;
+        }
+
+        #case-side-nav .case-side-nav-link.is-active {
+            color: #0016F2;
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-link {
+            opacity: 0;
+            max-height: 0;
+            pointer-events: none;
+            transform: translateY(-4px);
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-link.is-active {
+            color: #667284;
+            opacity: 1;
+            max-height: 40px;
+            pointer-events: auto;
+            transform: translateY(0);
+            padding-right: 32px;
+        }
+
+        main img,
+        main [class*="bg-[#ECF1F4]"] {
+            position: relative;
+            z-index: 2;
+        }
+
+        [data-parallax-wrap] {
+            overflow: hidden;
+            position: relative;
+            z-index: 4;
+        }
+
+        [data-parallax-image] {
+            will-change: transform;
+            transform: scale(1.08);
+            transform-origin: center;
+            position: relative;
+            z-index: 4;
+        }
+
+        @media (min-width: 1536px) {
+            #case-side-nav {
+                width: 352px;
+            }
+        }
+    </style>
+    <div class="full-bleed bg-[#FFF2D7] h-[128px] flex items-center px-6 sm:px-8 md:px-10 xl:px-0 2xl:px-0">
+        <div class="w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto flex items-center justify-between xl:px-6 2xl:px-0">
+            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+                <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 13L1 7L7 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
+                    </svg>
+                </span>
+                <span class="proj-nav-link font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Previous<span class="hidden min-[500px]:inline"> Project</span></span>
+            </a>
+            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+                <span class="proj-nav-link proj-nav-link-right font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Next<span class="hidden min-[500px]:inline"> Project</span></span>
+                <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L7 7L1 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="site-footer full-bleed bg-[#0007B2] text-white mt-0 xl:mt-0 flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
+        <div class="footer-inner flex items-center
+                w-full
+                max-w-[1280px]
+                2xl:max-w-[1440px]
+                mx-auto
+                flex-col
+                items-center
+                gap-y-4
+                px-4
+                sm:px-8
+                lg:flex-row
+                lg:items-center
+                lg:justify-between
+                lg:gap-y-0
+                xl:px-6
+                2xl:px-0
+                ">
+            <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#work">Work</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#about">About</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#contact">Contact</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#resume">Resume</a>
+            </nav>
+            <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
+                <div class="footer-email transition-colors duration-300 hover:text-accent-yellow">hello@peppered.design</div>
+                <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                    <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        const menuTween = gsap.timeline({paused: true})
+            .to(".menulink", {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                stagger: 0.1,
+                ease: "power2.out"
+            })
+            .to("#burgermiddle", {opacity:0, duration: .25}, 0)
+            .to("#burgertop", {y: "10.9375px", transformOrigin:"50% 50%", rotation: 45, duration: .25}, 0)
+            .to("#burgerbottom", {transformOrigin:"50% 50%", rotation: -45, duration: .25}, 0);
+
+        const header = document.querySelector("header");
+        let isMenuOpen = false;
+
+        const burger = document.querySelector("#burger");
+        if (burger && header) {
+            burger.addEventListener("click", (event) => {
+                event.stopPropagation();
+                document.body.parentElement.classList.toggle('stop-scrolling');
+                header.classList.toggle("menu-open");
+                if (!isMenuOpen) {
+                    menuTween.restart();
+                } else {
+                    menuTween.reverse();
+                }
+                isMenuOpen = !isMenuOpen;
+            });
+            document.querySelectorAll('header nav .menulink').forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (isMenuOpen) {
+                        document.body.parentElement.classList.remove('stop-scrolling');
+                        menuTween.reverse();
+                        header.classList.remove('menu-open');
+                        isMenuOpen = false;
+                    }
+                });
+            });
+        }
+
+        document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
+            const id = trigger.getAttribute("aria-controls");
+            const panel = id ? document.getElementById(id) : null;
+            if (!panel) return;
+            trigger.addEventListener("click", () => {
+                const expanded = trigger.getAttribute("aria-expanded") === "true";
+                trigger.setAttribute("aria-expanded", String(!expanded));
+                panel.hidden = expanded;
+            });
+        });
+
+        if (!reducedMotion) {
+            const parallaxImages = gsap.utils.toArray("[data-parallax-image]");
+            parallaxImages.forEach((img) => {
+                const wrap = img.closest("[data-parallax-wrap]") || img.parentElement;
+                if (!wrap) return;
+                gsap.fromTo(
+                    img,
+                    { yPercent: -14, scale: 1.12 },
+                    {
+                        yPercent: 14,
+                        scale: 1.12,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: wrap,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true,
+                        },
+                    }
+                );
+            });
+        }
+
+        const sideNav = document.getElementById("case-side-nav");
+        const overviewSection = document.getElementById("overview");
+        const overviewCard = overviewSection ? overviewSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
+        const reflectionsSection = document.getElementById("reflections");
+        const reflectionsCard = reflectionsSection ? reflectionsSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
+        const hardWaySection = document.getElementById("gazelkin-hard-way");
+        const sectionScrollIds = [
+            "overview",
+            "my-part",
+            "research",
+            "users-gazelkin",
+            "learning",
+            "operator",
+            "gazelkin-strip-dashboards",
+            "results-drivers",
+            "results-operators",
+            "business-impact",
+            "reflections",
+            "gazelkin-hard-way",
+        ];
+        const sectionNodes = sectionScrollIds.map((id) => document.getElementById(id)).filter(Boolean);
+
+        function navTargetForSectionId(sectionId) {
+            if (sectionId === "users-gazelkin" || sectionId === "operator" || sectionId === "gazelkin-strip-dashboards") {
+                return "learning";
+            }
+            if (
+                sectionId === "results-drivers" ||
+                sectionId === "results-operators" ||
+                sectionId === "business-impact"
+            ) {
+                return "impact";
+            }
+            return sectionId;
+        }
+        const sideNavLinks = sideNav ? Array.from(sideNav.querySelectorAll(".case-side-nav-link")) : [];
+        const sideNavIndicator = sideNav ? sideNav.querySelector(".case-side-nav-indicator") : null;
+        const sideNavToggle = document.getElementById("case-side-nav-toggle");
+        const sideNavMenu = document.getElementById("case-side-nav-menu");
+        const overlapBlockers = Array.from(document.querySelectorAll(
+            '[data-parallax-wrap], [data-parallax-wrap] img, main section > img, main img.overview-img-1, main img.overview-img-2, main img.overview-img-3, main [class*="bg-[#ECF1F4]"]'
+        ));
+
+        if (sideNav && overviewSection && overviewCard && reflectionsSection && sideNavLinks.length) {
+            const STICKY_OFFSET = 120;
+            const SCROLL_OFFSET = 120;
+            const INITIAL_GAP = 48;
+            const END_OFFSET = 120;
+            const ANCHOR_HOLD_MS = 700;
+            let ticking = false;
+            let visible = false;
+            let initialDocTop = 0;
+            let initialized = false;
+            let pendingAnchorDocTop = null;
+            let pendingAnchorUntil = 0;
+
+            function clamp(value, min, max) {
+                return Math.min(Math.max(value, min), max);
+            }
+
+            function absTop(node) {
+                return node.getBoundingClientRect().top + window.scrollY;
+            }
+
+            function setActiveLink(scrollY) {
+                const markerY = scrollY + window.innerHeight * 0.35;
+                let activeId = "overview";
+                sectionNodes.forEach((node) => {
+                    if (node && absTop(node) <= markerY) {
+                        activeId = node.id;
+                    }
+                });
+                const navActiveTarget = navTargetForSectionId(activeId);
+                let activeLink = null;
+                sideNavLinks.forEach((link) => {
+                    const isActive = link.getAttribute("data-target") === navActiveTarget;
+                    link.classList.toggle("is-active", isActive);
+                    if (isActive) activeLink = link;
+                });
+                if (sideNavIndicator && activeLink && sideNavMenu) {
+                    const menuRect = sideNavMenu.getBoundingClientRect();
+                    const activeRect = activeLink.getBoundingClientRect();
+                    const indicatorHeight = sideNavIndicator.offsetHeight || 40;
+                    const activeCenterY = activeRect.top - menuRect.top + activeRect.height / 2;
+                    const indicatorY = activeCenterY - indicatorHeight / 2;
+                    sideNavIndicator.style.transform = "translateY(" + indicatorY + "px)";
+                    sideNavIndicator.style.opacity = sideNav.classList.contains("is-collapsed") ? "0" : "1";
+                }
+                return activeId;
+            }
+
+            function ensureInitialized() {
+                if (initialized) return;
+                const cardTop = absTop(overviewCard);
+                initialDocTop = cardTop + overviewCard.offsetHeight + INITIAL_GAP;
+                initialized = true;
+            }
+
+            function setupSmoothScroll() {
+                function easeInOutCubic(t) {
+                    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                }
+
+                function smoothScrollTo(targetTop, onComplete) {
+                    if (typeof window.__pepperedLenisScrollTo === "function") {
+                        const didScroll = window.__pepperedLenisScrollTo(targetTop, {
+                            immediate: false,
+                            force: true
+                        });
+                        if (didScroll) {
+                            if (typeof window.__pepperedLenisOnScrollComplete === "function") {
+                                window.__pepperedLenisOnScrollComplete(onComplete);
+                            } else if (typeof onComplete === "function") {
+                                window.setTimeout(onComplete, 850);
+                            }
+                            return;
+                        }
+                    }
+
+                    const startTop = window.scrollY || window.pageYOffset;
+                    const distance = targetTop - startTop;
+                    if (Math.abs(distance) < 1) {
+                        if (typeof onComplete === "function") onComplete();
+                        return;
+                    }
+                    const duration = 800;
+                    const startTime = performance.now();
+
+                    function tick(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = easeInOutCubic(progress);
+                        window.scrollTo(0, startTop + distance * eased);
+                        if (progress < 1) {
+                            window.requestAnimationFrame(tick);
+                        } else if (typeof onComplete === "function") {
+                            onComplete();
+                        }
+                    }
+
+                    window.requestAnimationFrame(tick);
+                }
+
+                sideNavLinks.forEach((link) => {
+                    link.addEventListener("click", (event) => {
+                        event.preventDefault();
+                        const targetId = link.getAttribute("data-target");
+                        if (!targetId) return;
+                        const scrollSectionId = targetId === "impact" ? "results-drivers" : targetId;
+                        const targetNode = document.getElementById(scrollSectionId);
+                        if (!targetNode) return;
+                        const targetTop = absTop(targetNode) - SCROLL_OFFSET;
+                        const useKeyphraseLanding = targetId === "impact";
+                        if (!useKeyphraseLanding) {
+                            pendingAnchorDocTop = null;
+                            pendingAnchorUntil = 0;
+                        }
+                        if (sideNav.classList.contains("is-collapsed")) {
+                            sideNav.classList.remove("is-collapsed");
+                            if (sideNavToggle) sideNavToggle.setAttribute("aria-expanded", "true");
+                        }
+                        requestUpdate();
+                        const clampedTop = Math.max(0, targetTop);
+                        smoothScrollTo(clampedTop, () => {
+                            if (!useKeyphraseLanding) return;
+                            const anchorTop = getSectionKeyphraseAnchorTop(scrollSectionId);
+                            if (anchorTop === null) return;
+                            pendingAnchorDocTop = anchorTop;
+                            pendingAnchorUntil = performance.now() + ANCHOR_HOLD_MS;
+                            requestUpdate();
+                        });
+                    });
+                });
+            }
+
+            function setupCollapseToggle() {
+                if (!sideNavToggle) return;
+                sideNavToggle.addEventListener("click", () => {
+                    const isCollapsed = sideNav.classList.toggle("is-collapsed");
+                    sideNavToggle.setAttribute("aria-expanded", String(!isCollapsed));
+                    requestUpdate();
+                    window.setTimeout(requestUpdate, 320);
+                });
+            }
+
+            function getSectionKeyphraseAnchorTop(sectionId) {
+                if (sectionId !== "results-drivers") return null;
+                const targetSection = document.getElementById(sectionId);
+                if (!targetSection) return null;
+                const localCard = targetSection.querySelector('div[class*="bg-[#ECF1F4]"]');
+                if (!localCard) return null;
+                return absTop(localCard) + localCard.offsetHeight + INITIAL_GAP;
+            }
+
+            function overlapRatio(a, b) {
+                const overlapWidth = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+                const overlapHeight = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+                return (overlapWidth * overlapHeight) / Math.max(1, a.width * a.height);
+            }
+
+            function getOverlapOpacity() {
+                const navRect = sideNav.getBoundingClientRect();
+                if (!navRect.width || !navRect.height) return 1;
+                let maxRatio = 0;
+                overlapBlockers.forEach((blocker) => {
+                    if (!blocker) return;
+                    const rect = blocker.getBoundingClientRect();
+                    if (rect.bottom <= 0 || rect.top >= window.innerHeight || rect.right <= 0 || rect.left >= window.innerWidth) return;
+                    maxRatio = Math.max(maxRatio, overlapRatio(navRect, rect));
+                });
+                return clamp(1 - maxRatio * 0.7, 0.45, 1);
+            }
+
+            function updateSideNav() {
+                ticking = false;
+                if (window.innerWidth < 1280) {
+                    sideNav.classList.remove("is-visible");
+                    visible = false;
+                    initialized = false;
+                    return;
+                }
+
+                const scrollY = window.scrollY || window.pageYOffset;
+                const overviewTop = absTop(overviewSection);
+                const startThreshold = overviewTop - SCROLL_OFFSET;
+                const shouldShow = scrollY >= startThreshold;
+
+                if (!shouldShow) {
+                    sideNav.classList.remove("is-visible");
+                    visible = false;
+                    initialized = false;
+                    pendingAnchorDocTop = null;
+                    pendingAnchorUntil = 0;
+                    sideNav.style.setProperty("--case-nav-overlap-opacity", "1");
+                    return;
+                }
+
+                ensureInitialized();
+
+                if (!visible) {
+                    visible = true;
+                    sideNav.classList.add("is-visible");
+                }
+
+                const cardRect = overviewCard.getBoundingClientRect();
+                const navHeight = sideNav.offsetHeight;
+                const reflectionsTop = absTop(reflectionsSection);
+                const reflectionsStop = hardWaySection
+                    ? absTop(hardWaySection) + hardWaySection.offsetHeight + INITIAL_GAP
+                    : reflectionsCard
+                    ? absTop(reflectionsCard) + reflectionsCard.offsetHeight + INITIAL_GAP
+                    : reflectionsTop - END_OFFSET - navHeight;
+                const docBottomLimit = document.documentElement.scrollHeight - navHeight - 24;
+                const maxDocTop = clamp(reflectionsStop, initialDocTop, docBottomLimit);
+                const stickyDocTop = scrollY + STICKY_OFFSET;
+                setActiveLink(scrollY);
+                let preferredDocTop = stickyDocTop;
+                if (pendingAnchorDocTop !== null) {
+                    if (performance.now() <= pendingAnchorUntil) {
+                        preferredDocTop = pendingAnchorDocTop;
+                    } else {
+                        pendingAnchorDocTop = null;
+                        pendingAnchorUntil = 0;
+                    }
+                }
+                const navDocTop = clamp(preferredDocTop, initialDocTop, maxDocTop);
+                sideNav.style.left = cardRect.left + "px";
+                sideNav.style.top = (navDocTop - scrollY) + "px";
+                sideNav.style.setProperty("--case-nav-overlap-opacity", String(getOverlapOpacity()));
+            }
+
+            function requestUpdate() {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(updateSideNav);
+            }
+
+            window.addEventListener("scroll", requestUpdate, { passive: true });
+            window.addEventListener("resize", requestUpdate);
+            sideNav.addEventListener("transitionend", (event) => {
+                if (event.propertyName === "max-height" || event.propertyName === "padding" || event.propertyName === "height" || event.propertyName === "transform") {
+                    requestUpdate();
+                }
+            });
+            setupSmoothScroll();
+            setupCollapseToggle();
+            requestUpdate();
+        }
+    });
+</script>
+</body>
+</html>

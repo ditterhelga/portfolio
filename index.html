@@ -360,28 +360,24 @@
                 transition: background 300ms, transform 200ms;
                 font-weight: 600;
                 font-family: 'Sofia Sans Condensed', sans-serif;
-
-                svg {
-                    width: 100%;
-                    height: 100%;
-                    display: block;
-                    overflow: visible;
-                }
+                position: relative;
 
                 text {
                     fill: white;
                     font-size: 64px;
                     font-weight: 600;
-                    font-family: 'Sofia Sans Condensed', sans-serif;
                     text-transform: uppercase;
                     animation: rotate 25s linear infinite;
-                    transform-origin: 50% 50%;
-                    transform-box: fill-box;
+                    transform-origin: center;
                 }
 
                 .text-circle {
                     transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
                     transform-origin: center;
+                }
+
+                .text-circle-safari {
+                    display: none;
                 }
 
                 .arrow-icon {
@@ -403,7 +399,23 @@
                         stroke: var(--color-accent-yellow);
                     }
                 }
+                
+                html.is-safari & {
+                    .text-circle {
+                        display: none;
+                    }
+
+                    .text-circle-safari {
+                        display: block;
+                    }
+
+                    .text-circle-safari text {
+                        animation: none;
+                        letter-spacing: 0.08em;
+                    }
+                }
             }
+
         }
 
         @keyframes rotate {
@@ -873,13 +885,24 @@
                                  a170,170 0 0,1 0,340"
                               transform="rotate(12,250,250)" />
                     </defs>
+                    <path id="text-circle-safari"
+                          d="M250,420
+                             a170,170 0 0,1 0,-340
+                             a170,170 0 0,1 0,340"
+                          transform="rotate(12,250,250)"
+                          fill="none"
+                          stroke="none"/>
                     <circle cx="250" cy="250" r="140" fill="white"/>
                     <g class="text-circle">
+                        <text textLength="1000">
+                            <textPath xlink:href="#text-circle" aria-label="Click if you're curious">
+                                Click if you're curious
+                            </textPath>
+                        </text>
+                    </g>
+                    <g class="text-circle-safari" aria-hidden="true">
                         <text>
-                            <textPath href="#text-circle"
-                                      xlink:href="#text-circle"
-                                      startOffset="0%"
-                                      aria-label="Click if you're curious">
+                            <textPath xlink:href="#text-circle-safari" textLength="1000" lengthAdjust="spacing">
                                 Click if you're curious
                             </textPath>
                         </text>
@@ -983,6 +1006,7 @@
             </div>
 
             <div class="card-wrapper">
+                <a href="gazelkin.html" class="block h-full no-underline text-inherit">
                 <div class="card">
                     <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
@@ -1007,6 +1031,7 @@
                     </div>
 
                 </div>
+                </a>
             </div>
 
             <div class="card-wrapper">
@@ -1235,6 +1260,11 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         gsap.registerPlugin(ScrollTrigger);
+
+        const isSafari = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(navigator.userAgent);
+        if (isSafari) {
+            document.documentElement.classList.add('is-safari');
+        }
 
         // Burger and Menu setup
         const menuTween = gsap.timeline({paused: true})
