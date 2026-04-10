@@ -83,6 +83,12 @@
                 2xl:text-[64px]/[64px];
         }
 
+        @media (max-width: 767px) {
+            .results-mobile-tight {
+                line-height: 1.02 !important;
+            }
+        }
+
         /* Hero h1 keeps previous scale; does not use .section-header typography */
         .subway-hero-title {
             @apply font-family-sofia font-normal
@@ -825,7 +831,7 @@
                 <a href="#overview" data-target="overview" class="case-side-nav-link">Context</a>
                 <a href="#my-part" data-target="my-part" class="case-side-nav-link">My Role</a>
                 <a href="#research" data-target="research" class="case-side-nav-link">Research</a>
-                <a href="#vendor-experience" data-target="vendor-experience" class="case-side-nav-link">Solution</a>
+                <a href="#learning" data-target="learning" class="case-side-nav-link">Solution</a>
                 <a href="#results-real-world" data-target="results-real-world" class="case-side-nav-link">Impact</a>
             </nav>
         </aside>
@@ -881,8 +887,8 @@
             </div>
         </section>
 
-        <section id="pos-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-intro-main.png" alt="Subway POS device"/>
+        <section id="subway-intro-img" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-intro-main.png" alt="Subway POS device"/>
         </section>
 
         <section id="overview" class="flex flex-col items-start">
@@ -1065,8 +1071,8 @@
             </script>
         </section>
 
-        <section id="map-image" data-parallax-wrap class="-mt-[38px] md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-map.png" alt="Subway system map"/>
+        <section id="menu-subway" data-parallax-wrap class="-mt-[38px] max-md:rounded-[20px] max-md:overflow-hidden md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-map.png" alt="Subway system map"/>
         </section>
 
         <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
@@ -1214,7 +1220,7 @@
             </script>
         </section>
 
-        <section id="ecosystem" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+        <section id="users-subway" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
@@ -1242,6 +1248,53 @@
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
                         <p><span class="font-medium">Instead of building skills, the process crushed motivation.</span> New hires got lost in confusing materials, failed tests, and repeated mistakes, while managers kept reteaching the same basics. Hours were lost, turnover rose, and stores paid the price in productivity and profit.</p>
+                        <div class="flex w-full flex-col mt-5">
+                            <button type="button" id="ecosystem-emp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="ecosystem-emp-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="ecosystem-emp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                            </button>
+
+                            <div id="ecosystem-emp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="ecosystem-emp-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div>
+                                                <span class="font-medium">Guides without guidance</span><br/>
+                                                Training was a patchwork of scattered PDFs, printouts, and random videos. Employees didn't know how or when to use them, so training became improvised and inconsistent across stores. Mistakes weren't the exception, they were baked into the process.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Learning by copy-paste</span><br/>
+                                                With no proper system, knowledge spread informally. New staff shadowed older colleagues, picking up skipped steps and bad habits. Errors multiplied, costing the business wasted hours and inconsistent quality.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Lost experience</span><br/>
+                                                Instead of driving the business forward, senior staff spent hours re-explaining routine tasks. Valuable time that could fuel growth was lost to re-teaching.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Certification failures</span><br/>
+                                                Many employees failed tests multiple times, not from lack of ability, but from overwhelming and poorly structured materials. Each failure chipped away at confidence and motivation.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">First-job anxiety</span><br/>
+                                                For many, Subway was their first job. Fear of failure and lack of confidence made them hesitant to ask for help, slowing onboarding even more.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Digital gaps</span><br/>
+                                                In smaller towns, weak internet, outdated devices, and low digital literacy made learning harder. The system had to work for everyone, not just the tech-savvy.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">No way to measure progress</span><br/>
+                                                Without a digital platform, managers had no clear view of who was trained, who was struggling, or where mistakes occurred. Problems surfaced only after they hurt the business.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1254,10 +1307,49 @@
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
                         <p><span class="font-medium">Franchisees described the journey as confusing, stressful, and lonely.</span> Steps weren't clear, updates got buried, and constant calls to HQ slowed launches, increased risks, and cost revenue on both sides.</p>
+                        <div class="flex w-full flex-col mt-5">
+                            <button type="button" id="ecosystem-fran-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="ecosystem-fran-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="ecosystem-fran-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                            </button>
+
+                            <div id="ecosystem-fran-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="ecosystem-fran-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div>
+                                                <span class="font-medium">No single source of truth</span><br/>
+                                                Franchisees juggled binders, emails, and calls to HQ. Marketing rules, compliance docs, and training materials were scattered everywhere. Important updates often got buried, leading to compliance mistakes and exposing stores to risk.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Chaotic onboarding</span><br/>
+                                                Opening a store was a maze of unclear steps with no way to track progress. Each new franchisee pieced it together differently, causing delays, last-minute surprises, and costly errors. Launches dragged by weeks, directly cutting into revenue for both owners and HQ.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Dependence on HQ</span><br/>
+                                                Every missing detail turned into another phone call. HQ was swamped with repetitive requests, while owners felt unable to move forward independently.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Overwhelmed by information</span><br/>
+                                                Even when materials existed, they were dense and hard to apply. New owners didn't know what was essential and what was "nice to know." Many defaulted to outdated promotions or improvised materials, which hurt customer experience and weakened brand trust.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Emotional toll</span><br/>
+                                                For many owners, the process felt lonely and stressful. Without clear guidance, they were never sure if they were "doing it right." That uncertainty created frustration on both sides and strained relationships with HQ.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex md:grid w-full min-w-0 gap-y-6 border-t border-b border-[#E9E9E9] pt-[48px] pb-[48px] md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] xl:col-start-1 xl:row-start-5 2xl:col-start-1 2xl:row-start-5">
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-[48px] md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] xl:col-start-1 xl:row-start-5 2xl:col-start-1 2xl:row-start-5">
                     <div class="flex w-full gap-x-[24px]">
                         <img src="assets/images/subway-users-hq.svg"
                              alt="Wristband registration kiosk"
@@ -1266,6 +1358,41 @@
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
                         <p><span class="font-medium">HQ carried the weight of broken processes every day.</span> Teams spent hours answering repeat questions and resending documents instead of focusing on growth. Valuable time and resources drained into support, making scaling slower and more expensive.</p>
+                        <div class="flex w-full flex-col mt-5">
+                            <button type="button" id="ecosystem-hqfind-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="ecosystem-hqfind-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="ecosystem-hqfind-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                            </button>
+
+                            <div id="ecosystem-hqfind-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="ecosystem-hqfind-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div>
+                                                <span class="font-medium">Support overload</span><br/>
+                                                HQ spent hours answering the same questions from dozens of stores daily. Strategic work was sidelined by repetitive support.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">No visibility into progress</span><br/>
+                                                Without insight into franchisee training, HQ only discovered gaps later, as compliance failures, inconsistent operations, or customer complaints.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Inconsistent brand execution</span><br/>
+                                                Scattered materials meant stores applied rules differently. Customers noticed, weakening trust in the brand.
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">Inefficient scaling</span><br/>
+                                                Each new store required hands-on support from HQ. What should have been a repeatable process became a one-off struggle, making expansion slower, more expensive, and harder to sustain.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1291,13 +1418,35 @@
 
             </div>
 
+            <script>
+                (function () {
+                    function wireAccordion(btnId, wrapId, panelId, arrowId) {
+                        var btn = document.getElementById(btnId);
+                        var wrap = document.getElementById(wrapId);
+                        var panel = document.getElementById(panelId);
+                        var arrow = document.getElementById(arrowId);
+                        if (!btn || !wrap || !panel) return;
+                        btn.addEventListener('click', function () {
+                            var expanded = btn.getAttribute('aria-expanded') === 'true';
+                            var next = !expanded;
+                            btn.setAttribute('aria-expanded', String(next));
+                            wrap.setAttribute('data-open', next ? '1' : '0');
+                            panel.setAttribute('data-open', next ? '1' : '0');
+                            if (arrow) arrow.classList.toggle('rotate-180', next);
+                        });
+                    }
+                    wireAccordion('ecosystem-emp-acc-btn', 'ecosystem-emp-acc-panel-wrap', 'ecosystem-emp-acc-panel', 'ecosystem-emp-acc-arrow');
+                    wireAccordion('ecosystem-fran-acc-btn', 'ecosystem-fran-acc-panel-wrap', 'ecosystem-fran-acc-panel', 'ecosystem-fran-acc-arrow');
+                    wireAccordion('ecosystem-hqfind-acc-btn', 'ecosystem-hqfind-acc-panel-wrap', 'ecosystem-hqfind-acc-panel', 'ecosystem-hqfind-acc-arrow');
+                })();
+            </script>
         </section>
 
-        <section id="festival-girl-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-learning.png" alt="Subway at festival"/>
+        <section id="dashboard-subway" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-learning.png" alt="Subway at festival"/>
         </section>
 
-        <section id="vendor-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+        <section id="learning" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
@@ -1410,7 +1559,7 @@
             </script>
         </section>
 
-        <section id="guest-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+        <section id="gamification" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
@@ -1422,7 +1571,7 @@
 
                 <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Motivation &amp; Gamification</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">I added a <span class="font-medium">motivation layer to keep training engaging.</span> Instead of another chore, it became something people wanted to complete: with "Sub" points to collect, milestone badges to unlock, and progress worth celebrating.</p>
@@ -1433,7 +1582,7 @@
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+                <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
             <button type="button" id="guest-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="guest-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="guest-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1524,11 +1673,11 @@
             </script>
         </section>
 
-        <section id="employee-office-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/employee-office-subway.png" alt="Employee office at Subway"/>
+        <section id="employee-office-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/employee-office-subway.png" alt="Employee office at Subway"/>
         </section>
 
-        <section id="kiosk-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+        <section id="operations" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
@@ -1540,7 +1689,7 @@
 
                 <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Operational Clarity</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">Without the system, <span class="font-medium">opening a new store felt like solving a puzzle without the picture.</span> Instructions were buried in scattered PDFs, long email chains, and phone calls to HQ. Franchisees lost weeks chasing answers and never felt sure what step came next.</p>
@@ -1551,7 +1700,7 @@
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+                <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
             <button type="button" id="kiosk-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="kiosk-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="kiosk-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1635,7 +1784,7 @@
             </script>
         </section>
 
-        <section id="brand-standard" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+        <section id="branding" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
                     <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
@@ -1665,8 +1814,8 @@
             </div>
         </section>
 
-        <section id="branding-long-image" data-parallax-wrap class="md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-branding-long.png" alt="Subway branding in use"/>
+        <section id="branding-long-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-branding-long.png" alt="Subway branding in use"/>
         </section>
 
         <section id="results-real-world" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1676,12 +1825,12 @@
             <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
-                    <h2 class="section-header w-full">Results for Employees:<br/>From Overload to Confidence</h2>
+                    <h2 class="section-header w-full max-md:leading-[1.02] results-mobile-tight">Results for Employees:<br/>From Overload to Confidence</h2>
                 </div>
 
                 <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for Employees:<br/>From Overload to Confidence</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">Before, onboarding dragged on for weeks, with managers repeating the same explanations and new hires left guessing. With the new platform, learning became self-paced and structured — <span class="font-medium">employees could move quickly through lessons and arrive on shift prepared.</span></p>
@@ -1692,7 +1841,7 @@
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+                <div class="flex w-full flex-col order-4 mt-5 mb-8 md:order-3 md:mt-0 md:mb-0">
             <button type="button" id="results-real-world-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="results-real-world-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="results-real-world-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1746,13 +1895,13 @@
 
                 <img src="assets/images/subway-results-main.png"
                      alt="Subway results and impact"
-                     class="order-2 py-8 w-full rounded-[20px] object-contain md:hidden"/>
+                     class="order-2 w-full rounded-[20px] object-contain md:hidden"/>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                 <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/subway-results-side-1.png"
                              alt="Festival POS with Subway"
-                             class="hidden md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                         <img src="assets/images/subway-results-main.png"
                              alt="Subway results and impact"
                              class="hidden w-full rounded-[20px] object-contain md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
@@ -1787,7 +1936,7 @@
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
                     <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
-                        <h2 class="section-header w-full">Results for HQ and Franchisees:<br/>From Uncertainty to Control</h2>
+                        <h2 class="section-header w-full max-md:leading-[1.02] results-mobile-tight">Results for HQ and Franchisees:<br/>From Uncertainty to Control</h2>
                     </div>
 
                     <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for HQ and Franchisees:<br/>From Uncertainty to Control</h2>
@@ -1803,7 +1952,7 @@
                             </div>
                         </div>
 
-                        <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
+                        <div class="flex w-full flex-col order-4 mt-5 mb-8 md:order-3 md:mt-0 md:mb-0">
                             <button type="button" id="results-hq-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="results-hq-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                     <svg id="results-hq-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1861,13 +2010,13 @@
 
                         <img src="assets/images/subway-results-main-2.png"
                              alt="HQ and franchisee results"
-                             class="order-2 py-8 w-full rounded-[20px] object-contain md:hidden"/>
+                             class="order-2 w-full rounded-[20px] object-contain md:hidden"/>
 
                         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                             <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                                 <img src="assets/images/subway-results-side-2.png"
                                      alt="Franchisee results visual"
-                                     class="hidden md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                                     class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                                 <img src="assets/images/subway-results-main-2.png"
                                      alt="HQ and franchisee results"
                                      class="hidden w-full rounded-[20px] object-contain md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
@@ -1916,7 +2065,7 @@
                             </div>
                         </div>
 
-                        <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+                        <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
                             <button type="button" id="reflections-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="reflections-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                     <svg id="reflections-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1973,7 +2122,7 @@
                         <img src="assets/images/subway-keyphrase-logo.png"
                              alt="Subway"
                              class="h-[56px] w-[30px] shrink-0"/>
-                        <p class="font-light text-5/8">Helping others feel confident turned out to be the most rewarding part.</p>
+                        <p class="font-light text-5/8">Helping others feel confident turned out to be <span class="font-medium">the most rewarding part.</span></p>
                     </div>
                 </div>
             </div>
@@ -2187,8 +2336,8 @@
             z-index: 4;
         }
 
-        #map-image,
-        #map-image img {
+        #menu-subway,
+        #menu-subway img {
             position: relative;
             z-index: 3;
         }
@@ -2337,14 +2486,14 @@
         const overviewCard = overviewSection ? overviewSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
         const reflectionsSection = document.getElementById("reflections");
         const reflectionsCard = reflectionsSection ? reflectionsSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
-        const sectionIds = ["overview", "my-part", "research", "vendor-experience", "results-real-world"];
+        const sectionIds = ["overview", "my-part", "research", "learning", "results-real-world"];
         const sectionNodes = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
         const sideNavLinks = sideNav ? Array.from(sideNav.querySelectorAll(".case-side-nav-link")) : [];
         const sideNavIndicator = sideNav ? sideNav.querySelector(".case-side-nav-indicator") : null;
         const sideNavToggle = document.getElementById("case-side-nav-toggle");
         const sideNavMenu = document.getElementById("case-side-nav-menu");
         const overlapBlockers = Array.from(document.querySelectorAll(
-            '#map-image, #map-image img, [data-parallax-wrap], [data-parallax-wrap] img, main section > img, main img.overview-img-1, main img.overview-img-2, main img.overview-img-3, main [class*="bg-[#ECF1F4]"]'
+            '#menu-subway, #menu-subway img, [data-parallax-wrap], [data-parallax-wrap] img, main section > img, main img.overview-img-1, main img.overview-img-2, main img.overview-img-3, main [class*="bg-[#ECF1F4]"]'
         ));
 
         if (sideNav && overviewSection && overviewCard && reflectionsSection && sideNavLinks.length) {
@@ -2454,7 +2603,7 @@
                         const targetNode = document.getElementById(targetId);
                         if (!targetNode) return;
                         const targetTop = absTop(targetNode) - SCROLL_OFFSET;
-                        const useKeyphraseLanding = targetId === "ecosystem" || targetId === "results-real-world";
+                        const useKeyphraseLanding = targetId === "users-subway" || targetId === "results-real-world";
                         if (!useKeyphraseLanding) {
                             pendingAnchorDocTop = null;
                             pendingAnchorUntil = 0;
@@ -2488,7 +2637,7 @@
             }
 
             function getSectionKeyphraseAnchorTop(sectionId) {
-                if (sectionId !== "ecosystem" && sectionId !== "results-real-world") return null;
+                if (sectionId !== "users-subway" && sectionId !== "results-real-world") return null;
                 const targetSection = document.getElementById(sectionId);
                 if (!targetSection) return null;
                 const localCard = targetSection.querySelector('div[class*="bg-[#ECF1F4]"]');
