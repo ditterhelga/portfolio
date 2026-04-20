@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dreamkas — Olga Pertseva</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <!-- tools -->
+    <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="assets/js/global-lenis.js" defer></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --font-family-sofia: 'Sofia Sans Condensed', sans-serif;
+            --font-family-inter: 'Inter', sans-serif;
+
+            --color-text-primary: #302F2F;
+            --color-primary-dark: #3B47C2;
+            --color-primary-light: #0016F2;
+            --color-pink-badge: #FDE4DF;
+            --color-blue-light: #8891D6;
+            --color-blue-dark: #040989;
+            --color-accent-yellow: #FDC448;
+
+            --bg-color: 216, 29%, 97%;
+
+            --breakpoint-xs: 20rem;
+            --breakpoint-2xl: 96rem;
+        }
+
+        @utility full-bleed {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @layer base {
+            html {
+                /*position: absolute;*/
+                /*width: 100%;*/
+                /*height: 100%;*/
+                /*overflow-y: scroll;*/
+            }
+
+            body {
+                font-family: var(--font-family-inter);
+                font-size: 1.25rem;
+                line-height: 2rem;
+                letter-spacing: 0px;
+                font-weight: 400;
+                /*margin: 0;*/
+                color: var(--color-text-primary);
+                background: #FFFFFF;
+                overflow-x: hidden;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Sofia Sans Condensed', sans-serif;
+            }
+        }
+
+        .section-header {
+            @apply font-family-sofia font-normal
+                text-[56px]/[88px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px]
+                2xl:text-[64px]/[64px];
+        }
+
+        /* Hero h1 keeps previous scale; does not use .section-header typography */
+        .billfold-hero-title {
+            @apply font-family-sofia font-normal
+                text-[52px]/[60px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px];
+        }
+
+        .billfold-page-title {
+            @apply font-medium;
+        }
+
+        .dreamkas-hero-title {
+            @apply font-family-sofia font-normal
+                text-[52px]/[60px]
+                md:text-[60px]/[64px]
+                xl:text-[64px]/[64px];
+        }
+
+        .dreamkas-page-title {
+            @apply font-medium;
+        }
+
+        .dreamkas-image-caption {
+            font-size: 20px;
+            line-height: 1.5;
+            font-style: italic;
+            color: #8A8A8A;
+        }
+
+        .dreamkas-challenge-img {
+            max-height: 420px;
+        }
+
+        @media (min-width: 96rem) {
+            .dreamkas-challenge-img {
+                height: 771px;
+                max-height: none;
+            }
+        }
+
+        header {
+            @apply flex z-10;
+            /*py-8 md:py-13*/
+
+            & .logo img {
+                height: 63px;
+                width: auto;
+                transition: opacity 0.3s ease, filter 0.6s ease;
+            }
+
+            & #burger {
+                @apply z-20;
+                cursor: pointer;
+            }
+
+            @media (min-width: 768px) {
+    & nav .menulink {
+        position: relative;
+        font-weight: 400;
+        font-family: var(--font-family-inter);
+        transition: color 0.25s ease;
+    }
+
+    & nav .menulink::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        background-color: #FDE4DF;
+
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    & nav .menulink:hover::after {
+        transform: scaleX(1);
+    }
+
+    & nav .menulink:hover {
+        color: #0016F2;
+    }
+}
+
+            &.menu-open {
+                @apply fixed h-screen w-screen px-4 z-50 md:px-12;
+                inset: 0;
+
+                background: var(--color-primary-dark);
+
+                /* ensure content becomes visible when menu is open */
+                & .logo, nav {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                & .logo img {
+                    filter: brightness(0) invert(1);
+                }
+
+                & > #burger {
+                    @apply right-4;
+
+                    & svg rect {
+                        fill: rgba(255, 255, 255, 0.2);
+                    }
+
+                    & svg path {
+                        stroke: white;
+                    }
+                }
+
+                & > div {
+                    @apply flex-col;
+
+                    & > nav {
+                        @apply flex flex-col justify-center gap-y-8 h-screen;
+
+                        & a {
+                            @apply w-full md:h-full text-center;
+                        }
+                    }
+                }
+
+                & .menulink {
+                    font-family: 'Sofia Sans Condensed', sans-serif;
+                    font-size: 4rem;
+                    font-weight: 700;
+                    color: white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    letter-spacing: -0.02em;
+                    transition: transform 0.3s ease, color 0.3s ease;
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                & .menulink:hover {
+                    color: #FDC448;
+                    transform: translateY(-5px);
+                }
+            }
+        }
+
+        #hero {
+    & .line-bottom {
+        --rotate-row: 1em;
+    }
+
+    @media (min-width: 48rem) {
+        & .line-bottom {
+            --rotate-row: calc(5em / 4.75);
+        }
+    }
+
+    & .hero-rotating-wrap {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .rotating-words {
+        position: relative;
+        height: var(--rotate-row);
+        line-height: inherit;
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    & .phrases {
+        display: block;
+        animation: rotate-words 8s infinite ease-in-out;
+    }
+
+    & .phrases span {
+        display: block;
+        height: var(--rotate-row);
+        line-height: inherit;
+    }
+
+    & .sizer {
+        display: none;
+    }
+
+    & .rotating-words:hover .phrases {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes rotate-words {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(calc(-1 * var(--rotate-row)));
+    }
+    50%, 85% {
+        transform: translateY(calc(-2 * var(--rotate-row))); /* держим empath */
+    }
+    90% {
+        transform: translateY(0); /* быстрый возврат */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+        #about {
+            @apply flex
+            flex-col
+            gap-y-6
+            md:gap-y-8
+            xl:mt-5
+            xl:flex-row-reverse
+            xl:gap-x-14
+            2xl:gap-x-20;
+
+
+            .rotating-words {
+                position: relative;
+                display: inline-block;
+                white-space: nowrap;
+            }
+
+            .rotating-words .sizer {
+                visibility: hidden;
+                white-space: nowrap;
+            }
+
+            .rotating-words .phrases {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+
+            .rotating-words .phrases > span {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                letter-spacing: 0.02em;
+                display: block;
+                font-weight: 700;
+                color: #4B57C8;
+                opacity: 0;
+                animation: wordReveal 9s infinite;
+            }
+
+            .rotating-words .phrases > span:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            .rotating-words .phrases > span:nth-child(2) {
+                animation-delay: 3s;
+            }
+
+            .rotating-words .phrases > span:nth-child(3) {
+                animation-delay: 6s;
+            }
+
+            @keyframes wordReveal {
+                0% {
+                    opacity: 0;
+                    transform: translateY(24px);
+                    letter-spacing: 0.02em;
+                }
+                8% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    letter-spacing: -0.02em;
+                }
+                30% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    letter-spacing: -0.02em;
+                }
+                36% {
+                    opacity: 0;
+                    transform: translateY(-18px);
+                    letter-spacing: -0.02em;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-18px);
+                    letter-spacing: -0.02em;
+                }
+            }
+
+            .button-about {
+                /*relative*/
+                @apply  inline-flex
+                border-none
+                bg-primary-dark
+                rounded-full
+                w-[120px] h-[120px]
+                mt-4
+                ml-40
+                md:w-[150px] md:h-[150px]
+                md:mt-11.25
+                md:ml-62
+                xl:mt-0
+                xl:ml-0
+                cursor-pointer
+                text-white;
+                /*overflow: hidden;*/
+                /*position: relative;*/
+                /*display: inline-flex;*/
+                align-items: center;
+                justify-content: center;
+                transition: background 300ms, transform 200ms;
+                font-weight: 600;
+                font-family: 'Sofia Sans Condensed', sans-serif;
+
+                text {
+                    fill: white;
+                    font-size: 64px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    animation: rotate 25s linear infinite;
+                    transform-origin: center;
+                }
+
+                .text-circle {
+                    transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+                    transform-origin: center;
+                }
+
+                .arrow-icon {
+                    stroke-width: 10;
+                    stroke: var(--color-primary-dark);
+                    transition: stroke 300ms, transform 300ms;
+                }
+
+                &:hover {
+                    @apply bg-accent-yellow;
+
+                    transform: scale(1.2);
+
+                    .text-circle {
+                        transform: rotate(90deg);
+                    }
+
+                    .arrow-icon {
+                        stroke: var(--color-accent-yellow);
+                    }
+                }
+            }
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @utility card-content {
+            @apply flex flex-col gap-8 items-center sm:flex-row-reverse
+            2xl:gap-x-16;
+        }
+
+        @utility card-badges {
+            @apply flex flex-row flex-wrap gap-4 justify-items-start;
+
+            & .badge {
+                @apply rounded-full bg-pink-badge text-blue-light uppercase !text-lg font-family-sofia font-normal py-1 px-5;
+            }
+        }
+
+        @utility card-title {
+            @apply text-primary-dark font-family-sofia font-normal text-7xl tracking-[-2px]
+            xl:mb-5
+            2xl:text-[102px];
+        }
+
+        .card-description {
+            @apply flex flex-col gap-y-4
+            xl:w-[564px] xl:shrink-0 xl:gap-y-0;
+        }
+
+        .card-paragraph {
+            @apply flex flex-col gap-y-2
+            xl:mb-10;
+        }
+
+        .card-text {
+            @apply font-light;
+        }
+
+        .card-detail {
+            @apply flex
+            flex-row
+            items-center
+            gap-x-4
+            mt-2
+            xl:mt-0
+            uppercase
+            font-family-sofia
+            text-primary-dark
+            font-normal
+            text-[1.5rem]/6
+            tracking-wider;
+        }
+
+        .card-wrapper {
+            @apply xs:max-xl:full-bleed xl:rounded-[20px] bg-white;
+        }
+
+        /* Work cards: padding lives on .work-card-surface so outer .card can stay a neutral shell */
+        #work .work-cards-stack .card {
+            padding: 0 !important;
+            gap: 0 !important;
+        }
+
+        /* Match page grey so scaled cards don’t sit on a white “slot” (Tailwind bg-white on .card-wrapper) */
+        #work {
+            background-color: #f3f6f9;
+        }
+
+        /* Pull Beyond block up by half the main column gap (gap-y-18 / md:24 / xl:26) */
+        #work + .full-bleed {
+            margin-top: -2.25rem;
+        }
+
+        @media (min-width: 48rem) {
+            #work + .full-bleed {
+                margin-top: -3rem;
+            }
+        }
+
+        @media (min-width: 80rem) {
+            #work + .full-bleed {
+                margin-top: -3.25rem;
+            }
+        }
+
+        /* Sticky stack + scrub fade/scale — desktop only (see GSAP below) */
+        @media (min-width: 1280px) {
+            #work .work-cards-stack {
+                background-color: #f3f6f9;
+            }
+
+            /* Gap (xl:gap-y-16 = 64px) sits between wrappers so #F3F6F9 shows through */
+            #work .work-cards-stack > .card-wrapper {
+                position: relative;
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+            }
+
+            #work .work-cards-stack > .card-wrapper:last-of-type {
+                padding-bottom: calc(5vh + 56px);
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(1) {
+                z-index: 1;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(2) {
+                z-index: 2;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(3) {
+                z-index: 3;
+            }
+
+            #work .work-cards-stack > .card-wrapper:nth-child(4) {
+                z-index: 4;
+            }
+
+            /* Shell: fixed 722px slot; page-colored so area around scaled .work-card-surface isn’t white */
+            #work .work-cards-stack .card {
+                background-color: #f3f6f9 !important;
+                border-radius: 0;
+                box-sizing: border-box;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow: visible;
+            }
+
+            #work .work-cards-stack .work-card-surface {
+                background-color: #fff;
+                border-radius: 20px;
+                box-sizing: border-box;
+                width: 100%;
+                height: 722px;
+                min-height: 722px;
+                max-height: 722px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                /* Shrink toward overlap with next card (bottom pinned) so top/sides stay readable */
+                transform-origin: 50% 100%;
+                will-change: transform, opacity;
+                /* Lifts the front card slightly; scales with transform on the same layer */
+                box-shadow: 0 -4px 20px rgba(227, 233, 239, 0.4);
+            }
+
+            /* GSAP ScrollTrigger pin wrapper (when present) */
+            #work .pin-spacer {
+                background-color: #f3f6f9 !important;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            #work .work-cards-stack > .card-wrapper {
+                background-color: #f3f6f9 !important;
+            }
+            #work .work-cards-stack .card {
+                max-width: 100% !important;
+                height: 900px;
+                min-height: 900px;
+                max-height: 900px;
+            }
+            #work .work-cards-stack .work-card-surface {
+                height: auto !important;
+                min-height: unset !important;
+                max-height: unset !important;
+            }
+        }
+
+        .card {
+            @apply flex flex-col max-w-[1280px]
+            mx-auto
+            px-4 sm:px-8
+            pt-14 sm:pt-16
+            pb-12 sm:pb-13
+            gap-y-10
+            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14
+            2xl:max-w-full 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px] 2xl:gap-y-14;
+        }
+
+        .card-image {
+            @apply rounded-[20px] w-full object-cover
+            aspect-[1.25]
+            md:aspect-[0.84] md:max-w-[322px]
+            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0
+            2xl:h-[488px] 2xl:w-[576px] 2xl:max-w-[576px];
+        }
+
+
+        /* Main-xl: beyond-card-xl — gap 32px between image/tag/body/CTA; grid gap-x 48, gap-y 72; column 584px */
+        #cards-beyond {
+            @apply flex flex-col gap-y-12 md:gap-y-14
+            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
+            2xl:gap-x-16 2xl:gap-y-16;
+
+            & > .card-beyond {
+                @apply flex w-full max-w-full flex-col items-start gap-y-8;
+
+                & > .image-wrapper {
+                    @apply overflow-hidden
+                    rounded-[20px]
+                    w-full
+                    h-[380px]
+                    shrink-0;
+
+                    & > img {
+                        @apply w-full h-full
+                        object-cover object-center
+                    }
+                }
+
+                & .card-description {
+                    @apply flex w-full flex-col items-start gap-y-8 text-left;
+                }
+
+                & .card-description p {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 20px;
+                    line-height: 32px;
+                    font-weight: 400;
+                }
+
+                & .card-detail {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        .triag-cut {
+            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Lighter Inter for match CTA copy (thinner than body default) */
+        #match .match-xl-body p {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner a,
+        footer.site-footer .footer-inner .footer-email {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner nav {
+            display: flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner nav a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-email {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-contact img {
+            display: block;
+        }
+
+        .line-top {
+            background: linear-gradient(
+                90deg,
+                #E8C76D 0%,
+                #A7B4E8 10%,
+                #6C8BE8 20%,
+                #5573DD 30%,
+                #4C62D1 40%,
+                #4E5AC8 50%,
+                #5152BF 60%,
+                #554CB6 65%,
+                #5A47AD 70%,
+                #5F42A4 75%,
+                #643D9B 80%,
+                #693892 85%,
+                #6E3389 90%,
+                #732E80 95%,
+                #782977 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .line-bottom {
+            color: #2834B8;
+        }
+
+        /* ── Hero blob-mask effect ─────────────────────────────────────── */
+        .hero-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #2834B8;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+            top: 0;
+            left: 0;
+        }
+
+        #hero .hero-mask {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        /* Blob layer: #2834B8 base so text reads as dark blue at rest */
+        #hero .blob-layer {
+            position: absolute;
+            inset: 0;
+            background: #2834B8;
+            pointer-events: none;
+        }
+
+        #hero .blob-layer .blob {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            will-change: transform;
+        }
+
+        /* bottom layer – largest, bright blue */
+        #hero .blob-1 {
+            width: 690px; height: 690px;
+            margin: -345px 0 0 -345px;
+            background: #0A43FF;
+        }
+
+        /* middle layer – pink */
+        #hero .blob-2 {
+            width: 420px; height: 420px;
+            margin: -210px 0 0 -210px;
+            background: #FDE4DF;
+        }
+
+        /* top layer – yellow, smallest */
+        #hero .blob-3 {
+            width: 260px; height: 260px;
+            margin: -130px 0 0 -130px;
+            background: #FDC448;
+        }
+
+        /* Screen overlay: gradient matches page bg so it's invisible outside text */
+        #hero .mask-screen {
+            position: relative;
+            background: #FFFFFF;
+            background-attachment: fixed;
+            mix-blend-mode: screen;
+        }
+
+        #hero .mask-screen h1 {
+            color: #000;
+            -webkit-text-fill-color: #000;
+            padding-right: 0.5rem;
+        }
+        /* ─────────────────────────────────────────────────────────────── */
+
+    </style>
+</head>
+
+<body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto">
+
+<div class="flex flex-col px-4 sm:px-8 md:px-6 2xl:px-0">
+
+    <header class="flex pt-8 xl:pt-16">
+        <div class="flex justify-between w-full">
+            <div id="logo" class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.svg" alt="Olga Pertseva"/>
+                </a>
+            </div>
+
+            <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
+                <a href="index.html#work"    class="menulink">Work</a>
+                <a href="index.html#about"   class="menulink">About</a>
+                <a href="index.html#contact" class="menulink">Contact</a>
+                <a href="index.html#resume"  class="menulink">Resume</a>
+            </nav>
+        </div>
+
+        <div id="burger" class="fixed right-4 md:hidden">
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect width="56" height="56" rx="16" fill="#FDE4DF"/>
+                <path id="burgertop" d="M13.417 17.0625H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgermiddle" d="M13.417 38.9375H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgerbottom" d="M13.417 28H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </header>
+
+<main class="flex flex-col gap-y-18 md:gap-y-24 xl:gap-y-26 2xl:gap-y-[120px] mt-16 md:mt-18 xl:mt-18 2xl:mt-22">
+        <aside id="case-side-nav" class="hidden xl:block" aria-label="Case study sections">
+            <button type="button" id="case-side-nav-toggle" class="case-side-nav-toggle" aria-expanded="true" aria-controls="case-side-nav-menu" aria-label="Toggle section navigation">
+                <img src="assets/images/arrow-down.svg" alt="" aria-hidden="true" class="case-side-nav-toggle-icon"/>
+            </button>
+            <nav id="case-side-nav-menu">
+                <span class="case-side-nav-indicator" aria-hidden="true"></span>
+                <a href="#overview" data-target="overview" class="case-side-nav-link">Overview</a>
+                <a href="#challenge" data-target="challenge" class="case-side-nav-link">Challenge</a>
+                <a href="#my-part" data-target="my-part" class="case-side-nav-link">My role</a>
+                <a href="#research-discovery" data-target="research-discovery" class="case-side-nav-link">Research</a>
+                <a href="#understanding-users" data-target="understanding-users" class="case-side-nav-link">Users</a>
+                <a href="#research-to-product" data-target="research-to-product" class="case-side-nav-link">Product</a>
+                <a href="#core-ux" data-target="core-ux" class="case-side-nav-link">Core UX</a>
+                <a href="#results-cashiers" data-target="results-cashiers" class="case-side-nav-link">Results</a>
+                <a href="#still-in-use" data-target="still-in-use" class="case-side-nav-link">Still in use</a>
+            </nav>
+        </aside>
+
+        <section id="hero" class="flex flex-col bg-[#1A3716] -mx-4 px-4 sm:-mx-8 sm:px-8 md:-mx-6 md:px-6 2xl:mx-0 2xl:px-0 pt-8 pb-0 sm:pt-10 xl:pt-12">
+            <div class="dreamkas-breadcrumbs mb-6 md:mb-4 font-light text-5/8 flex flex-row flex-wrap items-center gap-x-2 text-white" aria-label="Breadcrumb">
+                <a class="no-underline hover:opacity-90 text-white" href="index.html#work">Work</a>
+                <span aria-hidden="true">/</span>
+                <span class="text-white/70">Dreamkas POS</span>
+            </div>
+            <h1 class="dreamkas-hero-title dreamkas-page-title text-white">Turning retail tech into something people trust</h1>
+            <div class="dreamkas-hero-media mt-10">
+                <div class="full-bleed overflow-hidden pb-8 md:pb-12 xl:pb-[80px]">
+                    <div class="flex w-full justify-center px-4 sm:px-8 md:px-6 2xl:px-8">
+                        <img class="w-full max-w-[1280px] rounded-[20px] object-cover xl:aspect-[1168/616] 2xl:max-w-[1440px]"
+                             src="assets/images/dreamkas-hero.png"
+                             alt="Dreamkas POS in use"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="intro" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 bg-white">
+            <div class="intro-grid flex flex-col gap-y-10 xl:grid xl:grid-cols-[minmax(0,496px)_minmax(0,704px)] xl:gap-x-6 xl:gap-y-8 xl:items-start 2xl:flex 2xl:flex-row 2xl:items-start 2xl:gap-x-16 2xl:gap-y-0">
+                <div class="intro-left flex flex-col gap-y-8 xl:contents 2xl:flex 2xl:flex-col 2xl:max-w-[688px] 2xl:shrink-0">
+                    <div class="intro-logo min-w-0 xl:col-start-1 xl:row-start-1">
+                        <img class="w-[232px] h-auto" src="assets/images/dreamkas-logo.png" alt="Dreamkas logo"/>
+                    </div>
+                    <div class="intro-description flex min-w-0 flex-col gap-y-2 text-5/8 font-light xl:col-start-1 xl:row-start-2">
+                        <p>Led the creation of <span class="font-medium">Russia&rsquo;s first touchscreen POS systems</span>, reshaping how thousands of businesses sell, learn, and operate every day.</p>
+                        <p>No manuals. No hand-holding. Just tools people could figure out in five minutes, even if they&rsquo;d <span class="font-medium">never used a POS before</span>.</p>
+                    </div>
+                </div>
+                <div class="intro-right metadata-block min-w-0 xl:col-start-2 xl:row-start-2 xl:max-w-[704px] xl:shrink-0 xl:self-start 2xl:max-w-[688px]">
+                    <div class="metadata-grid grid grid-cols-1 gap-y-4">
+                        <p class="text-5/8"><span class="font-medium">Role:</span> Lead Product Designer, driving research, UX strategy, and full-cycle product design, while building and mentoring a design team.</p>
+                        <p class="text-5/8"><span class="font-medium">Team:</span> PMs, hardware engineers, software developers, business stakeholders, sales team, marketing</p>
+                        <p class="text-5/8"><span class="font-medium">Timeline:</span> 3 years on-site (full-time)</p>
+                        <div class="metadata-impact flex flex-col gap-y-4">
+                            <div class="font-medium">Impact</div>
+                            <p class="text-5/8">&bull; 60% reduction in training time &bull; 25% faster checkout speeds</p>
+                            <p class="text-5/8">&bull; 40% fewer user errors &bull; Still running in thousands of stores largely unchanged</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pos-image">
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656]" src="assets/images/dreamkas-main.png" alt="Dreamkas POS"/>
+        </section>
+
+        <section id="overview" class="flex flex-col items-start">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Overview</h2>
+                    <div class="overview-text-1 font-light text-5/8 min-w-0">
+                    <p class="min-w-0">CSI, one of Russia&rsquo;s leading retail tech companies, launched Dreamkas to pioneer the country&rsquo;s first modern touchscreen POS systems. The goal was to create <span class="font-medium">intuitive tools requiring no training</span>, a new standard for thousands of businesses.</p>
+                    </div>
+                </div>
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Overview</h2>
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px] 2xl:row-start-2">
+                <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 hidden md:order-1 md:block 2xl:min-w-0">
+                    <p class="min-w-0">CSI, one of Russia&rsquo;s leading retail tech companies, launched Dreamkas to pioneer the country&rsquo;s first modern touchscreen POS systems. The goal was to create <span class="font-medium">intuitive tools requiring no training</span>, a new standard for thousands of businesses.</p>
+                </div>
+                <div class="overview-text-2 order-3 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">I led the UX, shaping <span class="font-medium">interaction logic, language, and workflows</span> from the ground up. Through field research and close team collaboration, we built a system that brought clarity, speed, and trust to diverse retail environments.</p>
+                </div>
+                </div>
+                <img src="assets/images/dreamkas-overview-pos-wide.png" alt="" class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+                <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/dreamkas-overview-cashier-square.png" alt="" class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/dreamkas-overview-viki-mini.png" alt="" class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+                <div class="order-4 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                    <p class="font-light text-5/8">I helped bring touchscreen POS technology into everyday retail, <span class="font-medium">reaching thousands of businesses across the country</span>.</p>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section id="challenge" class="flex flex-col items-start gap-y-8 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 max-md:gap-y-0 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-4 xl:gap-y-6 2xl:gap-y-[40px] xl:min-w-0 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">A sudden regulatory shift forced every business, from bakeries to open-air markets, to adopt <span class="font-medium">certified digital registers within months</span>.</p>
+                </div>
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">Thousands of cashiers and store owners with limited digital skills had to master unfamiliar systems while handling <span class="font-medium">real-time sales under constant pressure</span>.</p>
+                </div>
+                </div>
+                </div>
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 mt-8 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                    <p class="font-light text-5/8">The market was dominated by <span class="font-medium">outdated, unintuitive systems</span> that made everyday retail harder, not easier.</p>
+                </div>
+                <img src="assets/images/dreamkas-challenge-old-pos.png" alt="" class="dreamkas-challenge-img mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
+            </div>
+            </div>
+        </section>
+
+        <section id="my-part" class="flex flex-col gap-y-0 pb-[26px] md:pb-[29px] xl:pb-[38px] 2xl:pb-[43px]">
+            <div class="flex w-full max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:max-w-[856px] 2xl:max-w-[1048px]">
+            <h2 class="section-header w-full">My Part in This</h2>
+            <div class="w-full max-w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] overflow-hidden md:flex md:flex-col">
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
+                        <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="my-part-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">As the only UX designer at the start of the project, I wore many hats — from leading user research and prototyping to establishing workflows, onboarding teams, and driving early product decisions.</p>
+                            </div>
+                            <div class="my-part-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                                <p class="min-w-0">I shaped the first interaction patterns, built design foundations from scratch, and collaborated closely with engineers and business stakeholders to bring the vision to life.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="mt-10 flex w-full flex-col gap-y-10 md:mt-12 xl:mt-14">
+            <button type="button" id="my-part-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="my-part-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="my-part-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How my role expanded</span>
+            </button>
+            <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="my-part-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <p class="font-light text-5/8">Over time, my role expanded beyond individual contributions. I helped define the company&rsquo;s approach to UX, introducing new tools and processes, mentoring new team members, and influencing how design fit into business strategy.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="my-part-2-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="my-part-2-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="my-part-2-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What changed inside Dreamkas</span>
+            </button>
+            <div id="my-part-2-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="my-part-2-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <p class="font-light text-5/8">My work shaped not only the product, but also the <span class="font-medium">growing culture of design inside Dreamkas</span>.</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <script>
+            (function(){
+              function wire(btnId, wrapId, panelId, arrowId){
+                var btn=document.getElementById(btnId), wrap=document.getElementById(wrapId), panel=document.getElementById(panelId), arrow=document.getElementById(arrowId);
+                if(!btn||!wrap||!panel)return;
+                btn.addEventListener('click',function(){
+                  var o=btn.getAttribute('aria-expanded')==='true';
+                  btn.setAttribute('aria-expanded', o?'false':'true');
+                  wrap.setAttribute('data-open', o?'0':'1');
+                  panel.setAttribute('data-open', o?'0':'1');
+                  if(arrow) arrow.classList.toggle('rotate-180', !o);
+                });
+              }
+              wire('my-part-acc-btn','my-part-acc-panel-wrap','my-part-acc-panel','my-part-acc-arrow');
+              wire('my-part-2-acc-btn','my-part-2-acc-panel-wrap','my-part-2-acc-panel','my-part-2-acc-arrow');
+            })();
+            </script>
+        </section>
+
+        <section id="eco-shop-image">
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656]" src="assets/images/dreamkas-eco-shop.png" alt="Eco shop with Dreamkas POS"/>
+        </section>
+        <section id="research-discovery" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Research &amp; Discovery</h2>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Research &amp; Discovery</h2>
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">To design a POS system for users who had never used one, I had to start from the source — <span class="font-medium">real cashiers, business owners, and the messy realities of retail work.</span></p>
+                            </div>
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">This phase was all about understanding behaviors, uncovering pain points, and translating those into <span class="font-medium">clear design priorities.</span></p>
+                            </div>
+                        </div>
+                        <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+                            <button type="button" id="rd-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="rd-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="rd-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span>
+                            </button>
+                            <div id="rd-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="rd-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div><span class="font-medium">Field observation</span><br/>Shadowed cashiers and spoke with owners on busy shifts to see where the old tools broke down.</div>
+                                            <div><span class="font-medium">Journey mapping</span><br/>Mapped checkout, refunds, and edge cases to find where confusion piled up under pressure.</div>
+                                            <div><span class="font-medium">Iteration with engineering</span><br/>Turned weekly findings into prototypes we could test again on the floor.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                            <img src="assets/images/dreamkas-research-me.png" alt="Research in store" class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                            <p class="dreamkas-image-caption mt-4">That&rsquo;s me in the field, learning directly from cashiers during their shifts.</p>
+                        </div>
+                    </div>
+                    <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                        <p class="font-light text-5/8">&ldquo;Olga has a rare ability to understand people on a deeper level. It changed the way we made decisions as a team.&rdquo;</p>
+                        <div class="flex items-center gap-x-4 pt-2">
+                            <div class="h-12 w-12 shrink-0 rounded-full bg-[#DEE6F5]" aria-hidden="true"></div>
+                            <div class="text-[14px] leading-[20px] font-normal text-black">
+                                <div>Sergey Kapatsevich</div>
+                                <div>Head of Product</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>(function(){var b=document.getElementById('rd-acc-btn'),w=document.getElementById('rd-acc-panel-wrap'),p=document.getElementById('rd-acc-panel'),a=document.getElementById('rd-acc-arrow');if(!b||!w||!p)return;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');w.setAttribute('data-open',o?'0':'1');p.setAttribute('data-open',o?'0':'1');if(a)a.classList.toggle('rotate-180',!o);});})();</script>
+        </section>
+
+        <section id="understanding-users" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
+                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Understanding the Users</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-4 xl:gap-y-6 2xl:gap-y-[40px] xl:col-start-1 xl:row-start-2 xl:min-w-0 2xl:col-start-1 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">At that time most Russian shops relied on outdated button-based registers with tiny screens, while smaller businesses used pen and paper, leading to errors and compliance issues. <span class="font-medium">New fiscal laws forced a rapid switch to digital systems</span> — users suddenly had to work with tools they&rsquo;d never encountered.</p>
+                </div>
+                <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
+                    <p class="min-w-0">This exposed how poorly existing solutions fit real retail life. Cashiers had to navigate complex, unfamiliar systems under pressure. Store owners managed training and technical issues they didn&rsquo;t understand themselves. <span class="font-medium">Support teams struggled with endless troubleshooting.</span></p>
+                </div>
+                </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-[48px] md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] mt-[32px] xl:mt-[40px] xl:col-start-1 xl:row-start-3 2xl:col-start-1 2xl:row-start-3">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/dreamkas-persona-cashiers.png" alt="" class="w-[88px] h-[88px] shrink-0 object-contain"/>
+                        <div class="font-medium leading-tight self-center">Cashiers</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
+                        <p>Cashiers were the ones standing between outdated machines and impatient queues. Most had never touched a touchscreen before, and many were non-tech-savvy or temporary workers with no formal training.</p>
+                        <button type="button" id="uu-cash-acc-btn" class="group mt-5 flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="uu-cash-acc-panel">
+                            <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                <svg id="uu-cash-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                        </button>
+                        <div id="uu-cash-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                            <div class="min-h-0 overflow-hidden">
+                                <div id="uu-cash-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-8 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                    <p class="font-light text-5/8">Checkout had to stay fast when lines peaked; every confusing label or extra tap slowed everyone down.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-[48px] md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] xl:col-start-1 xl:row-start-4 2xl:col-start-1 2xl:row-start-4">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/dreamkas-persona-owners.png" alt="" class="w-[88px] h-[88px] shrink-0 object-contain"/>
+                        <div class="font-medium leading-tight self-center">Store Owners &amp; Managers</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
+                        <p>For small and mid-sized business owners, running operations meant juggling legal compliance, manual reporting, and training staff on systems they barely understood themselves.</p>
+                        <button type="button" id="uu-own-acc-btn" class="group mt-5 flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="uu-own-acc-panel">
+                            <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                <svg id="uu-own-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                        </button>
+                        <div id="uu-own-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                            <div class="min-h-0 overflow-hidden">
+                                <div id="uu-own-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-8 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                    <p class="font-light text-5/8">Owners needed confidence that staff could run compliant sales without constant supervision.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex w-full min-w-0 flex-col gap-y-6 border-t border-[#E9E9E9] pt-[48px] pb-[48px] md:grid md:grid-cols-[320px_1fr] md:gap-x-[40px] md:items-start xl:grid-cols-[360px_1fr] 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] xl:col-start-1 xl:row-start-5 2xl:col-start-1 2xl:row-start-5">
+                    <div class="flex w-full gap-x-[24px]">
+                        <img src="assets/images/dreamkas-persona-hq.png" alt="" class="w-[88px] h-[88px] shrink-0 object-contain"/>
+                        <div class="font-medium leading-tight self-center">HQ &amp; Support Teams</div>
+                    </div>
+                    <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
+                        <p>Support teams and installers worked with outdated hardware and inconsistent setups across thousands of locations.</p>
+                        <button type="button" id="uu-hq-acc-btn" class="group mt-5 flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="uu-hq-acc-panel">
+                            <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                <svg id="uu-hq-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                        </button>
+                        <div id="uu-hq-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                            <div class="min-h-0 overflow-hidden">
+                                <div id="uu-hq-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-8 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
+                                    <p class="font-light text-5/8">Remote diagnostics and repeatable install steps reduced repeat visits and phone support load.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 mt-2 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-4 2xl:col-start-2 2xl:row-start-2 2xl:row-span-4 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                    <p class="font-light text-5/8">Understanding all perspectives was essential to build something that worked not in theory, but in the <span class="font-medium">messy reality of real retail</span>.</p>
+                </div>
+            </div>
+            </div>
+            <script>(function(){function w(b,w,p,a){var B=document.getElementById(b),W=document.getElementById(w),P=document.getElementById(p),A=document.getElementById(a);if(!B||!W||!P)return;B.addEventListener('click',function(){var o=B.getAttribute('aria-expanded')==='true';B.setAttribute('aria-expanded',o?'false':'true');W.setAttribute('data-open',o?'0':'1');P.setAttribute('data-open',o?'0':'1');if(A)A.classList.toggle('rotate-180',!o);});}
+            w('uu-cash-acc-btn','uu-cash-acc-panel-wrap','uu-cash-acc-panel','uu-cash-acc-arrow');w('uu-own-acc-btn','uu-own-acc-panel-wrap','uu-own-acc-panel','uu-own-acc-arrow');w('uu-hq-acc-btn','uu-hq-acc-panel-wrap','uu-hq-acc-panel','uu-hq-acc-arrow');})();</script>
+        </section>
+
+        <section id="cafe-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/dreamkas-cafe.png" alt="Dreamkas hardware in a cafe"/>
+        </section>
+        <section id="research-to-product" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">From Research to Real Product</h2>
+                </div>
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">From Research to Real Product</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">This wasn&rsquo;t just a handful of interviews and a couple of wireframes. It was months of deep, iterative work — hundreds of prototypes, multiple rounds of testing, and constant discussions with developers, stakeholders, and the sales team.</p>
+                </div>
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">Translating that research into a real product meant rethinking everything from interaction logic to visual language. <span class="font-medium">I created the core UX foundations</span>, while real user insights shaped how the product behaved — not assumptions.</p>
+                </div>
+                </div>
+                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="rtp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="rtp-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="rtp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What we shipped first</span>
+            </button>
+            <div id="rtp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="rtp-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Shared design language</span><br/>Unified typography, spacing, and components across cashier and back-office tools.</div>
+                            <div><span class="font-medium">Error-proof flows</span><br/>Reduced destructive actions and clarified totals before payment.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                <img src="assets/images/dreamkas-viki-pos-lineup.png" alt="Viki POS lineup" class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                <p class="dreamkas-image-caption mt-4">Part of the Viki POS lineup, multiple models with different screen sizes and configurations, built to fit any retail environment.</p>
+                </div>
+                </div>
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                    <p class="font-light text-5/8">The result was a system designed to scale to <span class="font-medium">thousands of stores</span> and perform in real retail chaos.</p>
+                </div>
+            </div>
+            </div>
+            <script>(function(){var b=document.getElementById('rtp-acc-btn'),w=document.getElementById('rtp-acc-panel-wrap'),p=document.getElementById('rtp-acc-panel'),a=document.getElementById('rtp-acc-arrow');if(!b||!w||!p)return;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');w.setAttribute('data-open',o?'0':'1');p.setAttribute('data-open',o?'0':'1');if(a)a.classList.toggle('rotate-180',!o);});})();</script>
+        </section>
+
+        <section id="core-ux" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">The Core User Experience</h2>
+                </div>
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Core User Experience</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">Designing the cashier interface was the most hands-on part of the project. This was the screen people lived in all day — <span class="font-medium">every tap and layout choice shaped how fast and confidently they could work.</span></p>
+                </div>
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">I spent a lot of time refining the small things that make a difference under pressure: spacing, button sizes, the way errors appeared, the rhythm of checkout flows.</p>
+                </div>
+                </div>
+                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="cux-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="cux-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="cux-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Interaction principles</span>
+            </button>
+            <div id="cux-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="cux-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Large touch targets</span><br/>Kept primary actions within easy reach during long shifts.</div>
+                            <div><span class="font-medium">Forgiving flows</span><br/>Let staff correct mistakes without losing the sale.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/dreamkas-ux-hand-viki.png" alt="" class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/dreamkas-ux-cashier-wide.png" alt="" class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                    <p class="font-light text-5/8">My goal wasn&rsquo;t to make something flashy or &ldquo;modern&rdquo;, but to give people a tool they could trust, <span class="font-medium">no matter their experience level</span>.</p>
+                </div>
+            </div>
+            </div>
+            <script>(function(){var b=document.getElementById('cux-acc-btn'),w=document.getElementById('cux-acc-panel-wrap'),p=document.getElementById('cux-acc-panel'),a=document.getElementById('cux-acc-arrow');if(!b||!w||!p)return;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');w.setAttribute('data-open',o?'0':'1');p.setAttribute('data-open',o?'0':'1');if(a)a.classList.toggle('rotate-180',!o);});})();</script>
+        </section>
+        <section id="interface-gallery-1" class="dreamkas-gallery-section full-bleed bg-[#1A3716] py-12 md:py-16 xl:py-20">
+            <div class="mx-auto flex w-full max-w-[1280px] flex-col gap-y-8 px-4 sm:px-8 md:px-6 2xl:max-w-[1440px] 2xl:px-[120px]">
+                <div class="dreamkas-carousel relative" data-dreamkas-carousel>
+                    <div class="overflow-hidden rounded-[20px]">
+                        <div class="dreamkas-carousel-track flex transition-transform duration-500 ease-out motion-reduce:transition-none" data-carousel-track style="transform:translateX(0)">
+                            <div class="dreamkas-carousel-slide min-w-full shrink-0 px-1">
+                                <img src="assets/images/dreamkas-gallery-interface-1.png" alt="POS interface" class="w-full rounded-[16px] object-contain"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-center gap-x-4">
+                        <button type="button" class="dreamkas-carousel-prev inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20" aria-label="Previous slide" data-carousel-prev>&larr;</button>
+                        <div class="flex gap-2" data-carousel-dots></div>
+                        <button type="button" class="dreamkas-carousel-next inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20" aria-label="Next slide" data-carousel-next>&rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="under-hood" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                    <h2 class="section-header w-full">Under the Hood</h2>
+                </div>
+                <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Under the Hood</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                    <p class="min-w-0">While cashiers interacted with clear, focused screens, the system quietly handled a dense network of operations, legal rules, and integrations.</p>
+                </div>
+                <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                    <p class="min-w-0">This invisible layer was critical — <span class="font-medium">it&rsquo;s what made the product reliable at scale</span>, not just pleasant to use.</p>
+                </div>
+                </div>
+                <div class="flex w-full flex-col order-4 mt-5 md:order-3 md:mt-0">
+            <button type="button" id="uh-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="uh-acc-panel">
+                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                    <svg id="uh-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Compliance &amp; integrations</span>
+            </button>
+            <div id="uh-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                <div class="min-h-0 overflow-hidden">
+                    <div id="uh-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <div><span class="font-medium">Fiscal reporting</span><br/>Aligned screens with regulatory outputs so stores stayed audit-ready.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <img src="assets/images/dreamkas-receipt.png" alt="" class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                        <img src="assets/images/dreamkas-alco.png" alt="" class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                </div>
+                </div>
+                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                    <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                    <p class="font-light text-5/8">Reliability had to live <span class="font-medium">behind the scenes</span>, where shoppers never looked.</p>
+                </div>
+            </div>
+            </div>
+            <script>(function(){var b=document.getElementById('uh-acc-btn'),w=document.getElementById('uh-acc-panel-wrap'),p=document.getElementById('uh-acc-panel'),a=document.getElementById('uh-acc-arrow');if(!b||!w||!p)return;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');w.setAttribute('data-open',o?'0':'1');p.setAttribute('data-open',o?'0':'1');if(a)a.classList.toggle('rotate-180',!o);});})();</script>
+        </section>
+
+        <section id="interface-gallery-2" class="dreamkas-gallery-section full-bleed bg-[#1A3716] py-12 md:py-16 xl:py-20">
+            <div class="mx-auto flex w-full max-w-[1280px] flex-col gap-y-8 px-4 sm:px-8 md:px-6 2xl:max-w-[1440px] 2xl:px-[120px]">
+                <div class="dreamkas-carousel relative" data-dreamkas-carousel>
+                    <div class="overflow-hidden rounded-[20px]">
+                        <div class="dreamkas-carousel-track flex transition-transform duration-500 ease-out motion-reduce:transition-none" data-carousel-track style="transform:translateX(0)">
+                            <div class="dreamkas-carousel-slide min-w-full shrink-0 px-1">
+                                <img src="assets/images/dreamkas-gallery-interface-1.png" alt="POS interface" class="w-full rounded-[16px] object-contain"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-center gap-x-4">
+                        <button type="button" class="dreamkas-carousel-prev inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20" aria-label="Previous slide" data-carousel-prev>&larr;</button>
+                        <div class="flex gap-2" data-carousel-dots></div>
+                        <button type="button" class="dreamkas-carousel-next inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20" aria-label="Next slide" data-carousel-next>&rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="results-cashiers" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full max-md:leading-[1.02] results-mobile-tight">Results for Cashiers:<br/>Calm at the Register</h2>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for Cashiers:<br/>Calm at the Register</h2>
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Before Dreamkas, cashiers wrestled with tiny screens, cryptic codes, and flows that broke when lines grew. <span class="font-medium">Every mistake echoed down the queue</span> — stress for staff and friction for shoppers.</p>
+                            </div>
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">The new POS put <span class="font-medium">large touch targets, plain language, and forgiving flows</span> first. Checkout stayed fast when stores were busiest, and people recovered from errors without losing the sale.</p>
+                            </div>
+                        </div>
+                        <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+                            <button type="button" id="res-cash-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="res-cash-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="res-cash-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See full impact</span>
+                            </button>
+                            <div id="res-cash-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="res-cash-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div><span class="font-medium">Faster checkout rhythm</span><br/>Streamlined steps cut time at the till during peak hours.</div>
+                                            <div><span class="font-medium">Fewer mis-taps</span><br/>Clear hierarchy and spacing reduced errors under pressure.</div>
+                                            <div><span class="font-medium">Easier onboarding</span><br/>New hires could follow on-screen guidance without manuals.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                            <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                                <img src="assets/images/dreamkas-results-cashier-portrait.png" alt="Cashier using Dreamkas POS" class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                                <img src="assets/images/dreamkas-results-cashier-chart.png" alt="Checkout metrics" class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 mt-2 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                        <p class="font-light text-5/8">&ldquo;I don&rsquo;t fight the machine anymore — I just sell.&rdquo;</p>
+                        <div class="text-[14px] leading-[20px] font-normal text-black">
+                            <div>Store associate</div>
+                            <div>Regional supermarket chain</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>(function(){var b=document.getElementById('res-cash-acc-btn'),w=document.getElementById('res-cash-acc-panel-wrap'),p=document.getElementById('res-cash-acc-panel'),a=document.getElementById('res-cash-acc-arrow');if(!b||!w||!p)return;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');w.setAttribute('data-open',o?'0':'1');p.setAttribute('data-open',o?'0':'1');if(a)a.classList.toggle('rotate-180',!o);});})();</script>
+        </section>
+
+        <section id="designing-real-world" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Designing for the Real World</h2>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Designing for the Real World</h2>
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Retail isn&rsquo;t a lab. Screens had to work in <span class="font-medium">glare, noise, long shifts, and interrupted attention</span> — the same conditions we saw in field visits.</p>
+                            </div>
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">This section is a short walkthrough of how we stress-tested ideas before they ever reached a live store. <span class="font-medium">Video placeholder</span> — full reel to be added.</p>
+                            </div>
+                        </div>
+                        <div class="dreamkas-video-placeholder relative w-full overflow-hidden rounded-[20px] bg-[#0f2410] aspect-video">
+                            <img src="assets/images/dreamkas-hero.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true"/>
+                            <button type="button" class="absolute inset-0 flex items-center justify-center gap-x-3 text-white" aria-label="Play video: Designing for the Real World">
+                                <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/40 transition hover:bg-white/30">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                                </span>
+                                <span class="font-family-sofia text-lg uppercase tracking-wider">Play</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="results-business" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full max-md:leading-[1.02] results-mobile-tight">Results for Business:<br/>Control You Can See</h2>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Results for Business:<br/>Control You Can See</h2>
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Owners needed <span class="font-medium">visibility into sales, compliance, and staff performance</span> without wading through exports or calling support.</p>
+                            </div>
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">Dashboards and reports translated activity into decisions — <span class="font-medium">what to stock, when to staff up, and where revenue leaked</span>.</p>
+                            </div>
+                        </div>
+                        <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+                            <button type="button" id="res-biz-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="res-biz-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="res-biz-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See full impact</span>
+                            </button>
+                            <div id="res-biz-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="res-biz-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div><span class="font-medium">Reporting in one place</span><br/>Sales and fiscal data aligned for audits and daily ops.</div>
+                                            <div><span class="font-medium">Less firefighting</span><br/>Clear signals replaced guesswork when something looked off.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
+                            <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                                <img src="assets/images/dreamkas-results-owner-photo.png" alt="Store owner" class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                                <img src="assets/images/dreamkas-results-owner-chart.png" alt="Business metrics" class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                        <p class="font-light text-5/8">&ldquo;Finally I see what happens in my stores without living behind a spreadsheet.&rdquo;</p>
+                        <div class="flex items-center gap-x-4 pt-2">
+                            <img src="assets/images/dreamkas-results-owner-photo.png" alt="" class="h-12 w-12 shrink-0 rounded-full object-cover" aria-hidden="true"/>
+                            <div class="text-[14px] leading-[20px] font-normal text-black">
+                                <div>Ildar</div>
+                                <div>Multi-store owner</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>(function(){var b=document.getElementById('res-biz-acc-btn'),w=document.getElementById('res-biz-acc-panel-wrap'),p=document.getElementById('res-biz-acc-panel'),a=document.getElementById('res-biz-acc-arrow');if(!b||!w||!p)return;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');w.setAttribute('data-open',o?'0':'1');p.setAttribute('data-open',o?'0':'1');if(a)a.classList.toggle('rotate-180',!o);});})();</script>
+        </section>
+
+        <section id="viki-tower" class="flex flex-col">
+            <img class="w-full rounded-[20px] object-cover aspect-[1048/656]" src="assets/images/dreamkas-viki-tower.png" alt="Viki POS tower display"/>
+        </section>
+
+        <section id="learnings-growth" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Learnings &amp; Growth</h2>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Learnings &amp; Growth</h2>
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Dreamkas taught me to treat <span class="font-medium">retail software as a choreography of stress</span> — every second at the till is borrowed from someone behind you in line.</p>
+                            </div>
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">The biggest growth was learning to defend simplicity when stakeholders asked for more — <span class="font-medium">because “more” usually meant slower</span>.</p>
+                            </div>
+                        </div>
+                        <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+                            <button type="button" id="lg-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="lg-acc-panel">
+                                <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
+                                    <svg id="lg-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">More learnings</span>
+                            </button>
+                            <div id="lg-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="lg-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div><span class="font-medium">Field beats slides</span><br/>Nothing replaced watching cashiers during real rushes.</div>
+                                            <div><span class="font-medium">Design systems earn trust</span><br/>Repeatable patterns made handoff and QA predictable.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                            <img src="assets/images/dreamkas-learnings-store.png" alt="Retail floor" class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                            <p class="dreamkas-image-caption mt-4">Store visits kept the roadmap honest when metrics alone couldn&rsquo;t.</p>
+                        </div>
+                    </div>
+                    <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 xl:row-start-2 xl:row-span-2 2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                        <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                        <p class="font-light text-5/8">Growth meant <span class="font-medium">choosing clarity over feature noise</span>, every time.</p>
+                    </div>
+                </div>
+            </div>
+            <script>(function(){var b=document.getElementById('lg-acc-btn'),w=document.getElementById('lg-acc-panel-wrap'),p=document.getElementById('lg-acc-panel'),a=document.getElementById('lg-acc-arrow');if(!b||!w||!p)return;b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');w.setAttribute('data-open',o?'0':'1');p.setAttribute('data-open',o?'0':'1');if(a)a.classList.toggle('rotate-180',!o);});})();</script>
+        </section>
+
+        <section id="before-i-close" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Before I Close This Case</h2>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Before I Close This Case</h2>
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Self-checkout and new store formats were already on the horizon. We prototyped how Dreamkas could extend <span class="font-medium">beyond the traditional counter</span> — same trust, new surfaces.</p>
+                            </div>
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">This closing chapter is a glimpse of that stretch goal. <span class="font-medium">Video placeholder</span> — story to ship later.</p>
+                            </div>
+                        </div>
+                        <div class="dreamkas-video-placeholder dreamkas-video-placeholder--tall relative w-full overflow-hidden rounded-[20px] bg-[#0f2410] min-h-[320px] md:min-h-[480px] xl:min-h-[560px]">
+                            <img src="assets/images/dreamkas-self-checkout-csi.png" alt="" class="absolute inset-0 h-full w-full object-cover" aria-hidden="true"/>
+                            <button type="button" class="absolute inset-0 flex items-center justify-center gap-x-3 text-white" aria-label="Play video: Before I close this case">
+                                <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/40 transition hover:bg-white/30">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                                </span>
+                                <span class="font-family-sofia text-lg uppercase tracking-wider">Play</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="from-fear-to-familiar" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">From Fear to Familiar</h2>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">From Fear to Familiar</h2>
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                                <p class="min-w-0">Touchscreens were unfamiliar to many cashiers. <span class="font-medium">Fear of breaking something was as real as slow service.</span></p>
+                            </div>
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">Onboarding and in-product guidance turned that fear into muscle memory. <span class="font-medium">Video placeholder</span> — interview reel to come.</p>
+                            </div>
+                        </div>
+                        <div class="dreamkas-video-placeholder relative w-full overflow-hidden rounded-[20px] bg-[#0f2410] aspect-video">
+                            <img src="assets/images/dreamkas-main.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-50" aria-hidden="true"/>
+                            <button type="button" class="absolute inset-0 flex items-center justify-center gap-x-3 text-white" aria-label="Play video: From fear to familiar">
+                                <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/40 transition hover:bg-white/30">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                                </span>
+                                <span class="font-family-sofia text-lg uppercase tracking-wider">Play</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="still-in-use" class="flex flex-col items-start">
+            <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                    <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
+                        <h2 class="section-header w-full">Still in Use, and Still Making Life Easier</h2>
+                        <div class="overview-text-1 font-light text-5/8 min-w-0">
+                            <p class="min-w-0">Years later, many installs are <span class="font-medium">still running the same flows we shipped</span> — a rare kind of longevity in retail tech.</p>
+                        </div>
+                    </div>
+                    <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Still in Use, and Still Making Life Easier</h2>
+                    <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px] 2xl:row-start-2">
+                        <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 hidden md:order-1 md:block 2xl:min-w-0">
+                                <p class="min-w-0">Years later, many installs are <span class="font-medium">still running the same flows we shipped</span> — a rare kind of longevity in retail tech.</p>
+                            </div>
+                            <div class="overview-text-2 order-3 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                                <p class="min-w-0">From compact markets to self-checkout pilots, the same principles — <span class="font-medium">clarity, resilience, respect for the person at the till</span> — keep showing up.</p>
+                            </div>
+                        </div>
+                        <img src="assets/images/dreamkas-self-checkout-igor.png" alt="" class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+                        <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                            <img src="assets/images/dreamkas-self-checkout-spar.png" alt="" class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                            <img src="assets/images/dreamkas-self-checkout-lenta.png" alt="" class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                        </div>
+                    </div>
+                    <div class="order-4 min-w-0 w-full rounded-[20px] bg-[#ECF1F4] max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px] flex flex-col gap-y-6 md:order-3 md:mt-4 xl:mt-0 xl:col-start-2 2xl:col-start-2 2xl:row-start-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                        <img src="assets/images/dreamkas-keyphrase-logo copy.png" alt="" class="h-[56px] w-auto max-w-[200px] shrink-0 object-contain object-left"/>
+                        <p class="font-light text-5/8">If a product still helps people years after launch, <span class="font-medium">we did something right in the bones of the design</span>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="next-project" class="flex flex-col gap-y-6 md:gap-y-8 mb-[-120px] md:mb-[-80px] xl:mb-[-104px] 2xl:mb-[-120px]">
+            <nav class="next-project-nav flex flex-col gap-y-6 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8" aria-label="Adjacent projects">
+                <a class="next-project-link next-project-prev card-detail no-underline" href="#"></a>
+                <a class="next-project-link next-project-next card-detail no-underline sm:text-right" href="#"></a>
+            </nav>
+        </section>
+
+    </main>
+
+</div>
+
+    <style>
+        .proj-nav-link { position: relative; }
+        .proj-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0; bottom: -7px;
+            width: 100%; height: 3px;
+            background-color: var(--color-accent-yellow);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .proj-nav-link-right::after { transform-origin: right; }
+        .group:hover .proj-nav-link::after { transform: scaleX(1); }
+
+        #case-side-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 320px;
+            padding: 48px 56px 56px 56px;
+            background: #FFFFFF;
+            border: 1px solid #DEE6F5;
+            border-radius: 20px;
+            z-index: 1;
+            opacity: 0;
+            --case-nav-overlap-opacity: 1;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity 0.55s ease, transform 0.55s ease, height 0.25s ease, padding 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        #case-side-nav.is-visible {
+            opacity: var(--case-nav-overlap-opacity);
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        #case-side-nav nav {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: opacity 0.3s ease, max-height 0.3s ease, transform 0.3s ease;
+            max-height: 420px;
+            overflow: visible;
+        }
+
+        #case-side-nav .case-side-nav-toggle {
+            position: absolute;
+            top: 64px;
+            right: 56px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            cursor: pointer;
+            transition: color 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+            z-index: 2;
+            padding: 0;
+            transform: translateY(-50%);
+        }
+
+        #case-side-nav .case-side-nav-toggle-icon {
+            width: 16px;
+            height: 22px;
+            display: block;
+            opacity: 1;
+            filter: none;
+            transition: none;
+        }
+
+        #case-side-nav .case-side-nav-toggle:hover {
+            background-color: transparent;
+        }
+
+        #case-side-nav .case-side-nav-toggle:hover .case-side-nav-toggle-icon {
+            filter: brightness(0) saturate(100%) invert(15%) sepia(97%) saturate(6437%) hue-rotate(232deg) brightness(99%) contrast(118%);
+        }
+
+        #case-side-nav.is-collapsed {
+            padding: 24px 56px;
+        }
+
+        #case-side-nav.is-collapsed nav {
+            opacity: 1;
+            max-height: 32px;
+            transform: translateY(0);
+            gap: 0;
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-toggle {
+            top: 40px;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-indicator {
+            opacity: 0 !important;
+        }
+
+        #case-side-nav .case-side-nav-indicator {
+            position: absolute;
+            left: -57px;
+            top: 0;
+            width: 6px;
+            height: 40px;
+            border-radius: 3px;
+            background: var(--color-accent-yellow);
+            transform: translateY(0);
+            opacity: 0;
+            transition: transform 0.35s ease, opacity 0.2s ease;
+            will-change: transform;
+        }
+
+        #case-side-nav .case-side-nav-link {
+            position: relative;
+            display: block;
+            font-size: 1.25rem;
+            line-height: 2rem;
+            font-weight: 300;
+            color: #667284;
+            text-decoration: none;
+            opacity: 1;
+            max-height: 40px;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: color 0.25s ease, opacity 0.25s ease, max-height 0.25s ease, transform 0.25s ease;
+        }
+
+        #case-side-nav .case-side-nav-link:hover {
+            color: #0016F2;
+        }
+
+        #case-side-nav .case-side-nav-link.is-active {
+            color: #0016F2;
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-link {
+            opacity: 0;
+            max-height: 0;
+            pointer-events: none;
+            transform: translateY(-4px);
+        }
+
+        #case-side-nav.is-collapsed .case-side-nav-link.is-active {
+            color: #667284;
+            opacity: 1;
+            max-height: 40px;
+            pointer-events: auto;
+            transform: translateY(0);
+            padding-right: 32px;
+        }
+
+        main img,
+        main [class*="bg-[#ECF1F4]"] {
+            position: relative;
+            z-index: 2;
+        }
+
+        [data-parallax-wrap] {
+            overflow: hidden;
+            position: relative;
+            z-index: 4;
+        }
+
+        @media (min-width: 768px) {
+            [data-parallax-image] {
+                will-change: transform;
+                transform: scale(1.08);
+                transform-origin: center;
+            }
+        }
+
+        [data-parallax-image] {
+            position: relative;
+            z-index: 4;
+        }
+
+        #map-image,
+        #map-image img {
+            position: relative;
+            z-index: 3;
+        }
+
+        @media (min-width: 1536px) {
+            #case-side-nav {
+                width: 352px;
+            }
+        }
+    </style>
+    <div class="full-bleed bg-[#FFF2D7] h-[128px] flex items-center px-6 sm:px-8 md:px-10 xl:px-0 2xl:px-0">
+        <div class="w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto flex items-center justify-between xl:px-6 2xl:px-0">
+            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+                <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 13L1 7L7 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
+                    </svg>
+                </span>
+                <span class="proj-nav-link font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Previous<span class="hidden min-[500px]:inline"> Project</span></span>
+            </a>
+            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+                <span class="proj-nav-link proj-nav-link-right font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Next<span class="hidden min-[500px]:inline"> Project</span></span>
+                <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L7 7L1 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="site-footer full-bleed bg-[#0007B2] text-white mt-0 xl:mt-0 flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
+        <div class="footer-inner flex items-center
+                w-full
+                max-w-[1280px]
+                2xl:max-w-[1440px]
+                mx-auto
+                flex-col
+                items-center
+                gap-y-4
+                px-4
+                sm:px-8
+                lg:flex-row
+                lg:items-center
+                lg:justify-between
+                lg:gap-y-0
+                xl:px-6
+                2xl:px-0
+                ">
+            <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#work">Work</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#about">About</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#contact">Contact</a>
+                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#resume">Resume</a>
+            </nav>
+            <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
+                <div class="footer-email transition-colors duration-300 hover:text-accent-yellow">hello@peppered.design</div>
+                <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                    <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const menuTween = gsap.timeline({paused: true})
+            .to(".menulink", {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                stagger: 0.1,
+                ease: "power2.out"
+            })
+            .to("#burgermiddle", {opacity:0, duration: .25}, 0)
+            .to("#burgertop", {y: "10.9375px", transformOrigin:"50% 50%", rotation: 45, duration: .25}, 0)
+            .to("#burgerbottom", {transformOrigin:"50% 50%", rotation: -45, duration: .25}, 0);
+
+        const header = document.querySelector("header");
+        let isMenuOpen = false;
+
+        const burger = document.querySelector("#burger");
+        if (burger && header) {
+            burger.addEventListener("click", (event) => {
+                event.stopPropagation();
+                document.body.parentElement.classList.toggle('stop-scrolling');
+                header.classList.toggle("menu-open");
+                if (!isMenuOpen) {
+                    menuTween.restart();
+                } else {
+                    menuTween.reverse();
+                }
+                isMenuOpen = !isMenuOpen;
+            });
+            document.querySelectorAll('header nav .menulink').forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (isMenuOpen) {
+                        document.body.parentElement.classList.remove('stop-scrolling');
+                        menuTween.reverse();
+                        header.classList.remove('menu-open');
+                        isMenuOpen = false;
+                    }
+                });
+            });
+        }
+
+        document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
+            const id = trigger.getAttribute("aria-controls");
+            const panel = id ? document.getElementById(id) : null;
+            if (!panel) return;
+            trigger.addEventListener("click", () => {
+                const expanded = trigger.getAttribute("aria-expanded") === "true";
+                trigger.setAttribute("aria-expanded", String(!expanded));
+                panel.hidden = expanded;
+            });
+        });
+
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!reducedMotion) {
+            const parallaxNarrow = window.matchMedia("(max-width: 767px)");
+            const parallaxImages = gsap.utils.toArray("[data-parallax-image]");
+            parallaxImages.forEach((img) => {
+                const wrap = img.closest("[data-parallax-wrap]") || img.parentElement;
+                if (!wrap) return;
+                const useScale = !parallaxNarrow.matches;
+                const scaleFrom = useScale ? 1.12 : 1;
+                const scaleTo = useScale ? 1.12 : 1;
+                gsap.fromTo(
+                    img,
+                    { yPercent: -14, scale: scaleFrom },
+                    {
+                        yPercent: 14,
+                        scale: scaleTo,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: wrap,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true,
+                        },
+                    }
+                );
+            });
+        }
+
+        const sideNav = document.getElementById("case-side-nav");
+        const overviewSection = document.getElementById("overview");
+        const overviewCard = overviewSection ? overviewSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
+        const stillInUseSection = document.getElementById("still-in-use");
+        const stillInUseCard = stillInUseSection ? stillInUseSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
+        const sectionIds = [
+            "overview",
+            "challenge",
+            "my-part",
+            "research-discovery",
+            "understanding-users",
+            "research-to-product",
+            "core-ux",
+            "interface-gallery-1",
+            "under-hood",
+            "interface-gallery-2",
+            "results-cashiers",
+            "designing-real-world",
+            "results-business",
+            "learnings-growth",
+            "before-i-close",
+            "from-fear-to-familiar",
+            "still-in-use",
+        ];
+        const sectionNodes = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+        const sideNavLinks = sideNav ? Array.from(sideNav.querySelectorAll(".case-side-nav-link")) : [];
+        const sideNavIndicator = sideNav ? sideNav.querySelector(".case-side-nav-indicator") : null;
+        const sideNavToggle = document.getElementById("case-side-nav-toggle");
+        const sideNavMenu = document.getElementById("case-side-nav-menu");
+        const overlapBlockers = Array.from(document.querySelectorAll(
+            '#map-image, #map-image img, [data-parallax-wrap], [data-parallax-wrap] img, main section > img, main img.overview-img-1, main img.overview-img-2, main img.overview-img-3, main [class*="bg-[#ECF1F4]"], .dreamkas-gallery-section, .dreamkas-gallery-section img, #hero'
+        ));
+
+        if (sideNav && overviewSection && overviewCard && stillInUseSection && sideNavLinks.length) {
+            const STICKY_OFFSET = 120;
+            const SCROLL_OFFSET = 120;
+            const INITIAL_GAP = 48;
+            const END_OFFSET = 120;
+            const ANCHOR_HOLD_MS = 700;
+            let ticking = false;
+            let visible = false;
+            let initialDocTop = 0;
+            let initialized = false;
+            let pendingAnchorDocTop = null;
+            let pendingAnchorUntil = 0;
+
+            function clamp(value, min, max) {
+                return Math.min(Math.max(value, min), max);
+            }
+
+            function absTop(node) {
+                return node.getBoundingClientRect().top + window.scrollY;
+            }
+
+            function setActiveLink(scrollY) {
+                const markerY = scrollY + window.innerHeight * 0.35;
+                let activeId = "overview";
+                sectionNodes.forEach((node) => {
+                    if (node && absTop(node) <= markerY) {
+                        activeId = node.id;
+                    }
+                });
+                let activeLink = null;
+                sideNavLinks.forEach((link) => {
+                    const isActive = link.getAttribute("data-target") === activeId;
+                    link.classList.toggle("is-active", isActive);
+                    if (isActive) activeLink = link;
+                });
+                if (sideNavIndicator && activeLink && sideNavMenu) {
+                    const menuRect = sideNavMenu.getBoundingClientRect();
+                    const activeRect = activeLink.getBoundingClientRect();
+                    const indicatorHeight = sideNavIndicator.offsetHeight || 40;
+                    const activeCenterY = activeRect.top - menuRect.top + activeRect.height / 2;
+                    const indicatorY = activeCenterY - indicatorHeight / 2;
+                    sideNavIndicator.style.transform = "translateY(" + indicatorY + "px)";
+                    sideNavIndicator.style.opacity = sideNav.classList.contains("is-collapsed") ? "0" : "1";
+                }
+                return activeId;
+            }
+
+            function ensureInitialized() {
+                if (initialized) return;
+                const cardTop = absTop(overviewCard);
+                initialDocTop = cardTop + overviewCard.offsetHeight + INITIAL_GAP;
+                initialized = true;
+            }
+
+            function setupSmoothScroll() {
+                function easeInOutCubic(t) {
+                    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                }
+
+                function smoothScrollTo(targetTop, onComplete) {
+                    if (typeof window.__pepperedLenisScrollTo === "function") {
+                        const didScroll = window.__pepperedLenisScrollTo(targetTop, {
+                            immediate: false,
+                            force: true
+                        });
+                        if (didScroll) {
+                            if (typeof window.__pepperedLenisOnScrollComplete === "function") {
+                                window.__pepperedLenisOnScrollComplete(onComplete);
+                            } else if (typeof onComplete === "function") {
+                                window.setTimeout(onComplete, 850);
+                            }
+                            return;
+                        }
+                    }
+
+                    const startTop = window.scrollY || window.pageYOffset;
+                    const distance = targetTop - startTop;
+                    if (Math.abs(distance) < 1) {
+                        if (typeof onComplete === "function") onComplete();
+                        return;
+                    }
+                    const duration = 800;
+                    const startTime = performance.now();
+
+                    function tick(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = easeInOutCubic(progress);
+                        window.scrollTo(0, startTop + distance * eased);
+                        if (progress < 1) {
+                            window.requestAnimationFrame(tick);
+                        } else if (typeof onComplete === "function") {
+                            onComplete();
+                        }
+                    }
+
+                    window.requestAnimationFrame(tick);
+                }
+
+                sideNavLinks.forEach((link) => {
+                    link.addEventListener("click", (event) => {
+                        event.preventDefault();
+                        const targetId = link.getAttribute("data-target");
+                        if (!targetId) return;
+                        const targetNode = document.getElementById(targetId);
+                        if (!targetNode) return;
+                        const targetTop = absTop(targetNode) - SCROLL_OFFSET;
+                        const useKeyphraseLanding = targetId === "research-to-product" || targetId === "still-in-use";
+                        if (!useKeyphraseLanding) {
+                            pendingAnchorDocTop = null;
+                            pendingAnchorUntil = 0;
+                        }
+                        if (sideNav.classList.contains("is-collapsed")) {
+                            sideNav.classList.remove("is-collapsed");
+                            if (sideNavToggle) sideNavToggle.setAttribute("aria-expanded", "true");
+                        }
+                        requestUpdate();
+                        const clampedTop = Math.max(0, targetTop);
+                        smoothScrollTo(clampedTop, () => {
+                            if (!useKeyphraseLanding) return;
+                            const anchorTop = getSectionKeyphraseAnchorTop(targetId);
+                            if (anchorTop === null) return;
+                            pendingAnchorDocTop = anchorTop;
+                            pendingAnchorUntil = performance.now() + ANCHOR_HOLD_MS;
+                            requestUpdate();
+                        });
+                    });
+                });
+            }
+
+            function setupCollapseToggle() {
+                if (!sideNavToggle) return;
+                sideNavToggle.addEventListener("click", () => {
+                    const isCollapsed = sideNav.classList.toggle("is-collapsed");
+                    sideNavToggle.setAttribute("aria-expanded", String(!isCollapsed));
+                    requestUpdate();
+                    window.setTimeout(requestUpdate, 320);
+                });
+            }
+
+            function getSectionKeyphraseAnchorTop(sectionId) {
+                if (sectionId !== "research-to-product" && sectionId !== "still-in-use") return null;
+                const targetSection = document.getElementById(sectionId);
+                if (!targetSection) return null;
+                const localCard = targetSection.querySelector('div[class*="bg-[#ECF1F4]"]');
+                if (!localCard) return null;
+                return absTop(localCard) + localCard.offsetHeight + INITIAL_GAP;
+            }
+
+            function overlapRatio(a, b) {
+                const overlapWidth = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+                const overlapHeight = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+                return (overlapWidth * overlapHeight) / Math.max(1, a.width * a.height);
+            }
+
+            function getOverlapOpacity() {
+                const navRect = sideNav.getBoundingClientRect();
+                if (!navRect.width || !navRect.height) return 1;
+                let maxRatio = 0;
+                overlapBlockers.forEach((blocker) => {
+                    if (!blocker) return;
+                    const rect = blocker.getBoundingClientRect();
+                    if (rect.bottom <= 0 || rect.top >= window.innerHeight || rect.right <= 0 || rect.left >= window.innerWidth) return;
+                    maxRatio = Math.max(maxRatio, overlapRatio(navRect, rect));
+                });
+                return clamp(1 - maxRatio * 0.7, 0.45, 1);
+            }
+
+            function updateSideNav() {
+                ticking = false;
+                if (window.innerWidth < 1280) {
+                    sideNav.classList.remove("is-visible");
+                    visible = false;
+                    initialized = false;
+                    return;
+                }
+
+                const scrollY = window.scrollY || window.pageYOffset;
+                const overviewTop = absTop(overviewSection);
+                const startThreshold = overviewTop - SCROLL_OFFSET;
+                const shouldShow = scrollY >= startThreshold;
+
+                if (!shouldShow) {
+                    sideNav.classList.remove("is-visible");
+                    visible = false;
+                    initialized = false;
+                    pendingAnchorDocTop = null;
+                    pendingAnchorUntil = 0;
+                    sideNav.style.setProperty("--case-nav-overlap-opacity", "1");
+                    return;
+                }
+
+                ensureInitialized();
+
+                if (!visible) {
+                    visible = true;
+                    sideNav.classList.add("is-visible");
+                }
+
+                const cardRect = overviewCard.getBoundingClientRect();
+                const navHeight = sideNav.offsetHeight;
+                const stillInUseTop = absTop(stillInUseSection);
+                const reflectionsStop = stillInUseCard
+                    ? absTop(stillInUseCard) + stillInUseCard.offsetHeight + INITIAL_GAP
+                    : stillInUseTop - END_OFFSET - navHeight;
+                const docBottomLimit = document.documentElement.scrollHeight - navHeight - 24;
+                const maxDocTop = clamp(reflectionsStop, initialDocTop, docBottomLimit);
+                const stickyDocTop = scrollY + STICKY_OFFSET;
+                setActiveLink(scrollY);
+                let preferredDocTop = stickyDocTop;
+                if (pendingAnchorDocTop !== null) {
+                    if (performance.now() <= pendingAnchorUntil) {
+                        preferredDocTop = pendingAnchorDocTop;
+                    } else {
+                        pendingAnchorDocTop = null;
+                        pendingAnchorUntil = 0;
+                    }
+                }
+                const navDocTop = clamp(preferredDocTop, initialDocTop, maxDocTop);
+                sideNav.style.left = cardRect.left + "px";
+                sideNav.style.top = (navDocTop - scrollY) + "px";
+                sideNav.style.setProperty("--case-nav-overlap-opacity", String(getOverlapOpacity()));
+            }
+
+            function requestUpdate() {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(updateSideNav);
+            }
+
+            window.addEventListener("scroll", requestUpdate, { passive: true });
+            window.addEventListener("resize", requestUpdate);
+            sideNav.addEventListener("transitionend", (event) => {
+                if (event.propertyName === "max-height" || event.propertyName === "padding" || event.propertyName === "height" || event.propertyName === "transform") {
+                    requestUpdate();
+                }
+            });
+            setupSmoothScroll();
+            setupCollapseToggle();
+            requestUpdate();
+        }
+
+        document.querySelectorAll("[data-dreamkas-carousel]").forEach((root) => {
+            const track = root.querySelector("[data-carousel-track]");
+            const slides = root.querySelectorAll(".dreamkas-carousel-slide");
+            const prev = root.querySelector("[data-carousel-prev]");
+            const next = root.querySelector("[data-carousel-next]");
+            const dotsWrap = root.querySelector("[data-carousel-dots]");
+            if (!track || !slides.length || !prev || !next || !dotsWrap) return;
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            let index = 0;
+            const total = slides.length;
+            root.setAttribute("role", "region");
+            root.setAttribute("aria-roledescription", "carousel");
+            root.tabIndex = 0;
+            function go(i) {
+                index = ((i % total) + total) % total;
+                track.style.transform = "translateX(" + -index * 100 + "%)";
+                if (reducedMotion) track.style.transition = "none";
+                dotsWrap.querySelectorAll("button").forEach((btn, j) => {
+                    btn.setAttribute("aria-current", j === index ? "true" : "false");
+                    btn.classList.toggle("bg-white", j === index);
+                    btn.classList.toggle("bg-white/40", j !== index);
+                });
+            }
+            dotsWrap.innerHTML = "";
+            for (let j = 0; j < total; j++) {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.className = "h-2.5 w-2.5 rounded-full bg-white/40 transition hover:bg-white/70";
+                b.setAttribute("aria-label", "Go to slide " + (j + 1));
+                b.addEventListener("click", () => go(j));
+                dotsWrap.appendChild(b);
+            }
+            if (total <= 1) {
+                prev.setAttribute("disabled", "disabled");
+                next.setAttribute("disabled", "disabled");
+                prev.classList.add("opacity-40", "pointer-events-none");
+                next.classList.add("opacity-40", "pointer-events-none");
+                dotsWrap.innerHTML = "";
+                return;
+            }
+            prev.addEventListener("click", () => go(index - 1));
+            next.addEventListener("click", () => go(index + 1));
+            root.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    go(index - 1);
+                } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    go(index + 1);
+                }
+            });
+            go(0);
+        });
+    });
+</script>
+</body>
+</html>

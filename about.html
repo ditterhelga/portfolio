@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>About — Olga Pertseva</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <!-- tools -->
+    <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="assets/js/global-lenis.js" defer></script>
+
+    <style type="text/tailwindcss">
+        /* ── Design tokens ─────────────────────────────────────────── */
+        @theme {
+            --font-family-sofia: 'Sofia Sans Condensed', sans-serif;
+            --font-family-inter: 'Inter', sans-serif;
+
+            --color-text-primary: #302F2F;
+            --color-primary-dark: #3B47C2;
+            --color-primary-light: #0016F2;
+            --color-pink-badge: #FDE4DF;
+            --color-blue-light: #8891D6;
+            --color-blue-dark: #040989;
+            --color-accent-yellow: #FDC448;
+
+            --bg-color: 216, 29%, 97%;
+
+            --breakpoint-xs: 20rem;
+            --breakpoint-2xl: 96rem;
+        }
+
+        @utility full-bleed {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @layer base {
+            html {
+                @apply flex justify-center;
+            }
+
+            body {
+                font-family: var(--font-family-inter);
+                font-size: 1.25rem;
+                line-height: 2rem;
+                letter-spacing: 0px;
+                font-weight: 400;
+                color: var(--color-text-primary);
+                background: #ffffff;
+                overflow-x: hidden;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Sofia Sans Condensed', sans-serif;
+                font-weight: 700;
+            }
+        }
+
+        /* ── Header ─────────────────────────────────────────────────── */
+        header {
+            @apply flex z-10;
+
+            & .logo img {
+                height: 63px;
+                width: auto;
+                transition: opacity 0.3s ease, filter 0.6s ease;
+            }
+
+            & #burger {
+                @apply z-20;
+                cursor: pointer;
+            }
+
+            @media (min-width: 768px) {
+                & nav .menulink {
+                    position: relative;
+                    font-weight: 400;
+                    font-family: var(--font-family-inter);
+                    transition: color 0.25s ease;
+                    text-decoration: none;
+                    color: var(--color-text-primary);
+                }
+
+                & nav .menulink::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    bottom: -2px;
+                    width: 100%;
+                    height: 3px;
+                    background-color: #FDE4DF;
+                    transform: scaleX(0);
+                    transform-origin: left;
+                    transition: transform 0.4s ease;
+                }
+
+                & nav .menulink:hover::after {
+                    transform: scaleX(1);
+                }
+
+                & nav .menulink:hover {
+                    color: #0016F2;
+                }
+            }
+
+            &.menu-open {
+                @apply fixed h-screen w-screen px-4 z-50 md:px-12;
+                inset: 0;
+                background: var(--color-primary-dark);
+
+                & .logo, nav {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                & .logo img {
+                    filter: brightness(0) invert(1);
+                }
+
+                & > #burger {
+                    @apply right-4;
+
+                    & svg rect {
+                        fill: rgba(255, 255, 255, 0.2);
+                    }
+
+                    & svg path {
+                        stroke: white;
+                    }
+                }
+
+                & > div {
+                    @apply flex-col;
+
+                    & > nav {
+                        @apply flex flex-col justify-center gap-y-8 h-screen;
+
+                        & a {
+                            @apply w-full md:h-full text-center;
+                        }
+                    }
+                }
+
+                & .menulink {
+                    font-family: 'Sofia Sans Condensed', sans-serif;
+                    font-size: 4rem;
+                    font-weight: 700;
+                    color: white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    letter-spacing: -0.02em;
+                    transition: transform 0.3s ease, color 0.3s ease;
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                & .menulink:hover {
+                    color: #FDC448;
+                    transform: translateY(-5px);
+                }
+            }
+        }
+
+        /* ── Section label (blob + uppercase tag) ──────────────────── */
+        .section-label {
+            @apply text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 items-center;
+        }
+
+        /* ── Section heading (H1/H2 level) ─────────────────────────── */
+        .section-heading {
+            @apply font-family-sofia font-semibold
+                   text-[3rem]/[3rem]
+                   md:text-[4rem]/[4rem]
+                   xl:text-[4.375rem]/[5rem]
+                   2xl:text-[4.75rem]/[5.5rem];
+        }
+
+        /* ── Step card title (H3) ───────────────────────────────────── */
+        .step-title {
+            font-family: 'Sofia Sans Condensed', sans-serif;
+            font-weight: 500;
+            font-size: 2.75rem;
+            line-height: 3.5rem;
+            letter-spacing: 0;
+            color: var(--color-text-primary);
+        }
+
+        /* ── CTA link row (reuses site pattern) ─────────────────────── */
+        .card-detail {
+            @apply flex flex-row items-center gap-x-4 uppercase
+                   font-family-sofia text-primary-dark font-normal
+                   text-[1.5rem]/6 tracking-wider;
+        }
+
+        /* ── "Is it a match?" triangle clip ──────────────────────────── */
+        .triag-cut {
+            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* ── Match section body copy ─────────────────────────────────── */
+        #match p {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        /* ── Footer ─────────────────────────────────────────────────── */
+        footer.site-footer .footer-inner a,
+        footer.site-footer .footer-inner .footer-email {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner nav {
+            display: flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner nav a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-email {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-contact img {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] justify-center align-middle">
+
+<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:gap-y-24 xl:gap-y-26 2xl:px-0">
+
+    <!-- ── Header ─────────────────────────────────────────────────── -->
+    <header class="flex pt-8 xl:pt-16">
+        <div class="flex justify-between w-full">
+            <div id="logo" class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.svg" alt="Olga Pertseva"/>
+                </a>
+            </div>
+
+            <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
+                <a href="index.html#work"   class="menulink">Work</a>
+                <a href="about.html"        class="menulink">About</a>
+                <a href="contact.html"      class="menulink">Contact</a>
+                <a href="index.html#resume" class="menulink">Resume</a>
+            </nav>
+        </div>
+
+        <div id="burger" class="fixed right-4 md:hidden">
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect width="56" height="56" rx="16" fill="#FDE4DF"/>
+                <path id="burgertop"    d="M13.417 17.0625H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgermiddle" d="M13.417 38.9375H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgerbottom" d="M13.417 28H42.5837"      stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- ── Section 1: Know Me Better ─────────────────────────────── -->
+    <section class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
+
+        <div class="section-label">
+            <img src="assets/images/blob-shape.svg" alt=""/>
+            <span>Know me better</span>
+        </div>
+
+        <h1 class="section-heading">Hi! I'm glad you're here.</h1>
+
+        <!-- 2-col on xl+, stacked on xs/md -->
+        <div class="flex flex-col gap-y-4 xl:flex-row xl:gap-x-16 xl:items-start">
+
+            <!-- Left: bio text, with image inserted inline on xs/md -->
+            <div class="flex flex-col gap-y-4 flex-1 min-w-0">
+                <p>I'm Olga (also Helga, Olya, Ola), a UX/Product Designer who solves complex problems with a mix of engineer's logic, artist's intuition, and empath's insight.</p>
+
+                <!-- Photo: visible only on xs/md, sits between first and second paragraph -->
+                <div class="xl:hidden my-2">
+                    <img src="assets/images/About-image.png"
+                         alt="Olga Pertseva"
+                         class="w-full max-w-[288px] h-[385px] rounded-[20px] object-cover object-top"/>
+                </div>
+
+                <p>For over a decade, I've designed digital products across startups, enterprise platforms, e-commerce, and beyond, always focused on simplifying complexity, improving everyday interactions, and helping people achieve their goals with less friction and more confidence.</p>
+
+                <p>Throughout my career, I've worn many hats, often all at once. From building and leading design teams to taking full ownership as a team of one, I've designed products from the ground up, often in complex, fast-moving environments, leading everything from early research and problem framing to UX strategy, interaction design, and turning insights into product decisions.</p>
+            </div>
+
+            <!-- Right: photo on xl+ only -->
+            <div class="hidden xl:block xl:shrink-0 xl:w-[400px] 2xl:w-[460px]">
+                <img src="assets/images/About-image.png"
+                     alt="Olga Pertseva"
+                     class="w-full rounded-[20px] object-cover object-top
+                            xl:h-[640px] 2xl:h-[700px]"/>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ── Section 2: How I Work ──────────────────────────────────── -->
+    <section class="flex flex-col gap-y-8 xl:gap-y-12">
+
+        <div class="section-label">
+            <img src="assets/images/blob-shape.svg" alt=""/>
+            <span>How I work</span>
+        </div>
+
+        <h2 class="section-heading">I solve complex problems by balancing systematic thinking with deep human understanding.</h2>
+
+        <p>My process begins with exploring the human story and real problems behind every interface, then builds structure around the messy reality of how things actually work.</p>
+
+        <!-- Three step cards -->
+        <!-- xs/sm: stacked; md: illustration left + title right, text below; xl: 3-col grid -->
+        <div class="flex flex-col gap-y-10 xl:grid xl:grid-cols-3 xl:gap-x-12 xl:items-start">
+
+            <!-- Step 1: Start with People -->
+            <div class="flex flex-col gap-y-4 xl:gap-y-6">
+                <!-- Illustration + title: side-by-side on md, stacked on xs/xl -->
+                <div class="flex flex-col gap-y-4
+                            md:flex-row md:items-center md:gap-x-8
+                            xl:flex-col xl:gap-y-6">
+                    <div class="w-full overflow-hidden rounded-[20px]
+                                aspect-[226/196]
+                                md:w-[226px] md:h-[196px] md:shrink-0 md:aspect-auto
+                                xl:w-full xl:h-[320px]">
+                        <img src="assets/images/people-illustration.png"
+                             alt="Start with People"
+                             class="w-full h-full object-cover object-center"/>
+                    </div>
+                    <h3 class="step-title">Start with People</h3>
+                </div>
+                <p>To design something meaningful, I need to understand not just the business goals, but the human story behind the interface. Real empathy means digging into context, listening deeply, and questioning assumptions before jumping to solutions. I uncover what people actually need, not what we think they need.</p>
+            </div>
+
+            <!-- Step 2: Think by Making -->
+            <div class="flex flex-col gap-y-4 xl:gap-y-6">
+                <div class="flex flex-col gap-y-4
+                            md:flex-row md:items-center md:gap-x-8
+                            xl:flex-col xl:gap-y-6">
+                    <div class="w-full overflow-hidden rounded-[20px]
+                                aspect-[226/196]
+                                md:w-[226px] md:h-[196px] md:shrink-0 md:aspect-auto
+                                xl:w-full xl:h-[320px]">
+                        <img src="assets/images/think-illustration.png"
+                             alt="Think by Making"
+                             class="w-full h-full object-cover object-center"/>
+                    </div>
+                    <h3 class="step-title">Think by Making</h3>
+                </div>
+                <p>Once I know the story, I shift to hands-on exploration: rapid prototypes, user interviews, data analysis, and iterative testing — whatever brings clarity fastest. I'm flexible in tools but structured in thinking. The goal is always the same: test assumptions, measure impact, iterate fast.</p>
+            </div>
+
+            <!-- Step 3: Build Together -->
+            <div class="flex flex-col gap-y-4 xl:gap-y-6">
+                <div class="flex flex-col gap-y-4
+                            md:flex-row md:items-center md:gap-x-8
+                            xl:flex-col xl:gap-y-6">
+                    <div class="w-full overflow-hidden rounded-[20px]
+                                aspect-[226/196]
+                                md:w-[226px] md:h-[196px] md:shrink-0 md:aspect-auto
+                                xl:w-full xl:h-[320px]">
+                        <img src="assets/images/together-illustration.png"
+                             alt="Build Together"
+                             class="w-full h-full object-cover object-center"/>
+                    </div>
+                    <h3 class="step-title">Build together</h3>
+                </div>
+                <p>I involve developers, stakeholders, and users from the start. I believe ideas sharpen through friction, and good UX happens when everyone's part of the conversation. I adapt my approach to match the context — whether that's conducting field research with end users or presenting to execs, I adapt to the room.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ── Section 3: Outside of UX ──────────────────────────────── -->
+    <section class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
+
+        <div class="section-label">
+            <img src="assets/images/blob-shape.svg" alt=""/>
+            <span>Outside of UX</span>
+        </div>
+
+        <!-- 2-col on xl+: text+CTA left, painting right; stacked on xs/md -->
+        <div class="flex flex-col gap-y-8 xl:flex-row xl:gap-x-16 xl:items-start">
+
+            <!-- Left: heading + text + CTA -->
+            <div class="flex flex-col gap-y-6 flex-1 min-w-0">
+                <h2 class="section-heading">Pixels by Day, Paint by Night.</h2>
+
+                <div class="flex flex-col gap-y-4">
+                    <p>Design grounds me in logic and systems. Drawing lets me explore the messy, funny, human side of things — a space where not everything has to make sense to feel true.</p>
+                    <p>I create playful, sometimes absurd illustrations to stay curious, emotionally connected, and creatively balanced. It reminds me that good design doesn't always have to be serious to make an impact.</p>
+                </div>
+
+                <div class="card-detail cursor-pointer">
+                    <img src="assets/images/more-shape.svg" alt="" aria-hidden="true"/>
+                    <span>Explore my art</span>
+                </div>
+            </div>
+
+            <!-- Right: painting -->
+            <div class="xl:shrink-0 xl:w-[400px] 2xl:w-[460px]">
+                <img src="assets/images/painting-about.png"
+                     alt="Paintings by Olga"
+                     class="w-full rounded-[20px] object-cover
+                            xl:max-h-[620px] 2xl:max-h-[680px]"/>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ── Is it a match? + Footer — full-bleed ───────────────────── -->
+    <div class="full-bleed bg-white flex flex-col gap-y-0">
+
+        <section id="match"
+                 class="flex
+                        flex-col
+                        bg-primary-light
+                        gap-y-12
+                        items-center
+                        px-4 pt-36 pb-28
+                        text-center
+                        text-white
+                        triag-cut">
+            <h1 class="font-family-sofia font-normal text-7xl/[4.5rem] tracking-[-2px]">
+                Is it a match?
+            </h1>
+
+            <div class="flex flex-col gap-y-4 sm:gap-y-8 max-w-[736px]">
+                <p class="sm:hidden">
+                    Feel free to reach out, I'm happy to share more about my projects or talk about how I can help your team.
+                </p>
+                <p class="hidden sm:block">
+                    If you're looking for a designer who can turn ambiguity into structure, ideas into flows, and research into intuitive product experiences, let's talk.
+                </p>
+                <p class="hidden sm:block">
+                    Feel free to reach out, I'm happy to share more about my projects or talk about how I can help your team.
+                </p>
+                <p>Send me a message or email me directly at: hello@peppered.design</p>
+            </div>
+
+            <div class="card-detail">
+                <img src="assets/images/more-shape.svg" alt="" aria-hidden="true"/>
+                <a href="contact.html" class="!text-white no-underline">Send me a message</a>
+            </div>
+        </section>
+
+        <footer class="site-footer w-full bg-blue-dark text-white -mt-24 xl:-mt-22 flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
+            <div class="footer-inner flex items-center
+                        w-full
+                        max-w-[1280px]
+                        2xl:max-w-[1440px]
+                        mx-auto
+                        flex-col
+                        items-center
+                        gap-y-4
+                        px-4
+                        sm:px-8
+                        lg:flex-row
+                        lg:items-center
+                        lg:justify-between
+                        lg:gap-y-0
+                        xl:px-12
+                        2xl:px-[80px]">
+                <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
+                    <a class="no-underline hover:opacity-90" href="index.html#work">Work</a>
+                    <a class="no-underline hover:opacity-90" href="about.html">About</a>
+                    <a class="no-underline hover:opacity-90" href="contact.html">Contact</a>
+                    <a class="no-underline hover:opacity-90" href="index.html#resume">Resume</a>
+                </nav>
+                <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
+                    <div class="footer-email">hello@peppered.design</div>
+                    <a class="flex shrink-0 items-center leading-none" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                        <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const isSafari = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(navigator.userAgent);
+        if (isSafari) {
+            document.documentElement.classList.add('is-safari');
+        }
+
+        // Burger menu (identical to other pages)
+        const menuTween = gsap.timeline({ paused: true })
+            .to(".menulink", {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                stagger: 0.1,
+                ease: "power2.out"
+            })
+            .to("#burgermiddle", { opacity: 0, duration: 0.25 }, 0)
+            .to("#burgertop",    { y: "10.9375px", transformOrigin: "50% 50%", rotation: 45,  duration: 0.25 }, 0)
+            .to("#burgerbottom", { transformOrigin: "50% 50%", rotation: -45, duration: 0.25 }, 0);
+
+        const header = document.querySelector("header");
+        let isMenuOpen = false;
+
+        document.querySelector("#burger").addEventListener("click", (event) => {
+            event.stopPropagation();
+            document.body.parentElement.classList.toggle("stop-scrolling");
+            header.classList.toggle("menu-open");
+            if (!isMenuOpen) {
+                menuTween.restart();
+            } else {
+                menuTween.reverse();
+            }
+            isMenuOpen = !isMenuOpen;
+        });
+
+        document.querySelectorAll("header nav .menulink").forEach((link) => {
+            link.addEventListener("click", () => {
+                if (isMenuOpen) {
+                    document.body.parentElement.classList.remove("stop-scrolling");
+                    menuTween.reverse();
+                    header.classList.remove("menu-open");
+                    isMenuOpen = false;
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

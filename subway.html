@@ -43,11 +43,16 @@
             --breakpoint-2xl: 96rem;
         }
 
+        /* Scrollbar-safe full-bleed: avoid transform + 100vw centering (prevents horizontal overflow / shifted gutters). */
         @utility full-bleed {
             width: 100vw;
+            max-width: none;
             position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+            left: auto;
+            transform: none;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            box-sizing: border-box;
         }
 
         @layer base {
@@ -56,6 +61,9 @@
                 /*width: 100%;*/
                 /*height: 100%;*/
                 /*overflow-y: scroll;*/
+                /* Full viewport width: clip 100vw/scrollbar overflow here, not on max-width body */
+                overflow-x: hidden;
+                overflow-x: clip;
             }
 
             body {
@@ -67,7 +75,8 @@
                 /*margin: 0;*/
                 color: var(--color-text-primary);
                 background: #FFFFFF;
-                overflow-x: hidden;
+                /* Must stay visible: full-bleed sections extend past this max-width body */
+                overflow-x: visible;
             }
 
             h1, h2, h3, h4, h5, h6 {
@@ -855,17 +864,17 @@
 
         <!-- #intro: left — logo + description; right — metadata (role, timeline, tools); below — large image -->
         <section id="intro" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 bg-white">
-            <div class="intro-grid flex flex-col gap-y-10 xl:flex-row xl:gap-x-6 2xl:gap-x-16 xl:items-start">
-                <div class="intro-left flex flex-col gap-y-8 xl:max-w-[496px] 2xl:max-w-[688px] xl:shrink-0">
-                    <div class="intro-logo">
+            <div class="intro-grid flex flex-col gap-y-10 xl:grid xl:grid-cols-[minmax(0,496px)_minmax(0,704px)] xl:gap-x-6 xl:gap-y-8 xl:items-start 2xl:flex 2xl:flex-row 2xl:items-start 2xl:gap-x-16 2xl:gap-y-0">
+                <div class="intro-left flex flex-col gap-y-8 xl:contents 2xl:flex 2xl:flex-col 2xl:max-w-[688px] 2xl:shrink-0">
+                    <div class="intro-logo min-w-0 xl:col-start-1 xl:row-start-1">
                         <img class="w-[232px] h-auto" src="assets/images/subway-logo.png" alt="Subway logo"/>
                     </div>
-                    <div class="intro-description flex flex-col gap-y-2 text-5/8 font-light">
+                    <div class="intro-description flex min-w-0 flex-col gap-y-2 text-5/8 font-light xl:col-start-1 xl:row-start-2">
                         <p>I designed <span class="font-medium">Subway Russia's first digital platforms</span>: one to train employees and another to support franchise owners.</p>
                         <p>They transformed scattered manuals into structured, step-by-step digital flows that helped users move from "Where do I start?" to <span class="font-medium">feeling confident on the job from day one</span>.</p>
                     </div>
                 </div>
-                <div class="intro-right metadata-block xl:max-w-[704px] 2xl:max-w-[688px] xl:shrink-0 xl:pt-[128px] 2xl:pt-0">
+                <div class="intro-right metadata-block min-w-0 xl:col-start-2 xl:row-start-2 xl:max-w-[704px] xl:shrink-0 xl:self-start 2xl:max-w-[688px]">
                     <div class="metadata-grid grid grid-cols-1 gap-y-4">
                         <div class="metadata-role flex flex-col gap-y-2">
                             <p class="text-5/8"><span class="font-medium">Role:</span> Lead UX/UI Designer. Research, information architecture, wireframing, prototyping, visual design, usability testing.</p>
@@ -1052,23 +1061,6 @@
             </div>
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('my-part-acc-btn');
-                    var wrap = document.getElementById('my-part-acc-panel-wrap');
-                    var panel = document.getElementById('my-part-acc-panel');
-                    var arrow = document.getElementById('my-part-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="menu-subway" data-parallax-wrap class="-mt-[38px] max-md:rounded-[20px] max-md:overflow-hidden md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
@@ -1180,44 +1172,6 @@
                 class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
             />
 
-            <script>
-                (function () {
-                    var allBtns = Array.from(document.querySelectorAll("#research [data-research-acc-btn]"));
-
-                    allBtns.forEach(function (btn) {
-                        var panelId = btn.getAttribute("aria-controls");
-                        if (!panelId) return;
-                        var wrap = document.getElementById(panelId + "-wrap");
-                        var panel = document.getElementById(panelId);
-                        var arrow = btn.querySelector("[data-research-acc-arrow]");
-                        if (!wrap || !panel) return;
-
-                        btn.addEventListener("click", function () {
-                            var expanded = btn.getAttribute("aria-expanded") === "true";
-                            var next = !expanded;
-
-                            // collapse all others first
-                            allBtns.forEach(function (otherBtn) {
-                                if (otherBtn === btn) return;
-                                var otherId = otherBtn.getAttribute("aria-controls");
-                                var otherWrap = document.getElementById(otherId + "-wrap");
-                                var otherPanel = document.getElementById(otherId);
-                                var otherArrow = otherBtn.querySelector("[data-research-acc-arrow]");
-                                otherBtn.setAttribute("aria-expanded", "false");
-                                if (otherWrap) otherWrap.setAttribute("data-open", "0");
-                                if (otherPanel) otherPanel.setAttribute("data-open", "0");
-                                if (otherArrow) otherArrow.classList.remove("rotate-180");
-                            });
-
-                            // toggle clicked one
-                            btn.setAttribute("aria-expanded", String(next));
-                            wrap.setAttribute("data-open", next ? "1" : "0");
-                            panel.setAttribute("data-open", next ? "1" : "0");
-                            if (arrow) arrow.classList.toggle("rotate-180", next);
-                        });
-                    });
-                })();
-            </script>
         </section>
 
         <section id="users-subway" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1418,28 +1372,6 @@
 
             </div>
 
-            <script>
-                (function () {
-                    function wireAccordion(btnId, wrapId, panelId, arrowId) {
-                        var btn = document.getElementById(btnId);
-                        var wrap = document.getElementById(wrapId);
-                        var panel = document.getElementById(panelId);
-                        var arrow = document.getElementById(arrowId);
-                        if (!btn || !wrap || !panel) return;
-                        btn.addEventListener('click', function () {
-                            var expanded = btn.getAttribute('aria-expanded') === 'true';
-                            var next = !expanded;
-                            btn.setAttribute('aria-expanded', String(next));
-                            wrap.setAttribute('data-open', next ? '1' : '0');
-                            panel.setAttribute('data-open', next ? '1' : '0');
-                            if (arrow) arrow.classList.toggle('rotate-180', next);
-                        });
-                    }
-                    wireAccordion('ecosystem-emp-acc-btn', 'ecosystem-emp-acc-panel-wrap', 'ecosystem-emp-acc-panel', 'ecosystem-emp-acc-arrow');
-                    wireAccordion('ecosystem-fran-acc-btn', 'ecosystem-fran-acc-panel-wrap', 'ecosystem-fran-acc-panel', 'ecosystem-fran-acc-arrow');
-                    wireAccordion('ecosystem-hqfind-acc-btn', 'ecosystem-hqfind-acc-panel-wrap', 'ecosystem-hqfind-acc-panel', 'ecosystem-hqfind-acc-arrow');
-                })();
-            </script>
         </section>
 
         <section id="dashboard-subway" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
@@ -1540,23 +1472,6 @@
 
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('vendor-exp-acc-btn');
-                    var wrap = document.getElementById('vendor-exp-acc-panel-wrap');
-                    var panel = document.getElementById('vendor-exp-acc-panel');
-                    var arrow = document.getElementById('vendor-exp-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="gamification" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1654,23 +1569,6 @@
 
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('guest-exp-acc-btn');
-                    var wrap = document.getElementById('guest-exp-acc-panel-wrap');
-                    var panel = document.getElementById('guest-exp-acc-panel');
-                    var arrow = document.getElementById('guest-exp-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="employee-office-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
@@ -1765,23 +1663,6 @@
 
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('kiosk-exp-acc-btn');
-                    var wrap = document.getElementById('kiosk-exp-acc-panel-wrap');
-                    var panel = document.getElementById('kiosk-exp-acc-panel');
-                    var arrow = document.getElementById('kiosk-exp-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="branding" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1913,23 +1794,6 @@
 
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('results-real-world-acc-btn');
-                    var wrap = document.getElementById('results-real-world-acc-panel-wrap');
-                    var panel = document.getElementById('results-real-world-acc-panel');
-                    var arrow = document.getElementById('results-real-world-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="results-hq-franchisees" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -2026,26 +1890,9 @@
                 </div>
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('results-hq-acc-btn');
-                    var wrap = document.getElementById('results-hq-acc-panel-wrap');
-                    var panel = document.getElementById('results-hq-acc-panel');
-                    var arrow = document.getElementById('results-hq-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
-        <section id="reflections" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 mb-[80px] xl:mb-[120px]">
+        <section id="reflections" class="mb-[16px] md:mb-0 xl:mb-[16px] 2xl:mb-0">
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
                 <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
                     <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
@@ -2116,8 +1963,8 @@
                                 max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                                 flex flex-col gap-y-6
                                 md:order-3 md:mt-4 xl:mt-0
-                                xl:col-start-2 xl:row-start-2 xl:row-span-2
-                                2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
+                                xl:col-start-2 xl:row-start-2 xl:row-span-1
+                                2xl:col-start-2 2xl:row-start-2 2xl:row-span-1 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
                                 2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
                         <img src="assets/images/subway-keyphrase-logo.png"
                              alt="Subway"
@@ -2129,25 +1976,60 @@
 
             <script>
                 (function () {
-                    var btn = document.getElementById('reflections-acc-btn');
-                    var wrap = document.getElementById('reflections-acc-panel-wrap');
-                    var panel = document.getElementById('reflections-acc-panel');
-                    var arrow = document.getElementById('reflections-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    var idConfigs = [
+                        { btnId: 'my-part-acc-btn',           wrapId: 'my-part-acc-panel-wrap',           panelId: 'my-part-acc-panel',           arrowId: 'my-part-acc-arrow' },
+                        { btnId: 'ecosystem-emp-acc-btn',      wrapId: 'ecosystem-emp-acc-panel-wrap',      panelId: 'ecosystem-emp-acc-panel',      arrowId: 'ecosystem-emp-acc-arrow' },
+                        { btnId: 'ecosystem-fran-acc-btn',     wrapId: 'ecosystem-fran-acc-panel-wrap',     panelId: 'ecosystem-fran-acc-panel',     arrowId: 'ecosystem-fran-acc-arrow' },
+                        { btnId: 'ecosystem-hqfind-acc-btn',   wrapId: 'ecosystem-hqfind-acc-panel-wrap',   panelId: 'ecosystem-hqfind-acc-panel',   arrowId: 'ecosystem-hqfind-acc-arrow' },
+                        { btnId: 'vendor-exp-acc-btn',         wrapId: 'vendor-exp-acc-panel-wrap',         panelId: 'vendor-exp-acc-panel',         arrowId: 'vendor-exp-acc-arrow' },
+                        { btnId: 'guest-exp-acc-btn',          wrapId: 'guest-exp-acc-panel-wrap',          panelId: 'guest-exp-acc-panel',          arrowId: 'guest-exp-acc-arrow' },
+                        { btnId: 'kiosk-exp-acc-btn',          wrapId: 'kiosk-exp-acc-panel-wrap',          panelId: 'kiosk-exp-acc-panel',          arrowId: 'kiosk-exp-acc-arrow' },
+                        { btnId: 'results-real-world-acc-btn', wrapId: 'results-real-world-acc-panel-wrap', panelId: 'results-real-world-acc-panel', arrowId: 'results-real-world-acc-arrow' },
+                        { btnId: 'results-hq-acc-btn',         wrapId: 'results-hq-acc-panel-wrap',         panelId: 'results-hq-acc-panel',         arrowId: 'results-hq-acc-arrow' },
+                        { btnId: 'reflections-acc-btn',        wrapId: 'reflections-acc-panel-wrap',        panelId: 'reflections-acc-panel',        arrowId: 'reflections-acc-arrow' },
+                    ].map(function (cfg) {
+                        return {
+                            btn:   document.getElementById(cfg.btnId),
+                            wrap:  document.getElementById(cfg.wrapId),
+                            panel: document.getElementById(cfg.panelId),
+                            arrow: document.getElementById(cfg.arrowId)
+                        };
+                    }).filter(function (item) { return item.btn && item.wrap && item.panel; });
+
+                    var researchItems = Array.from(document.querySelectorAll('#research [data-research-acc-btn]')).map(function (btn) {
+                        var panelId = btn.getAttribute('aria-controls');
+                        return {
+                            btn:   btn,
+                            wrap:  document.getElementById(panelId + '-wrap'),
+                            panel: document.getElementById(panelId),
+                            arrow: btn.querySelector('[data-research-acc-arrow]')
+                        };
+                    }).filter(function (item) { return item.btn && item.wrap && item.panel; });
+
+                    var accordions = idConfigs.concat(researchItems);
+
+                    function setAccordionState(item, isOpen) {
+                        item.btn.setAttribute('aria-expanded', String(isOpen));
+                        item.wrap.setAttribute('data-open', isOpen ? '1' : '0');
+                        item.panel.setAttribute('data-open', isOpen ? '1' : '0');
+                        if (item.arrow) item.arrow.classList.toggle('rotate-180', isOpen);
+                    }
+
+                    accordions.forEach(function (item) {
+                        item.btn.addEventListener('click', function () {
+                            var willOpen = item.btn.getAttribute('aria-expanded') !== 'true';
+                            accordions.forEach(function (other) { setAccordionState(other, false); });
+                            if (willOpen) {
+                                setAccordionState(item, true);
+                            }
+                        });
                     });
                 })();
             </script>
         </section>
 
         <!-- #next-project: previous / next project navigation -->
-        <section id="next-project" class="flex flex-col gap-y-6 md:gap-y-8 mb-[-120px] md:mb-[-80px] xl:mb-[-104px] 2xl:mb-[-120px]">
+        <section id="next-project" class="flex flex-col gap-y-6 md:gap-y-8 mb-0">
             <nav class="next-project-nav flex flex-col gap-y-6 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8" aria-label="Adjacent projects">
                 <a class="next-project-link next-project-prev card-detail no-underline" href="#"></a>
                 <a class="next-project-link next-project-next card-detail no-underline sm:text-right" href="#"></a>
@@ -2328,10 +2210,15 @@
             z-index: 4;
         }
 
+        @media (min-width: 768px) {
+            [data-parallax-image] {
+                will-change: transform;
+                transform: scale(1.08);
+                transform-origin: center;
+            }
+        }
+
         [data-parallax-image] {
-            will-change: transform;
-            transform: scale(1.08);
-            transform-origin: center;
             position: relative;
             z-index: 4;
         }
@@ -2459,16 +2346,20 @@
         });
 
         if (!reducedMotion) {
+            const parallaxNarrow = window.matchMedia("(max-width: 767px)");
             const parallaxImages = gsap.utils.toArray("[data-parallax-image]");
             parallaxImages.forEach((img) => {
                 const wrap = img.closest("[data-parallax-wrap]") || img.parentElement;
                 if (!wrap) return;
+                const useScale = !parallaxNarrow.matches;
+                const scaleFrom = useScale ? 1.12 : 1;
+                const scaleTo = useScale ? 1.12 : 1;
                 gsap.fromTo(
                     img,
-                    { yPercent: -14, scale: 1.12 },
+                    { yPercent: -14, scale: scaleFrom },
                     {
                         yPercent: 14,
-                        scale: 1.12,
+                        scale: scaleTo,
                         ease: "none",
                         scrollTrigger: {
                             trigger: wrap,

@@ -855,17 +855,17 @@
 
         <!-- #intro: left — logo + description; right — metadata -->
         <section id="intro" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
-            <div class="intro-grid flex flex-col gap-y-10 xl:flex-row xl:gap-x-6 2xl:gap-x-16 xl:items-start">
-                <div class="intro-left flex flex-col gap-y-8 xl:max-w-[496px] 2xl:max-w-[688px] xl:shrink-0">
-                    <div class="intro-logo">
+            <div class="intro-grid flex flex-col gap-y-10 xl:grid xl:grid-cols-[minmax(0,496px)_minmax(0,704px)] xl:gap-x-6 xl:gap-y-8 xl:items-start 2xl:flex 2xl:flex-row 2xl:items-start 2xl:gap-x-16 2xl:gap-y-0">
+                <div class="intro-left flex flex-col gap-y-8 xl:contents 2xl:flex 2xl:flex-col 2xl:max-w-[688px] 2xl:shrink-0">
+                    <div class="intro-logo min-w-0 xl:col-start-1 xl:row-start-1">
                         <img class="w-[310px] max-w-full h-auto" src="assets/images/gazelkin-client-logo.png" alt="Gazelkin logo"/>
                     </div>
-                    <div class="intro-description flex flex-col gap-y-2 text-5/8 font-light">
+                    <div class="intro-description flex min-w-0 flex-col gap-y-2 text-5/8 font-light xl:col-start-1 xl:row-start-2">
                         <p>I designed a <span class="font-medium">connected service ecosystem for a transportation company</span> — connecting 700 vehicles, 150 operators, and customers with tools that finally worked together.</p>
                         <p>Ending the era of &ldquo;Let me call the driver&rdquo; and &ldquo;Where&rsquo;s that spreadsheet?&rdquo;</p>
                     </div>
                 </div>
-                <div class="intro-right metadata-block xl:max-w-[704px] 2xl:max-w-[688px] xl:shrink-0 xl:pt-[128px] 2xl:pt-0">
+                <div class="intro-right metadata-block min-w-0 xl:col-start-2 xl:row-start-2 xl:max-w-[704px] xl:shrink-0 xl:self-start 2xl:max-w-[688px]">
                     <div class="metadata-grid grid grid-cols-1 gap-y-4">
                         <div class="metadata-role flex flex-col gap-y-2">
                             <p class="text-5/8"><span class="font-medium">Role:</span> Lead Product Designer — full ownership across all user-facing platforms</p>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Contact — Peppered Design</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <!-- tools -->
+    <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="assets/js/global-lenis.js" defer></script>
+
+    <style type="text/tailwindcss">
+        /* ── Design tokens (identical to site-wide) ───────────────── */
+        @theme {
+            --font-family-sofia: 'Sofia Sans Condensed', sans-serif;
+            --font-family-inter: 'Inter', sans-serif;
+
+            --color-text-primary: #302F2F;
+            --color-primary-dark: #3B47C2;
+            --color-primary-light: #0016F2;
+            --color-pink-badge: #FDE4DF;
+            --color-blue-light: #8891D6;
+            --color-blue-dark: #040989;
+            --color-accent-yellow: #FDC448;
+
+            --bg-color: 216, 29%, 97%;
+
+            --breakpoint-xs: 20rem;
+            --breakpoint-2xl: 96rem;
+        }
+
+        @utility full-bleed {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @layer base {
+            html {
+                @apply flex justify-center;
+            }
+
+            body {
+                font-family: var(--font-family-inter);
+                font-size: 1.25rem;
+                line-height: 2rem;
+                letter-spacing: 0px;
+                font-weight: 400;
+                color: white;
+                background-color: #0016F2;
+                overflow-x: hidden;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Sofia Sans Condensed', sans-serif;
+                font-weight: 700;
+            }
+        }
+
+        /* ── Header — dark-theme overrides ──────────────────────── */
+        header {
+            @apply flex z-10;
+
+            & .logo img {
+                height: 63px;
+                width: auto;
+                /* white logo on blue background */
+                filter: brightness(0) invert(1);
+                transition: opacity 0.3s ease, filter 0.6s ease;
+            }
+
+            & #burger {
+                @apply z-20;
+                cursor: pointer;
+            }
+
+            @media (min-width: 768px) {
+                & nav .menulink {
+                    position: relative;
+                    font-weight: 400;
+                    font-family: var(--font-family-inter);
+                    color: white;
+                    text-decoration: none;
+                    transition: color 0.25s ease;
+                }
+
+                & nav .menulink::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    bottom: -2px;
+                    width: 100%;
+                    height: 3px;
+                    background-color: #FDE4DF;
+                    transform: scaleX(0);
+                    transform-origin: left;
+                    transition: transform 0.4s ease;
+                }
+
+                & nav .menulink:hover::after {
+                    transform: scaleX(1);
+                }
+
+                & nav .menulink:hover {
+                    color: #FDE4DF;
+                }
+            }
+
+            &.menu-open {
+                @apply fixed h-screen w-screen px-4 z-50 md:px-12;
+                inset: 0;
+                background: var(--color-primary-dark);
+
+                & .logo, nav {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                & .logo img {
+                    filter: brightness(0) invert(1);
+                }
+
+                & > #burger {
+                    @apply right-4;
+
+                    & svg rect {
+                        fill: rgba(255, 255, 255, 0.2);
+                    }
+
+                    & svg path {
+                        stroke: white;
+                    }
+                }
+
+                & > div {
+                    @apply flex-col;
+
+                    & > nav {
+                        @apply flex flex-col justify-center gap-y-8 h-screen;
+
+                        & a {
+                            @apply w-full md:h-full text-center;
+                        }
+                    }
+                }
+
+                & .menulink {
+                    font-family: 'Sofia Sans Condensed', sans-serif;
+                    font-size: 4rem;
+                    font-weight: 700;
+                    color: white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    letter-spacing: -0.02em;
+                    transition: transform 0.3s ease, color 0.3s ease;
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                & .menulink:hover {
+                    color: #FDC448;
+                    transform: translateY(-5px);
+                }
+            }
+        }
+
+        /* ── Contact hero heading ────────────────────────────────── */
+        .contact-heading {
+            font-family: 'Sofia Sans Condensed', sans-serif;
+            font-weight: 700;
+            color: #FDE4DF;
+            line-height: 1em;
+            letter-spacing: -3px;
+            @apply text-[5.5rem] md:text-[12rem] md:tracking-[-8px];
+        }
+
+        /* ── Contact form fields ─────────────────────────────────── */
+        .contact-field {
+            @apply flex flex-col gap-y-2;
+
+            & label {
+                font-family: 'Inter', sans-serif;
+                font-size: 1.25rem;
+                line-height: 2rem;
+                font-weight: 300;
+                color: white;
+            }
+
+            & input,
+            & textarea {
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+                color: white;
+                font-family: 'Inter', sans-serif;
+                font-size: 1.25rem;
+                line-height: 2rem;
+                font-weight: 300;
+                width: 100%;
+                outline: none;
+                padding: 8px 0;
+                resize: none;
+                caret-color: #FDE4DF;
+                transition: border-color 0.25s ease;
+            }
+
+            & input:focus,
+            & textarea:focus {
+                border-bottom-color: #FDE4DF;
+            }
+        }
+
+        /* ── CTA button — mirrors .card-detail but white text ────── */
+        .card-detail {
+            @apply flex flex-row items-center gap-x-4 uppercase font-family-sofia
+                   text-white font-normal text-[1.5rem]/6 tracking-wider;
+        }
+
+        /* ── Footer (identical to site-wide) ────────────────────── */
+        footer.site-footer .footer-inner a,
+        footer.site-footer .footer-inner .footer-email {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        footer.site-footer .footer-inner nav {
+            display: flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner nav a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-email {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        footer.site-footer .footer-inner .footer-contact img {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] justify-center align-middle">
+
+<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:gap-y-24 xl:gap-y-26 2xl:px-0">
+
+    <header class="flex pt-8 xl:pt-16">
+        <div class="flex justify-between w-full">
+            <div id="logo" class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.svg" alt="Olga Pertseva"/>
+                </a>
+            </div>
+
+            <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
+                <a href="index.html#work"   class="menulink">Work</a>
+                <a href="index.html#about"  class="menulink">About</a>
+                <a href="contact.html"      class="menulink">Contact</a>
+                <a href="index.html#resume" class="menulink">Resume</a>
+            </nav>
+        </div>
+
+        <div id="burger" class="fixed right-4 md:hidden">
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect width="56" height="56" rx="16" fill="#FDE4DF"/>
+                <path id="burgertop"    d="M13.417 17.0625H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgermiddle" d="M13.417 38.9375H42.5837" stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+                <path id="burgerbottom" d="M13.417 28H42.5837"      stroke="#363CCC" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- ── Contact content ─────────────────────────────────────── -->
+    <main class="flex flex-col xl:flex-row xl:items-start xl:gap-x-16 2xl:gap-x-20 pb-20 xl:pb-28 2xl:pb-36">
+
+        <!-- Left column: heading · description · form · CTA -->
+        <div class="flex flex-col gap-y-8 md:gap-y-10 xl:gap-y-12 flex-1 min-w-0">
+
+            <h1 class="contact-heading">Got a project? Let's talk.</h1>
+
+            <div class="flex flex-col gap-y-4 text-xl/[2rem] text-white font-light">
+                <p>
+                    If your product feels complex, chaotic, or unclear, that's where I do my best work.<br>
+                    I turn ambiguity into structure and research into confident decisions.<br>
+                    If that's what you need, reach out.
+                </p>
+                <p>
+                    Prefer email? Contact me at:
+                    <a href="mailto:hello@peppered.design"
+                       class="text-pink-badge font-semibold no-underline hover:underline">hello@peppered.design</a>
+                </p>
+            </div>
+
+            <form class="flex flex-col gap-y-10 xl:gap-y-12 xl:max-w-[772px]"
+                  action="https://formspree.io/f/hello@peppered.design"
+                  method="POST">
+
+                <div class="contact-field">
+                    <label for="contact-name">Your name</label>
+                    <input type="text" id="contact-name" name="name"
+                           autocomplete="name"/>
+                </div>
+
+                <div class="contact-field">
+                    <label for="contact-email">Your email</label>
+                    <input type="email" id="contact-email" name="email"
+                           autocomplete="email"/>
+                </div>
+
+                <div class="contact-field">
+                    <label for="contact-message">What are you working on and how can I help?</label>
+                    <textarea id="contact-message" name="message" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="card-detail cursor-pointer border-none bg-transparent p-0 w-fit
+                                             transition-opacity hover:opacity-75">
+                    <img src="assets/images/more-shape.svg" alt="" aria-hidden="true"/>
+                    <span>Send a message</span>
+                </button>
+
+            </form>
+        </div>
+
+        <!-- Right column: illustration — xl+ only -->
+        <div class="hidden xl:flex xl:shrink-0 xl:w-[460px] 2xl:w-[504px] xl:items-start xl:justify-center xl:pt-4">
+            <img src="assets/images/contact-letter.png"
+                 alt="A bird carrying a letter"
+                 class="w-full h-auto object-contain object-top max-h-[546px]"/>
+        </div>
+
+    </main>
+
+    <!-- ── Footer — full-bleed dark blue ──────────────────────── -->
+    <div class="full-bleed">
+        <footer class="site-footer w-full bg-blue-dark text-white flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
+            <div class="footer-inner flex items-center
+                        w-full
+                        max-w-[1280px]
+                        2xl:max-w-[1440px]
+                        mx-auto
+                        flex-col
+                        items-center
+                        gap-y-4
+                        px-4
+                        sm:px-8
+                        lg:flex-row
+                        lg:items-center
+                        lg:justify-between
+                        lg:gap-y-0
+                        xl:px-12
+                        2xl:px-[80px]">
+                <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
+                    <a class="no-underline hover:opacity-90" href="index.html#work">Work</a>
+                    <a class="no-underline hover:opacity-90" href="index.html#about">About</a>
+                    <a class="no-underline hover:opacity-90" href="contact.html">Contact</a>
+                    <a class="no-underline hover:opacity-90" href="index.html#resume">Resume</a>
+                </nav>
+                <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
+                    <div class="footer-email">hello@peppered.design</div>
+                    <a class="flex shrink-0 items-center leading-none" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                        <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const isSafari = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(navigator.userAgent);
+        if (isSafari) {
+            document.documentElement.classList.add('is-safari');
+        }
+
+        // Burger menu (identical pattern to index.html)
+        const menuTween = gsap.timeline({ paused: true })
+            .to(".menulink", {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                stagger: 0.1,
+                ease: "power2.out"
+            })
+            .to("#burgermiddle", { opacity: 0, duration: 0.25 }, 0)
+            .to("#burgertop",    { y: "10.9375px", transformOrigin: "50% 50%", rotation: 45,  duration: 0.25 }, 0)
+            .to("#burgerbottom", { transformOrigin: "50% 50%", rotation: -45, duration: 0.25 }, 0);
+
+        const header = document.querySelector("header");
+        let isMenuOpen = false;
+
+        document.querySelector("#burger").addEventListener("click", (event) => {
+            event.stopPropagation();
+            document.body.parentElement.classList.toggle("stop-scrolling");
+            header.classList.toggle("menu-open");
+            if (!isMenuOpen) {
+                menuTween.restart();
+            } else {
+                menuTween.reverse();
+            }
+            isMenuOpen = !isMenuOpen;
+        });
+
+        document.querySelectorAll("header nav .menulink").forEach((link) => {
+            link.addEventListener("click", () => {
+                if (isMenuOpen) {
+                    document.body.parentElement.classList.remove("stop-scrolling");
+                    menuTween.reverse();
+                    header.classList.remove("menu-open");
+                    isMenuOpen = false;
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

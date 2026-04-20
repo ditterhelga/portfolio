@@ -854,17 +854,17 @@
 
         <!-- #intro: left — logo + description; right — metadata (role, timeline, tools); below — large image -->
         <section id="intro" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 bg-white">
-            <div class="intro-grid flex flex-col gap-y-10 xl:flex-row xl:gap-x-6 2xl:gap-x-16 xl:items-start">
-                <div class="intro-left flex flex-col gap-y-8 xl:max-w-[496px] 2xl:max-w-[688px] xl:shrink-0">
-                    <div class="intro-logo">
+            <div class="intro-grid flex flex-col gap-y-10 xl:grid xl:grid-cols-[minmax(0,496px)_minmax(0,704px)] xl:gap-x-6 xl:gap-y-8 xl:items-start 2xl:flex 2xl:flex-row 2xl:items-start 2xl:gap-x-16 2xl:gap-y-0">
+                <div class="intro-left flex flex-col gap-y-8 xl:contents 2xl:flex 2xl:flex-col 2xl:max-w-[688px] 2xl:shrink-0">
+                    <div class="intro-logo min-w-0 xl:col-start-1 xl:row-start-1">
                         <img class="w-[232px] h-auto" src="assets/images/billfold-logo.png" alt="Billfold logo"/>
                     </div>
-                    <div class="intro-description flex flex-col gap-y-2 text-5/8 font-light">
+                    <div class="intro-description flex min-w-0 flex-col gap-y-2 text-5/8 font-light xl:col-start-1 xl:row-start-2">
                         <p>Billfold is an <span class="font-medium">RFID-powered payment ecosystem</span> now used at <span class="font-medium">large-scale festivals and stadiums worldwide</span>.</p>
                         <p>I designed <span class="font-medium">every touchpoint from scratch</span>, from RFID wristband registration kiosks to vendor POS and guest-facing screens, to keep lines moving and payments effortless even when <span class="font-medium">thousands of people ordered at once</span>.</p>
                     </div>
                 </div>
-                <div class="intro-right metadata-block xl:max-w-[704px] 2xl:max-w-[688px] xl:shrink-0 xl:pt-[128px] 2xl:pt-0">
+                <div class="intro-right metadata-block min-w-0 xl:col-start-2 xl:row-start-2 xl:max-w-[704px] xl:shrink-0 xl:self-start 2xl:max-w-[688px]">
                     <div class="metadata-grid grid grid-cols-1 gap-y-4">
                         <div class="metadata-role flex flex-col gap-y-2">
                             <p class="text-5/8"><span class="font-medium">Role:</span> Sole Product Designer — from early concept to polished ecosystem</p>
@@ -1074,27 +1074,10 @@
             </div>
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('my-part-acc-btn');
-                    var wrap = document.getElementById('my-part-acc-panel-wrap');
-                    var panel = document.getElementById('my-part-acc-panel');
-                    var arrow = document.getElementById('my-part-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
-        <section id="map-image" class="-mt-[38px] md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img class="w-full rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/map-billfold.png" alt="Billfold system map"/>
+        <section id="map-image" data-parallax-wrap class="-mt-[38px] max-md:rounded-[20px] max-md:overflow-hidden md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
+            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/map-billfold.png" alt="Billfold system map"/>
         </section>
 
         <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
@@ -1202,44 +1185,6 @@
                 class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
             />
 
-            <script>
-                (function () {
-                    var allBtns = Array.from(document.querySelectorAll("#research [data-research-acc-btn]"));
-
-                    allBtns.forEach(function (btn) {
-                        var panelId = btn.getAttribute("aria-controls");
-                        if (!panelId) return;
-                        var wrap = document.getElementById(panelId + "-wrap");
-                        var panel = document.getElementById(panelId);
-                        var arrow = btn.querySelector("[data-research-acc-arrow]");
-                        if (!wrap || !panel) return;
-
-                        btn.addEventListener("click", function () {
-                            var expanded = btn.getAttribute("aria-expanded") === "true";
-                            var next = !expanded;
-
-                            // collapse all others first
-                            allBtns.forEach(function (otherBtn) {
-                                if (otherBtn === btn) return;
-                                var otherId = otherBtn.getAttribute("aria-controls");
-                                var otherWrap = document.getElementById(otherId + "-wrap");
-                                var otherPanel = document.getElementById(otherId);
-                                var otherArrow = otherBtn.querySelector("[data-research-acc-arrow]");
-                                otherBtn.setAttribute("aria-expanded", "false");
-                                if (otherWrap) otherWrap.setAttribute("data-open", "0");
-                                if (otherPanel) otherPanel.setAttribute("data-open", "0");
-                                if (otherArrow) otherArrow.classList.remove("rotate-180");
-                            });
-
-                            // toggle clicked one
-                            btn.setAttribute("aria-expanded", String(next));
-                            wrap.setAttribute("data-open", next ? "1" : "0");
-                            panel.setAttribute("data-open", next ? "1" : "0");
-                            if (arrow) arrow.classList.toggle("rotate-180", next);
-                        });
-                    });
-                })();
-            </script>
         </section>
 
         <section id="ecosystem" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1409,23 +1354,6 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('vendor-exp-acc-btn');
-                    var wrap = document.getElementById('vendor-exp-acc-panel-wrap');
-                    var panel = document.getElementById('vendor-exp-acc-panel');
-                    var arrow = document.getElementById('vendor-exp-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="guest-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1523,23 +1451,6 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('guest-exp-acc-btn');
-                    var wrap = document.getElementById('guest-exp-acc-panel-wrap');
-                    var panel = document.getElementById('guest-exp-acc-panel');
-                    var arrow = document.getElementById('guest-exp-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="kiosk-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1633,23 +1544,6 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
             </div>
 
-            <script>
-                (function () {
-                    var btn = document.getElementById('kiosk-exp-acc-btn');
-                    var wrap = document.getElementById('kiosk-exp-acc-panel-wrap');
-                    var panel = document.getElementById('kiosk-exp-acc-panel');
-                    var arrow = document.getElementById('kiosk-exp-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
-                    });
-                })();
-            </script>
         </section>
 
         <section id="results-real-world" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1749,18 +1643,48 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
             <script>
                 (function () {
-                    var btn = document.getElementById('results-real-world-acc-btn');
-                    var wrap = document.getElementById('results-real-world-acc-panel-wrap');
-                    var panel = document.getElementById('results-real-world-acc-panel');
-                    var arrow = document.getElementById('results-real-world-acc-arrow');
-                    if (!btn || !wrap || !panel) return;
-                    btn.addEventListener('click', function () {
-                        var expanded = btn.getAttribute('aria-expanded') === 'true';
-                        var next = !expanded;
-                        btn.setAttribute('aria-expanded', String(next));
-                        wrap.setAttribute('data-open', next ? '1' : '0');
-                        panel.setAttribute('data-open', next ? '1' : '0');
-                        if (arrow) arrow.classList.toggle('rotate-180', next);
+                    var idConfigs = [
+                        { btnId: 'my-part-acc-btn',           wrapId: 'my-part-acc-panel-wrap',           panelId: 'my-part-acc-panel',           arrowId: 'my-part-acc-arrow' },
+                        { btnId: 'vendor-exp-acc-btn',         wrapId: 'vendor-exp-acc-panel-wrap',         panelId: 'vendor-exp-acc-panel',         arrowId: 'vendor-exp-acc-arrow' },
+                        { btnId: 'guest-exp-acc-btn',          wrapId: 'guest-exp-acc-panel-wrap',          panelId: 'guest-exp-acc-panel',          arrowId: 'guest-exp-acc-arrow' },
+                        { btnId: 'kiosk-exp-acc-btn',          wrapId: 'kiosk-exp-acc-panel-wrap',          panelId: 'kiosk-exp-acc-panel',          arrowId: 'kiosk-exp-acc-arrow' },
+                        { btnId: 'results-real-world-acc-btn', wrapId: 'results-real-world-acc-panel-wrap', panelId: 'results-real-world-acc-panel', arrowId: 'results-real-world-acc-arrow' },
+                    ].map(function (cfg) {
+                        return {
+                            btn:   document.getElementById(cfg.btnId),
+                            wrap:  document.getElementById(cfg.wrapId),
+                            panel: document.getElementById(cfg.panelId),
+                            arrow: document.getElementById(cfg.arrowId)
+                        };
+                    }).filter(function (item) { return item.btn && item.wrap && item.panel; });
+
+                    var researchItems = Array.from(document.querySelectorAll('#research [data-research-acc-btn]')).map(function (btn) {
+                        var panelId = btn.getAttribute('aria-controls');
+                        return {
+                            btn:   btn,
+                            wrap:  document.getElementById(panelId + '-wrap'),
+                            panel: document.getElementById(panelId),
+                            arrow: btn.querySelector('[data-research-acc-arrow]')
+                        };
+                    }).filter(function (item) { return item.btn && item.wrap && item.panel; });
+
+                    var accordions = idConfigs.concat(researchItems);
+
+                    function setAccordionState(item, isOpen) {
+                        item.btn.setAttribute('aria-expanded', String(isOpen));
+                        item.wrap.setAttribute('data-open', isOpen ? '1' : '0');
+                        item.panel.setAttribute('data-open', isOpen ? '1' : '0');
+                        if (item.arrow) item.arrow.classList.toggle('rotate-180', isOpen);
+                    }
+
+                    accordions.forEach(function (item) {
+                        item.btn.addEventListener('click', function () {
+                            var willOpen = item.btn.getAttribute('aria-expanded') !== 'true';
+                            accordions.forEach(function (other) { setAccordionState(other, false); });
+                            if (willOpen) {
+                                setAccordionState(item, true);
+                            }
+                        });
                     });
                 })();
             </script>
@@ -2024,6 +1948,25 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
             z-index: 2;
         }
 
+        [data-parallax-wrap] {
+            overflow: hidden;
+            position: relative;
+            z-index: 4;
+        }
+
+        @media (min-width: 768px) {
+            [data-parallax-image] {
+                will-change: transform;
+                transform: scale(1.08);
+                transform-origin: center;
+            }
+        }
+
+        [data-parallax-image] {
+            position: relative;
+            z-index: 4;
+        }
+
         #map-image,
         #map-image img {
             position: relative;
@@ -2145,6 +2088,35 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
             });
         });
 
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!reducedMotion) {
+            const parallaxNarrow = window.matchMedia("(max-width: 767px)");
+            const parallaxImages = gsap.utils.toArray("[data-parallax-image]");
+            parallaxImages.forEach((img) => {
+                const wrap = img.closest("[data-parallax-wrap]") || img.parentElement;
+                if (!wrap) return;
+                const useScale = !parallaxNarrow.matches;
+                const scaleFrom = useScale ? 1.12 : 1;
+                const scaleTo = useScale ? 1.12 : 1;
+                gsap.fromTo(
+                    img,
+                    { yPercent: -14, scale: scaleFrom },
+                    {
+                        yPercent: 14,
+                        scale: scaleTo,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: wrap,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true,
+                        },
+                    }
+                );
+            });
+        }
+
         const sideNav = document.getElementById("case-side-nav");
         const overviewSection = document.getElementById("overview");
         const overviewCard = overviewSection ? overviewSection.querySelector('div[class*="bg-[#ECF1F4]"]') : null;
@@ -2157,7 +2129,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
         const sideNavToggle = document.getElementById("case-side-nav-toggle");
         const sideNavMenu = document.getElementById("case-side-nav-menu");
         const overlapBlockers = Array.from(document.querySelectorAll(
-            '#map-image, #map-image img, main section > img, main img.overview-img-1, main img.overview-img-2, main img.overview-img-3, main [class*="bg-[#ECF1F4]"]'
+            '#map-image, #map-image img, [data-parallax-wrap], [data-parallax-wrap] img, main section > img, main img.overview-img-1, main img.overview-img-2, main img.overview-img-3, main [class*="bg-[#ECF1F4]"]'
         ));
 
         if (sideNav && overviewSection && overviewCard && reflectionsSection && sideNavLinks.length) {
