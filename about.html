@@ -178,18 +178,94 @@
             }
         }
 
-        /* ── Section label (blob + uppercase tag) ──────────────────── */
-        .section-label {
-            @apply text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 items-center;
+        .section-header {
+            @apply font-family-sofia
+            text-5xl/[3rem]
+            md:text-[4rem]/[4rem]
+            xl:text-7xl/20
+            font-semibold;
         }
 
-        /* ── Section heading (H1/H2 level) ─────────────────────────── */
+        .intro-scroll-reveal .word {
+            display: inline-block;
+            color: #e5e5e5;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro-scroll-reveal {
+                color: var(--color-text-primary);
+            }
+        }
+
+        @utility card-badges {
+            @apply flex flex-row flex-wrap gap-4 justify-items-start;
+
+            & .badge {
+                @apply rounded-full bg-pink-badge text-blue-light uppercase !text-lg font-family-sofia font-normal py-1 px-5;
+            }
+        }
+
+        .card-text {
+            @apply font-light;
+        }
+
+        /* Intro + How I work: same body copy as #cards-beyond (Inter 20/32, light) */
+        .about-main-stack > section p {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 300;
+            letter-spacing: 0;
+        }
+
+        /* Section kickers — same as index (#beyond “Beyond Work”) */
+        .section-kicker {
+            width: fit-content;
+        }
+
+        .section-kicker-blob {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            color: #363ccc;
+            transition: color 0.35s ease;
+        }
+
+        .section-kicker-blob svg {
+            display: block;
+            width: 24px;
+            height: 24px;
+            transform-origin: center center;
+            transition: transform 1.45s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+
+        .section-kicker:hover .section-kicker-blob {
+            color: #0016f2;
+        }
+
+        .section-kicker:hover .section-kicker-blob svg {
+            transform: rotate(720deg);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .section-kicker-blob svg {
+                transition: none;
+            }
+
+            .section-kicker:hover .section-kicker-blob svg {
+                transform: none;
+            }
+        }
+
+        /* ── Section heading (H1/H2 level) — Figma H1/cst-4.75rem: 70 / 80 ─ */
         .section-heading {
             @apply font-family-sofia font-semibold
                    text-[3rem]/[3rem]
                    md:text-[4rem]/[4rem]
                    xl:text-[4.375rem]/[5rem]
-                   2xl:text-[4.75rem]/[5.5rem];
+                   2xl:text-[4.375rem]/[5rem];
         }
 
         /* ── Step card title (H3) ───────────────────────────────────── */
@@ -202,11 +278,318 @@
             color: var(--color-text-primary);
         }
 
-        /* ── CTA link row (reuses site pattern) ─────────────────────── */
+        /* ── How I work: illustration hover blob (#FFF2D7, inside image bounds) ─ */
+        @keyframes about-step-blob-morph {
+            0%,
+            100% {
+                border-radius: 58% 42% 62% 38% / 52% 48% 55% 45%;
+            }
+            33% {
+                border-radius: 48% 52% 42% 58% / 45% 55% 48% 52%;
+            }
+            66% {
+                border-radius: 62% 38% 48% 52% / 58% 42% 50% 50%;
+            }
+        }
+
+        .about-step-image {
+            --about-blob-rotate: -6deg;
+        }
+
+        .about-how-work-grid > div:nth-child(1) .about-step-image {
+            --about-blob-rotate: -10deg;
+        }
+
+        .about-how-work-grid > div:nth-child(2) .about-step-image {
+            --about-blob-rotate: 4deg;
+        }
+
+        .about-how-work-grid > div:nth-child(3) .about-step-image {
+            --about-blob-rotate: 9deg;
+        }
+
+        .about-step-blob {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 0;
+            width: 76%;
+            height: 76%;
+            max-width: 100%;
+            max-height: 100%;
+            background-color: #fff2d7;
+            opacity: 0;
+            transform: translate(-50%, -50%) rotate(var(--about-blob-rotate, 0deg)) scale(0.82);
+            pointer-events: none;
+            transition:
+                opacity 0.55s cubic-bezier(0.33, 1, 0.32, 1),
+                transform 0.6s cubic-bezier(0.33, 1, 0.32, 1);
+            animation: about-step-blob-morph 7s ease-in-out infinite paused;
+            will-change: transform, opacity, border-radius;
+        }
+
+        .about-step-image:hover .about-step-blob {
+            opacity: 1;
+            transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            animation-play-state: running;
+        }
+
+        .about-step-image-frame img {
+            transition: transform 0.55s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+
+        .about-step-image:hover .about-step-image-frame img {
+            transform: scale(1.03);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .about-step-blob {
+                animation: none;
+                border-radius: 55% 45% 55% 45% / 50% 50% 50% 50%;
+            }
+
+            .about-step-image:hover .about-step-blob {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            .about-step-image-frame img {
+                transition-duration: 0.15s;
+            }
+        }
+
+        /* ── CTA link row (same as index work/beyond cards) ─────────── */
         .card-detail {
-            @apply flex flex-row items-center gap-x-4 uppercase
-                   font-family-sofia text-primary-dark font-normal
-                   text-[1.5rem]/6 tracking-wider;
+            @apply flex
+            flex-row
+            items-center
+            gap-x-4
+            mt-2
+            xl:mt-0
+            uppercase
+            font-family-sofia
+            text-primary-dark
+            font-normal
+            text-[1.5rem]/6
+            tracking-wider;
+        }
+
+        #cards-beyond a.beyond-card-cta-link {
+            cursor: pointer;
+        }
+
+        #cards-beyond .card-beyond.group .work-card-cta .card-detail-text {
+            transform: translateY(1px);
+        }
+
+        #cards-beyond .work-card-cta {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 1rem;
+            width: fit-content;
+            max-width: 100%;
+            padding-right: 0;
+            box-sizing: border-box;
+            transition: padding-right 0.4s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+
+        #cards-beyond .work-card-cta::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 48px;
+            height: 48px;
+            margin-top: -24px;
+            border-radius: 9999px;
+            background-color: var(--color-accent-yellow);
+            z-index: 0;
+            pointer-events: none;
+            transition:
+                width 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                height 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                margin-top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                background-color 0.35s ease;
+        }
+
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta {
+            padding-right: 32px;
+        }
+
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta::before,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta::before {
+            top: 0;
+            margin-top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-pink-badge);
+        }
+
+        #cards-beyond .work-card-cta-icon,
+        #cards-beyond .work-card-cta .card-detail-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        #cards-beyond .work-card-cta-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        #cards-beyond .work-card-cta-chevron,
+        #cards-beyond .work-card-cta-arrow {
+            transition: opacity 0.3s ease;
+        }
+
+        #cards-beyond .work-card-cta-chevron {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            display: block;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            overflow: visible;
+        }
+
+        #cards-beyond .work-card-cta-arrow {
+            position: absolute;
+            left: 23px;
+            top: 17px;
+            width: 18px;
+            height: 14px;
+            max-width: none;
+            object-fit: contain;
+            object-position: left top;
+            display: block;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-chevron,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-chevron {
+            opacity: 0;
+        }
+
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-arrow,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-arrow {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #cards-beyond .work-card-cta::before,
+            #cards-beyond .work-card-cta,
+            #cards-beyond .work-card-cta-chevron,
+            #cards-beyond .work-card-cta-arrow {
+                transition: none;
+            }
+        }
+
+        /* Main-xl: beyond cards — same grid as index */
+        #cards-beyond {
+            @apply flex flex-col gap-y-12 md:gap-y-14
+            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
+            2xl:gap-x-16 2xl:gap-y-16;
+
+            & > .card-beyond {
+                @apply flex w-full max-w-full flex-col items-start gap-y-8;
+
+                & > .image-wrapper {
+                    @apply overflow-hidden
+                    rounded-[20px]
+                    w-full
+                    h-[380px]
+                    shrink-0;
+                    position: relative;
+
+                    & > .image-parallax-track {
+                        position: absolute;
+                        left: 0;
+                        top: -9%;
+                        width: 100%;
+                        height: 118%;
+                        will-change: transform;
+                    }
+
+                    & > .image-parallax-track > img {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        max-width: none;
+                        object-fit: cover;
+                        object-position: center;
+                        display: block;
+                    }
+                }
+
+                & .card-description {
+                    @apply flex w-full flex-col items-start gap-y-8 text-left;
+                }
+
+                & .card-description p {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 20px;
+                    line-height: 32px;
+                    font-weight: 300;
+                }
+
+                & .card-detail {
+                    margin-top: 0;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                & > .card-beyond > .image-wrapper > .image-parallax-track {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    width: 100%;
+                    height: 100%;
+                    will-change: auto;
+                }
+
+                & > .card-beyond > .image-wrapper > .image-parallax-track > img {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    width: 100%;
+                    height: 100%;
+                    max-width: none;
+                }
+            }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #cards-beyond .image-wrapper > .image-parallax-track > img {
+                transform-origin: center center;
+                transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+                transform: scale(1.06);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #cards-beyond .image-wrapper > .image-parallax-track > img {
+                transition: none;
+            }
+
+            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+                transform: none;
+            }
         }
 
         /* ── "Is it a match?" — chevron matches Figma (76.9792 / 739) ─── */
@@ -215,7 +598,7 @@
         }
 
         /* ── Match section (Figma 2176:3827) ───────────────────────── */
-        #match p {
+        #match .match-xl-body p {
             font-family: 'Inter', sans-serif;
             font-size: 20px;
             line-height: 32px;
@@ -303,7 +686,7 @@
         }
 
         #match .match-heading {
-            font-family: 'Sofia Sans Condensed', sans-serif;
+            font-family: var(--font-family-sofia);
             font-weight: 500;
             font-size: clamp(2.75rem, 9vw, 6.375rem);
             line-height: 1.02;
@@ -406,7 +789,7 @@
         #match .match-cta-label {
             position: relative;
             z-index: 1;
-            font-family: 'Sofia Sans Condensed', sans-serif;
+            font-family: var(--font-family-sofia);
             font-weight: 400;
             font-size: 24px;
             line-height: 24px;
@@ -436,7 +819,6 @@
             }
         }
 
-        /* ── Footer ─────────────────────────────────────────────────── */
         footer.site-footer .footer-inner a,
         footer.site-footer .footer-inner .footer-email {
             font-family: 'Inter', sans-serif;
@@ -481,7 +863,7 @@
 
 <body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] justify-center align-middle">
 
-<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:gap-y-24 xl:gap-y-26 2xl:px-0">
+<div class="about-page flex flex-col gap-y-[72px] md:gap-y-[88px] xl:gap-y-[120px] px-4 sm:px-8 2xl:px-0">
 
     <!-- ── Header ─────────────────────────────────────────────────── -->
     <header class="flex pt-8 xl:pt-16">
@@ -510,41 +892,44 @@
         </div>
     </header>
 
-    <!-- ── Section 1: Know Me Better ─────────────────────────────── -->
+    <div class="about-main-stack flex min-w-0 w-full flex-col gap-y-[72px] md:gap-y-[88px] xl:gap-y-[120px]">
+
+    <!-- ── Section 1: Know Me Better — 2xl: photo vertically centered vs full text block ─ -->
     <section class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
 
-        <div class="section-label">
-            <img src="assets/images/blob-shape.svg" alt=""/>
-            <span>Know me better</span>
-        </div>
+        <div class="flex flex-col gap-y-6 2xl:flex-row 2xl:items-center 2xl:gap-x-[140px] 2xl:gap-y-0">
 
-        <h1 class="section-heading">Hi! I'm glad you're here.</h1>
-
-        <!-- 2-col on xl+, stacked on xs/md -->
-        <div class="flex flex-col gap-y-4 xl:flex-row xl:gap-x-16 xl:items-start">
-
-            <!-- Left: bio text, with image inserted inline on xs/md -->
-            <div class="flex flex-col gap-y-4 flex-1 min-w-0">
-                <p>I'm Olga (also Helga, Olya, Ola), a UX/Product Designer who solves complex problems with a mix of engineer's logic, artist's intuition, and empath's insight.</p>
-
-                <!-- Photo: visible only on xs/md, sits between first and second paragraph -->
-                <div class="xl:hidden my-2">
-                    <img src="assets/images/About-image.png"
-                         alt="Olga Pertseva"
-                         class="w-full max-w-[288px] h-[385px] rounded-[20px] object-cover object-top"/>
+            <div class="flex flex-col gap-y-6 flex-1 min-w-0 2xl:max-w-[716px]">
+                <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
+                    <span class="section-kicker-blob" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.6313 0.884258C9.6594 0.304573 10.8197 0 12 0C13.1803 0 14.3406 0.304573 15.3687 0.884258C17.5927 2.34072 19.7291 3.92675 21.7668 5.63412C23.439 7.08816 24.3842 9.99624 23.851 12.1773C23.1831 14.7828 22.3659 17.3478 21.4033 19.8595C20.9109 20.9379 20.1518 21.8732 19.1978 22.577C18.2437 23.2808 17.1261 23.7301 15.9503 23.8823C13.3191 24.0392 10.6809 24.0392 8.04965 23.8823C5.86848 23.7369 3.42072 21.9194 2.59672 19.8595C1.63415 17.3478 0.816881 14.7828 0.148959 12.1773C-0.384217 9.99624 0.560958 7.08816 2.23319 5.63412C4.26307 3.92752 6.39135 2.34151 8.60706 0.884258H8.6313Z" fill="currentColor"/>
+                        </svg>
+                    </span>
+                    <span>KNOW ME BETTER</span>
                 </div>
 
-                <p>For over a decade, I've designed digital products across startups, enterprise platforms, e-commerce, and beyond, always focused on simplifying complexity, improving everyday interactions, and helping people achieve their goals with less friction and more confidence.</p>
+                <h1 class="section-heading">Hi! I'm glad you're here.</h1>
 
-                <p>Throughout my career, I've worn many hats, often all at once. From building and leading design teams to taking full ownership as a team of one, I've designed products from the ground up, often in complex, fast-moving environments, leading everything from early research and problem framing to UX strategy, interaction design, and turning insights into product decisions.</p>
+                <div class="flex flex-col gap-y-4">
+                    <p>I'm Olga (also Helga, Olya, Ola), a UX/Product Designer who solves complex problems with a mix of engineer's logic, artist's intuition, and empath's insight.</p>
+
+                    <div class="2xl:hidden my-2">
+                        <img src="assets/images/About-image.png"
+                             alt="Olga Pertseva"
+                             class="w-full max-w-[584px] aspect-[584/784] rounded-[20px] object-cover object-top"/>
+                    </div>
+
+                    <p>For over a decade, I've designed digital products across startups, enterprise platforms, e-commerce, and beyond, always focused on simplifying complexity, improving everyday interactions, and helping people achieve their goals with less friction and more confidence.</p>
+
+                    <p>Throughout my career, I've worn many hats, often all at once. From building and leading design teams to taking full ownership as a team of one, I've designed products from the ground up, often in complex, fast-moving environments, leading everything from early research and problem framing to UX strategy, interaction design, and turning insights into product decisions.</p>
+                </div>
             </div>
 
-            <!-- Right: photo on xl+ only -->
-            <div class="hidden xl:block xl:shrink-0 xl:w-[400px] 2xl:w-[460px]">
+            <div class="hidden 2xl:flex 2xl:shrink-0 2xl:w-[584px] 2xl:justify-center">
                 <img src="assets/images/About-image.png"
                      alt="Olga Pertseva"
-                     class="w-full rounded-[20px] object-cover object-top
-                            xl:h-[640px] 2xl:h-[700px]"/>
+                     class="h-[784px] w-[584px] max-w-full rounded-[20px] object-cover object-top"/>
             </div>
         </div>
 
@@ -553,70 +938,63 @@
     <!-- ── Section 2: How I Work ──────────────────────────────────── -->
     <section class="flex flex-col gap-y-8 xl:gap-y-12">
 
-        <div class="section-label">
-            <img src="assets/images/blob-shape.svg" alt=""/>
-            <span>How I work</span>
+        <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
+            <span class="section-kicker-blob" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.6313 0.884258C9.6594 0.304573 10.8197 0 12 0C13.1803 0 14.3406 0.304573 15.3687 0.884258C17.5927 2.34072 19.7291 3.92675 21.7668 5.63412C23.439 7.08816 24.3842 9.99624 23.851 12.1773C23.1831 14.7828 22.3659 17.3478 21.4033 19.8595C20.9109 20.9379 20.1518 21.8732 19.1978 22.577C18.2437 23.2808 17.1261 23.7301 15.9503 23.8823C13.3191 24.0392 10.6809 24.0392 8.04965 23.8823C5.86848 23.7369 3.42072 21.9194 2.59672 19.8595C1.63415 17.3478 0.816881 14.7828 0.148959 12.1773C-0.384217 9.99624 0.560958 7.08816 2.23319 5.63412C4.26307 3.92752 6.39135 2.34151 8.60706 0.884258H8.6313Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <span>HOW I WORK</span>
         </div>
 
-        <h2 class="section-heading">I solve complex problems by balancing systematic thinking with deep human understanding.</h2>
+        <h2 id="about-how-i-work-lede" class="section-header intro-scroll-reveal 2xl:max-w-[1240px]">I solve complex problems by balancing systematic thinking with deep human understanding.</h2>
 
-        <p>My process begins with exploring the human story and real problems behind every interface, then builds structure around the messy reality of how things actually work.</p>
+        <p class="2xl:max-w-[1240px]">My process begins with exploring the human story and real problems behind every interface, then builds structure around the messy reality of how things actually work.</p>
 
-        <!-- Three step cards -->
-        <!-- xs/sm: stacked; md: illustration left + title right, text below; xl: 3-col grid -->
-        <div class="flex flex-col gap-y-10 xl:grid xl:grid-cols-3 xl:gap-x-12 xl:items-start">
+        <!-- Image on top, title under, then copy; 2xl: 424×360 tiles in 3 cols -->
+        <div class="about-how-work-grid flex flex-col gap-y-10 2xl:grid 2xl:grid-cols-3 2xl:gap-x-[84px] 2xl:items-start">
 
-            <!-- Step 1: Start with People -->
-            <div class="flex flex-col gap-y-4 xl:gap-y-6">
-                <!-- Illustration + title: side-by-side on md, stacked on xs/xl -->
-                <div class="flex flex-col gap-y-4
-                            md:flex-row md:items-center md:gap-x-8
-                            xl:flex-col xl:gap-y-6">
-                    <div class="w-full overflow-hidden rounded-[20px]
-                                aspect-[226/196]
-                                md:w-[226px] md:h-[196px] md:shrink-0 md:aspect-auto
-                                xl:w-full xl:h-[320px]">
+            <div class="flex flex-col gap-y-4 2xl:gap-y-6">
+                <div class="flex flex-col gap-y-4 md:flex-row md:items-center md:gap-x-[32px] md:gap-y-0 lg:flex-col lg:items-stretch lg:gap-x-0 lg:gap-y-4 2xl:gap-y-6">
+                    <div class="about-step-image relative isolate mx-auto w-full max-h-[360px] shrink-0 md:mx-0 md:w-[226px] md:max-h-none lg:mx-auto lg:w-full lg:max-h-[360px] lg:shrink 2xl:mx-0 2xl:h-[360px] 2xl:w-[424px] 2xl:max-h-none 2xl:shrink-0">
+                        <span class="about-step-blob" aria-hidden="true"></span>
+                        <div class="about-step-image-frame relative z-[1] h-full w-full overflow-hidden rounded-[20px] aspect-[424/360] max-h-[360px] 2xl:aspect-auto 2xl:h-full 2xl:w-full 2xl:max-h-none">
                         <img src="assets/images/people-illustration.png"
                              alt="Start with People"
-                             class="w-full h-full object-cover object-center"/>
+                             class="h-full w-full object-cover object-center"/>
+                        </div>
                     </div>
-                    <h3 class="step-title">Start with People</h3>
+                    <h3 class="step-title md:min-w-0 md:flex-1 lg:flex-none">Start with People</h3>
                 </div>
                 <p>To design something meaningful, I need to understand not just the business goals, but the human story behind the interface. Real empathy means digging into context, listening deeply, and questioning assumptions before jumping to solutions. I uncover what people actually need, not what we think they need.</p>
             </div>
 
-            <!-- Step 2: Think by Making -->
-            <div class="flex flex-col gap-y-4 xl:gap-y-6">
-                <div class="flex flex-col gap-y-4
-                            md:flex-row md:items-center md:gap-x-8
-                            xl:flex-col xl:gap-y-6">
-                    <div class="w-full overflow-hidden rounded-[20px]
-                                aspect-[226/196]
-                                md:w-[226px] md:h-[196px] md:shrink-0 md:aspect-auto
-                                xl:w-full xl:h-[320px]">
+            <div class="flex flex-col gap-y-4 2xl:gap-y-6">
+                <div class="flex flex-col gap-y-4 md:flex-row md:items-center md:gap-x-[32px] md:gap-y-0 lg:flex-col lg:items-stretch lg:gap-x-0 lg:gap-y-4 2xl:gap-y-6">
+                    <div class="about-step-image relative isolate mx-auto w-full max-h-[360px] shrink-0 md:mx-0 md:w-[226px] md:max-h-none lg:mx-auto lg:w-full lg:max-h-[360px] lg:shrink 2xl:mx-0 2xl:h-[360px] 2xl:w-[424px] 2xl:max-h-none 2xl:shrink-0">
+                        <span class="about-step-blob" aria-hidden="true"></span>
+                        <div class="about-step-image-frame relative z-[1] h-full w-full overflow-hidden rounded-[20px] aspect-[424/360] max-h-[360px] 2xl:aspect-auto 2xl:h-full 2xl:w-full 2xl:max-h-none">
                         <img src="assets/images/think-illustration.png"
                              alt="Think by Making"
-                             class="w-full h-full object-cover object-center"/>
+                             class="h-full w-full object-cover object-center"/>
+                        </div>
                     </div>
-                    <h3 class="step-title">Think by Making</h3>
+                    <h3 class="step-title md:min-w-0 md:flex-1 lg:flex-none">Think by Making</h3>
                 </div>
                 <p>Once I know the story, I shift to hands-on exploration: rapid prototypes, user interviews, data analysis, and iterative testing — whatever brings clarity fastest. I'm flexible in tools but structured in thinking. The goal is always the same: test assumptions, measure impact, iterate fast.</p>
             </div>
 
-            <!-- Step 3: Build Together -->
-            <div class="flex flex-col gap-y-4 xl:gap-y-6">
-                <div class="flex flex-col gap-y-4
-                            md:flex-row md:items-center md:gap-x-8
-                            xl:flex-col xl:gap-y-6">
-                    <div class="w-full overflow-hidden rounded-[20px]
-                                aspect-[226/196]
-                                md:w-[226px] md:h-[196px] md:shrink-0 md:aspect-auto
-                                xl:w-full xl:h-[320px]">
+            <div class="flex flex-col gap-y-4 2xl:gap-y-6">
+                <div class="flex flex-col gap-y-4 md:flex-row md:items-center md:gap-x-[32px] md:gap-y-0 lg:flex-col lg:items-stretch lg:gap-x-0 lg:gap-y-4 2xl:gap-y-6">
+                    <div class="about-step-image relative isolate mx-auto w-full max-h-[360px] shrink-0 md:mx-0 md:w-[226px] md:max-h-none lg:mx-auto lg:w-full lg:max-h-[360px] lg:shrink 2xl:mx-0 2xl:h-[360px] 2xl:w-[424px] 2xl:max-h-none 2xl:shrink-0">
+                        <span class="about-step-blob" aria-hidden="true"></span>
+                        <div class="about-step-image-frame relative z-[1] h-full w-full overflow-hidden rounded-[20px] aspect-[424/360] max-h-[360px] 2xl:aspect-auto 2xl:h-full 2xl:w-full 2xl:max-h-none">
                         <img src="assets/images/together-illustration.png"
                              alt="Build Together"
-                             class="w-full h-full object-cover object-center"/>
+                             class="h-full w-full object-cover object-center"/>
+                        </div>
                     </div>
-                    <h3 class="step-title">Build together</h3>
+                    <h3 class="step-title md:min-w-0 md:flex-1 lg:flex-none">Build together</h3>
                 </div>
                 <p>I involve developers, stakeholders, and users from the start. I believe ideas sharpen through friction, and good UX happens when everyone's part of the conversation. I adapt my approach to match the context — whether that's conducting field research with end users or presenting to execs, I adapt to the room.</p>
             </div>
@@ -625,45 +1003,160 @@
 
     </section>
 
-    <!-- ── Section 3: Outside of UX ──────────────────────────────── -->
-    <section class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
+    <!-- ── Beyond Work (same block as index) ───────────────────────── -->
+    <div class="full-bleed bg-white flex flex-col gap-y-22">
 
-        <div class="section-label">
-            <img src="assets/images/blob-shape.svg" alt=""/>
-            <span>Outside of UX</span>
-        </div>
+        <section id="beyond"
+                 class="flex
+                        flex-col
+                        gap-y-12
+                        xl:gap-y-16
+                        max-w-[1280px]
+                        2xl:max-w-[1440px]
+                        mx-auto
+                        pt-0
+                        px-4
+                        sm:px-8
+                        2xl:px-0">
 
-        <!-- 2-col on xl+: text+CTA left, painting right; stacked on xs/md -->
-        <div class="flex flex-col gap-y-8 xl:flex-row xl:gap-x-16 xl:items-start">
-
-            <!-- Left: heading + text + CTA -->
-            <div class="flex flex-col gap-y-6 flex-1 min-w-0">
-                <h2 class="section-heading">Pixels by Day, Paint by Night.</h2>
-
-                <div class="flex flex-col gap-y-4">
-                    <p>Design grounds me in logic and systems. Drawing lets me explore the messy, funny, human side of things — a space where not everything has to make sense to feel true.</p>
-                    <p>I create playful, sometimes absurd illustrations to stay curious, emotionally connected, and creatively balanced. It reminds me that good design doesn't always have to be serious to make an impact.</p>
+            <div class="flex flex-col gap-y-6">
+                <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
+                    <span class="section-kicker-blob" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.6313 0.884258C9.6594 0.304573 10.8197 0 12 0C13.1803 0 14.3406 0.304573 15.3687 0.884258C17.5927 2.34072 19.7291 3.92675 21.7668 5.63412C23.439 7.08816 24.3842 9.99624 23.851 12.1773C23.1831 14.7828 22.3659 17.3478 21.4033 19.8595C20.9109 20.9379 20.1518 21.8732 19.1978 22.577C18.2437 23.2808 17.1261 23.7301 15.9503 23.8823C13.3191 24.0392 10.6809 24.0392 8.04965 23.8823C5.86848 23.7369 3.42072 21.9194 2.59672 19.8595C1.63415 17.3478 0.816881 14.7828 0.148959 12.1773C-0.384217 9.99624 0.560958 7.08816 2.23319 5.63412C4.26307 3.92752 6.39135 2.34151 8.60706 0.884258H8.6313Z" fill="currentColor"/>
+                        </svg>
+                    </span>
+                    <span>BEYOND WORK</span>
                 </div>
 
-                <div class="card-detail cursor-pointer">
-                    <img src="assets/images/more-shape.svg" alt="" aria-hidden="true"/>
-                    <span>Explore my art</span>
+                <h1 id="beyond-life-lede" class="section-header intro-scroll-reveal">
+                    Design is a huge part of my life, but outside of it, I'm constantly making, exploring, and experimenting.
+                </h1>
+
+                <p class="card-text">
+                    Here's a peek at the other things that make me, me.
+                </p>
+            </div>
+
+            <div id="cards-beyond">
+
+                <div class="group card-beyond">
+                    <div class="image-wrapper 2xl:h-[468px]">
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        </div>
+                    </div>
+
+                    <div class="card-description">
+                        <div class="card-badges">
+                            <span class="badge">My Other Medium</span>
+                        </div>
+
+                        <p class="card-text">I've been drawing since I can remember. It's my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
+
+                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
+                            </span>
+                        </a>
+                    </div>
                 </div>
+
+                <div class="group card-beyond">
+                    <div class="image-wrapper 2xl:h-[468px]">
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        <div class="card-badges">
+                            <span class="badge">My entrepreneurial experiment</span>
+                        </div>
+
+                        <p class="card-text">
+                            At one point, I came close to launching my own eco-friendly kitchenware brand. UX research saved me a business headache, revealing why the market wasn't the right fit.
+                        </p>
+
+                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Story coming soon</span></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group card-beyond">
+                    <div class="image-wrapper 2xl:h-[468px]">
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        </div>
+                    </div>
+
+                    <div class="card-description">
+                        <div class="card-badges">
+                            <span class="badge">My Other Medium</span>
+                        </div>
+
+                        <p class="card-text">I've been drawing since I can remember. It's my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
+
+                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group card-beyond">
+                    <div class="image-wrapper 2xl:h-[468px]">
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        <div class="card-badges">
+                            <span class="badge">My entrepreneurial experiment</span>
+                        </div>
+
+                        <p class="card-text">
+                            At one point, I came close to launching my own eco-friendly kitchenware brand. UX research saved me a business headache, revealing why the market wasn't the right fit.
+                        </p>
+
+                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Story coming soon</span></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Right: painting -->
-            <div class="xl:shrink-0 xl:w-[400px] 2xl:w-[460px]">
-                <img src="assets/images/painting-about.png"
-                     alt="Paintings by Olga"
-                     class="w-full rounded-[20px] object-cover
-                            xl:max-h-[620px] 2xl:max-h-[680px]"/>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- ── Is it a match? + Footer — full-bleed ───────────────────── -->
-    <div class="full-bleed bg-white flex flex-col gap-y-0">
+        </section>
 
         <section id="match"
                  class="bg-primary-light
@@ -723,6 +1216,7 @@
                         mx-auto
                         flex-col
                         items-center
+                        
                         gap-y-4
                         px-4
                         sm:px-8
@@ -731,7 +1225,8 @@
                         lg:justify-between
                         lg:gap-y-0
                         xl:px-12
-                        2xl:px-[80px]">
+                        2xl:px-[80px]
+                        ">
                 <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
                     <a class="no-underline" href="index.html#work">Work</a>
                     <a class="no-underline" href="about.html">About</a>
@@ -746,6 +1241,8 @@
                 </div>
             </div>
         </footer>
+
+    </div>
 
     </div>
 
@@ -798,6 +1295,70 @@
                 }
             });
         });
+
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function introScrollRevealViewportBand() {
+            const h = window.innerHeight;
+            if (window.matchMedia("(max-width: 479px)").matches) {
+                return { startY: h * 0.96, endY: h * 0.26 };
+            }
+            if (window.matchMedia("(max-width: 767px)").matches) {
+                return { startY: h * 0.94, endY: h * 0.28 };
+            }
+            if (window.matchMedia("(max-width: 991px)").matches) {
+                return { startY: h * 0.92, endY: h * 0.26 };
+            }
+            return { startY: h * 0.9, endY: h * 0.22 };
+        }
+
+        const introScrollRevealTickers = [];
+
+        function setupIntroScrollReveal(el) {
+            if (!el || reducedMotion) return;
+            const endColor = getComputedStyle(el).color || "#302f2f";
+            const raw = el.textContent.trim().replace(/\s+/g, " ");
+            const escapeHtml = (s) =>
+                s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            el.innerHTML = raw
+                .split(" ")
+                .map((w) => `<span class="word">${escapeHtml(w)}</span>`)
+                .join(" ");
+            const words = gsap.utils.toArray(el.querySelectorAll(".word"));
+
+            gsap.set(words, { color: "#e5e5e5" });
+            const tl = gsap.timeline({ paused: true });
+            tl.to(words, {
+                color: endColor,
+                ease: "power3.inOut",
+                stagger: 0.65,
+                duration: 11,
+            });
+
+            function tick() {
+                const { startY, endY } = introScrollRevealViewportBand();
+                const rect = el.getBoundingClientRect();
+                const anchorY = rect.top + Math.min(rect.height * 0.15, 28);
+                const span = startY - endY;
+                let p = span === 0 ? 1 : (startY - anchorY) / span;
+                p = Math.max(0, Math.min(1, p));
+                tl.progress(p);
+            }
+
+            introScrollRevealTickers.push(tick);
+        }
+
+        setupIntroScrollReveal(document.getElementById("about-how-i-work-lede"));
+        setupIntroScrollReveal(document.getElementById("beyond-life-lede"));
+
+        if (introScrollRevealTickers.length) {
+            function tickAllIntroScrollReveals() {
+                introScrollRevealTickers.forEach((fn) => fn());
+            }
+            gsap.ticker.add(tickAllIntroScrollReveals);
+            window.addEventListener("resize", tickAllIntroScrollReveals, { passive: true });
+            tickAllIntroScrollReveals();
+        }
     });
 </script>
 

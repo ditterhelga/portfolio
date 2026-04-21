@@ -538,7 +538,7 @@
             tracking-wider;
         }
 
-        /* Section kickers: blob only — simple rotation on row hover */
+        /* Section kickers: blob — same rotation as before; fill uses currentColor for hover */
         .section-kicker {
             width: fit-content;
         }
@@ -549,9 +549,11 @@
             justify-content: center;
             width: 24px;
             height: 24px;
+            color: #363ccc;
+            transition: color 0.35s ease;
         }
 
-        .section-kicker-blob img {
+        .section-kicker-blob svg {
             display: block;
             width: 24px;
             height: 24px;
@@ -559,16 +561,20 @@
             transition: transform 1.45s cubic-bezier(0.33, 1, 0.32, 1);
         }
 
-        .section-kicker:hover .section-kicker-blob img {
+        .section-kicker:hover .section-kicker-blob {
+            color: #0016f2;
+        }
+
+        .section-kicker:hover .section-kicker-blob svg {
             transform: rotate(720deg);
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .section-kicker-blob img {
+            .section-kicker-blob svg {
                 transition: none;
             }
 
-            .section-kicker:hover .section-kicker-blob img {
+            .section-kicker:hover .section-kicker-blob svg {
                 transform: none;
             }
         }
@@ -578,42 +584,18 @@
             cursor: pointer;
         }
 
-        /*
-         * Work card titles: fill is only inside glyphs (background-clip: text).
-         * Radial highlight uses background-attachment: fixed + --shine-px/--shine-py (viewport px) so
-         * the light tracks the cursor across the whole title. Base fill = linear gradient.
-         */
-        #work a.work-case-card-link:has(> h3.card-title) {
-            --shine-px: 50vw;
-            --shine-py: 50vh;
-        }
-
+        /* Work card titles: solid brand blue; darken slightly when the card row is hovered or the title link is focused */
         #work .work-card-surface h3.card-title.intro-scroll-reveal .word {
             display: inline-block;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-            background-image:
-                radial-gradient(
-                    circle clamp(76px, 15vw, 148px) at var(--shine-px) var(--shine-py),
-                    rgba(255, 255, 255, 0.48) 0%,
-                    rgba(200, 206, 245, 0.32) 34%,
-                    rgba(136, 145, 214, 0) 65%
-                ),
-                linear-gradient(158deg, #3b47c2 0%, #363b8a 42%, #302f2f 92%);
-            background-repeat: no-repeat;
-            background-attachment: fixed, scroll;
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: #3b47c2;
+            -webkit-text-fill-color: #3b47c2;
+            transition: color 0.2s ease, -webkit-text-fill-color 0.2s ease;
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            #work .work-card-surface h3.card-title.intro-scroll-reveal .word {
-                background: none;
-                background-clip: border-box;
-                -webkit-background-clip: border-box;
-                color: inherit;
-                -webkit-text-fill-color: inherit;
-            }
+        #work .card-content.group:hover h3.card-title.intro-scroll-reveal .word,
+        #work a.work-case-card-link:has(> h3.card-title):focus-visible h3.card-title.intro-scroll-reveal .word {
+            color: #0016f2;
+            -webkit-text-fill-color: #0016f2;
         }
         #cards-beyond a.beyond-card-cta-link {
             cursor: pointer;
@@ -786,20 +768,20 @@
             }
         }
 
-        /* Pull Beyond block up by half the main column gap (gap-y-18 / md:24 / xl:26) */
+        /* Pull Beyond block up (overlaps main column gap) — tuned so less #f3f6f9 shows under the last work card */
         #work + .full-bleed {
-            margin-top: -2.25rem;
+            margin-top: -3.25rem;
         }
 
         @media (min-width: 48rem) {
             #work + .full-bleed {
-                margin-top: -3rem;
+                margin-top: -4rem;
             }
         }
 
         @media (min-width: 80rem) {
             #work + .full-bleed {
-                margin-top: -3.25rem;
+                margin-top: -4.75rem;
             }
         }
 
@@ -817,7 +799,7 @@
             }
 
             #work .work-cards-stack > .card-wrapper:last-of-type {
-                padding-bottom: calc(5vh + 56px);
+                padding-bottom: calc(1.5vh + 24px);
             }
 
             #work .work-cards-stack > .card-wrapper:nth-child(1) {
@@ -1570,7 +1552,9 @@
         <div class="flex flex-col gap-y-6 xl:gap-y-12">
             <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
                 <span class="section-kicker-blob" aria-hidden="true">
-                    <img src="assets/images/blob-shape.svg" alt="" width="24" height="24" decoding="async"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.6313 0.884258C9.6594 0.304573 10.8197 0 12 0C13.1803 0 14.3406 0.304573 15.3687 0.884258C17.5927 2.34072 19.7291 3.92675 21.7668 5.63412C23.439 7.08816 24.3842 9.99624 23.851 12.1773C23.1831 14.7828 22.3659 17.3478 21.4033 19.8595C20.9109 20.9379 20.1518 21.8732 19.1978 22.577C18.2437 23.2808 17.1261 23.7301 15.9503 23.8823C13.3191 24.0392 10.6809 24.0392 8.04965 23.8823C5.86848 23.7369 3.42072 21.9194 2.59672 19.8595C1.63415 17.3478 0.816881 14.7828 0.148959 12.1773C-0.384217 9.99624 0.560958 7.08816 2.23319 5.63412C4.26307 3.92752 6.39135 2.34151 8.60706 0.884258H8.6313Z" fill="currentColor"/>
+                    </svg>
                 </span>
                 <span>My work</span>
             </div>
@@ -1778,13 +1762,14 @@
                         xl:pt-[104px]
                         px-4
                         sm:px-8
-                        xl:px-8
-                        2xl:px-[80px]">
+                        2xl:px-0">
 
             <div class="flex flex-col gap-y-6">
                 <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
                     <span class="section-kicker-blob" aria-hidden="true">
-                        <img src="assets/images/blob-shape.svg" alt="" width="24" height="24" decoding="async"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.6313 0.884258C9.6594 0.304573 10.8197 0 12 0C13.1803 0 14.3406 0.304573 15.3687 0.884258C17.5927 2.34072 19.7291 3.92675 21.7668 5.63412C23.439 7.08816 24.3842 9.99624 23.851 12.1773C23.1831 14.7828 22.3659 17.3478 21.4033 19.8595C20.9109 20.9379 20.1518 21.8732 19.1978 22.577C18.2437 23.2808 17.1261 23.7301 15.9503 23.8823C13.3191 24.0392 10.6809 24.0392 8.04965 23.8823C5.86848 23.7369 3.42072 21.9194 2.59672 19.8595C1.63415 17.3478 0.816881 14.7828 0.148959 12.1773C-0.384217 9.99624 0.560958 7.08816 2.23319 5.63412C4.26307 3.92752 6.39135 2.34151 8.60706 0.884258H8.6313Z" fill="currentColor"/>
+                        </svg>
                     </span>
                     <span>Beyond Work</span>
                 </div>
@@ -2283,60 +2268,6 @@
             introScrollRevealTickers.push(tick);
         }
 
-        function setupWorkTitleClipShine() {
-            if (reducedMotion) return;
-            const links = document.querySelectorAll("#work a.work-case-card-link:has(> h3.card-title)");
-            if (!links.length) return;
-
-            function setShineFromClient(link, clientX, clientY) {
-                link.style.setProperty("--shine-px", `${clientX}px`);
-                link.style.setProperty("--shine-py", `${clientY}px`);
-            }
-
-            function centerShine(link) {
-                const r = link.getBoundingClientRect();
-                setShineFromClient(link, r.left + r.width / 2, r.top + r.height / 2);
-            }
-
-            links.forEach((link) => {
-                centerShine(link);
-
-                let rafId = 0;
-                let pendingX = 0;
-                let pendingY = 0;
-
-                link.addEventListener("pointermove", (e) => {
-                    pendingX = e.clientX;
-                    pendingY = e.clientY;
-                    if (rafId) return;
-                    rafId = window.requestAnimationFrame(() => {
-                        setShineFromClient(link, pendingX, pendingY);
-                        rafId = 0;
-                    });
-                });
-
-                link.addEventListener("pointerleave", () => {
-                    if (rafId) {
-                        window.cancelAnimationFrame(rafId);
-                        rafId = 0;
-                    }
-                    centerShine(link);
-                });
-
-                link.addEventListener("focusin", () => centerShine(link));
-            });
-
-            function recenterIdleShines() {
-                links.forEach((link) => {
-                    if (link.matches(":hover")) return;
-                    centerShine(link);
-                });
-            }
-
-            window.addEventListener("scroll", recenterIdleShines, { passive: true });
-            window.addEventListener("resize", recenterIdleShines, { passive: true });
-        }
-
         setupIntroScrollReveal(document.getElementById("about-systems-lede"));
         setupIntroScrollReveal(document.getElementById("work-pos-lede"));
         setupIntroScrollReveal(document.getElementById("beyond-life-lede"));
@@ -2352,8 +2283,6 @@
             window.addEventListener("resize", tickAllIntroScrollReveals, { passive: true });
             tickAllIntroScrollReveals();
         }
-
-        setupWorkTitleClipShine();
 
         // Work section: sticky stack, fade + scale (desktop only; demo pattern)
         if (!reducedMotion) {
