@@ -638,7 +638,7 @@
         }
 
         .triag-cut {
-            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+            clip-path: polygon(0 0, 50% 10.416%, 100% 0, 100% 100%, 0 100%);
         }
 
         /* Lighter Inter for match CTA copy (thinner than body default) */
@@ -669,16 +669,24 @@
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-email {
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-contact img {
             display: block;
+        }
+
+        footer.site-footer .footer-inner nav a:hover,
+        footer.site-footer .footer-inner .footer-email:hover {
+            color: #FDE4DF;
+            opacity: 1;
         }
 
         .line-top {
@@ -798,10 +806,10 @@
             </div>
 
             <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
-                <a href="#work"    class="menulink">Work</a>
-                <a href="#about"   class="menulink">About</a>
-                <a href="#contact" class="menulink">Contact</a>
-                <a href="#resume"  class="menulink">Resume</a>
+                <a href="index.html#work"    class="menulink">Work</a>
+                <a href="about.html"   class="menulink">About</a>
+                <a href="contact.html" class="menulink">Contact</a>
+                <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="menulink" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
         </div>
 
@@ -833,7 +841,7 @@
         <!-- #hero: breadcrumbs, page title (h1), hero image or video placeholder -->
         <section id="hero" class="flex flex-col">
             <div class="billfold-breadcrumbs mb-6 md:mb-4 font-light text-5/8 flex flex-row flex-wrap items-center gap-x-2" aria-label="Breadcrumb">
-                <a class="no-underline hover:opacity-90" href="index.html#work">Work</a>
+                <a class="no-underline transition-colors duration-[250ms] ease-out hover:text-[#0016F2]" href="index.html#work">Work</a>
                 <span aria-hidden="true">/</span>
                 <span class="text-[#8A8A8A]">Billfold</span>
             </div>
@@ -877,9 +885,9 @@
                         </div>
                         <div class="metadata-impact flex flex-col gap-y-4">
                             <div class="font-medium">Impact</div>
-                            <p class="text-5/8">• Guest spend: up to <span class="font-medium text-[#442699]">+60%</span> higher per person with RFID</p>
-                            <p class="text-5/8">• Faster service: bartenders processed <span class="font-medium text-[#442699]">+23%</span> more transactions</p>
-                            <p class="text-5/8">• Event revenue: <span class="font-medium text-[#442699]">+30–50%</span> higher sales at major events</p>
+                            <p class="text-5/8">• <span class="font-medium">Guest spend:</span> up to <span class="font-medium text-[#442699]">+60%</span> higher per person with RFID</p>
+                            <p class="text-5/8">• <span class="font-medium">Faster service:</span> bartenders processed <span class="font-medium text-[#442699]">+23%</span> more transactions</p>
+                            <p class="text-5/8">• <span class="font-medium">Event revenue:</span> <span class="font-medium text-[#442699]">+30–50%</span> higher sales at major events</p>
                         </div>
                     </div>
                 </div>
@@ -1045,7 +1053,7 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I got it done</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I got it done</span></span>
             </button>
 
             <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1090,7 +1098,7 @@
                     <div class="max-md:contents md:contents xl:flex xl:min-w-0 xl:flex-col xl:gap-y-8 2xl:gap-y-[40px]">
                         <div class="max-md:contents md:contents xl:contents 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                             <div class="research-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
-                                <p class="min-w-0">Since I couldn’t attend US festivals in person, <span class="font-medium">research had to happen remotely.</span> I worked closely with PMs, event staff, and engineers to understand how payments broke down during live events, and what vendors and guests struggled with the most. Feedback came from videos, on-site reports, and rapid loops between design and deployment.</p>
+                                <p class="min-w-0"><span class="font-medium">Since I couldn’t attend US festivals in person, research had to happen remotely.</span> I worked closely with <span class="font-medium">PMs, event staff, and engineers to understand how payments broke down during live events, and what vendors and guests struggled with the most.</span> Feedback came from videos, on-site reports, and rapid loops between design and deployment.</p>
                             </div>
                             <div class="research-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
                                 <p class="min-w-0">This process helped me uncover the real conditions the product had to survive: sun glare on screens, beer-soaked hardware, distracted and impatient guests, and staff with minimal training. <span class="font-medium">By combining remote insights with field feedback, I could translate messy realities into design principles the team could build on.</span></p>
@@ -1109,7 +1117,7 @@
                                 <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
-                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span>
+                        <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span></span>
                     </button>
 
                     <div id="research-acc-panel-1-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1145,7 +1153,7 @@
                                 <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
-                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I discovered</span>
+                        <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I discovered</span></span>
                     </button>
 
                     <div id="research-acc-panel-2-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1273,7 +1281,7 @@
                 <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
-                    <p class="min-w-0">For bartenders and waiters, <span class="font-medium">speed was everything.</span><br/>
+                    <p class="min-w-0"><span class="font-medium">For bartenders and waiters, speed was everything.</span><br/>
 At peak hours, a single extra tap or a confusing screen could slow the entire line and frustrate hundreds of guests. The vendor-facing POS had to be <span class="font-medium">simple enough to learn in minutes and reliable enough to handle non-stop orders all night.</span></p>
                 </div>
 
@@ -1289,7 +1297,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span></span>
             </button>
 
             <div id="vendor-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1338,15 +1346,16 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
                 </div>
 
-                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                <div class="order-3 max-xl:hidden min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            md:order-3 md:mt-4 xl:mt-0
+                            md:order-3 md:mt-4 xl:mt-0 xl:invisible
                             xl:col-start-2 xl:row-start-2 xl:row-span-2
                             2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
-                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]"
+                     aria-hidden="true">
                     <img src="assets/images/logo-billfold-keyphrase.png"
-                         alt="Billfold"
+                         alt=""
                          class="h-[56px] w-[30px] shrink-0"/>
                     <p class="font-light text-5/8">Billfold proved that when payments run smoothly, everything else follows: <span class="font-medium">faster lines, calmer staff, and happier guests.</span></p>
                 </div>
@@ -1371,7 +1380,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
-                    <p class="min-w-0">For guests, confidence was everything. In the middle of a noisy crowd, they needed to know their order was right and their payment went through, without second-guessing or asking staff. <span class="font-medium">The customer-facing screen had to remove doubt in an environment where attention lasted only a second.</span></p>
+                    <p class="min-w-0"><span class="font-medium">For guests, confidence was everything.</span> In the middle of a noisy crowd, they needed to know their order was right and their payment went through, without second-guessing or asking staff. <span class="font-medium">The customer-facing screen had to remove doubt in an environment where attention lasted only a second.</span></p>
                 </div>
 
                 <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
@@ -1386,7 +1395,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span></span>
             </button>
 
             <div id="guest-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1435,15 +1444,16 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
                 </div>
 
-                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                <div class="order-3 max-xl:hidden min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            md:order-3 md:mt-4 xl:mt-0
+                            md:order-3 md:mt-4 xl:mt-0 xl:invisible
                             xl:col-start-2 xl:row-start-2 xl:row-span-2
                             2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
-                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]"
+                     aria-hidden="true">
                     <img src="assets/images/logo-billfold-keyphrase.png"
-                         alt="Billfold"
+                         alt=""
                          class="h-[56px] w-[30px] shrink-0"/>
                     <p class="font-light text-5/8">Billfold proved that when payments run smoothly, everything else follows: <span class="font-medium">faster lines, calmer staff, and happier guests.</span></p>
                 </div>
@@ -1468,7 +1478,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
-                    <p class="min-w-0">The first impression of any event happens at the gate. Guests arriving with excitement don't want to stand in another long line just to set up a wristband. The self-check-in kiosk had to make registration quick, intuitive, and foolproof, so thousands of people could flow through without bottlenecks.</p>
+                    <p class="min-w-0"><span class="font-medium">The first impression of any event happens at the gate.</span> Guests arriving with excitement don't want to stand in another long line just to set up a wristband. The self-check-in kiosk had to make registration quick, intuitive, and foolproof, so thousands of people could flow through without bottlenecks.</p>
                 </div>
 
                 <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
@@ -1483,7 +1493,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span></span>
             </button>
 
             <div id="kiosk-exp-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1528,15 +1538,16 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
                 </div>
 
-                <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                <div class="order-3 max-xl:hidden min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            md:order-3 md:mt-4 xl:mt-0
+                            md:order-3 md:mt-4 xl:mt-0 xl:invisible
                             xl:col-start-2 xl:row-start-2 xl:row-span-2
                             2xl:col-start-2 2xl:row-start-2 2xl:row-span-2 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
-                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
+                            2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]"
+                     aria-hidden="true">
                     <img src="assets/images/logo-billfold-keyphrase.png"
-                         alt="Billfold"
+                         alt=""
                          class="h-[56px] w-[30px] shrink-0"/>
                     <p class="font-light text-5/8">Billfold proved that when payments run smoothly, everything else follows: <span class="font-medium">faster lines, calmer staff, and happier guests.</span></p>
                 </div>
@@ -1576,7 +1587,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Features & design decisions</span></span>
             </button>
 
             <div id="results-real-world-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1705,10 +1716,10 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
                 <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:col-start-1 xl:row-start-2 xl:min-w-0 2xl:col-start-1 2xl:row-start-2 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 2xl:min-w-0">
-                    <p class="min-w-0">Billfold pushed me to design for real-world chaos, not polished screens. Working remotely and solo, I had to move fast, trust my decisions, and make them work for bartenders with 30-second training and guests who barely looked at the UI.</p>
+                    <p class="min-w-0"><span class="font-medium">Billfold pushed me to design for real-world chaos, not polished screens.</span> Working remotely and solo, I had to move fast, trust my decisions, and make them work for bartenders with 30-second training and guests who barely looked at the UI.</p>
                 </div>
                 <div class="overview-text-2 font-light text-5/8 min-w-0 2xl:min-w-0">
-                    <p class="min-w-0">What mattered most were the small wins: one clearer total, one fewer tap, one steadier flow, and lines shrank, staff exhaled, sales climbed. It proved to me that the best design shows its value under pressure, where clarity makes the biggest difference.</p>
+                    <p class="min-w-0">What mattered most were the small wins: one clearer total, one fewer tap, one steadier flow, and lines shrank, staff exhaled, sales climbed. It proved to me that the <span class="font-medium">best design shows its value under pressure, where clarity makes the biggest difference.</span></p>
                 </div>
                 </div>
                 </div>
@@ -1721,9 +1732,9 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                         <div class="font-medium leading-tight self-center">Growing Through Constraints</div>
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
-                        <p>Because I couldn't be on-site, I had to adapt my research approach, relying on staff videos, real-time feedback loops, and rapid iterations with engineers in the field.</p>
+                        <p>Because I couldn't be on-site, <span class="font-medium">I had to adapt my research approach, relying on staff videos, real-time feedback loops, and rapid iterations with engineers in the field.</span></p>
                         <p>It wasn't always perfect, but it taught me to stay curious, flexible, and resourceful.</p>
-                        <p>At the same time, working as the only designer in a startup pushed me to grow in resilience and autonomy: trusting my instincts, making fast decisions, and defending them to a cross-functional team that needed results, not just polished screens.</p>
+                        <p>At the same time, working as the only designer in a startup pushed me to <span class="font-medium">grow in resilience and autonomy:</span> trusting my instincts, making fast decisions, and defending them to a cross-functional team that needed results, not just polished screens.</p>
                     </div>
                 </div>
 
@@ -1735,8 +1746,8 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                         <div class="font-medium leading-tight self-center">Thinking Beyond Interfaces</div>
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
-                        <p>I got a crash course in designing hardware and software together, aligning screen logic with RFID behavior, and understanding how even a 1-second delay could break trust.</p>
-                        <p>That experience pushed me to think less about individual screens and more about the system as a whole: how devices, flows, and infrastructure connect to shape the user experience.</p>
+                        <p><span class="font-medium">I got a crash course in designing hardware and software together,</span> aligning screen logic with RFID behavior, and understanding how even a 1-second delay could break trust.</p>
+                        <p>That experience pushed me to <span class="font-medium">think less about individual screens and more about the system as a whole:</span> how devices, flows, and infrastructure connect to shape the user experience.</p>
                     </div>
                 </div>
 
@@ -1748,9 +1759,9 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                         <div class="font-medium leading-tight self-center">Connecting UX to Business</div>
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
-                        <p>I saw first-hand how UX drives business metrics.</p>
+                        <p><span class="font-medium">I saw first-hand how UX drives business metrics.</span></p>
                         <p>Faster flows and clearer screens didn't just feel better, they increased revenue, enabled tens of thousands of extra transactions, and gave venues confidence in a system they could rely on.</p>
-                        <p>Design wasn't decoration here, it was directly tied to dollars, scale, and trust.</p>
+                        <p><span class="font-medium">Design wasn't decoration here, it was directly tied to dollars, scale, and trust.</span></p>
                     </div>
                 </div>
 
@@ -1764,7 +1775,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                     <img src="assets/images/logo-billfold-keyphrase.png"
                          alt="Billfold"
                          class="h-[56px] w-[30px] shrink-0"/>
-                    <p class="font-light text-5/8">When design removes friction, everyone wins: staff feel supported, guests stay engaged, and the business sees the difference in the numbers.</p>
+                    <p class="font-light text-5/8"><span class="font-medium">When design removes friction, everyone wins:</span> staff feel supported, guests stay engaged, and the business sees the difference in the numbers.</p>
                 </div>
             </div>
 
@@ -1798,6 +1809,43 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
         }
         .proj-nav-link-right::after { transform-origin: right; }
         .group:hover .proj-nav-link::after { transform: scaleX(1); }
+
+        /* Case accordion: +1px label nudge; pink underline on hover (no vertical jump) */
+        button.group > span:nth-child(2),
+        div.group.flex.items-center > span:nth-child(2) {
+            transform: translateY(1px);
+        }
+        .case-acc-label {
+            position: relative;
+            display: inline-block;
+        }
+        .case-acc-label::after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 2px;
+            width: 100%;
+            height: 3px;
+            z-index: 1;
+            background-color: #FDE4DF;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.35s ease;
+            pointer-events: none;
+        }
+        .group:hover .case-acc-label::after {
+            transform: scaleX(1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .case-acc-label::after {
+                transition: none;
+            }
+            .group:hover .case-acc-label::after {
+                transform: scaleX(1);
+            }
+        }
 
         #case-side-nav {
             position: fixed;
@@ -1981,7 +2029,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
     </style>
     <div class="full-bleed bg-[#FFF2D7] h-[128px] flex items-center px-6 sm:px-8 md:px-10 xl:px-0 2xl:px-0">
         <div class="w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto flex items-center justify-between xl:px-6 2xl:px-0">
-            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+            <a href="subway.html" class="flex items-center gap-x-[16px] no-underline group" aria-label="Previous project: Subway">
                 <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 13L1 7L7 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
@@ -1989,7 +2037,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </span>
                 <span class="proj-nav-link font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Previous<span class="hidden min-[500px]:inline"> Project</span></span>
             </a>
-            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+            <a href="gazelkin.html" class="flex items-center gap-x-[16px] no-underline group" aria-label="Next project: Gazelkin">
                 <span class="proj-nav-link proj-nav-link-right font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Next<span class="hidden min-[500px]:inline"> Project</span></span>
                 <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2019,14 +2067,14 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 2xl:px-0
                 ">
             <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#work">Work</a>
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#about">About</a>
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#contact">Contact</a>
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#resume">Resume</a>
+                <a class="no-underline" href="index.html#work">Work</a>
+                <a class="no-underline" href="about.html">About</a>
+                <a class="no-underline" href="contact.html">Contact</a>
+                <a class="no-underline" href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
             <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
-                <div class="footer-email transition-colors duration-300 hover:text-accent-yellow">hello@peppered.design</div>
-                <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                <a class="footer-email" href="mailto:hello@peppered.design">hello@peppered.design</a>
+                <a class="flex shrink-0 items-center leading-none" href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer">
                     <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
                 </a>
             </div>

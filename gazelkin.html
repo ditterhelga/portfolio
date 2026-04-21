@@ -644,7 +644,7 @@
         }
 
         .triag-cut {
-            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+            clip-path: polygon(0 0, 50% 10.416%, 100% 0, 100% 100%, 0 100%);
         }
 
         /* Lighter Inter for match CTA copy (thinner than body default) */
@@ -675,16 +675,24 @@
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-email {
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-contact img {
             display: block;
+        }
+
+        footer.site-footer .footer-inner nav a:hover,
+        footer.site-footer .footer-inner .footer-email:hover {
+            color: #FDE4DF;
+            opacity: 1;
         }
 
         .line-top {
@@ -804,10 +812,10 @@
             </div>
 
             <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
-                <a href="#work"    class="menulink">Work</a>
-                <a href="#about"   class="menulink">About</a>
-                <a href="#contact" class="menulink">Contact</a>
-                <a href="#resume"  class="menulink">Resume</a>
+                <a href="index.html#work"    class="menulink">Work</a>
+                <a href="about.html"   class="menulink">About</a>
+                <a href="contact.html" class="menulink">Contact</a>
+                <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="menulink" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
         </div>
 
@@ -839,7 +847,7 @@
         <!-- #hero: breadcrumbs, page title (h1), hero image or video placeholder -->
         <section id="hero" class="flex flex-col">
             <div class="gazelkin-breadcrumbs mb-6 md:mb-4 font-light text-5/8 flex flex-row flex-wrap items-center gap-x-2" aria-label="Breadcrumb">
-                <a class="no-underline hover:opacity-90" href="index.html#work">Work</a>
+                <a class="no-underline transition-colors duration-[250ms] ease-out hover:text-[#0016F2]" href="index.html#work">Work</a>
                 <span aria-hidden="true">/</span>
                 <span class="text-[#8A8A8A]">Gazelkin Logistics</span>
             </div>
@@ -1018,7 +1026,7 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">HOW I GOT IT DONE</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">HOW I GOT IT DONE</span></span>
             </button>
 
             <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1101,7 +1109,7 @@
                             <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </span>
-                    <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span>
+                    <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I approached research</span></span>
                 </button>
 
                 <div id="research-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1197,7 +1205,7 @@
                             <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                 <svg id="gzk-drv-meth-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
-                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Methodology</span>
+                            <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Methodology</span></span>
                         </button>
                         <div id="gzk-drv-meth-panel-wrap" data-open="0" class="mt-2 grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                             <div class="min-h-0 overflow-hidden">
@@ -1219,7 +1227,7 @@
                             <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                 <svg id="gzk-drv-det-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
-                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                            <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span></span>
                         </button>
                         <div id="gzk-drv-det-panel-wrap" data-open="0" class="mt-2 grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                             <div class="min-h-0 overflow-hidden">
@@ -1250,7 +1258,7 @@
                             <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                 <svg id="gzk-op-meth-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
-                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Methodology</span>
+                            <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Methodology</span></span>
                         </button>
                         <div id="gzk-op-meth-panel-wrap" data-open="0" class="mt-2 grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                             <div class="min-h-0 overflow-hidden">
@@ -1271,7 +1279,7 @@
                             <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                 <svg id="gzk-op-det-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
-                            <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span>
+                            <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed insights</span></span>
                         </button>
                         <div id="gzk-op-det-panel-wrap" data-open="0" class="mt-2 grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                             <div class="min-h-0 overflow-hidden">
@@ -1382,7 +1390,7 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed Design Decisions</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed Design Decisions</span></span>
             </button>
 
             <div id="road-decisions-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1429,7 +1437,7 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I&rsquo;d Add Today</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I&rsquo;d Add Today</span></span>
             </button>
 
             <div id="road-add-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1516,7 +1524,7 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed Design Decisions</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Detailed Design Decisions</span></span>
             </button>
 
             <div id="op-decisions-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1553,7 +1561,7 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I&rsquo;d Add Today</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">What I&rsquo;d Add Today</span></span>
             </button>
 
             <div id="op-add-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1644,7 +1652,7 @@
                 <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </span>
-        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span>
+        <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span></span>
     </button>
 
     <div id="res-drv-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1740,7 +1748,7 @@
                                 <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
-                        <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span>
+                        <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span></span>
                     </button>
 
                     <div id="res-op-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -1825,7 +1833,7 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See Full Impact</span></span>
             </button>
             <div id="biz-impact-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                 <div class="min-h-0 overflow-hidden">
@@ -1895,7 +1903,7 @@
                                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </span>
-                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">More reflections</span>
+                                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">More reflections</span></span>
                             </button>
 
                             <div id="reflections-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
@@ -2009,6 +2017,43 @@
         }
         .proj-nav-link-right::after { transform-origin: right; }
         .group:hover .proj-nav-link::after { transform: scaleX(1); }
+
+        /* Case accordion: +1px label nudge; pink underline on hover (no vertical jump) */
+        button.group > span:nth-child(2),
+        div.group.flex.items-center > span:nth-child(2) {
+            transform: translateY(1px);
+        }
+        .case-acc-label {
+            position: relative;
+            display: inline-block;
+        }
+        .case-acc-label::after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 2px;
+            width: 100%;
+            height: 3px;
+            z-index: 1;
+            background-color: #FDE4DF;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.35s ease;
+            pointer-events: none;
+        }
+        .group:hover .case-acc-label::after {
+            transform: scaleX(1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .case-acc-label::after {
+                transition: none;
+            }
+            .group:hover .case-acc-label::after {
+                transform: scaleX(1);
+            }
+        }
 
         #case-side-nav {
             position: fixed;
@@ -2181,7 +2226,7 @@
     </style>
     <div class="full-bleed bg-[#FFF2D7] h-[128px] flex items-center px-6 sm:px-8 md:px-10 xl:px-0 2xl:px-0">
         <div class="w-full max-w-[1280px] 2xl:max-w-[1440px] mx-auto flex items-center justify-between xl:px-6 2xl:px-0">
-            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+            <a href="billfold.html" class="flex items-center gap-x-[16px] no-underline group" aria-label="Previous project: Billfold POS">
                 <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 13L1 7L7 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-[#0007B2] transition-colors duration-300"/>
@@ -2189,7 +2234,7 @@
                 </span>
                 <span class="proj-nav-link font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Previous<span class="hidden min-[500px]:inline"> Project</span></span>
             </a>
-            <a href="#" class="flex items-center gap-x-[16px] no-underline group">
+            <a href="dreamkas.html" class="flex items-center gap-x-[16px] no-underline group" aria-label="Next project: Dreamkas POS">
                 <span class="proj-nav-link proj-nav-link-right font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">Next<span class="hidden min-[500px]:inline"> Project</span></span>
                 <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#0007B2] transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:scale-110">
                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2219,14 +2264,14 @@
                 2xl:px-0
                 ">
             <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#work">Work</a>
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#about">About</a>
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#contact">Contact</a>
-                <a class="no-underline hover:text-accent-yellow transition-colors duration-300" href="index.html#resume">Resume</a>
+                <a class="no-underline" href="index.html#work">Work</a>
+                <a class="no-underline" href="about.html">About</a>
+                <a class="no-underline" href="contact.html">Contact</a>
+                <a class="no-underline" href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
             <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
-                <div class="footer-email transition-colors duration-300 hover:text-accent-yellow">hello@peppered.design</div>
-                <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                <a class="footer-email" href="mailto:hello@peppered.design">hello@peppered.design</a>
+                <a class="flex shrink-0 items-center leading-none" href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer">
                     <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
                 </a>
             </div>

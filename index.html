@@ -416,6 +416,72 @@
                 }
             }
 
+            .about-portrait-frame {
+                position: relative;
+                overflow: hidden;
+                border-radius: 20px;
+                isolation: isolate;
+                flex-shrink: 0;
+                cursor: pointer;
+                @apply max-w-none
+                h-[152px] w-[152px]
+                -mt-40
+                md:-mt-52.75
+                md:h-[208px] md:w-[208px]
+                xl:h-[384px] xl:w-[384px]
+                xl:mt-0;
+            }
+
+            .about-portrait-stage {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                perspective: 880px;
+                perspective-origin: 50% 42%;
+            }
+
+            .about-portrait-tilt {
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transform: perspective(880px) rotateX(0deg) rotateY(0deg);
+                will-change: transform;
+            }
+
+            /* Slightly larger than frame so parallax/tilt stay inside the clip (square mask is only on the frame). */
+            .about-portrait-stack {
+                position: absolute;
+                inset: -9%;
+                width: auto;
+                height: auto;
+                transform-style: preserve-3d;
+            }
+
+            .about-portrait-layer {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: 50% 45%;
+                max-width: none;
+                pointer-events: none;
+                user-select: none;
+                -webkit-user-drag: none;
+                will-change: transform;
+            }
+
+            .about-portrait-back {
+                z-index: 1;
+                transform: scale(1.03);
+            }
+
+            .about-portrait-front {
+                z-index: 2;
+                transform: scale(1.03);
+            }
+
         }
 
         @keyframes rotate {
@@ -472,6 +538,224 @@
             tracking-wider;
         }
 
+        /* Section kickers: blob only — simple rotation on row hover */
+        .section-kicker {
+            width: fit-content;
+        }
+
+        .section-kicker-blob {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+        }
+
+        .section-kicker-blob img {
+            display: block;
+            width: 24px;
+            height: 24px;
+            transform-origin: center center;
+            transition: transform 1.45s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+
+        .section-kicker:hover .section-kicker-blob img {
+            transform: rotate(720deg);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .section-kicker-blob img {
+                transition: none;
+            }
+
+            .section-kicker:hover .section-kicker-blob img {
+                transform: none;
+            }
+        }
+
+        /* #work: only image / title / CTA are links */
+        #work a.work-case-card-link {
+            cursor: pointer;
+        }
+
+        /*
+         * Work card titles: fill is only inside glyphs (background-clip: text).
+         * Radial highlight uses background-attachment: fixed + --shine-px/--shine-py (viewport px) so
+         * the light tracks the cursor across the whole title. Base fill = linear gradient.
+         */
+        #work a.work-case-card-link:has(> h3.card-title) {
+            --shine-px: 50vw;
+            --shine-py: 50vh;
+        }
+
+        #work .work-card-surface h3.card-title.intro-scroll-reveal .word {
+            display: inline-block;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            background-image:
+                radial-gradient(
+                    circle clamp(76px, 15vw, 148px) at var(--shine-px) var(--shine-py),
+                    rgba(255, 255, 255, 0.48) 0%,
+                    rgba(200, 206, 245, 0.32) 34%,
+                    rgba(136, 145, 214, 0) 65%
+                ),
+                linear-gradient(158deg, #3b47c2 0%, #363b8a 42%, #302f2f 92%);
+            background-repeat: no-repeat;
+            background-attachment: fixed, scroll;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #work .work-card-surface h3.card-title.intro-scroll-reveal .word {
+                background: none;
+                background-clip: border-box;
+                -webkit-background-clip: border-box;
+                color: inherit;
+                -webkit-text-fill-color: inherit;
+            }
+        }
+        #cards-beyond a.beyond-card-cta-link {
+            cursor: pointer;
+        }
+
+        /* Row layout: image link must not stay w-full at sm+ (would collapse the text column) */
+        @media (min-width: 640px) {
+            #work .card-content.group > .card-description {
+                min-width: 0;
+                flex: 1 1 auto;
+            }
+        }
+
+        /* Work + Beyond Work CTAs: yellow circle → pink pill; white chevron → arrow-hover.svg */
+        #work .card-content.group .work-card-cta .card-detail-text,
+        #cards-beyond .card-beyond.group .work-card-cta .card-detail-text {
+            transform: translateY(1px);
+        }
+        #work .work-card-cta,
+        #cards-beyond .work-card-cta {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 1rem;
+            width: fit-content;
+            max-width: 100%;
+            padding-right: 0;
+            box-sizing: border-box;
+            transition: padding-right 0.4s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+        #work .work-card-cta::before,
+        #cards-beyond .work-card-cta::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 48px;
+            height: 48px;
+            margin-top: -24px;
+            border-radius: 9999px;
+            background-color: var(--color-accent-yellow);
+            z-index: 0;
+            pointer-events: none;
+            transition:
+                width 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                height 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                margin-top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                background-color 0.35s ease;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta {
+            padding-right: 32px;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta::before,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta::before,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta::before,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta::before {
+            top: 0;
+            margin-top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-pink-badge);
+        }
+        #work .work-card-cta-icon,
+        #work .work-card-cta .card-detail-text,
+        #cards-beyond .work-card-cta-icon,
+        #cards-beyond .work-card-cta .card-detail-text {
+            position: relative;
+            z-index: 1;
+        }
+        #work .work-card-cta-icon,
+        #cards-beyond .work-card-cta-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+        #work .work-card-cta-chevron,
+        #work .work-card-cta-arrow,
+        #cards-beyond .work-card-cta-chevron,
+        #cards-beyond .work-card-cta-arrow {
+            transition: opacity 0.3s ease;
+        }
+        #work .work-card-cta-chevron,
+        #cards-beyond .work-card-cta-chevron {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            display: block;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            overflow: visible;
+        }
+        #work .work-card-cta-arrow,
+        #cards-beyond .work-card-cta-arrow {
+            position: absolute;
+            left: 23px;
+            top: 17px;
+            width: 18px;
+            height: 14px;
+            max-width: none;
+            object-fit: contain;
+            object-position: left top;
+            display: block;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta-chevron,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta-chevron,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-chevron,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-chevron {
+            opacity: 0;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta-arrow,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta-arrow,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-arrow,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-arrow {
+            opacity: 1;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #work .work-card-cta::before,
+            #work .work-card-cta,
+            #work .work-card-cta-chevron,
+            #work .work-card-cta-arrow,
+            #cards-beyond .work-card-cta::before,
+            #cards-beyond .work-card-cta,
+            #cards-beyond .work-card-cta-chevron,
+            #cards-beyond .work-card-cta-arrow {
+                transition: none;
+            }
+        }
+
         .card-wrapper {
             @apply xs:max-xl:full-bleed xl:rounded-[20px] bg-white;
         }
@@ -485,6 +769,21 @@
         /* Match page grey so scaled cards don’t sit on a white “slot” (Tailwind bg-white on .card-wrapper) */
         #work {
             background-color: #f3f6f9;
+        }
+
+        .intro-scroll-reveal .word {
+            display: inline-block;
+            color: #e5e5e5;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro-scroll-reveal {
+                color: var(--color-text-primary);
+            }
+
+            #work .work-card-surface h3.card-title.intro-scroll-reveal {
+                color: var(--color-primary-dark);
+            }
         }
 
         /* Pull Beyond block up by half the main column gap (gap-y-18 / md:24 / xl:26) */
@@ -600,12 +899,57 @@
             2xl:max-w-full 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px] 2xl:gap-y-14;
         }
 
-        .card-image {
-            @apply rounded-[20px] w-full object-cover
+        /* Clip shell; image inside is taller and translates on scroll (Sequel-style pan) */
+        .card-image-frame {
+            @apply rounded-[20px] w-full
             aspect-[1.25]
             md:aspect-[0.84] md:max-w-[322px]
             xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0
             2xl:h-[488px] 2xl:w-[576px] 2xl:max-w-[576px];
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Slight vertical slack only; img fills track 1:1 like the old in-flow card-image */
+        .card-image-parallax-track {
+            position: absolute;
+            left: 0;
+            top: -9%;
+            width: 100%;
+            height: 118%;
+            will-change: transform;
+        }
+
+        .card-image-frame .card-image {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-image-parallax-track {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                height: 100%;
+                will-change: auto;
+            }
+
+            .card-image-frame .card-image {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                height: 100%;
+                max-width: none;
+            }
         }
 
 
@@ -624,10 +968,27 @@
                     w-full
                     h-[380px]
                     shrink-0;
+                    position: relative;
 
-                    & > img {
-                        @apply w-full h-full
-                        object-cover object-center
+                    & > .image-parallax-track {
+                        position: absolute;
+                        left: 0;
+                        top: -9%;
+                        width: 100%;
+                        height: 118%;
+                        will-change: transform;
+                    }
+
+                    & > .image-parallax-track > img {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        max-width: none;
+                        object-fit: cover;
+                        object-position: center;
+                        display: block;
                     }
                 }
 
@@ -639,26 +1000,260 @@
                     font-family: 'Inter', sans-serif;
                     font-size: 20px;
                     line-height: 32px;
-                    font-weight: 400;
+                    font-weight: 300;
                 }
 
                 & .card-detail {
                     margin-top: 0;
                 }
             }
+
+            @media (prefers-reduced-motion: reduce) {
+                & > .card-beyond > .image-wrapper > .image-parallax-track {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    width: 100%;
+                    height: 100%;
+                    will-change: auto;
+                }
+
+                & > .card-beyond > .image-wrapper > .image-parallax-track > img {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    width: 100%;
+                    height: 100%;
+                    max-width: none;
+                }
+            }
         }
 
+        /* Chevron matches Figma footer (1680×739): dip y = 76.9792 / 739 ≈ 10.416% */
         .triag-cut {
-            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+            clip-path: polygon(0 0, 50% 10.416%, 100% 0, 100% 100%, 0 100%);
         }
 
-        /* Lighter Inter for match CTA copy (thinner than body default) */
+        /* Figma node 2176:3827 — full-bleed SVG stack + masked strokes */
+        #match {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            min-height: clamp(420px, 52vw, 739px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #match .match-figma-stack {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        #match .match-figma-stack--lines {
+            z-index: 1;
+        }
+
+        @media (max-width: 767px) {
+            #match .match-figma-stack--lines {
+                display: none;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            #match .match-figma-stack--lines {
+                transform: scale(0.9);
+                transform-origin: center center;
+            }
+        }
+
+        #match .match-inner {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1108px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 48px;
+            padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            #match .match-inner {
+                padding-inline: clamp(1.75rem, 11vw, 5.5rem);
+            }
+        }
+
+        #match .match-xl-body {
+            width: 100%;
+            max-width: min(100%, 640px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 900px) {
+            #match .match-xl-body {
+                max-width: min(100%, 720px);
+            }
+        }
+
         #match .match-xl-body p {
             font-family: 'Inter', sans-serif;
             font-size: 20px;
             line-height: 32px;
             font-weight: 300;
             letter-spacing: 0;
+        }
+
+        #match .match-xl-body a {
+            font-weight: 300;
+        }
+
+        #match .match-heading {
+            font-family: var(--font-family-sofia);
+            font-weight: 500;
+            font-size: clamp(2.75rem, 9vw, 6.375rem);
+            line-height: 1.02;
+            letter-spacing: -2px;
+        }
+
+        /* Match CTA — pill + icon like work cards; padding-right always 32px so centered flex doesn’t re-shift on hover */
+        #match .match-cta {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 1rem;
+            width: fit-content;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-right: 32px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        #match .match-cta::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 48px;
+            height: 48px;
+            margin-top: -24px;
+            border-radius: 9999px;
+            background-color: var(--color-accent-yellow);
+            z-index: 0;
+            pointer-events: none;
+            transition:
+                width 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                height 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                margin-top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                background-color 0.35s ease;
+        }
+
+        #match .match-cta:hover::before,
+        #match .match-cta:focus-visible::before {
+            top: 0;
+            margin-top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-pink-badge);
+        }
+
+        #match .match-cta-icon {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        #match .match-cta-circle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            width: 48px;
+            height: 48px;
+            display: block;
+        }
+
+        #match .match-cta-send {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 23px;
+            height: 23px;
+            max-width: none;
+            object-fit: contain;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #match .match-cta:hover .match-cta-circle,
+        #match .match-cta:focus-visible .match-cta-circle {
+            opacity: 0;
+        }
+
+        #match .match-cta:hover .match-cta-send,
+        #match .match-cta:focus-visible .match-cta-send {
+            opacity: 1;
+        }
+
+        #match .match-cta-label {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-family-sofia);
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            transform: translateY(1px);
+            transition: color 0.35s ease;
+        }
+
+        #match .match-cta:hover .match-cta-label,
+        #match .match-cta:focus-visible .match-cta-label {
+            color: var(--color-primary-light);
+        }
+
+        #match .match-cta:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #match .match-cta::before,
+            #match .match-cta-circle,
+            #match .match-cta-send,
+            #match .match-cta-label {
+                transition: none;
+            }
         }
 
         footer.site-footer .footer-inner a,
@@ -680,16 +1275,24 @@
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-email {
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-contact img {
             display: block;
+        }
+
+        footer.site-footer .footer-inner nav a:hover,
+        footer.site-footer .footer-inner .footer-email:hover {
+            color: #FDE4DF;
+            opacity: 1;
         }
 
         .line-top {
@@ -731,6 +1334,32 @@
             display: none;
             top: 0;
             left: 0;
+        }
+
+        /* Slight zoom of photo on hover (img only — parallax stays on .card-image-parallax-track). */
+        @media (hover: hover) and (pointer: fine) {
+            #work .card-image-frame .card-image,
+            #cards-beyond .image-wrapper > .image-parallax-track > img {
+                transform-origin: center center;
+                transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            #work .card-image-frame:hover .card-image,
+            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+                transform: scale(1.06);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #work .card-image-frame .card-image,
+            #cards-beyond .image-wrapper > .image-parallax-track > img {
+                transition: none;
+            }
+
+            #work .card-image-frame:hover .card-image,
+            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+                transform: none;
+            }
         }
 
         #hero .hero-mask {
@@ -810,9 +1439,9 @@
 
             <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
                 <a href="#work"    class="menulink">Work</a>
-                <a href="#about"   class="menulink">About</a>
-                <a href="#contact" class="menulink">Contact</a>
-                <a href="#resume"  class="menulink">Resume</a>
+                <a href="about.html"   class="menulink">About</a>
+                <a href="contact.html" class="menulink">Contact</a>
+                <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="menulink" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
         </div>
 
@@ -866,16 +1495,16 @@
     <section id="about">
 
         <div class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
-            <h1 class="section-header">I create systems people want to use, not just tolerate.</h1>
+            <h1 id="about-systems-lede" class="section-header intro-scroll-reveal">I create systems people want to use, not just tolerate.</h1>
 
-            <div class="flex flex-col text-5/8 gap-y-2">
-                <p>I’m Olga, a Product Designer based in Amsterdam.</p>
-                <p>Over the past decade, I’ve turned complex, frustrating systems into intuitive products
+            <div class="flex flex-col gap-y-2">
+                <p class="card-text">I’m Olga, a Product Designer based in Amsterdam.</p>
+                <p class="card-text">Over the past decade, I’ve turned complex, frustrating systems into intuitive products
                     that people enjoy using — bringing calm to busy environments and helping them work with
                     confidence.</p>
             </div>
 
-            <button class="button-about">
+            <a href="about.html" class="button-about no-underline text-inherit" aria-label="About me">
                 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500">
                     <title>Circular Text Path</title>
                     <defs>
@@ -909,19 +1538,29 @@
                     </g>
                     <path class="arrow-icon" d="M225 275 L270 230 L235 230 M270 265 L270 230"  fill="none" stroke-linecap="square" stroke-linejoin="bevel"/>
                 </svg>
-            </button>
+            </a>
         </div>
 
-        <div>
-            <img src="assets/images/me-pepper.webp"
-                 alt="Olga Pertseva"
-                 class="max-w-none
-                        h-[152px] w-[152px]
-                        -mt-40
-                        md:-mt-52.75
-                        md:h-[208px] md:w-[208px]
-                        xl:h-[384px] xl:w-[384px]
-                        xl:mt-0"/>
+        <div class="about-portrait-frame">
+            <div class="about-portrait-stage">
+                <div class="about-portrait-tilt">
+                    <div class="about-portrait-stack">
+                        <img class="about-portrait-layer about-portrait-back"
+                             src="assets/images/me-pepper-back.png"
+                             alt=""
+                             width="384"
+                             height="384"
+                             decoding="async"
+                             aria-hidden="true"/>
+                        <img class="about-portrait-layer about-portrait-front"
+                             src="assets/images/me-pepper-front.png"
+                             alt="Olga Pertseva"
+                             width="384"
+                             height="384"
+                             decoding="async"/>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -929,16 +1568,18 @@
     <section id="work" class="flex flex-col gap-y-12 xl:gap-y-16">
 
         <div class="flex flex-col gap-y-6 xl:gap-y-12">
-            <div class="text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
-                <img src="assets/images/blob-shape.svg" alt="⬟"/>
+            <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
+                <span class="section-kicker-blob" aria-hidden="true">
+                    <img src="assets/images/blob-shape.svg" alt="" width="24" height="24" decoding="async"/>
+                </span>
                 <span>My work</span>
             </div>
 
             <div class="flex flex-col gap-y-6 xl:gap-y-12">
-                <h1 class="section-header">
+                <h1 id="work-pos-lede" class="section-header intro-scroll-reveal">
                     From POS systems and e-commerce platforms to logistics dashboards and enterprise tools, I design for high-stakes environments where complexity meets real people.
                 </h1>
-                <p>
+                <p class="card-text">
                     I’ve built products that improved training speeds by 40%, reduced operational errors by over 70%, and increased sales by double digits. I’m proud that many are still in use years later, quietly making everyday work simpler for teams around the world.
                 </p>
             </div>
@@ -953,20 +1594,35 @@
                         <span class="badge">Restaurant training and operations</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/subway-main.png" alt="Subway Project" loading="lazy"/>
+                    <div class="group card-content">
+                        <a href="subway.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Subway case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/subway-main.png" alt="Subway Project" loading="lazy"/>
+                                </div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Subway</h3>
+                            <a href="subway.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Subway</h3>
+                            </a>
 
                             <div class="card-paragraph">
                                 <p class="card-text">Led the design of two platforms that simplify employee learning and support franchisees from launch to growth.</p>
                                 <p class="card-text"><b>Impact:</b> 40% faster employee onboarding • 60% higher certification completion • 30% faster store launches • significant reduction in franchisee support calls.</p>
                             </div>
 
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="subway.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
 
                         </div>
                     </div>
@@ -984,20 +1640,35 @@
                         <span class="badge">RFID Payments For Live Events</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/billfold-main.png" alt="Billfold POS Project" loading="lazy">
+                    <div class="group card-content">
+                        <a href="billfold.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Billfold POS case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/billfold-main.png" alt="Billfold POS Project" loading="lazy">
+                                </div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Billfold POS</h3>
+                            <a href="billfold.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Billfold POS</h3>
+                            </a>
 
                             <div class="card-paragraph">
                                 <p class="card-text">Designed a complete POS ecosystem that keeps lines moving and revenue flowing when every second counts.</p>
                                 <p class="card-text"><b>Impact:</b> +30-50% higher sales at major events • up to 60% higher sales per person • 23% more transactions • now deployed worldwide.</p>
                             </div>
 
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="billfold.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     </div>
@@ -1006,7 +1677,6 @@
             </div>
 
             <div class="card-wrapper">
-                <a href="gazelkin.html" class="block h-full no-underline text-inherit">
                 <div class="card">
                     <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
@@ -1014,28 +1684,41 @@
                         <span class="badge">Logistics & Customer Operations</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/gazelkin-main.png" alt="Gazelkin Project" loading="lazy">
+                    <div class="group card-content">
+                        <a href="gazelkin.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Gazelkin case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/gazelkin-main.png" alt="Gazelkin Project" loading="lazy">
+                                </div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Gazelkin</h3>
+                            <a href="gazelkin.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Gazelkin</h3>
+                            </a>
                             <div class="card-paragraph">
                                 <p class="card-text">Built a multi-product logistics ecosystem including driver and customer apps, plus end-to-end tools for dispatchers and operators.</p>
                                 <p class="card-text"><b>Impact:</b> 45% fewer dispatcher calls • 92% driver app adoption in 3 weeks • 65% fewer customer callbacks • 40% faster order processing.</p>
                             </div>
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="gazelkin.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     </div>
 
                 </div>
-                </a>
             </div>
 
             <div class="card-wrapper">
-                <a href="dreamkas.html" class="block h-full no-underline text-inherit">
                 <div class="card">
                     <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
@@ -1044,24 +1727,38 @@
                         <span class="badge">High-volume Retail Systems</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/dreamkas-main.png" alt="Dreamkas Project" loading="lazy">
+                    <div class="group card-content">
+                        <a href="dreamkas.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Dreamkas POS case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/dreamkas-main.png" alt="Dreamkas Project" loading="lazy">
+                                </div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Dreamkas POS</h3>
+                            <a href="dreamkas.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Dreamkas POS</h3>
+                            </a>
 
                             <div class="card-paragraph">
                                 <p class="card-text">Led the design of POS systems powering high-volume retail across major supermarket chains.</p>
                                 <p class="card-text"><b>Impact:</b> 25% faster checkout speed • 40% fewer user errors •  60% less cashier training time • deployed across major national retailers including Lenta, SPAR, OBI.</p>
                             </div>
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="dreamkas.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     </div>
                 </div>
-                </a>
             </div>
         </div>
 
@@ -1085,25 +1782,29 @@
                         2xl:px-[80px]">
 
             <div class="flex flex-col gap-y-6">
-                <div class="text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
-                    <img src="assets/images/blob-shape.svg" alt="⬟"/>
+                <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
+                    <span class="section-kicker-blob" aria-hidden="true">
+                        <img src="assets/images/blob-shape.svg" alt="" width="24" height="24" decoding="async"/>
+                    </span>
                     <span>Beyond Work</span>
                 </div>
 
-                <h1 class="section-header">
+                <h1 id="beyond-life-lede" class="section-header intro-scroll-reveal">
                     Design is a huge part of my life, but outside of it, I’m constantly making, exploring, and experimenting.
                 </h1>
 
-                <p>
+                <p class="card-text">
                     Here’s a peek at the other things that make me, me.
                 </p>
             </div>
 
             <div id="cards-beyond">
 
-                <div class="card-beyond">
+                <div class="group card-beyond">
                     <div class="image-wrapper 2xl:h-[468px]">
-                        <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        </div>
                     </div>
 
                     <div class="card-description">
@@ -1111,18 +1812,27 @@
                             <span class="badge">My Other Medium</span>
                         </div>
 
-                        <p class="">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
+                        <p class="card-text">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
 
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Explore my art</span>
-                        </div>
+                        <a href="about.html" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
+                            </span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="card-beyond">
+                <div class="group card-beyond">
                     <div class="image-wrapper 2xl:h-[468px]">
-                        <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        </div>
                     </div>
                     <div class="card-description">
                         <div class="card-badges">
@@ -1133,16 +1843,25 @@
                             At one point, I came close to launching my own eco-friendly kitchenware brand. UX research saved me a business headache, revealing why the market wasn’t the right fit.
                         </p>
 
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Story coming soon</span>
-                        </div>
+                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Story coming soon</span></span>
+                            </span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="card-beyond">
+                <div class="group card-beyond">
                     <div class="image-wrapper 2xl:h-[468px]">
-                        <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        </div>
                     </div>
 
                     <div class="card-description">
@@ -1150,18 +1869,27 @@
                             <span class="badge">My Other Medium</span>
                         </div>
 
-                        <p class="">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
+                        <p class="card-text">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
 
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Explore my art</span>
-                        </div>
+                        <a href="about.html" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
+                            </span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="card-beyond">
+                <div class="group card-beyond">
                     <div class="image-wrapper 2xl:h-[468px]">
-                        <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        </div>
                     </div>
                     <div class="card-description">
                         <div class="card-badges">
@@ -1172,10 +1900,17 @@
                             At one point, I came close to launching my own eco-friendly kitchenware brand. UX research saved me a business headache, revealing why the market wasn’t the right fit.
                         </p>
 
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Story coming soon</span>
-                        </div>
+                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Story coming soon</span></span>
+                            </span>
+                        </a>
                     </div>
                 </div>
 
@@ -1184,40 +1919,52 @@
         </section>
 
         <section id="match"
-                 class="flex
-                        flex-col
-                        bg-primary-light
-                        gap-y-12
-                        items-center
-                        px-4 pt-36 pb-28
-                        text-center
-                        text-white
-                        triag-cut
-                        md:min-w-[552px]">
-            <h1 class="font-family-sofia font-normal text-7xl/[4.5rem] tracking-[-2px]">
-                Is it a match?
-            </h1>
+                 class="bg-primary-light
+                        px-4 py-24 text-center text-white triag-cut
+                        md:py-28 lg:py-32">
+            <img class="match-figma-stack"
+                 src="assets/images/match-figma-background.svg"
+                 alt=""
+                 aria-hidden="true"
+                 decoding="async"/>
+            <img class="match-figma-stack match-figma-stack--lines"
+                 src="assets/images/match-figma-mask.svg"
+                 alt=""
+                 aria-hidden="true"
+                 decoding="async"/>
 
-            <div class="match-xl-body flex flex-col gap-y-4 sm:hidden">
-                <p>
-                    Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
-                </p>
-                <p>
-                    Send me a message or email at: hello@peppered.design
-                </p>
-            </div>
-            <div class="match-xl-body hidden sm:flex sm:flex-col sm:gap-y-8 md:max-w-[522px] lg:max-w-[744px]">
-                <p>
-                    If you’re looking for a designer who can turn ambiguity into structure, ideas into flows, and research into intuitive product experiences, let’s talk.
-                </p>
-                <p>
-                    Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
-                </p>
-            </div>
+            <div class="match-inner">
+                <h1 class="match-heading w-full text-center">
+                    Is it a match?
+                </h1>
 
-            <div class="card-detail">
-                <img src="assets/images/more-shape.svg" alt="->"/>
-                <span class="!text-white">Send me a message</span>
+                <div class="match-xl-body flex flex-col gap-y-4 text-center sm:hidden">
+                    <p>
+                        Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
+                    </p>
+                    <p>
+                        Send me a message or email at: <a href="mailto:hello@peppered.design" class="text-inherit font-light no-underline hover:underline">hello@peppered.design</a>
+                    </p>
+                </div>
+                <div class="match-xl-body hidden sm:flex sm:flex-col sm:gap-y-8 sm:text-center w-full">
+                    <p>
+                        If you’re looking for a designer who can turn ambiguity into structure, ideas into flows, and research into intuitive product experiences, let’s talk.
+                    </p>
+                    <p>
+                        Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
+                    </p>
+                    <p>
+                        Send me a message or email me directly at: <a href="mailto:hello@peppered.design" class="text-inherit font-light no-underline hover:underline">hello@peppered.design</a>
+                    </p>
+                </div>
+
+                <a href="contact.html" class="match-cta no-underline">
+                    <span class="match-cta-icon" aria-hidden="true">
+                        <img class="match-cta-circle" src="assets/images/match-figma-cta-circle.svg" alt="" decoding="async"/>
+                        <img class="match-cta-send" src="assets/images/send-icon.svg" alt="" decoding="async"/>
+                    </span>
+                    <span class="match-cta-label">Send me a message</span>
+                </a>
             </div>
         </section>
 
@@ -1241,14 +1988,14 @@
                         2xl:px-[80px]
                         ">
                 <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
-                    <a class="no-underline hover:opacity-90" href="#work">Work</a>
-                    <a class="no-underline hover:opacity-90" href="#about">About</a>
-                    <a class="no-underline hover:opacity-90" href="#contact">Contact</a>
-                    <a class="no-underline hover:opacity-90" href="#resume">Resume</a>
+                    <a class="no-underline" href="#work">Work</a>
+                    <a class="no-underline" href="about.html">About</a>
+                    <a class="no-underline" href="contact.html">Contact</a>
+                    <a class="no-underline" href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
                 </nav>
                 <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
-                    <div class="footer-email">hello@peppered.design</div>
-                    <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                    <a class="footer-email" href="mailto:hello@peppered.design">hello@peppered.design</a>
+                    <a class="flex shrink-0 items-center leading-none" href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer">
                         <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
                     </a>
                 </div>
@@ -1326,6 +2073,68 @@
         });
         // End Burger setup
 
+        // About portrait: face / hand parallax + subtle 3D tilt toward cursor
+        const portraitFrame = document.querySelector(".about-portrait-frame");
+        const portraitTilt = portraitFrame?.querySelector(".about-portrait-tilt");
+        const portraitBack = portraitFrame?.querySelector(".about-portrait-back");
+        const portraitFront = portraitFrame?.querySelector(".about-portrait-front");
+        const portraitMotionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const portraitPointerFine = window.matchMedia("(pointer: fine)").matches;
+
+        if (portraitFrame && portraitTilt && portraitBack && portraitFront && portraitMotionOk && portraitPointerFine) {
+            const easeOut = "cubic-bezier(0.22, 1, 0.36, 1)";
+            const tiltMaxY = 4;
+            const tiltMaxX = 3;
+            const parallaxBack = 2.5;
+            const parallaxFront = 3.5;
+            const layerScale = 1.03;
+
+            function clamp(n, lo, hi) {
+                return Math.min(hi, Math.max(lo, n));
+            }
+
+            function clearPortraitTransitions() {
+                portraitTilt.style.transition = "";
+                portraitBack.style.transition = "";
+                portraitFront.style.transition = "";
+            }
+
+            function setPortraitPose(nx, ny) {
+                const rx = -ny * tiltMaxX;
+                const ry = nx * tiltMaxY;
+                portraitTilt.style.transform = `perspective(880px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+                portraitBack.style.transform =
+                    `translate3d(${nx * -parallaxBack}px, ${ny * -parallaxBack * 0.9}px, 0) scale(${layerScale})`;
+                portraitFront.style.transform =
+                    `translate3d(${nx * parallaxFront}px, ${ny * parallaxFront * 0.9}px, 0) scale(${layerScale})`;
+            }
+
+            function resetPortraitPose() {
+                portraitTilt.style.transition = `transform 0.5s ${easeOut}`;
+                portraitBack.style.transition = `transform 0.5s ${easeOut}`;
+                portraitFront.style.transition = `transform 0.5s ${easeOut}`;
+                portraitTilt.style.transform = "perspective(880px) rotateX(0deg) rotateY(0deg)";
+                portraitBack.style.transform = `translate3d(0, 0, 0) scale(${layerScale})`;
+                portraitFront.style.transform = `translate3d(0, 0, 0) scale(${layerScale})`;
+                const onEnd = (e) => {
+                    if (e.propertyName !== "transform") return;
+                    portraitTilt.removeEventListener("transitionend", onEnd);
+                    clearPortraitTransitions();
+                };
+                portraitTilt.addEventListener("transitionend", onEnd);
+            }
+
+            portraitFrame.addEventListener("mousemove", (e) => {
+                const rect = portraitFrame.getBoundingClientRect();
+                const nx = clamp(((e.clientX - rect.left) / rect.width) * 2 - 1, -1, 1);
+                const ny = clamp(((e.clientY - rect.top) / rect.height) * 2 - 1, -1, 1);
+                clearPortraitTransitions();
+                setPortraitPose(nx, ny);
+            });
+
+            portraitFrame.addEventListener("mouseleave", resetPortraitPose);
+        }
+
         // Hide logo on mobile when scrolling
         // let lastScrollTop = 0;
         // const logo = document.querySelector('#logo');
@@ -1352,8 +2161,201 @@
         //     }
         // });
 
-        // Work section: sticky stack, fade + scale (desktop only; demo pattern)
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /** Scroll-scrubbed vertical pan on card images (animates the track; img stays 100% cover inside). */
+        function setupCardImageParallax() {
+            if (reducedMotion) return;
+
+            const tracks = gsap.utils.toArray(
+                "#work .card-image-parallax-track, #cards-beyond .image-wrapper > .image-parallax-track"
+            );
+
+            tracks.forEach((track) => {
+                const trigger = track.closest(".card-image-frame") || track.closest(".image-wrapper");
+                if (!trigger) return;
+
+                const h = trigger.clientHeight || trigger.getBoundingClientRect().height;
+                if (!h) return;
+
+                /* ~±7.5% of frame height; track is 118% / -9% so ~9% slack each side avoids gaps */
+                const range = Math.max(22, Math.round(h * 0.075));
+
+                gsap.fromTo(
+                    track,
+                    { y: -range, force3D: true },
+                    {
+                        y: range,
+                        ease: "none",
+                        force3D: true,
+                        scrollTrigger: {
+                            trigger,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: 0.45,
+                            invalidateOnRefresh: true,
+                        },
+                    }
+                );
+            });
+        }
+
+        function introScrollRevealViewportBand() {
+            const h = window.innerHeight;
+            if (window.matchMedia("(max-width: 479px)").matches) {
+                return { startY: h * 0.96, endY: h * 0.26 };
+            }
+            if (window.matchMedia("(max-width: 767px)").matches) {
+                return { startY: h * 0.94, endY: h * 0.28 };
+            }
+            if (window.matchMedia("(max-width: 991px)").matches) {
+                return { startY: h * 0.92, endY: h * 0.26 };
+            }
+            return { startY: h * 0.9, endY: h * 0.22 };
+        }
+
+        const introScrollRevealTickers = [];
+
+        function setupIntroScrollReveal(el) {
+            if (!el || reducedMotion) return;
+            const endColor = getComputedStyle(el).color || "#302f2f";
+            const raw = el.textContent.trim().replace(/\s+/g, " ");
+            const escapeHtml = (s) =>
+                s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            el.innerHTML = raw
+                .split(" ")
+                .map((w) => `<span class="word">${escapeHtml(w)}</span>`)
+                .join(" ");
+            const words = gsap.utils.toArray(el.querySelectorAll(".word"));
+
+            gsap.set(words, { color: "#e5e5e5" });
+            const tl = gsap.timeline({ paused: true });
+            tl.to(words, {
+                color: endColor,
+                ease: "power3.inOut",
+                stagger: 0.65,
+                duration: 11,
+            });
+
+            function tick() {
+                const { startY, endY } = introScrollRevealViewportBand();
+                const rect = el.getBoundingClientRect();
+                const anchorY = rect.top + Math.min(rect.height * 0.15, 28);
+                const span = startY - endY;
+                let p = span === 0 ? 1 : (startY - anchorY) / span;
+                p = Math.max(0, Math.min(1, p));
+                tl.progress(p);
+            }
+
+            introScrollRevealTickers.push(tick);
+        }
+
+        function setupWorkCardTitleScrollReveal(el) {
+            if (!el || reducedMotion) return;
+            const raw = el.textContent.trim().replace(/\s+/g, " ");
+            const escapeHtml = (s) =>
+                s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            el.innerHTML = raw
+                .split(" ")
+                .map((w) => `<span class="word">${escapeHtml(w)}</span>`)
+                .join(" ");
+            const words = gsap.utils.toArray(el.querySelectorAll(".word"));
+
+            gsap.set(words, { opacity: 0.14 });
+            const tl = gsap.timeline({ paused: true });
+            tl.to(words, {
+                opacity: 1,
+                ease: "power3.inOut",
+                stagger: 0.65,
+                duration: 11,
+            });
+
+            function tick() {
+                const { startY, endY } = introScrollRevealViewportBand();
+                const rect = el.getBoundingClientRect();
+                const anchorY = rect.top + Math.min(rect.height * 0.15, 28);
+                const span = startY - endY;
+                let p = span === 0 ? 1 : (startY - anchorY) / span;
+                p = Math.max(0, Math.min(1, p));
+                tl.progress(p);
+            }
+
+            introScrollRevealTickers.push(tick);
+        }
+
+        function setupWorkTitleClipShine() {
+            if (reducedMotion) return;
+            const links = document.querySelectorAll("#work a.work-case-card-link:has(> h3.card-title)");
+            if (!links.length) return;
+
+            function setShineFromClient(link, clientX, clientY) {
+                link.style.setProperty("--shine-px", `${clientX}px`);
+                link.style.setProperty("--shine-py", `${clientY}px`);
+            }
+
+            function centerShine(link) {
+                const r = link.getBoundingClientRect();
+                setShineFromClient(link, r.left + r.width / 2, r.top + r.height / 2);
+            }
+
+            links.forEach((link) => {
+                centerShine(link);
+
+                let rafId = 0;
+                let pendingX = 0;
+                let pendingY = 0;
+
+                link.addEventListener("pointermove", (e) => {
+                    pendingX = e.clientX;
+                    pendingY = e.clientY;
+                    if (rafId) return;
+                    rafId = window.requestAnimationFrame(() => {
+                        setShineFromClient(link, pendingX, pendingY);
+                        rafId = 0;
+                    });
+                });
+
+                link.addEventListener("pointerleave", () => {
+                    if (rafId) {
+                        window.cancelAnimationFrame(rafId);
+                        rafId = 0;
+                    }
+                    centerShine(link);
+                });
+
+                link.addEventListener("focusin", () => centerShine(link));
+            });
+
+            function recenterIdleShines() {
+                links.forEach((link) => {
+                    if (link.matches(":hover")) return;
+                    centerShine(link);
+                });
+            }
+
+            window.addEventListener("scroll", recenterIdleShines, { passive: true });
+            window.addEventListener("resize", recenterIdleShines, { passive: true });
+        }
+
+        setupIntroScrollReveal(document.getElementById("about-systems-lede"));
+        setupIntroScrollReveal(document.getElementById("work-pos-lede"));
+        setupIntroScrollReveal(document.getElementById("beyond-life-lede"));
+        document.querySelectorAll("#work .work-card-surface h3.card-title.intro-scroll-reveal").forEach((el) => {
+            setupWorkCardTitleScrollReveal(el);
+        });
+
+        if (introScrollRevealTickers.length) {
+            function tickAllIntroScrollReveals() {
+                introScrollRevealTickers.forEach((fn) => fn());
+            }
+            gsap.ticker.add(tickAllIntroScrollReveals);
+            window.addEventListener("resize", tickAllIntroScrollReveals, { passive: true });
+            tickAllIntroScrollReveals();
+        }
+
+        setupWorkTitleClipShine();
+
+        // Work section: sticky stack, fade + scale (desktop only; demo pattern)
         if (!reducedMotion) {
             ScrollTrigger.matchMedia({
                 "(min-width: 1280px)": function () {
@@ -1403,6 +2405,7 @@
         }
 
         window.addEventListener("load", () => {
+            setupCardImageParallax();
             ScrollTrigger.refresh();
         });
 

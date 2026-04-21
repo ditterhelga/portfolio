@@ -252,16 +252,24 @@
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-email {
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-contact img {
             display: block;
+        }
+
+        footer.site-footer .footer-inner nav a:hover,
+        footer.site-footer .footer-inner .footer-email:hover {
+            color: #FDE4DF;
+            opacity: 1;
         }
 
     </style>
@@ -281,9 +289,9 @@
 
             <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
                 <a href="index.html#work"   class="menulink">Work</a>
-                <a href="index.html#about"  class="menulink">About</a>
+                <a href="about.html"  class="menulink">About</a>
                 <a href="contact.html"      class="menulink">Contact</a>
-                <a href="index.html#resume" class="menulink">Resume</a>
+                <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="menulink" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
         </div>
 
@@ -377,14 +385,14 @@
                         xl:px-12
                         2xl:px-[80px]">
                 <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
-                    <a class="no-underline hover:opacity-90" href="index.html#work">Work</a>
-                    <a class="no-underline hover:opacity-90" href="index.html#about">About</a>
-                    <a class="no-underline hover:opacity-90" href="contact.html">Contact</a>
-                    <a class="no-underline hover:opacity-90" href="index.html#resume">Resume</a>
+                    <a class="no-underline" href="index.html#work">Work</a>
+                    <a class="no-underline" href="about.html">About</a>
+                    <a class="no-underline" href="contact.html">Contact</a>
+                    <a class="no-underline" href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
                 </nav>
                 <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
-                    <div class="footer-email">hello@peppered.design</div>
-                    <a class="flex shrink-0 items-center leading-none" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <a class="footer-email" href="mailto:hello@peppered.design">hello@peppered.design</a>
+                    <a class="flex shrink-0 items-center leading-none" href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer">
                         <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
                     </a>
                 </div>

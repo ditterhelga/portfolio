@@ -21,7 +21,7 @@
                                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </span>
-                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See full impact</span>
+                                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See full impact</span></span>
                             </button>
                             <div id="res-cash-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                                 <div class="min-h-0 overflow-hidden">
@@ -38,7 +38,7 @@
                         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                             <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                                 <img src="assets/images/dreamkas-results-cashier-portrait.png" alt="Cashier using Dreamkas POS" class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
-                                <img src="assets/images/dreamkas-results-cashier-chart.png" alt="Checkout metrics" class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+                                <img src="assets/images/dreamkas-results-cashier-chart.png" alt="Checkout metrics" class="block w-full rounded-[20px] object-cover aspect-[288/184] max-md:mt-4 md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
                             </div>
                         </div>
                     </div>
@@ -70,13 +70,13 @@
                                 <p class="min-w-0">This section is a short walkthrough of how we stress-tested ideas before they ever reached a live store. <span class="font-medium">Video placeholder</span> — full reel to be added.</p>
                             </div>
                         </div>
-                        <div class="dreamkas-video-placeholder relative w-full overflow-hidden rounded-[20px] bg-[#0f2410] aspect-video">
-                            <img src="assets/images/dreamkas-hero.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true"/>
-                            <button type="button" class="absolute inset-0 flex items-center justify-center gap-x-3 text-white" aria-label="Play video: Designing for the Real World">
-                                <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/40 transition hover:bg-white/30">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                        <div class="dreamkas-video-player dreamkas-video-placeholder relative aspect-video w-full overflow-hidden rounded-[20px] bg-[#0f2410]" data-dreamkas-player="mp4">
+                            <video class="absolute inset-0 z-0 h-full w-full object-cover" playsinline preload="metadata" poster="assets/images/dreamkas-main.png" src="assets/videos/Video-dreamkas.mp4"></video>
+                            <img src="assets/images/dreamkas-main.png" alt="" class="dreamkas-video-poster absolute inset-0 z-0 h-full w-full object-cover opacity-50" aria-hidden="true"/>
+                            <button type="button" class="dreamkas-video-overlay group absolute inset-0 z-10 flex cursor-pointer items-center justify-center border-0 bg-black/30 p-0 transition-colors duration-300 hover:bg-black/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" aria-label="Play video: Designing for the Real World">
+                                <span class="pointer-events-none flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full bg-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-2 ring-white/60 transition duration-300 ease-out group-hover:scale-110 group-hover:bg-[#FDC448] group-hover:ring-[#FDC448] group-hover:shadow-[0_16px_48px_rgba(253,196,72,0.45)]">
+                                    <svg class="h-11 w-11 text-white transition-colors duration-300 group-hover:text-[#1A3716]" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 18L28.25 24.25L22 30.5" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </span>
-                                <span class="font-family-sofia text-lg uppercase tracking-wider">Play</span>
                             </button>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </span>
-                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See full impact</span>
+                                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">See full impact</span></span>
                             </button>
                             <div id="res-biz-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                                 <div class="min-h-0 overflow-hidden">
@@ -123,7 +123,7 @@
                         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                             <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                                 <img src="assets/images/dreamkas-results-owner-photo.png" alt="Store owner" class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
-                                <img src="assets/images/dreamkas-results-owner-chart.png" alt="Business metrics" class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
+                                <img src="assets/images/dreamkas-results-owner-chart.png" alt="Business metrics" class="block w-full rounded-[20px] object-cover aspect-[288/184] max-md:mt-4 md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
                             </div>
                         </div>
                     </div>
@@ -154,22 +154,22 @@
                     </div>
                     <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Learnings &amp; Growth</h2>
                     <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:min-h-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 xl:row-span-2 2xl:row-span-2 2xl:gap-y-[48px] 2xl:row-start-2">
-                        <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
+                        <div class="flex flex-col gap-y-4 max-md:order-1 md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                             <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
                                 <p class="min-w-0">Dreamkas taught me to treat <span class="font-medium">retail software as a choreography of stress</span> — every second at the till is borrowed from someone behind you in line.</p>
                             </div>
-                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                            <div class="overview-text-2 block order-2 font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
                                 <p class="min-w-0">The biggest growth was learning to defend simplicity when stakeholders asked for more — <span class="font-medium">because “more” usually meant slower</span>.</p>
                             </div>
                         </div>
-                        <div class="flex w-full flex-col order-4 mt-5 mb-0 md:order-3 md:mt-0">
+                        <div class="flex w-full flex-col max-md:order-3 max-md:mb-10 mt-5 mb-0 md:order-3 md:mt-0 md:mb-0">
                             <button type="button" id="lg-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="lg-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                     <svg id="lg-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </span>
-                                <span class="flex min-h-[34px] items-center font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">More learnings</span>
+                                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">More learnings</span></span>
                             </button>
                             <div id="lg-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                                 <div class="min-h-0 overflow-hidden">
@@ -182,8 +182,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
-                            <img src="assets/images/dreamkas-learnings-store.png" alt="Retail floor" class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                        <div class="flex w-full flex-col max-md:order-2 md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                            <img src="assets/images/dreamkas-learnings-store.png" alt="Retail floor" class="overview-img-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
                             <p class="dreamkas-image-caption mt-4">Store visits kept the roadmap honest when metrics alone couldn&rsquo;t.</p>
                         </div>
                     </div>
@@ -242,13 +242,12 @@
                                 <p class="min-w-0">Onboarding and in-product guidance turned that fear into muscle memory. <span class="font-medium">Video placeholder</span> — interview reel to come.</p>
                             </div>
                         </div>
-                        <div class="dreamkas-video-placeholder relative w-full overflow-hidden rounded-[20px] bg-[#0f2410] aspect-video">
-                            <img src="assets/images/dreamkas-main.png" alt="" class="absolute inset-0 h-full w-full object-cover opacity-50" aria-hidden="true"/>
-                            <button type="button" class="absolute inset-0 flex items-center justify-center gap-x-3 text-white" aria-label="Play video: From fear to familiar">
-                                <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 ring-2 ring-white/40 transition hover:bg-white/30">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                        <div class="dreamkas-video-player dreamkas-video-placeholder relative aspect-video w-full overflow-hidden rounded-[20px] bg-[#0f2410]" data-dreamkas-player="youtube" data-youtube-id="SqYLiJ58i2o">
+                            <img src="assets/images/dreamkas-main.png" alt="" class="dreamkas-video-poster absolute inset-0 z-0 h-full w-full object-cover opacity-50" aria-hidden="true"/>
+                            <button type="button" class="dreamkas-video-overlay group absolute inset-0 z-10 flex cursor-pointer items-center justify-center border-0 bg-black/30 p-0 transition-colors duration-300 hover:bg-black/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" aria-label="Play video: From fear to familiar">
+                                <span class="pointer-events-none flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full bg-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-2 ring-white/60 transition duration-300 ease-out group-hover:scale-110 group-hover:bg-[#FDC448] group-hover:ring-[#FDC448] group-hover:shadow-[0_16px_48px_rgba(253,196,72,0.45)]">
+                                    <svg class="h-11 w-11 text-white transition-colors duration-300 group-hover:text-[#1A3716]" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 18L28.25 24.25L22 30.5" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </span>
-                                <span class="font-family-sofia text-lg uppercase tracking-wider">Play</span>
                             </button>
                         </div>
                     </div>
@@ -276,7 +275,7 @@
                             </div>
                         </div>
                         <img src="assets/images/dreamkas-self-checkout-igor.png" alt="" class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
-                        <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                        <div class="order-5 max-md:hidden flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                             <img src="assets/images/dreamkas-self-checkout-spar.png" alt="" class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
                             <img src="assets/images/dreamkas-self-checkout-lenta.png" alt="" class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
                         </div>
@@ -295,3 +294,4 @@
                 <a class="next-project-link next-project-next card-detail no-underline sm:text-right" href="#"></a>
             </nav>
         </section>
+        <script>(function(){document.querySelectorAll("[data-dreamkas-player]").forEach(function(root){var overlay=root.querySelector(".dreamkas-video-overlay");if(!overlay)return;var kind=root.getAttribute("data-dreamkas-player");overlay.addEventListener("click",function(){if(kind==="mp4"){var v=root.querySelector("video");if(!v)return;var pe=root.querySelector(".dreamkas-video-poster");if(pe)pe.classList.add("hidden");v.controls=true;overlay.classList.add("hidden");var p=v.play();if(p&&typeof p.catch==="function")p.catch(function(){});}else if(kind==="youtube"){if(root.querySelector("iframe")||root.getAttribute("data-youtube-started")==="1")return;root.setAttribute("data-youtube-started","1");var id=root.getAttribute("data-youtube-id");if(!id)return;var poster=root.querySelector(".dreamkas-video-poster");if(poster)poster.classList.add("hidden");overlay.classList.add("hidden");var iframe=document.createElement("iframe");iframe.className="absolute inset-0 z-20 h-full w-full border-0";iframe.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");iframe.setAttribute("allowfullscreen","");iframe.setAttribute("referrerpolicy","strict-origin-when-cross-origin");iframe.setAttribute("title","From fear to familiar");var q=["autoplay=1","rel=0","playsinline=1","modestbranding=1","enablejsapi=1"];var loc=window.location;var o="";try{o=loc.origin||""}catch(e1){}if(o&&(o.indexOf("http:")===0||o.indexOf("https:")===0)){q.push("origin="+encodeURIComponent(o));q.push("widget_referrer="+encodeURIComponent(loc.href||o))}iframe.src="https://www.youtube-nocookie.com/embed/"+encodeURIComponent(id)+"?"+q.join("&");root.appendChild(iframe);}});});})();</script>
