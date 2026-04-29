@@ -960,23 +960,35 @@
         }
 
 
-        /* Main-xl: beyond-card-xl — gap 32px between image/tag/body/CTA; grid gap-x 48, gap-y 72; column 584px */
+        /* Beyond Work cards — full-width stacked rows (image | copy+CTA), not a 2-col grid */
         #cards-beyond {
-            @apply flex flex-col gap-y-12 md:gap-y-14
-            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
-            xl:items-stretch
-            2xl:gap-x-16 2xl:gap-y-16;
+            @apply flex w-full min-w-0 flex-col gap-y-0;
 
-            & > .card-beyond {
-                @apply flex w-full max-w-full flex-col items-start gap-y-8;
+            /* Image + pill + text + CTA: 3px #FDE4DF rules, xl+: 232×232 image, 48px gutter */
+            & > .card-beyond:not(.card-beyond--more) {
+                @apply flex w-full max-w-full flex-col items-start gap-y-6
+                border-b-[3px] border-[#FDE4DF]
+                py-8 md:py-10 xl:py-12;
+
+                &:first-child {
+                    @apply border-t-[3px] border-[#FDE4DF];
+                }
+
+                @media (min-width: 1280px) {
+                    @apply flex-row items-center justify-between gap-x-[48px] gap-y-0;
+                }
 
                 & > .image-wrapper {
                     @apply overflow-hidden
-                    rounded-[20px]
+                    rounded-2xl
                     w-full
-                    h-[380px]
+                    h-[280px]
                     shrink-0;
                     position: relative;
+
+                    @media (min-width: 1280px) {
+                        @apply order-2 h-[232px] w-[232px] max-w-[232px] rounded-2xl;
+                    }
 
                     & > .image-parallax-track {
                         position: absolute;
@@ -1001,7 +1013,8 @@
                 }
 
                 & .card-description {
-                    @apply flex w-full flex-col items-start gap-y-8 text-left;
+                    @apply flex w-full flex-col items-start gap-y-8 text-left
+                    xl:order-1 xl:min-w-0 xl:flex-1 xl:gap-y-9 xl:w-auto xl:max-w-none;
                 }
 
                 & .card-description p {
@@ -1017,7 +1030,7 @@
             }
 
             @media (prefers-reduced-motion: reduce) {
-                & > .card-beyond > .image-wrapper > .image-parallax-track {
+                & > .card-beyond:not(.card-beyond--more) > .image-wrapper > .image-parallax-track {
                     position: relative;
                     top: auto;
                     left: auto;
@@ -1026,7 +1039,7 @@
                     will-change: auto;
                 }
 
-                & > .card-beyond > .image-wrapper > .image-parallax-track > img {
+                & > .card-beyond:not(.card-beyond--more) > .image-wrapper > .image-parallax-track > img {
                     position: relative;
                     top: auto;
                     left: auto;
@@ -1038,7 +1051,7 @@
 
             /* Beyond card — marquee pills (image + text, same motion as Reasonal-style original) */
             & > .card-beyond--more {
-                @apply gap-y-0 xl:h-full xl:min-h-0;
+                @apply w-full gap-y-0 border-t-[3px] border-b-[3px] border-[#FDE4DF] py-8 md:py-10 xl:py-12;
             }
 
             & > .card-beyond--more .beyond-more-shell {
@@ -1049,14 +1062,7 @@
 
             @media (min-width: 1280px) {
                 & > .card-beyond--more .beyond-more-shell {
-                    min-height: 0;
-                    height: 100%;
-                }
-            }
-
-            @media (min-width: 1536px) {
-                & > .card-beyond--more .beyond-more-shell {
-                    min-height: 0;
+                    min-height: 380px;
                 }
             }
 
@@ -1089,16 +1095,16 @@
                 will-change: transform;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
-                animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 200s) linear infinite;
+                animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 140s) linear infinite;
             }
 
             & > .card-beyond--more .beyond-marquee-row--alt .beyond-marquee-track {
                 animation-direction: reverse;
-                --beyond-marquee-dur: 300s;
+                --beyond-marquee-dur: 210s;
             }
 
             & > .card-beyond--more .beyond-marquee-stack > .beyond-marquee-row:last-child .beyond-marquee-track {
-                --beyond-marquee-dur: 222s;
+                --beyond-marquee-dur: 155s;
             }
 
             & > .card-beyond--more .beyond-marquee-pill {
@@ -1486,25 +1492,25 @@
         /* Slight zoom of photo on hover (img only — parallax stays on .card-image-parallax-track). */
         @media (hover: hover) and (pointer: fine) {
             #work .card-image-frame .card-image,
-            #cards-beyond .image-wrapper > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper > .image-parallax-track > img {
                 transform-origin: center center;
                 transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
 
             #work .card-image-frame:hover .card-image,
-            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper:hover > .image-parallax-track > img {
                 transform: scale(1.06);
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
             #work .card-image-frame .card-image,
-            #cards-beyond .image-wrapper > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper > .image-parallax-track > img {
                 transition: none;
             }
 
             #work .card-image-frame:hover .card-image,
-            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper:hover > .image-parallax-track > img {
                 transform: none;
             }
         }
@@ -1982,7 +1988,7 @@
             <div id="cards-beyond">
 
                 <div class="group card-beyond">
-                    <div class="image-wrapper 2xl:h-[468px]">
+                    <div class="image-wrapper">
                         <div class="image-parallax-track">
                             <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
                         </div>
@@ -2010,7 +2016,7 @@
                 </div>
 
                 <div class="group card-beyond">
-                    <div class="image-wrapper 2xl:h-[468px]">
+                    <div class="image-wrapper">
                         <div class="image-parallax-track">
                             <img src="assets/images/gazelkin-results-dashboards-wide.png" alt="Vibe coding experiments"/>
                         </div>
@@ -2039,7 +2045,7 @@
 
                 <div class="hidden" aria-hidden="true">
                 <div class="group card-beyond">
-                    <div class="image-wrapper 2xl:h-[468px]">
+                    <div class="image-wrapper">
                         <div class="image-parallax-track">
                             <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
                         </div>
@@ -2067,7 +2073,7 @@
                     </div>
                 </div>
 
-                <div class="group card-beyond card-beyond--more">
+                <div class="group card-beyond card-beyond--more w-full">
                     <div class="beyond-more-shell">
                         <div class="beyond-marquee-stack" aria-hidden="true">
                             <span class="beyond-marquee-edge beyond-marquee-edge--left"></span>

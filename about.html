@@ -210,7 +210,7 @@
         }
 
         /* Intro + How I work: same body copy as #cards-beyond (Inter 20/32, light) */
-        .about-main-stack > section p {
+        .about-main-stack > section p:not(.about-cta-card__sub) {
             font-family: 'Inter', sans-serif;
             font-size: 20px;
             line-height: 32px;
@@ -218,11 +218,159 @@
             letter-spacing: 0;
         }
 
+        /* Know Me Better — two-column intro (slightly smaller than main body 20/32) */
+        .about-main-stack > section .about-know-me-copy p {
+            font-size: 18px;
+            line-height: 29px;
+        }
+
+        /* Know Me Better — portrait crossfade to hover still */
+        .about-portrait-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .about-portrait-wrap .about-portrait {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 20px;
+        }
+
+        .about-portrait-wrap .about-portrait--hover {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .about-portrait-wrap:hover .about-portrait--hover {
+                opacity: 1;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .about-portrait-wrap .about-portrait--hover {
+                transition: opacity 0.12s ease;
+            }
+        }
+
         .about-main-stack .about-cta-title {
             font-family: var(--font-family-sofia) !important;
             font-weight: 600 !important;
             font-size: 32px !important;
             line-height: 32px !important;
+        }
+
+        /* Know Me Better — linked CTA tiles (Resume / LinkedIn / Say hello) */
+        .about-cta-card {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            column-gap: 1rem;
+            flex: 1 1 0%;
+            width: 100%;
+            min-width: 0;
+            padding: 32px;
+            border-radius: 16px;
+            background-color: #ecf1f4;
+            text-decoration: none;
+            color: inherit;
+            box-sizing: border-box;
+            transition: background-color 0.35s ease, color 0.35s ease;
+        }
+
+        .about-cta-card:hover,
+        .about-cta-card:focus-visible {
+            background-color: #3b47c2;
+            color: #fff;
+        }
+
+        .about-cta-card:focus-visible {
+            outline: 2px solid #0016f2;
+            outline-offset: 2px;
+        }
+
+        .about-cta-card:hover .about-cta-title,
+        .about-cta-card:focus-visible .about-cta-title {
+            color: #fff !important;
+        }
+
+        .about-cta-card__sub {
+            margin: 0;
+            margin-left: 26px;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 300;
+            color: #2b2b2b;
+            transition: color 0.35s ease;
+        }
+
+        .about-cta-card:hover .about-cta-card__sub,
+        .about-cta-card:focus-visible .about-cta-card__sub {
+            color: #fff;
+        }
+
+        .about-cta-dot {
+            display: inline-block;
+            flex-shrink: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            background-color: #0016f2;
+            transition: background-color 0.35s ease;
+        }
+
+        .about-cta-card:hover .about-cta-dot,
+        .about-cta-card:focus-visible .about-cta-dot {
+            background-color: #fde4df;
+        }
+
+        /* Hover CTA: more-shape.svg (yellow + chevron) */
+        .about-cta-card__arrow {
+            position: relative;
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            opacity: 0;
+            transform: translateX(12px);
+            pointer-events: none;
+            transition:
+                opacity 0.35s ease,
+                transform 0.4s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+
+        .about-cta-card:hover .about-cta-card__arrow,
+        .about-cta-card:focus-visible .about-cta-card__arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-cta-card-more-shape {
+            display: block;
+            width: 48px;
+            height: 48px;
+            pointer-events: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .about-cta-card,
+            .about-cta-card__arrow,
+            .about-cta-card__sub,
+            .about-cta-dot {
+                transition: none;
+            }
+
+            .about-cta-card__arrow {
+                transform: none;
+            }
         }
 
         /* Pull Beyond Work block up vs. about-main-stack row-gap (How I work → full-bleed) */
@@ -509,22 +657,34 @@
             }
         }
 
-        /* Main-xl: beyond cards — same grid as index */
+        /* Beyond Work cards — full-width rows, stacked (image | copy+CTA), not a 2-col grid */
         #cards-beyond {
-            @apply flex flex-col gap-y-12 md:gap-y-14
-            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
-            2xl:gap-x-16 2xl:gap-y-16;
+            @apply flex w-full min-w-0 flex-col gap-y-0;
 
-            & > .card-beyond {
-                @apply flex w-full max-w-full flex-col items-start gap-y-8;
+            & > .card-beyond:not(.card-beyond--more) {
+                @apply flex w-full max-w-full flex-col items-start gap-y-6
+                border-b-[3px] border-[#FDE4DF]
+                py-8 md:py-10 xl:py-12;
+
+                &:first-child {
+                    @apply border-t-[3px] border-[#FDE4DF];
+                }
+
+                @media (min-width: 1280px) {
+                    @apply flex-row items-center justify-between gap-x-[48px] gap-y-0;
+                }
 
                 & > .image-wrapper {
                     @apply overflow-hidden
-                    rounded-[20px]
+                    rounded-2xl
                     w-full
-                    h-[380px]
+                    h-[280px]
                     shrink-0;
                     position: relative;
+
+                    @media (min-width: 1280px) {
+                        @apply order-2 h-[232px] w-[232px] max-w-[232px] rounded-2xl;
+                    }
 
                     & > .image-parallax-track {
                         position: absolute;
@@ -549,7 +709,8 @@
                 }
 
                 & .card-description {
-                    @apply flex w-full flex-col items-start gap-y-8 text-left;
+                    @apply flex w-full flex-col items-start gap-y-8 text-left
+                    xl:order-1 xl:min-w-0 xl:flex-1 xl:gap-y-9 xl:w-auto xl:max-w-none;
                 }
 
                 & .card-description p {
@@ -565,7 +726,7 @@
             }
 
             @media (prefers-reduced-motion: reduce) {
-                & > .card-beyond > .image-wrapper > .image-parallax-track {
+                & > .card-beyond:not(.card-beyond--more) > .image-wrapper > .image-parallax-track {
                     position: relative;
                     top: auto;
                     left: auto;
@@ -574,7 +735,7 @@
                     will-change: auto;
                 }
 
-                & > .card-beyond > .image-wrapper > .image-parallax-track > img {
+                & > .card-beyond:not(.card-beyond--more) > .image-wrapper > .image-parallax-track > img {
                     position: relative;
                     top: auto;
                     left: auto;
@@ -586,7 +747,7 @@
 
             /* Beyond card — marquee pills (same as index #cards-beyond) */
             & > .card-beyond--more {
-                @apply gap-y-0 xl:h-full xl:min-h-0;
+                @apply w-full gap-y-0 border-t-[3px] border-b-[3px] border-[#FDE4DF] py-8 md:py-10 xl:py-12;
             }
 
             & > .card-beyond--more .beyond-more-shell {
@@ -597,14 +758,7 @@
 
             @media (min-width: 1280px) {
                 & > .card-beyond--more .beyond-more-shell {
-                    min-height: 0;
-                    height: 100%;
-                }
-            }
-
-            @media (min-width: 1536px) {
-                & > .card-beyond--more .beyond-more-shell {
-                    min-height: 0;
+                    min-height: 380px;
                 }
             }
 
@@ -635,16 +789,16 @@
                 will-change: transform;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
-                animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 200s) linear infinite;
+                animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 140s) linear infinite;
             }
 
             & > .card-beyond--more .beyond-marquee-row--alt .beyond-marquee-track {
                 animation-direction: reverse;
-                --beyond-marquee-dur: 300s;
+                --beyond-marquee-dur: 210s;
             }
 
             & > .card-beyond--more .beyond-marquee-stack > .beyond-marquee-row:last-child .beyond-marquee-track {
-                --beyond-marquee-dur: 222s;
+                --beyond-marquee-dur: 155s;
             }
 
             & > .card-beyond--more .beyond-marquee-pill {
@@ -680,22 +834,22 @@
         }
 
         @media (hover: hover) and (pointer: fine) {
-            #cards-beyond .image-wrapper > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper > .image-parallax-track > img {
                 transform-origin: center center;
                 transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
 
-            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper:hover > .image-parallax-track > img {
                 transform: scale(1.06);
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            #cards-beyond .image-wrapper > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper > .image-parallax-track > img {
                 transition: none;
             }
 
-            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper:hover > .image-parallax-track > img {
                 transform: none;
             }
         }
@@ -745,16 +899,16 @@
             will-change: transform;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 200s) linear infinite;
+            animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 140s) linear infinite;
         }
 
         #about-how-more-about .beyond-marquee-row--alt .beyond-marquee-track {
             animation-direction: reverse;
-            --beyond-marquee-dur: 300s;
+            --beyond-marquee-dur: 210s;
         }
 
         #about-how-more-about .beyond-marquee-stack > .beyond-marquee-row:last-child .beyond-marquee-track {
-            --beyond-marquee-dur: 222s;
+            --beyond-marquee-dur: 155s;
         }
 
         #about-how-more-about .beyond-marquee-pill {
@@ -1107,11 +1261,21 @@
     <section class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
 
         <div class="flex flex-col gap-y-[84px]">
-            <div class="flex flex-col gap-y-10 md:flex-row md:items-start md:gap-x-12 xl:gap-x-14">
-            <div class="w-[400px] h-[400px] max-w-full md:shrink-0">
+            <div class="flex flex-col gap-y-12 md:flex-row md:items-start md:gap-x-16 md:gap-y-0 xl:gap-x-24">
+            <div class="about-portrait-wrap w-[400px] h-[400px] max-w-full md:shrink-0">
                 <img src="assets/images/About-image.png"
                      alt="Olga Pertseva"
-                     class="w-full h-full rounded-[20px] object-cover object-top"/>
+                     class="about-portrait about-portrait--base"
+                     width="400"
+                     height="400"
+                     decoding="async"/>
+                <img src="assets/images/About-image-hover.png"
+                     alt=""
+                     class="about-portrait about-portrait--hover"
+                     width="400"
+                     height="400"
+                     decoding="async"
+                     aria-hidden="true"/>
             </div>
 
             <div class="flex flex-col gap-y-6 flex-1 min-w-0">
@@ -1129,7 +1293,7 @@
             </div>
 
             <div class="flex flex-col gap-y-[84px]">
-                <div class="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-12">
+                <div class="about-know-me-copy grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-12">
                     <div class="flex flex-col gap-y-6">
                         <p>For over a decade, I've designed digital products that live in the real world — <strong class="font-medium">POS systems, logistics platforms, payment tools, and enterprise software used daily by real people under real pressure</strong>, always focused on simplifying complexity, improving everyday interactions, and <strong class="font-medium">helping people achieve their goals with less friction and more confidence</strong>.</p>
                     </div>
@@ -1138,43 +1302,52 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row md:gap-x-[40px] gap-y-6 mb-10 md:mb-12">
-                    <div class="flex-1 w-full rounded-[16px] bg-[#ECF1F4] pt-[32px] pb-[32px] pl-[32px] pr-[32px]">
-                        <div class="flex items-start gap-x-4">
-                            <span class="mt-[6px] inline-block h-[10px] w-[10px] rounded-full bg-[#0016F2]"></span>
-                            <div class="flex flex-col gap-y-1">
+                    <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="about-cta-card no-underline text-inherit" target="_blank" rel="noopener noreferrer">
+                        <div class="flex min-w-0 flex-1 flex-col gap-y-1">
+                            <div class="flex items-center gap-x-4">
+                                <span class="about-cta-dot" aria-hidden="true"></span>
                                 <p class="m-0 about-cta-title">Resume</p>
-                                <p class="m-0 text-sm font-light text-[#2b2b2b]">See my experience</p>
                             </div>
+                            <p class="about-cta-card__sub font-light">See my experience</p>
                         </div>
-                    </div>
+                        <span class="about-cta-card__arrow" aria-hidden="true">
+                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="48" height="48" decoding="async"/>
+                        </span>
+                    </a>
 
-                    <div class="flex-1 w-full rounded-[16px] bg-[#ECF1F4] pt-[32px] pb-[32px] pl-[32px] pr-[32px]">
-                        <div class="flex items-start gap-x-4">
-                            <span class="mt-[6px] inline-block h-[10px] w-[10px] rounded-full bg-[#0016F2]"></span>
-                            <div class="flex flex-col gap-y-1">
+                    <a class="about-cta-card no-underline text-inherit" href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <div class="flex min-w-0 flex-1 flex-col gap-y-1">
+                            <div class="flex items-center gap-x-4">
+                                <span class="about-cta-dot" aria-hidden="true"></span>
                                 <p class="m-0 about-cta-title">LinkedIn</p>
-                                <p class="m-0 text-sm font-light text-[#2b2b2b]">Let's connect</p>
                             </div>
+                            <p class="about-cta-card__sub font-light">Let's connect</p>
                         </div>
-                    </div>
+                        <span class="about-cta-card__arrow" aria-hidden="true">
+                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="48" height="48" decoding="async"/>
+                        </span>
+                    </a>
 
-                    <div class="flex-1 w-full rounded-[16px] bg-[#ECF1F4] pt-[32px] pb-[32px] pl-[32px] pr-[32px]">
-                        <div class="flex items-start gap-x-4">
-                            <span class="mt-[6px] inline-block h-[10px] w-[10px] rounded-full bg-[#0016F2]"></span>
-                            <div class="flex flex-col gap-y-1">
+                    <a class="about-cta-card footer-email no-underline text-inherit" href="mailto:hello@peppered.design">
+                        <div class="flex min-w-0 flex-1 flex-col gap-y-1">
+                            <div class="flex items-center gap-x-4">
+                                <span class="about-cta-dot" aria-hidden="true"></span>
                                 <p class="m-0 about-cta-title">Say hello</p>
-                                <p class="m-0 text-sm font-light text-[#2b2b2b]">hello@peppered.design</p>
                             </div>
+                            <p class="about-cta-card__sub font-light">hello@peppered.design</p>
                         </div>
-                    </div>
+                        <span class="about-cta-card__arrow" aria-hidden="true">
+                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="48" height="48" decoding="async"/>
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
 
     </section>
 
-    <!-- ── Section 2: How I Work ──────────────────────────────────── -->
-    <section class="flex flex-col gap-y-8 xl:gap-y-12">
+    <!-- ── Section 2: How I Work — pulled up 20px vs CTA row + main-stack gap ─ -->
+    <section class="-mt-[20px] flex flex-col gap-y-8 xl:gap-y-12">
 
         <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
             <span class="section-kicker-blob" aria-hidden="true">
@@ -1224,6 +1397,7 @@
                     <span class="beyond-marquee-edge beyond-marquee-edge--left"></span>
                     <span class="beyond-marquee-edge beyond-marquee-edge--right"></span>
 
+                    <!-- 18 statements (01–18), 6 per row; each track duplicated for scroll. -->
                     <div class="beyond-marquee-row">
                         <div class="beyond-marquee-track">
                             <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/01-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
@@ -1231,65 +1405,47 @@
                             <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/03-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
                             <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/04-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
                             <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/05-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 8</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 11</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 6</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 12</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 15</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 10</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 7</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 9</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 17</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 16</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 18</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 14</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 13</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/06-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Think in systems, not screens</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/01-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/02-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/03-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/04-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/05-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/06-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Think in systems, not screens</span></div>
                         </div>
                     </div>
 
                     <div class="beyond-marquee-row beyond-marquee-row--alt">
                         <div class="beyond-marquee-track">
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/01-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/02-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/03-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/04-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/05-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 10</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 18</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 12</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 13</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 9</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 8</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 11</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 6</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 14</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 17</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 7</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 15</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 16</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/07-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organised</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/08-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/09-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Field research, not assumptions</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/10-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">The handoff is not the finish line</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/11-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/12-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Design for the user, not against them</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/07-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organised</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/08-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/09-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Field research, not assumptions</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/10-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">The handoff is not the finish line</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/11-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/12-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Design for the user, not against them</span></div>
                         </div>
                     </div>
 
                     <div class="beyond-marquee-row">
                         <div class="beyond-marquee-track">
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/01-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/02-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/03-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/04-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/05-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 15</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 9</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 14</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 10</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 16</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 11</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 17</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 6</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 12</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 8</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 7</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 18</span></div>
-                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img beyond-marquee-pill-img--placeholder" aria-hidden="true"></div><span class="beyond-marquee-pill-label">text 13</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/13-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/14-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy, design should handle that</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/15-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/16-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/17-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Structure first, pixels last</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/18-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Accessible by default, not by request</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/13-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/14-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy, design should handle that</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/15-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/16-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/17-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Structure first, pixels last</span></div>
+                            <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="assets/images/18-statement.png" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Accessible by default, not by request</span></div>
                         </div>
                     </div>
                 </div>
@@ -1340,7 +1496,7 @@
             <div id="cards-beyond">
 
                 <div class="group card-beyond">
-                    <div class="image-wrapper 2xl:h-[468px]">
+                    <div class="image-wrapper">
                         <div class="image-parallax-track">
                             <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
                         </div>
@@ -1368,7 +1524,7 @@
                 </div>
 
                 <div class="group card-beyond">
-                    <div class="image-wrapper 2xl:h-[468px]">
+                    <div class="image-wrapper">
                         <div class="image-parallax-track">
                             <img src="assets/images/gazelkin-results-dashboards-wide.png" alt="Vibe coding experiments"/>
                         </div>
@@ -1397,7 +1553,7 @@
 
                 <div class="hidden" aria-hidden="true">
                 <div class="group card-beyond">
-                    <div class="image-wrapper 2xl:h-[468px]">
+                    <div class="image-wrapper">
                         <div class="image-parallax-track">
                             <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
                         </div>
@@ -1425,7 +1581,7 @@
                     </div>
                 </div>
 
-                <div class="group card-beyond card-beyond--more">
+                <div class="group card-beyond card-beyond--more w-full">
                     <div class="beyond-more-shell">
                         <div class="beyond-marquee-stack" aria-hidden="true">
                             <span class="beyond-marquee-edge beyond-marquee-edge--left"></span>
