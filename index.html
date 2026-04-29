@@ -609,6 +609,30 @@
             }
         }
 
+        /*
+         * Image column between sm and xl: photo lives in absolutely positioned layers, so the flex item
+         * has ~0 intrinsic width and can collapse. Give it a real flex basis (override shrink-0 intent when needed).
+         */
+        @media (min-width: 640px) and (max-width: 767px) {
+            #work .card-content.group > a.work-case-card-link:first-of-type {
+                flex-grow: 0;
+                flex-shrink: 1;
+                flex-basis: 618px;
+                min-width: 200px;
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1279px) {
+            #work .card-content.group > a.work-case-card-link:first-of-type {
+                flex-grow: 0;
+                flex-shrink: 1;
+                flex-basis: 710px;
+                min-width: 200px;
+                max-width: 100%;
+            }
+        }
+
         /* Work + Beyond Work CTAs: yellow circle → pink pill; white chevron → arrow-hover.svg */
         #work .card-content.group .work-card-cta .card-detail-text,
         #cards-beyond .card-beyond.group .work-card-cta .card-detail-text {
@@ -884,10 +908,11 @@
         /* Clip shell; image inside is taller and translates on scroll (Sequel-style pan) */
         .card-image-frame {
             @apply rounded-[20px] w-full
-            aspect-[1.25]
-            md:aspect-[0.84] md:max-w-[322px]
-            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0
-            2xl:h-[488px] 2xl:w-[576px] 2xl:max-w-[576px];
+            max-sm:h-[460px] max-sm:aspect-auto
+            sm:h-auto sm:aspect-[460/400] sm:max-h-[538px] sm:max-w-[min(100%,618px)]
+            md:max-h-[620px] md:max-w-[min(100%,710px)]
+            xl:aspect-auto xl:h-[480px] xl:w-[552px] xl:max-h-none xl:max-w-[552px] xl:shrink-0
+            2xl:h-[586px] 2xl:w-[691px] 2xl:max-w-[691px];
             position: relative;
             overflow: hidden;
         }
@@ -939,6 +964,7 @@
         #cards-beyond {
             @apply flex flex-col gap-y-12 md:gap-y-14
             xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
+            xl:items-stretch
             2xl:gap-x-16 2xl:gap-y-16;
 
             & > .card-beyond {
@@ -1008,6 +1034,111 @@
                     height: 100%;
                     max-width: none;
                 }
+            }
+
+            /* Beyond card — marquee pills (image + text, same motion as Reasonal-style original) */
+            & > .card-beyond--more {
+                @apply gap-y-0 xl:h-full xl:min-h-0;
+            }
+
+            & > .card-beyond--more .beyond-more-shell {
+                @apply flex w-full min-h-0 flex-1 flex-col overflow-hidden rounded-[20px];
+                background-color: #ecf1f4;
+                min-height: min(380px, 52vw);
+            }
+
+            @media (min-width: 1280px) {
+                & > .card-beyond--more .beyond-more-shell {
+                    min-height: 0;
+                    height: 100%;
+                }
+            }
+
+            @media (min-width: 1536px) {
+                & > .card-beyond--more .beyond-more-shell {
+                    min-height: 0;
+                }
+            }
+
+            & > .card-beyond--more .beyond-marquee-stack {
+                @apply relative flex min-h-0 flex-1 flex-col justify-center gap-6 py-8 md:gap-8 md:py-10 xl:gap-10 xl:py-12;
+            }
+
+            & > .card-beyond--more .beyond-marquee-edge {
+                @apply pointer-events-none absolute inset-y-0 z-10 w-[10%] max-w-[72px];
+            }
+
+            & > .card-beyond--more .beyond-marquee-edge--left {
+                left: 0;
+                background: linear-gradient(to right, #ecf1f4 0%, transparent 100%);
+            }
+
+            & > .card-beyond--more .beyond-marquee-edge--right {
+                right: 0;
+                background: linear-gradient(to left, #ecf1f4 0%, transparent 100%);
+            }
+
+            & > .card-beyond--more .beyond-marquee-row {
+                @apply relative overflow-hidden;
+            }
+
+            /* Same loop as reasonal.co “Everything you need…”: linear infinite, duplicated strip;
+               direction flipped vs their default so pills drift left → right (translate -50% → 0). */
+            & > .card-beyond--more .beyond-marquee-track {
+                @apply flex w-max gap-4 md:gap-5;
+                will-change: transform;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 200s) linear infinite;
+            }
+
+            & > .card-beyond--more .beyond-marquee-row--alt .beyond-marquee-track {
+                animation-direction: reverse;
+                --beyond-marquee-dur: 300s;
+            }
+
+            & > .card-beyond--more .beyond-marquee-stack > .beyond-marquee-row:last-child .beyond-marquee-track {
+                --beyond-marquee-dur: 222s;
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill {
+                @apply flex w-max shrink-0 items-center gap-4 rounded-[28px] bg-white py-4 pl-4 pr-7 shadow-[0_4px_22px_rgba(116,130,151,0.15)] md:gap-5 md:rounded-[32px] md:py-[18px] md:pl-[18px] md:pr-9;
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill-img {
+                @apply relative h-16 w-16 shrink-0 overflow-hidden rounded-[14px] md:h-[72px] md:w-[72px] md:rounded-2xl;
+                transform: translateZ(0);
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill-img img {
+                @apply h-full w-full object-cover;
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill-label {
+                font-family: 'Inter', sans-serif;
+                font-size: 20px;
+                line-height: 32px;
+                font-weight: 300;
+                letter-spacing: 0;
+                color: var(--color-text-primary);
+                text-align: left;
+                white-space: nowrap;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                & > .card-beyond--more .beyond-marquee-track {
+                    animation: none;
+                    transform: translateX(0);
+                }
+            }
+        }
+
+        @keyframes beyond-marquee-scroll-ltr {
+            from {
+                transform: translateX(-50%);
+            }
+            to {
+                transform: translateX(0);
             }
         }
 
@@ -1318,6 +1449,40 @@
             left: 0;
         }
 
+        @media (hover: hover) and (pointer: fine) {
+            .card-view-cursor {
+                position: fixed;
+                width: 96px;
+                height: 96px;
+                background: white;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Sofia Sans Condensed', sans-serif;
+                font-weight: 600;
+                font-size: 22px;
+                letter-spacing: 0.03em;
+                color: #0016F2;
+                top: 0;
+                left: 0;
+                transform: translateZ(0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                will-change: transform, opacity;
+            }
+
+            @supports (-webkit-hyphens: none) {
+                .card-view-cursor {
+                    box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.35);
+                    outline: 1px solid transparent;
+                    -webkit-font-smoothing: antialiased;
+                }
+            }
+        }
+
         /* Slight zoom of photo on hover (img only — parallax stays on .card-image-parallax-track). */
         @media (hover: hover) and (pointer: fine) {
             #work .card-image-frame .card-image,
@@ -1341,6 +1506,30 @@
             #work .card-image-frame:hover .card-image,
             #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
                 transform: none;
+            }
+        }
+
+        /* Blue overlay on work card images — fades in on hover */
+        .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: #0016F2;
+            mix-blend-mode: multiply;
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .card-image-frame:hover .card-image-overlay {
+                opacity: 0.8;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-image-overlay {
+                transition: none;
             }
         }
 
@@ -1584,6 +1773,7 @@
                                 <div class="card-image-parallax-track">
                                     <img class="card-image" src="assets/images/subway-main.png" alt="Subway Project" loading="lazy"/>
                                 </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
                             </div>
                         </a>
                         <div class="card-description">
@@ -1630,6 +1820,7 @@
                                 <div class="card-image-parallax-track">
                                     <img class="card-image" src="assets/images/billfold-main.png" alt="Billfold POS Project" loading="lazy">
                                 </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
                             </div>
                         </a>
                         <div class="card-description">
@@ -1674,6 +1865,7 @@
                                 <div class="card-image-parallax-track">
                                     <img class="card-image" src="assets/images/gazelkin-main.png" alt="Gazelkin Project" loading="lazy">
                                 </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
                             </div>
                         </a>
                         <div class="card-description">
@@ -1717,6 +1909,7 @@
                                 <div class="card-image-parallax-track">
                                     <img class="card-image" src="assets/images/dreamkas-main.png" alt="Dreamkas Project" loading="lazy">
                                 </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
                             </div>
                         </a>
                         <div class="card-description">
@@ -1760,6 +1953,9 @@
                         mx-auto
                         pt-14
                         xl:pt-[104px]
+                        pb-8
+                        md:pb-10
+                        xl:pb-12
                         px-4
                         sm:px-8
                         2xl:px-0">
@@ -1816,47 +2012,18 @@
                 <div class="group card-beyond">
                     <div class="image-wrapper 2xl:h-[468px]">
                         <div class="image-parallax-track">
-                            <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
-                        </div>
-                    </div>
-                    <div class="card-description">
-                        <div class="card-badges">
-                            <span class="badge">My entrepreneurial experiment</span>
-                        </div>
-
-                        <p class="card-text">
-                            At one point, I came close to launching my own eco-friendly kitchenware brand. UX research saved me a business headache, revealing why the market wasn’t the right fit.
-                        </p>
-
-                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
-                            <span class="work-card-cta">
-                                <span class="work-card-cta-icon" aria-hidden="true">
-                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
-                                </span>
-                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Story coming soon</span></span>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="group card-beyond">
-                    <div class="image-wrapper 2xl:h-[468px]">
-                        <div class="image-parallax-track">
-                            <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                            <img src="assets/images/gazelkin-results-dashboards-wide.png" alt="Vibe coding experiments"/>
                         </div>
                     </div>
 
                     <div class="card-description">
                         <div class="card-badges">
-                            <span class="badge">My Other Medium</span>
+                            <span class="badge">Vibe coding experiments</span>
                         </div>
 
                         <p class="card-text">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
 
-                        <a href="about.html" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                        <a href="#work" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Look what I did">
                             <span class="work-card-cta">
                                 <span class="work-card-cta-icon" aria-hidden="true">
                                     <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1864,12 +2031,13 @@
                                     </svg>
                                     <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
                                 </span>
-                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">LOOK WHAT I DID</span></span>
                             </span>
                         </a>
                     </div>
                 </div>
 
+                <div class="hidden" aria-hidden="true">
                 <div class="group card-beyond">
                     <div class="image-wrapper 2xl:h-[468px]">
                         <div class="image-parallax-track">
@@ -1897,6 +2065,140 @@
                             </span>
                         </a>
                     </div>
+                </div>
+
+                <div class="group card-beyond card-beyond--more">
+                    <div class="beyond-more-shell">
+                        <div class="beyond-marquee-stack" aria-hidden="true">
+                            <span class="beyond-marquee-edge beyond-marquee-edge--left"></span>
+                            <span class="beyond-marquee-edge beyond-marquee-edge--right"></span>
+
+                            <div class="beyond-marquee-row">
+                                <div class="beyond-marquee-track">
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                </div>
+                            </div>
+
+                            <div class="beyond-marquee-row beyond-marquee-row--alt">
+                                <div class="beyond-marquee-track">
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                </div>
+                            </div>
+
+                            <div class="beyond-marquee-row">
+                                <div class="beyond-marquee-track">
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
 
             </div>
@@ -2382,8 +2684,37 @@
             });
         }
 
+        // Work card image — "View" cursor follower
+        const cardViewCursor = document.querySelector(".card-view-cursor");
+        const cardFrames = document.querySelectorAll("#work .card-image-frame");
+
+        if (cardViewCursor && cardFrames.length && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            gsap.set(cardViewCursor, { opacity: 0, scale: 0 });
+
+            cardFrames.forEach(frame => {
+                frame.addEventListener("mouseenter", () => {
+                    frame.style.cursor = "none";
+                    gsap.to(cardViewCursor, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
+                });
+                frame.addEventListener("mouseleave", () => {
+                    frame.style.cursor = "";
+                    gsap.to(cardViewCursor, { opacity: 0, scale: 0, duration: 0.2, ease: "power2.in" });
+                });
+            });
+
+            document.addEventListener("mousemove", e => {
+                gsap.set(cardViewCursor, {
+                    x: Math.round(e.clientX),
+                    y: Math.round(e.clientY),
+                    xPercent: -50,
+                    yPercent: -50
+                });
+            });
+        }
+
     });
 </script>
 <div class="hero-cursor"></div>
+<div class="card-view-cursor">VIEW</div>
 </body>
 </html>
