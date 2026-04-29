@@ -23,6 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
     <script src="assets/js/global-lenis.js" defer></script>
+    <script src="assets/js/img-lqip.js" defer></script>
 
     <style type="text/tailwindcss">
         /* ── Design tokens ─────────────────────────────────────────── */
@@ -450,6 +451,46 @@
             color: var(--color-text-primary);
         }
 
+        #step-cursor-follower {
+            position: fixed;
+            width: 220px;
+            height: 220px;
+            border-radius: 20px;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, -100%) scale(0.9);
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            will-change: left, top, transform;
+        }
+
+        #step-cursor-follower.is-visible {
+            opacity: 1;
+            transform: translate(-50%, -100%) scale(1);
+        }
+
+        #step-cursor-follower img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .about-how-work-grid .step-hover-zone {
+            cursor: none;
+        }
+
+        .about-how-work-grid .step-hover-zone .step-number-bg {
+            transition: opacity 0.22s ease;
+        }
+
+        .about-how-work-grid .step-hover-zone:hover .step-number-bg {
+            opacity: 0;
+        }
+
         /* ── How I work: illustration hover blob (pink #FDE4DF @ 50%, 8-value border-radius via JS) ─ */
         .about-step-image {
             --about-blob-rotate: -6deg;
@@ -676,14 +717,15 @@
 
                 & > .image-wrapper {
                     @apply overflow-hidden
-                    rounded-2xl
+                    rounded-[20px]
                     w-full
                     h-[280px]
                     shrink-0;
                     position: relative;
+                    isolation: isolate;
 
                     @media (min-width: 1280px) {
-                        @apply order-2 h-[232px] w-[232px] max-w-[232px] rounded-2xl;
+                        @apply order-2 h-[232px] w-[232px] max-w-[232px] rounded-[20px];
                     }
 
                     & > .image-parallax-track {
@@ -692,6 +734,7 @@
                         top: -9%;
                         width: 100%;
                         height: 118%;
+                        z-index: 0;
                         will-change: transform;
                     }
 
@@ -833,15 +876,93 @@
             }
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper > .image-parallax-track > img {
-                transform-origin: center center;
-                transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            }
+        /* LQIP: --lqip behind image until img.lqip-fadein loads */
+        .lqip-parallax-host {
+            background-image: var(--lqip);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
-            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper:hover > .image-parallax-track > img {
+        .lqip-parallax-host > img.lqip-fadein {
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        #work .lqip-parallax-host > img.lqip-fadein.lqip-loaded,
+        #cards-beyond .lqip-parallax-host > img.lqip-fadein.lqip-loaded {
+            opacity: 1;
+        }
+
+        .about-portrait-hover-slot > img.lqip-fadein.lqip-loaded {
+            opacity: 0;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .about-portrait-wrap:hover .about-portrait-hover-slot > img.lqip-fadein.lqip-loaded {
+                opacity: 1;
+            }
+        }
+
+        .about-portrait-wrap.lqip-portrait-host {
+            background-image: var(--lqip);
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+        }
+
+        .about-portrait-wrap.lqip-portrait-host .about-portrait--base.lqip-fadein {
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .about-portrait-wrap.lqip-portrait-host .about-portrait--base.lqip-fadein.lqip-loaded {
+            opacity: 1;
+        }
+
+        .about-portrait-hover-slot {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: inherit;
+        }
+
+        .about-portrait-hover-slot .about-portrait--hover {
+            border-radius: inherit;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lqip-parallax-host > img.lqip-fadein,
+            .about-portrait-wrap.lqip-portrait-host .about-portrait--base.lqip-fadein {
+                transition: none;
+            }
+        }
+
+        /* Beyond Work thumbnails — 20px corners (explicit + clip-path so parallax img + overlay respect radius) */
+        #cards-beyond .card-beyond:not(.card-beyond--more) > .image-wrapper {
+            border-radius: 20px;
+            overflow: hidden;
+            clip-path: inset(0 round 20px);
+        }
+
+        #cards-beyond .card-beyond:not(.card-beyond--more) > .image-wrapper > .beyond-image-overlay {
+            border-radius: 20px;
+        }
+
+        #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper > .image-parallax-track > img {
+            transform-origin: center center;
+            transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #cards-beyond .card-beyond:not(.card-beyond--more):hover .image-wrapper > .image-parallax-track > img {
                 transform: scale(1.06);
             }
+        }
+
+        #cards-beyond .card-beyond:not(.card-beyond--more):focus-within .image-wrapper > .image-parallax-track > img {
+            transform: scale(1.06);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -849,8 +970,37 @@
                 transition: none;
             }
 
-            #cards-beyond .card-beyond:not(.card-beyond--more) .image-wrapper:hover > .image-parallax-track > img {
+            #cards-beyond .card-beyond:not(.card-beyond--more):hover .image-wrapper > .image-parallax-track > img,
+            #cards-beyond .card-beyond:not(.card-beyond--more):focus-within .image-wrapper > .image-parallax-track > img {
                 transform: none;
+            }
+        }
+
+        /* Beyond Work — blue multiply overlay at rest; clears when hovering / focusing anywhere on the card row */
+        #cards-beyond .card-beyond:not(.card-beyond--more) .beyond-image-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: #0016F2;
+            mix-blend-mode: multiply;
+            opacity: 0.8;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #cards-beyond .card-beyond:not(.card-beyond--more):hover .beyond-image-overlay {
+                opacity: 0;
+            }
+        }
+
+        #cards-beyond .card-beyond:not(.card-beyond--more):focus-within .beyond-image-overlay {
+            opacity: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #cards-beyond .card-beyond:not(.card-beyond--more) .beyond-image-overlay {
+                transition: none;
             }
         }
 
@@ -1262,20 +1412,22 @@
 
         <div class="flex flex-col gap-y-[84px]">
             <div class="flex flex-col gap-y-12 md:flex-row md:items-start md:gap-x-16 md:gap-y-0 xl:gap-x-24">
-            <div class="about-portrait-wrap w-[400px] h-[400px] max-w-full md:shrink-0">
+            <div class="about-portrait-wrap lqip-portrait-host w-[400px] h-[400px] max-w-full md:shrink-0" data-lqip-ref="assets/images/About-image.png">
                 <img src="assets/images/About-image.png"
                      alt="Olga Pertseva"
-                     class="about-portrait about-portrait--base"
+                     class="about-portrait about-portrait--base lqip-fadein"
                      width="400"
                      height="400"
                      decoding="async"/>
-                <img src="assets/images/About-image-hover.png"
-                     alt=""
-                     class="about-portrait about-portrait--hover"
-                     width="400"
-                     height="400"
-                     decoding="async"
-                     aria-hidden="true"/>
+                <div class="about-portrait-hover-slot lqip-parallax-host" data-lqip-ref="assets/images/About-image-hover.png">
+                    <img src="assets/images/About-image-hover.png"
+                         alt=""
+                         class="about-portrait about-portrait--hover lqip-fadein"
+                         width="400"
+                         height="400"
+                         decoding="async"
+                         aria-hidden="true"/>
+                </div>
             </div>
 
             <div class="flex flex-col gap-y-6 flex-1 min-w-0">
@@ -1366,25 +1518,34 @@
         <div class="about-how-work-grid flex flex-col gap-y-10 2xl:grid 2xl:grid-cols-3 2xl:gap-x-[84px] 2xl:items-start">
 
             <div class="flex flex-col gap-y-4 2xl:gap-y-6">
-                <div style="position:relative;display:flex;align-items:flex-end;height:152px;overflow:hidden;">
-                    <div style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">01</div>
-                    <h3 class="step-title" style="position:relative;z-index:1;margin:0;line-height:1;">Start with People</h3>
+                <div
+                    class="step-hover-zone"
+                    data-step-preview="assets/images/people.png"
+                    style="position:relative;display:flex;align-items:flex-end;height:152px;overflow:hidden;">
+                    <div class="step-number-bg" style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">01</div>
+                    <h3 class="step-title" style="position:relative;z-index:2;margin:0;line-height:1;">Start with People</h3>
                 </div>
                 <p>To design something meaningful, I need to understand not just the business goals, but the human story behind the interface. Real empathy means digging into context, listening deeply, and questioning assumptions before jumping to solutions. I uncover what people actually need, not what we think they need.</p>
             </div>
 
             <div class="flex flex-col gap-y-4 2xl:gap-y-6">
-                <div style="position:relative;display:flex;align-items:flex-end;height:152px;overflow:hidden;">
-                    <div style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">02</div>
-                    <h3 class="step-title" style="position:relative;z-index:1;margin:0;line-height:1;">Think by Making</h3>
+                <div
+                    class="step-hover-zone"
+                    data-step-preview="assets/images/Think-by-Making.png"
+                    style="position:relative;display:flex;align-items:flex-end;height:152px;overflow:hidden;">
+                    <div class="step-number-bg" style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">02</div>
+                    <h3 class="step-title" style="position:relative;z-index:2;margin:0;line-height:1;">Think by Making</h3>
                 </div>
                 <p>Once I know the story, I shift to hands-on exploration: rapid prototypes, user interviews, data analysis, and iterative testing — whatever brings clarity fastest. I'm flexible in tools but structured in thinking. The goal is always the same: test assumptions, measure impact, iterate fast.</p>
             </div>
 
             <div class="flex flex-col gap-y-4 2xl:gap-y-6">
-                <div style="position:relative;display:flex;align-items:flex-end;height:152px;overflow:hidden;">
-                    <div style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">03</div>
-                    <h3 class="step-title" style="position:relative;z-index:1;margin:0;line-height:1;">Build together</h3>
+                <div
+                    class="step-hover-zone"
+                    data-step-preview="assets/images/Build-together.png"
+                    style="position:relative;display:flex;align-items:flex-end;height:152px;overflow:hidden;">
+                    <div class="step-number-bg" style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">03</div>
+                    <h3 class="step-title" style="position:relative;z-index:2;margin:0;line-height:1;">Build together</h3>
                 </div>
                 <p>I involve developers, stakeholders, and users from the start. I believe ideas sharpen through friction, and good UX happens when everyone's part of the conversation. I adapt my approach to match the context — whether that's conducting field research with end users or presenting to execs, I adapt to the room.</p>
             </div>
@@ -1497,9 +1658,10 @@
 
                 <div class="group card-beyond">
                     <div class="image-wrapper">
-                        <div class="image-parallax-track">
-                            <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        <div class="image-parallax-track lqip-parallax-host" data-lqip-ref="assets/images/other-medium.png">
+                            <img class="lqip-fadein" src="assets/images/other-medium.png" alt="My other medium" loading="lazy" decoding="async"/>
                         </div>
+                        <div class="beyond-image-overlay" aria-hidden="true"></div>
                     </div>
 
                     <div class="card-description">
@@ -1525,9 +1687,10 @@
 
                 <div class="group card-beyond">
                     <div class="image-wrapper">
-                        <div class="image-parallax-track">
-                            <img src="assets/images/gazelkin-results-dashboards-wide.png" alt="Vibe coding experiments"/>
+                        <div class="image-parallax-track lqip-parallax-host" data-lqip-ref="assets/images/gazelkin-results-dashboards-wide.png">
+                            <img class="lqip-fadein" src="assets/images/gazelkin-results-dashboards-wide.png" alt="Vibe coding experiments" loading="lazy" decoding="async"/>
                         </div>
+                        <div class="beyond-image-overlay" aria-hidden="true"></div>
                     </div>
 
                     <div class="card-description">
@@ -1554,9 +1717,10 @@
                 <div class="hidden" aria-hidden="true">
                 <div class="group card-beyond">
                     <div class="image-wrapper">
-                        <div class="image-parallax-track">
-                            <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        <div class="image-parallax-track lqip-parallax-host" data-lqip-ref="assets/images/MY entrepreneurial experiment.png">
+                            <img class="lqip-fadein" src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment" loading="lazy" decoding="async"/>
                         </div>
+                        <div class="beyond-image-overlay" aria-hidden="true"></div>
                     </div>
                     <div class="card-description">
                         <div class="card-badges">
@@ -1980,8 +2144,54 @@
             window.addEventListener("resize", tickAllIntroScrollReveals, { passive: true });
             tickAllIntroScrollReveals();
         }
+
+        // Cursor follower for step titles
+        const stepFollower = document.getElementById("step-cursor-follower");
+        const stepHoverZones = document.querySelectorAll(".about-how-work-grid .step-hover-zone");
+        let sfMouseX = 0,
+            sfMouseY = 0,
+            sfX = 0,
+            sfY = 0,
+            sfRaf = null;
+
+        function sfLerp(a, b, t) {
+            return a + (b - a) * t;
+        }
+
+        function sfAnimate() {
+            if (!stepFollower) return;
+            sfX = sfLerp(sfX, sfMouseX, 0.1);
+            sfY = sfLerp(sfY, sfMouseY, 0.1);
+            stepFollower.style.left = sfX + "px";
+            stepFollower.style.top = sfY + "px";
+            sfRaf = requestAnimationFrame(sfAnimate);
+        }
+
+        document.addEventListener("mousemove", (e) => {
+            sfMouseX = e.clientX;
+            sfMouseY = e.clientY;
+        });
+
+        const stepFollowerImg = stepFollower?.querySelector("img");
+        if (stepFollower && stepFollowerImg && stepHoverZones.length) {
+            stepHoverZones.forEach((zone) => {
+                zone.addEventListener("mouseenter", () => {
+                    const src = zone.getAttribute("data-step-preview");
+                    if (src) stepFollowerImg.src = src;
+                    stepFollower.classList.add("is-visible");
+                    if (!sfRaf) sfAnimate();
+                });
+                zone.addEventListener("mouseleave", () => {
+                    stepFollower.classList.remove("is-visible");
+                });
+            });
+        }
     });
 </script>
+
+<div id="step-cursor-follower" aria-hidden="true">
+    <img src="assets/images/Think-by-Making.png" alt="" />
+</div>
 
 </body>
 </html>
