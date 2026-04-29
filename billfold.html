@@ -23,6 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
     <script src="assets/js/global-lenis.js" defer></script>
+    <script src="assets/js/img-lqip.js" defer></script>
 
     <style type="text/tailwindcss">
         @theme {
@@ -790,6 +791,29 @@
         }
         /* ─────────────────────────────────────────────────────────────── */
 
+        /* LQIP: tiny JPEG placeholder until full image loads */
+        .lqip-parallax-host {
+            background-image: var(--lqip);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .lqip-parallax-host > img.lqip-fadein {
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .lqip-parallax-host > img.lqip-fadein.lqip-loaded {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lqip-parallax-host > img.lqip-fadein {
+                transition: none;
+            }
+        }
+
     </style>
 </head>
 
@@ -895,7 +919,7 @@
         </section>
 
         <section id="pos-image">
-            <img class="w-full rounded-[20px] object-cover aspect-[1048/656]" src="assets/images/main-billfold.png" alt="Billfold POS device"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/main-billfold.png"><img class="w-full rounded-[20px] object-cover aspect-[1048/656] lqip-fadein" src="assets/images/main-billfold.png" alt="Billfold POS device"/></div>
         </section>
 
         <section id="overview" class="flex flex-col items-start">
@@ -942,17 +966,17 @@
                 </div>
                 </div>
 
-                <img src="assets/images/hand-billfold.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/hand-billfold.png"><img src="assets/images/hand-billfold.png"
                      alt="Billfold POS device"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/RFID_Wristband_billfold.png"
                              alt="Billfold RFID wristband"
                              class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
-                        <img src="assets/images/festival-billfold.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/festival-billfold.png"><img src="assets/images/festival-billfold.png"
                              alt="Festival crowd"
-                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover lqip-fadein"/></div>
                 </div>
                 </div>
 
@@ -1016,9 +1040,9 @@
                     — fast enough to keep lines moving and reliable enough to protect revenue at every transaction.</p>
                 </div>
 
-                <img src="assets/images/challenge-billfold.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/challenge-billfold.png"><img src="assets/images/challenge-billfold.png"
                      alt="Billfold challenge"
-                     class="mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
+                     class="mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px] lqip-fadein"/></div>
 
             </div>
 
@@ -1085,7 +1109,7 @@
         </section>
 
         <section id="map-image" data-parallax-wrap class="-mt-[38px] max-md:rounded-[20px] max-md:overflow-hidden md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/map-billfold.png" alt="Billfold system map"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/map-billfold.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/map-billfold.png" alt="Billfold system map"/></div>
         </section>
 
         <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
@@ -1187,11 +1211,11 @@
                 </div>
             </div>
 
-            <img
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/festival-man-billfold.png"><img
                 src="assets/images/festival-man-billfold.png"
                 alt="Billfold at festival"
-                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
-            />
+                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px] lqip-fadein"
+            /></div>
 
         </section>
 
@@ -1263,7 +1287,7 @@
         </section>
 
         <section id="festival-girl-image">
-            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/festival-girl-billfold.png" alt="Billfold at festival"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/festival-girl-billfold.png"><img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto lqip-fadein" src="assets/images/festival-girl-billfold.png" alt="Billfold at festival"/></div>
         </section>
 
         <section id="vendor-experience" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1331,17 +1355,17 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
-                <img src="assets/images/vendor-billfold.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/vendor-billfold.png"><img src="assets/images/vendor-billfold.png"
                      alt="Vendor-facing Billfold POS"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                        <img src="assets/images/barmen-phone-billfold.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/barmen-phone-billfold.png"><img src="assets/images/barmen-phone-billfold.png"
                              alt="Bartender using Billfold on phone"
-                             class="hidden md:block overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
-                        <img src="assets/images/barmen-billfold.png"
+                             class="hidden md:block overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/barmen-billfold.png"><img src="assets/images/barmen-billfold.png"
                              alt="Bartenders at Billfold POS"
-                             class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                             class="overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover lqip-fadein"/></div>
                 </div>
                 </div>
                 </div>
@@ -1429,17 +1453,17 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
-                <img src="assets/images/customer-pos-billfold.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/customer-pos-billfold.png"><img src="assets/images/customer-pos-billfold.png"
                      alt="Guest-facing Billfold customer POS screen"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/bar-billfold.png"
                              alt="Bar environment with Billfold"
                              class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
-                        <img src="assets/images/customer-billfold.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/customer-billfold.png"><img src="assets/images/customer-billfold.png"
                              alt="Guest using Billfold customer-facing screen"
-                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover lqip-fadein"/></div>
                 </div>
                 </div>
                 </div>
@@ -1523,17 +1547,17 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
-                <img src="assets/images/kiosk-billfold.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/kiosk-billfold.png"><img src="assets/images/kiosk-billfold.png"
                      alt="Billfold check-in kiosk"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/kiosk-billfold-img.png"
                              alt="Billfold kiosk interface detail"
                              class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
-                        <img src="assets/images/man-kiosk-billfold.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/man-kiosk-billfold.png"><img src="assets/images/man-kiosk-billfold.png"
                              alt="Guest using Billfold check-in kiosk"
-                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover lqip-fadein"/></div>
                 </div>
                 </div>
                 </div>
@@ -1626,9 +1650,9 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                 <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                        <img src="assets/images/festival-pos-billfold.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/festival-pos-billfold.png"><img src="assets/images/festival-pos-billfold.png"
                              alt="Festival POS with Billfold"
-                             class="hidden md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="hidden md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                         <img src="assets/images/results-billfold.png"
                              alt="Billfold results and impact"
                              class="hidden w-full rounded-[20px] object-contain md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
@@ -1702,7 +1726,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
         </section>
 
         <section id="give-image">
-            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/give-billfold.png" alt="Billfold Give feature"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/give-billfold.png"><img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto lqip-fadein" src="assets/images/give-billfold.png" alt="Billfold Give feature"/></div>
         </section>
 
         <section id="reflections" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14 mb-[80px] xl:mb-[120px]">

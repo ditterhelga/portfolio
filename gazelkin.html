@@ -23,6 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
     <script src="assets/js/global-lenis.js" defer></script>
+    <script src="assets/js/img-lqip.js" defer></script>
 
     <style type="text/tailwindcss">
         @theme {
@@ -796,6 +797,29 @@
         }
         /* ─────────────────────────────────────────────────────────────── */
 
+        /* LQIP: tiny JPEG placeholder until full image loads */
+        .lqip-parallax-host {
+            background-image: var(--lqip);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .lqip-parallax-host > img.lqip-fadein {
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .lqip-parallax-host > img.lqip-fadein.lqip-loaded {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lqip-parallax-host > img.lqip-fadein {
+                transition: none;
+            }
+        }
+
     </style>
 </head>
 
@@ -855,7 +879,7 @@
             <div class="gazelkin-hero-media image-block mt-10">
                 <div class="gazelkin-hero-media-bg full-bleed overflow-hidden bg-[#ECF1F4] py-8 md:py-12 xl:py-[80px]">
                     <div class="flex w-full justify-center px-4 sm:px-8 md:px-6 2xl:px-8">
-                        <img class="w-full max-w-[1280px] rounded-[20px] object-cover xl:aspect-[1168/616] 2xl:max-w-[1440px]" src="assets/images/gazelkin-hero.png" alt="Gazelkin driver using the mobile app"/>
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-hero.png"><img class="w-full max-w-[1280px] rounded-[20px] object-cover xl:aspect-[1168/616] 2xl:max-w-[1440px] lqip-fadein" src="assets/images/gazelkin-hero.png" alt="Gazelkin driver using the mobile app"/></div>
                     </div>
                 </div>
             </div>
@@ -896,7 +920,7 @@
         </section>
 
         <section id="gazelkin-lead-strip">
-            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-lead-dashboard.png" alt="Gazelkin logistics operations"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-lead-dashboard.png"><img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto lqip-fadein" src="assets/images/gazelkin-lead-dashboard.png" alt="Gazelkin logistics operations"/></div>
         </section>
 
         <section id="overview" class="flex flex-col items-start">
@@ -925,17 +949,17 @@
                 </div>
                 </div>
 
-                <img src="assets/images/gazelkin-overview-hero-drivers.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-overview-hero-drivers.png"><img src="assets/images/gazelkin-overview-hero-drivers.png"
                      alt="Gazelkin drivers"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                        <img src="assets/images/gazelkin-overview-mover.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-overview-mover.png"><img src="assets/images/gazelkin-overview-mover.png"
                              alt="Driver loading cargo"
-                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:min-w-0 2xl:w-full 2xl:flex-none 2xl:object-cover"/>
-                        <img src="assets/images/gazelkin-overview-call-center.png"
+                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:min-w-0 2xl:w-full 2xl:flex-none 2xl:object-cover lqip-fadein"/></div>
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-overview-call-center.png"><img src="assets/images/gazelkin-overview-call-center.png"
                              alt="Call center operator"
-                             class="hidden aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:block md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="hidden aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:block md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                 </div>
                 </div>
 
@@ -989,9 +1013,9 @@
                     <p class="font-light text-5/8">A <span class="font-medium">fragmented system</span> with no shared data, no design foundation, and <span class="font-medium">users under constant pressure,</span> this was the real challenge.</p>
                 </div>
 
-                <img src="assets/images/gazelkin-challenge-team.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-challenge-team.png"><img src="assets/images/gazelkin-challenge-team.png"
                      alt="Gazelkin team at work"
-                     class="mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
+                     class="mt-8 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px] lqip-fadein"/></div>
 
             </div>
 
@@ -1079,7 +1103,7 @@
         </section>
 
         <section id="gazelkin-strip-map">
-            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-process-map.png" alt="Operations map and dashboards"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-process-map.png"><img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto lqip-fadein" src="assets/images/gazelkin-process-map.png" alt="Operations map and dashboards"/></div>
         </section>
 
         <section id="research" class="flex flex-col gap-y-0 -mt-2 md:mt-0">
@@ -1142,11 +1166,11 @@
                 </div>
             </div>
 
-            <img
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-research-operations.png"><img
                 src="assets/images/gazelkin-research-operations.png"
                 alt="Dispatcher during research"
-                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
-            />
+                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px] lqip-fadein"
+            /></div>
 
             <script>
                 (function () {
@@ -1357,7 +1381,7 @@
         </section>
 
         <section id="gazelkin-personas-hero">
-            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-personas-hero-driver.png" alt="Driver in delivery van"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-personas-hero-driver.png"><img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto lqip-fadein" src="assets/images/gazelkin-personas-hero-driver.png" alt="Driver in delivery van"/></div>
         </section>
 
                 <section id="learning" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1411,17 +1435,17 @@
                 </div>
 
                 <div class="flex w-full min-w-0 flex-col gap-y-4 md:order-4 md:gap-y-[16px]">
-                <img src="assets/images/gazelkin-road-app-hero.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-road-app-hero.png"><img src="assets/images/gazelkin-road-app-hero.png"
                      alt="Driver app on device in vehicle"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:flex-row md:gap-x-4 md:gap-y-0 md:items-start 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                        <img src="assets/images/gazelkin-road-drivers-collab.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-road-drivers-collab.png"><img src="assets/images/gazelkin-road-drivers-collab.png"
                              alt="Drivers reviewing the app together"
-                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:min-w-0 2xl:w-full 2xl:flex-none 2xl:object-cover"/>
-                        <img src="assets/images/gazelkin-road-hand-device.png"
+                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:min-w-0 2xl:w-full 2xl:flex-none 2xl:object-cover lqip-fadein"/></div>
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-road-hand-device.png"><img src="assets/images/gazelkin-road-hand-device.png"
                              alt="Driver using phone in cab"
-                             class="hidden aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:block md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="hidden aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:block md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                 </div>
                 </div>
 
@@ -1544,9 +1568,9 @@
                 </div>
 
                 <div class="w-full">
-                <img src="assets/images/gazelkin-operator-focus.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-operator-focus.png"><img src="assets/images/gazelkin-operator-focus.png"
                      alt="Operator at workstation"
-                     class="overview-img-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
                 </div>
 
                 <div class="flex w-full flex-col gap-y-6 md:gap-y-8 xl:gap-y-8 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] font-light text-5/8">
@@ -1619,7 +1643,7 @@
         </section>
 
         <section id="gazelkin-strip-dashboards">
-            <img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto" src="assets/images/gazelkin-results-dashboards-wide.png" alt="Operations dashboards"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-results-dashboards-wide.png"><img class="w-full rounded-[20px] object-cover aspect-[1048/656] md:aspect-auto lqip-fadein" src="assets/images/gazelkin-results-dashboards-wide.png" alt="Operations dashboards"/></div>
         </section>
 
 <section id="results-drivers" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1675,9 +1699,9 @@
 
         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
         <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                <img src="assets/images/gazelkin-results-driver-portrait.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-results-driver-portrait.png"><img src="assets/images/gazelkin-results-driver-portrait.png"
                      alt="Driver portrait"
-                     class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                     class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                 <img src="assets/images/gazelkin-results-driver-scene.png"
                      alt="Drivers in the field"
                      class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
@@ -1772,9 +1796,9 @@
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                     <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                        <img src="assets/images/gazelkin-results-operator-portrait.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-results-operator-portrait.png"><img src="assets/images/gazelkin-results-operator-portrait.png"
                              alt="Operator portrait"
-                             class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                         <img src="assets/images/gazelkin-results-operator-scene.png"
                              alt="Operators at work"
                              class="hidden w-full rounded-[20px] object-cover md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
@@ -1854,7 +1878,7 @@
             </div>
         </div>
         <div class="w-full max-w-full xl:max-w-[856px] 2xl:max-w-[1048px]">
-            <img src="assets/images/gazelkin-business-impact-delivery.png" alt="Delivery in motion" class="w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-business-impact-delivery.png"><img src="assets/images/gazelkin-business-impact-delivery.png" alt="Delivery in motion" class="w-full rounded-[20px] object-cover aspect-[288/184] md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
         </div>
     </div>
     <script>
@@ -1941,9 +1965,9 @@
                         </div>
 
                         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
-                            <img src="assets/images/gazelkin-reflections-logistics.png"
+                            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/gazelkin-reflections-logistics.png"><img src="assets/images/gazelkin-reflections-logistics.png"
                                  alt="Logistics operations and reflection"
-                                 class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                                 class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
                         </div>
                     </div>
 

@@ -23,6 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
     <script src="assets/js/global-lenis.js" defer></script>
+    <script src="assets/js/img-lqip.js" defer></script>
 
     <style type="text/tailwindcss">
         @theme {
@@ -805,6 +806,29 @@
         }
         /* ─────────────────────────────────────────────────────────────── */
 
+        /* LQIP: tiny JPEG placeholder until full image loads */
+        .lqip-parallax-host {
+            background-image: var(--lqip);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .lqip-parallax-host > img.lqip-fadein {
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .lqip-parallax-host > img.lqip-fadein.lqip-loaded {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lqip-parallax-host > img.lqip-fadein {
+                transition: none;
+            }
+        }
+
     </style>
 </head>
 
@@ -864,7 +888,7 @@
             <div class="subway-hero-media image-block mt-10">
                 <div class="subway-hero-media-bg full-bleed overflow-hidden bg-[#1A3716] py-8 md:py-12 xl:py-[80px]">
                     <div class="flex w-full justify-center px-4 sm:px-8 md:px-6 2xl:px-8">
-                        <img class="w-full max-w-[1280px] rounded-[20px] object-cover xl:aspect-[1168/616] 2xl:max-w-[1440px]" src="assets/images/subway-hero.png" alt="Subway hero image"/>
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-hero.png"><img class="w-full max-w-[1280px] rounded-[20px] object-cover xl:aspect-[1168/616] 2xl:max-w-[1440px] lqip-fadein" src="assets/images/subway-hero.png" alt="Subway hero image"/></div>
                     </div>
                 </div>
             </div>
@@ -905,7 +929,7 @@
         </section>
 
         <section id="subway-intro-img" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-intro-main.png" alt="Subway POS device"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-intro-main.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-intro-main.png" alt="Subway POS device"/></div>
         </section>
 
         <section id="overview" class="flex flex-col items-start">
@@ -934,17 +958,17 @@
                 </div>
                 </div>
 
-                <img src="assets/images/subway-overview-main.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-overview-main.png"><img src="assets/images/subway-overview-main.png"
                      alt="Subway POS device"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-4 md:mt-4 md:aspect-[1048/656] xl:mt-6 xl:aspect-[1048/656] 2xl:mt-[24px] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:-mt-[8px] md:gap-y-[16px] md:flex-row md:gap-x-4 md:gap-y-0 md:items-start xl:-mt-[16px] xl:gap-y-0 2xl:-mt-[24px] 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/subway-overview-side-1.png"
                              alt="Subway RFID wristband"
                              class="overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
-                        <img src="assets/images/subway-overview-side-2.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-overview-side-2.png"><img src="assets/images/subway-overview-side-2.png"
                              alt="Festival crowd"
-                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover lqip-fadein"/></div>
                 </div>
                 </div>
 
@@ -1072,7 +1096,7 @@
         </section>
 
         <section id="menu-subway" data-parallax-wrap class="-mt-[38px] max-md:rounded-[20px] max-md:overflow-hidden md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-map.png" alt="Subway system map"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-transition-map.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-transition-map.png" alt="Subway system map"/></div>
         </section>
 
         <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
@@ -1174,11 +1198,11 @@
                 </div>
             </div>
 
-            <img
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-research-main.png"><img
                 src="assets/images/subway-research-main.png"
                 alt="Subway at festival"
-                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px]"
-            />
+                class="mt-4 w-full rounded-[20px] object-cover aspect-[1048/656] md:mt-12 md:max-xl:h-[clamp(334px,calc(334px+42*(100vw-48rem)/32rem),376px)] xl:mt-8 xl:max-w-[856px] xl:h-[376px] 2xl:mt-[48px] 2xl:max-w-[1048px] 2xl:h-[496px] lqip-fadein"
+            /></div>
 
         </section>
 
@@ -1383,7 +1407,7 @@
         </section>
 
         <section id="dashboard-subway" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-transition-learning.png" alt="Subway at festival"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-transition-learning.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-transition-learning.png" alt="Subway at festival"/></div>
         </section>
 
         <section id="learning" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1450,9 +1474,9 @@
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
-                <img src="assets/images/subway-learning-main.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-learning-main.png"><img src="assets/images/subway-learning-main.png"
                      alt="Vendor-facing Subway POS"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/subway-learning-side-1.png"
@@ -1546,17 +1570,17 @@
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
-                <img src="assets/images/subway-gamification-main.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-gamification-main.png"><img src="assets/images/subway-gamification-main.png"
                      alt="Guest-facing Subway customer POS screen"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
                 <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                        <img src="assets/images/subway-gamification-side-1.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-gamification-side-1.png"><img src="assets/images/subway-gamification-side-1.png"
                              alt="Bar environment with Subway"
-                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover"/>
-                        <img src="assets/images/subway-gamification-side-2.png"
+                             class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover lqip-fadein"/></div>
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-gamification-side-2.png"><img src="assets/images/subway-gamification-side-2.png"
                              alt="Guest using Subway customer-facing screen"
-                             class="hidden md:block overview-img-3 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="hidden md:block overview-img-3 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                 </div>
                 </div>
                 </div>
@@ -1580,7 +1604,7 @@
         </section>
 
         <section id="employee-office-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/employee-office-subway.png" alt="Employee office at Subway"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/employee-office-subway.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/employee-office-subway.png" alt="Employee office at Subway"/></div>
         </section>
 
         <section id="operations" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1643,9 +1667,9 @@
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
-                <img src="assets/images/subway-operations-main.png"
+                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-operations-main.png"><img src="assets/images/subway-operations-main.png"
                      alt="Subway check-in kiosk"
-                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                     class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
                 </div>
                 </div>
 
@@ -1704,7 +1728,7 @@
         </section>
 
         <section id="branding-long-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px]" src="assets/images/subway-branding-long.png" alt="Subway branding in use"/>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-branding-long.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-branding-long.png" alt="Subway branding in use"/></div>
         </section>
 
         <section id="results-real-world" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -1788,9 +1812,9 @@
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                 <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                        <img src="assets/images/subway-results-side-1.png"
+                        <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-results-side-1.png"><img src="assets/images/subway-results-side-1.png"
                              alt="Festival POS with Subway"
-                             class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                             class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                         <img src="assets/images/subway-results-main.png"
                              alt="Subway results and impact"
                              class="hidden w-full rounded-[20px] object-contain md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
@@ -1886,9 +1910,9 @@
 
                         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
                             <div class="order-5 flex w-full flex-col gap-y-8 md:order-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
-                                <img src="assets/images/subway-results-side-2.png"
+                                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-results-side-2.png"><img src="assets/images/subway-results-side-2.png"
                                      alt="Franchisee results visual"
-                                     class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
+                                     class="block md:block w-full shrink-0 rounded-[20px] object-cover aspect-[288/184] md:h-[320px] md:w-[320px] md:flex-none xl:h-[328px] xl:w-[328px] xl:flex-none 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none lqip-fadein"/></div>
                                 <img src="assets/images/subway-results-main-2.png"
                                      alt="HQ and franchisee results"
                                      class="hidden w-full rounded-[20px] object-contain md:block md:h-[320px] md:w-full md:flex-1 md:min-w-0 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full"/>
@@ -1961,9 +1985,9 @@
                         </div>
 
                         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
-                            <img src="assets/images/girl-food-subway.png"
+                            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/girl-food-subway.png"><img src="assets/images/girl-food-subway.png"
                                  alt="Reflections image"
-                                 class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                                 class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
                         </div>
                     </div>
 
