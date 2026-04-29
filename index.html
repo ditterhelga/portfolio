@@ -21,6 +21,8 @@
 
     <!-- tools -->
     <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="assets/js/global-lenis.js" defer></script>
 
     <style type="text/tailwindcss">
         @theme {
@@ -38,12 +40,14 @@
             --bg-color: 216, 29%, 97%;
 
             --breakpoint-xs: 20rem;
+            --breakpoint-2xl: 96rem;
         }
 
         @utility full-bleed {
-            @apply w-screen;
-            margin-left: calc(50% - 50vw);
-            margin-right: calc(50% - 50vw);
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         @layer base {
@@ -64,6 +68,7 @@
                 /*margin: 0;*/
                 color: var(--color-text-primary);
                 background: linear-gradient(to bottom, #FFFFFF 0px, #F3F6F9 1183px) #F3F6F9;
+                overflow-x: hidden;
             }
 
             h1, h2, h3, h4, h5, h6 {
@@ -257,7 +262,8 @@
             md:gap-y-8
             xl:mt-5
             xl:flex-row-reverse
-            xl:gap-x-14;
+            xl:gap-x-14
+            2xl:gap-x-20;
 
 
             .rotating-words {
@@ -354,6 +360,7 @@
                 transition: background 300ms, transform 200ms;
                 font-weight: 600;
                 font-family: 'Sofia Sans Condensed', sans-serif;
+                position: relative;
 
                 text {
                     fill: white;
@@ -367,6 +374,10 @@
                 .text-circle {
                     transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
                     transform-origin: center;
+                }
+
+                .text-circle-safari {
+                    display: none;
                 }
 
                 .arrow-icon {
@@ -388,7 +399,89 @@
                         stroke: var(--color-accent-yellow);
                     }
                 }
+                
+                html.is-safari & {
+                    .text-circle {
+                        display: none;
+                    }
+
+                    .text-circle-safari {
+                        display: block;
+                    }
+
+                    .text-circle-safari text {
+                        animation: none;
+                        letter-spacing: 0.08em;
+                    }
+                }
             }
+
+            .about-portrait-frame {
+                position: relative;
+                overflow: hidden;
+                border-radius: 20px;
+                isolation: isolate;
+                flex-shrink: 0;
+                cursor: pointer;
+                @apply max-w-none
+                h-[152px] w-[152px]
+                -mt-40
+                md:-mt-52.75
+                md:h-[208px] md:w-[208px]
+                xl:h-[384px] xl:w-[384px]
+                xl:mt-0;
+            }
+
+            .about-portrait-stage {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                perspective: 880px;
+                perspective-origin: 50% 42%;
+            }
+
+            .about-portrait-tilt {
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transform: perspective(880px) rotateX(0deg) rotateY(0deg);
+                will-change: transform;
+            }
+
+            /* Slightly larger than frame so parallax/tilt stay inside the clip (square mask is only on the frame). */
+            .about-portrait-stack {
+                position: absolute;
+                inset: -9%;
+                width: auto;
+                height: auto;
+                transform-style: preserve-3d;
+            }
+
+            .about-portrait-layer {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: 50% 45%;
+                max-width: none;
+                pointer-events: none;
+                user-select: none;
+                -webkit-user-drag: none;
+                will-change: transform;
+            }
+
+            .about-portrait-back {
+                z-index: 1;
+                transform: scale(1.03);
+            }
+
+            .about-portrait-front {
+                z-index: 2;
+                transform: scale(1.03);
+            }
+
         }
 
         @keyframes rotate {
@@ -398,7 +491,8 @@
         }
 
         @utility card-content {
-            @apply flex flex-col gap-8 items-center sm:flex-row-reverse;
+            @apply flex flex-col gap-8 items-center sm:flex-row-reverse
+            2xl:gap-x-16;
         }
 
         @utility card-badges {
@@ -411,7 +505,8 @@
 
         @utility card-title {
             @apply text-primary-dark font-family-sofia font-normal text-7xl tracking-[-2px]
-            xl:mb-5;
+            xl:mb-5
+            2xl:text-[102px];
         }
 
         .card-description {
@@ -443,6 +538,230 @@
             tracking-wider;
         }
 
+        /* Section kickers: blob — same rotation as before; fill uses currentColor for hover */
+        .section-kicker {
+            width: fit-content;
+        }
+
+        .section-kicker-blob {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            color: #363ccc;
+            transition: color 0.35s ease;
+        }
+
+        .section-kicker-blob svg {
+            display: block;
+            width: 24px;
+            height: 24px;
+            transform-origin: center center;
+            transition: transform 1.45s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+
+        .section-kicker:hover .section-kicker-blob {
+            color: #0016f2;
+        }
+
+        .section-kicker:hover .section-kicker-blob svg {
+            transform: rotate(720deg);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .section-kicker-blob svg {
+                transition: none;
+            }
+
+            .section-kicker:hover .section-kicker-blob svg {
+                transform: none;
+            }
+        }
+
+        /* #work: only image / title / CTA are links */
+        #work a.work-case-card-link {
+            cursor: pointer;
+        }
+
+        /* Work card titles: solid brand blue; darken slightly when the card row is hovered or the title link is focused */
+        #work .work-card-surface h3.card-title.intro-scroll-reveal .word {
+            display: inline-block;
+            color: #3b47c2;
+            -webkit-text-fill-color: #3b47c2;
+            transition: color 0.2s ease, -webkit-text-fill-color 0.2s ease;
+        }
+
+        #work .card-content.group:hover h3.card-title.intro-scroll-reveal .word,
+        #work a.work-case-card-link:has(> h3.card-title):focus-visible h3.card-title.intro-scroll-reveal .word {
+            color: #0016f2;
+            -webkit-text-fill-color: #0016f2;
+        }
+        #cards-beyond a.beyond-card-cta-link {
+            cursor: pointer;
+        }
+
+        /* Row layout: image link must not stay w-full at sm+ (would collapse the text column) */
+        @media (min-width: 640px) {
+            #work .card-content.group > .card-description {
+                min-width: 0;
+                flex: 1 1 auto;
+            }
+        }
+
+        /*
+         * Image column between sm and xl: photo lives in absolutely positioned layers, so the flex item
+         * has ~0 intrinsic width and can collapse. Give it a real flex basis (override shrink-0 intent when needed).
+         */
+        @media (min-width: 640px) and (max-width: 767px) {
+            #work .card-content.group > a.work-case-card-link:first-of-type {
+                flex-grow: 0;
+                flex-shrink: 1;
+                flex-basis: 618px;
+                min-width: 200px;
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1279px) {
+            #work .card-content.group > a.work-case-card-link:first-of-type {
+                flex-grow: 0;
+                flex-shrink: 1;
+                flex-basis: 710px;
+                min-width: 200px;
+                max-width: 100%;
+            }
+        }
+
+        /* Work + Beyond Work CTAs: yellow circle → pink pill; white chevron → arrow-hover.svg */
+        #work .card-content.group .work-card-cta .card-detail-text,
+        #cards-beyond .card-beyond.group .work-card-cta .card-detail-text {
+            transform: translateY(1px);
+        }
+        #work .work-card-cta,
+        #cards-beyond .work-card-cta {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 1rem;
+            width: fit-content;
+            max-width: 100%;
+            padding-right: 0;
+            box-sizing: border-box;
+            transition: padding-right 0.4s cubic-bezier(0.33, 1, 0.32, 1);
+        }
+        #work .work-card-cta::before,
+        #cards-beyond .work-card-cta::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 48px;
+            height: 48px;
+            margin-top: -24px;
+            border-radius: 9999px;
+            background-color: var(--color-accent-yellow);
+            z-index: 0;
+            pointer-events: none;
+            transition:
+                width 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                height 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                margin-top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                background-color 0.35s ease;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta {
+            padding-right: 32px;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta::before,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta::before,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta::before,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta::before {
+            top: 0;
+            margin-top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-pink-badge);
+        }
+        #work .work-card-cta-icon,
+        #work .work-card-cta .card-detail-text,
+        #cards-beyond .work-card-cta-icon,
+        #cards-beyond .work-card-cta .card-detail-text {
+            position: relative;
+            z-index: 1;
+        }
+        #work .work-card-cta-icon,
+        #cards-beyond .work-card-cta-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+        #work .work-card-cta-chevron,
+        #work .work-card-cta-arrow,
+        #cards-beyond .work-card-cta-chevron,
+        #cards-beyond .work-card-cta-arrow {
+            transition: opacity 0.3s ease;
+        }
+        #work .work-card-cta-chevron,
+        #cards-beyond .work-card-cta-chevron {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            display: block;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            overflow: visible;
+        }
+        #work .work-card-cta-arrow,
+        #cards-beyond .work-card-cta-arrow {
+            position: absolute;
+            left: 23px;
+            top: 17px;
+            width: 18px;
+            height: 14px;
+            max-width: none;
+            object-fit: contain;
+            object-position: left top;
+            display: block;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta-chevron,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta-chevron,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-chevron,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-chevron {
+            opacity: 0;
+        }
+        #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta-arrow,
+        #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta-arrow,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-arrow,
+        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-arrow {
+            opacity: 1;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #work .work-card-cta::before,
+            #work .work-card-cta,
+            #work .work-card-cta-chevron,
+            #work .work-card-cta-arrow,
+            #cards-beyond .work-card-cta::before,
+            #cards-beyond .work-card-cta,
+            #cards-beyond .work-card-cta-chevron,
+            #cards-beyond .work-card-cta-arrow {
+                transition: none;
+            }
+        }
+
         .card-wrapper {
             @apply xs:max-xl:full-bleed xl:rounded-[20px] bg-white;
         }
@@ -458,20 +777,35 @@
             background-color: #f3f6f9;
         }
 
-        /* Pull Beyond block up by half the main column gap (gap-y-18 / md:24 / xl:26) */
+        .intro-scroll-reveal .word {
+            display: inline-block;
+            color: #e5e5e5;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro-scroll-reveal {
+                color: var(--color-text-primary);
+            }
+
+            #work .work-card-surface h3.card-title.intro-scroll-reveal {
+                color: var(--color-primary-dark);
+            }
+        }
+
+        /* Pull Beyond block up (overlaps main column gap) — tuned so less #f3f6f9 shows under the last work card */
         #work + .full-bleed {
-            margin-top: -2.25rem;
+            margin-top: -3.25rem;
         }
 
         @media (min-width: 48rem) {
             #work + .full-bleed {
-                margin-top: -3rem;
+                margin-top: -4rem;
             }
         }
 
         @media (min-width: 80rem) {
             #work + .full-bleed {
-                margin-top: -3.25rem;
+                margin-top: -4.75rem;
             }
         }
 
@@ -489,7 +823,7 @@
             }
 
             #work .work-cards-stack > .card-wrapper:last-of-type {
-                padding-bottom: calc(5vh + 56px);
+                padding-bottom: calc(1.5vh + 24px);
             }
 
             #work .work-cards-stack > .card-wrapper:nth-child(1) {
@@ -524,9 +858,6 @@
                 border-radius: 20px;
                 box-sizing: border-box;
                 width: 100%;
-                max-width: 1216px;
-                margin-left: auto;
-                margin-right: auto;
                 height: 722px;
                 min-height: 722px;
                 max-height: 722px;
@@ -546,6 +877,23 @@
             }
         }
 
+        @media (min-width: 1536px) {
+            #work .work-cards-stack > .card-wrapper {
+                background-color: #f3f6f9 !important;
+            }
+            #work .work-cards-stack .card {
+                max-width: 100% !important;
+                height: 900px;
+                min-height: 900px;
+                max-height: 900px;
+            }
+            #work .work-cards-stack .work-card-surface {
+                height: auto !important;
+                min-height: unset !important;
+                max-height: unset !important;
+            }
+        }
+
         .card {
             @apply flex flex-col max-w-[1280px]
             mx-auto
@@ -553,21 +901,71 @@
             pt-14 sm:pt-16
             pb-12 sm:pb-13
             gap-y-10
-            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14;
+            xl:max-w-[1216px] xl:px-20 xl:pt-20 xl:pb-[104px] xl:gap-y-14
+            2xl:max-w-full 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px] 2xl:gap-y-14;
         }
 
-        .card-image {
-            @apply rounded-[20px] w-full object-cover
-            aspect-[1.25]
-            md:aspect-[0.84] md:max-w-[322px]
-            xl:aspect-auto xl:h-[400px] xl:w-[460px] xl:max-w-[460px] xl:shrink-0;
+        /* Clip shell; image inside is taller and translates on scroll (Sequel-style pan) */
+        .card-image-frame {
+            @apply rounded-[20px] w-full
+            max-sm:h-[460px] max-sm:aspect-auto
+            sm:h-auto sm:aspect-[460/400] sm:max-h-[538px] sm:max-w-[min(100%,618px)]
+            md:max-h-[620px] md:max-w-[min(100%,710px)]
+            xl:aspect-auto xl:h-[480px] xl:w-[552px] xl:max-h-none xl:max-w-[552px] xl:shrink-0
+            2xl:h-[586px] 2xl:w-[691px] 2xl:max-w-[691px];
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Slight vertical slack only; img fills track 1:1 like the old in-flow card-image */
+        .card-image-parallax-track {
+            position: absolute;
+            left: 0;
+            top: -9%;
+            width: 100%;
+            height: 118%;
+            will-change: transform;
+        }
+
+        .card-image-frame .card-image {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-image-parallax-track {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                height: 100%;
+                will-change: auto;
+            }
+
+            .card-image-frame .card-image {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                height: 100%;
+                max-width: none;
+            }
         }
 
 
         /* Main-xl: beyond-card-xl — gap 32px between image/tag/body/CTA; grid gap-x 48, gap-y 72; column 584px */
         #cards-beyond {
             @apply flex flex-col gap-y-12 md:gap-y-14
-            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px];
+            xl:grid xl:grid-cols-2 xl:gap-x-12 xl:gap-y-[72px]
+            xl:items-stretch
+            2xl:gap-x-16 2xl:gap-y-16;
 
             & > .card-beyond {
                 @apply flex w-full max-w-full flex-col items-start gap-y-8;
@@ -578,10 +976,27 @@
                     w-full
                     h-[380px]
                     shrink-0;
+                    position: relative;
 
-                    & > img {
-                        @apply w-full h-full
-                        object-cover object-center
+                    & > .image-parallax-track {
+                        position: absolute;
+                        left: 0;
+                        top: -9%;
+                        width: 100%;
+                        height: 118%;
+                        will-change: transform;
+                    }
+
+                    & > .image-parallax-track > img {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        max-width: none;
+                        object-fit: cover;
+                        object-position: center;
+                        display: block;
                     }
                 }
 
@@ -593,26 +1008,365 @@
                     font-family: 'Inter', sans-serif;
                     font-size: 20px;
                     line-height: 32px;
-                    font-weight: 400;
+                    font-weight: 300;
                 }
 
                 & .card-detail {
                     margin-top: 0;
                 }
             }
+
+            @media (prefers-reduced-motion: reduce) {
+                & > .card-beyond > .image-wrapper > .image-parallax-track {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    width: 100%;
+                    height: 100%;
+                    will-change: auto;
+                }
+
+                & > .card-beyond > .image-wrapper > .image-parallax-track > img {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    width: 100%;
+                    height: 100%;
+                    max-width: none;
+                }
+            }
+
+            /* Beyond card — marquee pills (image + text, same motion as Reasonal-style original) */
+            & > .card-beyond--more {
+                @apply gap-y-0 xl:h-full xl:min-h-0;
+            }
+
+            & > .card-beyond--more .beyond-more-shell {
+                @apply flex w-full min-h-0 flex-1 flex-col overflow-hidden rounded-[20px];
+                background-color: #ecf1f4;
+                min-height: min(380px, 52vw);
+            }
+
+            @media (min-width: 1280px) {
+                & > .card-beyond--more .beyond-more-shell {
+                    min-height: 0;
+                    height: 100%;
+                }
+            }
+
+            @media (min-width: 1536px) {
+                & > .card-beyond--more .beyond-more-shell {
+                    min-height: 0;
+                }
+            }
+
+            & > .card-beyond--more .beyond-marquee-stack {
+                @apply relative flex min-h-0 flex-1 flex-col justify-center gap-6 py-8 md:gap-8 md:py-10 xl:gap-10 xl:py-12;
+            }
+
+            & > .card-beyond--more .beyond-marquee-edge {
+                @apply pointer-events-none absolute inset-y-0 z-10 w-[10%] max-w-[72px];
+            }
+
+            & > .card-beyond--more .beyond-marquee-edge--left {
+                left: 0;
+                background: linear-gradient(to right, #ecf1f4 0%, transparent 100%);
+            }
+
+            & > .card-beyond--more .beyond-marquee-edge--right {
+                right: 0;
+                background: linear-gradient(to left, #ecf1f4 0%, transparent 100%);
+            }
+
+            & > .card-beyond--more .beyond-marquee-row {
+                @apply relative overflow-hidden;
+            }
+
+            /* Same loop as reasonal.co “Everything you need…”: linear infinite, duplicated strip;
+               direction flipped vs their default so pills drift left → right (translate -50% → 0). */
+            & > .card-beyond--more .beyond-marquee-track {
+                @apply flex w-max gap-4 md:gap-5;
+                will-change: transform;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 200s) linear infinite;
+            }
+
+            & > .card-beyond--more .beyond-marquee-row--alt .beyond-marquee-track {
+                animation-direction: reverse;
+                --beyond-marquee-dur: 300s;
+            }
+
+            & > .card-beyond--more .beyond-marquee-stack > .beyond-marquee-row:last-child .beyond-marquee-track {
+                --beyond-marquee-dur: 222s;
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill {
+                @apply flex w-max shrink-0 items-center gap-4 rounded-[28px] bg-white py-4 pl-4 pr-7 shadow-[0_4px_22px_rgba(116,130,151,0.15)] md:gap-5 md:rounded-[32px] md:py-[18px] md:pl-[18px] md:pr-9;
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill-img {
+                @apply relative h-16 w-16 shrink-0 overflow-hidden rounded-[14px] md:h-[72px] md:w-[72px] md:rounded-2xl;
+                transform: translateZ(0);
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill-img img {
+                @apply h-full w-full object-cover;
+            }
+
+            & > .card-beyond--more .beyond-marquee-pill-label {
+                font-family: 'Inter', sans-serif;
+                font-size: 20px;
+                line-height: 32px;
+                font-weight: 300;
+                letter-spacing: 0;
+                color: var(--color-text-primary);
+                text-align: left;
+                white-space: nowrap;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                & > .card-beyond--more .beyond-marquee-track {
+                    animation: none;
+                    transform: translateX(0);
+                }
+            }
         }
 
+        @keyframes beyond-marquee-scroll-ltr {
+            from {
+                transform: translateX(-50%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Chevron matches Figma footer (1680×739): dip y = 76.9792 / 739 ≈ 10.416% */
         .triag-cut {
-            clip-path: polygon(0 0, 50% 6vh, 100% 0, 100% 100%, 0 100%);
+            clip-path: polygon(0 0, 50% 10.416%, 100% 0, 100% 100%, 0 100%);
         }
 
-        /* Lighter Inter for match CTA copy (thinner than body default) */
+        /* Figma node 2176:3827 — full-bleed SVG stack + masked strokes */
+        #match {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            min-height: clamp(420px, 52vw, 739px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #match .match-figma-stack {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        #match .match-figma-stack--lines {
+            z-index: 1;
+        }
+
+        @media (max-width: 767px) {
+            #match .match-figma-stack--lines {
+                display: none;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            #match .match-figma-stack--lines {
+                transform: scale(0.9);
+                transform-origin: center center;
+            }
+        }
+
+        #match .match-inner {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1108px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 48px;
+            padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            #match .match-inner {
+                padding-inline: clamp(1.75rem, 11vw, 5.5rem);
+            }
+        }
+
+        #match .match-xl-body {
+            width: 100%;
+            max-width: min(100%, 640px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 900px) {
+            #match .match-xl-body {
+                max-width: min(100%, 720px);
+            }
+        }
+
         #match .match-xl-body p {
             font-family: 'Inter', sans-serif;
             font-size: 20px;
             line-height: 32px;
             font-weight: 300;
             letter-spacing: 0;
+        }
+
+        #match .match-xl-body a {
+            font-weight: 300;
+        }
+
+        #match .match-heading {
+            font-family: var(--font-family-sofia);
+            font-weight: 500;
+            font-size: clamp(2.75rem, 9vw, 6.375rem);
+            line-height: 1.02;
+            letter-spacing: -2px;
+        }
+
+        /* Match CTA — pill + icon like work cards; padding-right always 32px so centered flex doesn’t re-shift on hover */
+        #match .match-cta {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 1rem;
+            width: fit-content;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-right: 32px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        #match .match-cta::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 48px;
+            height: 48px;
+            margin-top: -24px;
+            border-radius: 9999px;
+            background-color: var(--color-accent-yellow);
+            z-index: 0;
+            pointer-events: none;
+            transition:
+                width 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                height 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                margin-top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                background-color 0.35s ease;
+        }
+
+        #match .match-cta:hover::before,
+        #match .match-cta:focus-visible::before {
+            top: 0;
+            margin-top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-pink-badge);
+        }
+
+        #match .match-cta-icon {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        #match .match-cta-circle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            width: 48px;
+            height: 48px;
+            display: block;
+        }
+
+        #match .match-cta-send {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 23px;
+            height: 23px;
+            max-width: none;
+            object-fit: contain;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #match .match-cta:hover .match-cta-circle,
+        #match .match-cta:focus-visible .match-cta-circle {
+            opacity: 0;
+        }
+
+        #match .match-cta:hover .match-cta-send,
+        #match .match-cta:focus-visible .match-cta-send {
+            opacity: 1;
+        }
+
+        #match .match-cta-label {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-family-sofia);
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            transform: translateY(1px);
+            transition: color 0.35s ease;
+        }
+
+        #match .match-cta:hover .match-cta-label,
+        #match .match-cta:focus-visible .match-cta-label {
+            color: var(--color-primary-light);
+        }
+
+        #match .match-cta:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #match .match-cta::before,
+            #match .match-cta-circle,
+            #match .match-cta-send,
+            #match .match-cta-label {
+                transition: none;
+            }
         }
 
         footer.site-footer .footer-inner a,
@@ -625,24 +1379,33 @@
         }
 
         footer.site-footer .footer-inner nav {
-            min-height: 32px;
+            display: flex;
             align-items: center;
+            min-height: 32px;
         }
 
         footer.site-footer .footer-inner nav a {
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-email {
             display: inline-flex;
             align-items: center;
             min-height: 32px;
+            transition: color 0.3s ease;
         }
 
         footer.site-footer .footer-inner .footer-contact img {
             display: block;
+        }
+
+        footer.site-footer .footer-inner nav a:hover,
+        footer.site-footer .footer-inner .footer-email:hover {
+            color: #FDE4DF;
+            opacity: 1;
         }
 
         .line-top {
@@ -684,6 +1447,90 @@
             display: none;
             top: 0;
             left: 0;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .card-view-cursor {
+                position: fixed;
+                width: 96px;
+                height: 96px;
+                background: white;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Sofia Sans Condensed', sans-serif;
+                font-weight: 600;
+                font-size: 22px;
+                letter-spacing: 0.03em;
+                color: #0016F2;
+                top: 0;
+                left: 0;
+                transform: translateZ(0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                will-change: transform, opacity;
+            }
+
+            @supports (-webkit-hyphens: none) {
+                .card-view-cursor {
+                    box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.35);
+                    outline: 1px solid transparent;
+                    -webkit-font-smoothing: antialiased;
+                }
+            }
+        }
+
+        /* Slight zoom of photo on hover (img only — parallax stays on .card-image-parallax-track). */
+        @media (hover: hover) and (pointer: fine) {
+            #work .card-image-frame .card-image,
+            #cards-beyond .image-wrapper > .image-parallax-track > img {
+                transform-origin: center center;
+                transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            #work .card-image-frame:hover .card-image,
+            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+                transform: scale(1.06);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #work .card-image-frame .card-image,
+            #cards-beyond .image-wrapper > .image-parallax-track > img {
+                transition: none;
+            }
+
+            #work .card-image-frame:hover .card-image,
+            #cards-beyond .image-wrapper:hover > .image-parallax-track > img {
+                transform: none;
+            }
+        }
+
+        /* Blue overlay on work card images — fades in on hover */
+        .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: #0016F2;
+            mix-blend-mode: multiply;
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .card-image-frame:hover .card-image-overlay {
+                opacity: 0.8;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-image-overlay {
+                transition: none;
+            }
         }
 
         #hero .hero-mask {
@@ -742,15 +1589,16 @@
         #hero .mask-screen h1 {
             color: #000;
             -webkit-text-fill-color: #000;
+            padding-right: 0.5rem;
         }
         /* ─────────────────────────────────────────────────────────────── */
 
     </style>
 </head>
 
-<body class="flex flex-col w-full max-w-[1280px] justify-center align-middle">
+<body class="flex flex-col w-full max-w-[1280px] 2xl:max-w-[1440px] justify-center align-middle">
 
-<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:gap-y-24 xl:gap-y-26">
+<div class="flex flex-col gap-y-18 px-4 sm:px-8 md:gap-y-24 xl:gap-y-26 2xl:px-0">
 
     <header class="flex pt-8 xl:pt-16">
         <div class="flex justify-between w-full">
@@ -762,9 +1610,9 @@
 
             <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
                 <a href="#work"    class="menulink">Work</a>
-                <a href="#about"   class="menulink">About</a>
-                <a href="#contact" class="menulink">Contact</a>
-                <a href="#resume"  class="menulink">Resume</a>
+                <a href="about.html"   class="menulink">About</a>
+                <a href="contact.html" class="menulink">Contact</a>
+                <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="menulink" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
         </div>
 
@@ -818,16 +1666,16 @@
     <section id="about">
 
         <div class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
-            <h1 class="section-header">I create systems people want to use, not just tolerate.</h1>
+            <h1 id="about-systems-lede" class="section-header intro-scroll-reveal">I create systems people want to use, not just tolerate.</h1>
 
-            <div class="flex flex-col text-5/8 gap-y-2">
-                <p>I’m Olga, a Product Designer based in Amsterdam.</p>
-                <p>Over the past decade, I’ve turned complex, frustrating systems into intuitive products
+            <div class="flex flex-col gap-y-2">
+                <p class="card-text">I’m Olga, a Product Designer based in Amsterdam.</p>
+                <p class="card-text">Over the past decade, I’ve turned complex, frustrating systems into intuitive products
                     that people enjoy using — bringing calm to busy environments and helping them work with
                     confidence.</p>
             </div>
 
-            <button class="button-about">
+            <a href="about.html" class="button-about no-underline text-inherit" aria-label="About me">
                 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500">
                     <title>Circular Text Path</title>
                     <defs>
@@ -837,6 +1685,13 @@
                                  a170,170 0 0,1 0,340"
                               transform="rotate(12,250,250)" />
                     </defs>
+                    <path id="text-circle-safari"
+                          d="M250,420
+                             a170,170 0 0,1 0,-340
+                             a170,170 0 0,1 0,340"
+                          transform="rotate(12,250,250)"
+                          fill="none"
+                          stroke="none"/>
                     <circle cx="250" cy="250" r="140" fill="white"/>
                     <g class="text-circle">
                         <text textLength="1000">
@@ -845,21 +1700,38 @@
                             </textPath>
                         </text>
                     </g>
+                    <g class="text-circle-safari" aria-hidden="true">
+                        <text>
+                            <textPath xlink:href="#text-circle-safari" textLength="1000" lengthAdjust="spacing">
+                                Click if you're curious
+                            </textPath>
+                        </text>
+                    </g>
                     <path class="arrow-icon" d="M225 275 L270 230 L235 230 M270 265 L270 230"  fill="none" stroke-linecap="square" stroke-linejoin="bevel"/>
                 </svg>
-            </button>
+            </a>
         </div>
 
-        <div>
-            <img src="assets/images/me-pepper.webp"
-                 alt="Olga Pertseva"
-                 class="max-w-none
-                        h-[152px] w-[152px]
-                        -mt-40
-                        md:-mt-52.75
-                        md:h-[208px] md:w-[208px]
-                        xl:h-[384px] xl:w-[384px]
-                        xl:mt-0"/>
+        <div class="about-portrait-frame">
+            <div class="about-portrait-stage">
+                <div class="about-portrait-tilt">
+                    <div class="about-portrait-stack">
+                        <img class="about-portrait-layer about-portrait-back"
+                             src="assets/images/me-pepper-back.png"
+                             alt=""
+                             width="384"
+                             height="384"
+                             decoding="async"
+                             aria-hidden="true"/>
+                        <img class="about-portrait-layer about-portrait-front"
+                             src="assets/images/me-pepper-front.png"
+                             alt="Olga Pertseva"
+                             width="384"
+                             height="384"
+                             decoding="async"/>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -867,16 +1739,20 @@
     <section id="work" class="flex flex-col gap-y-12 xl:gap-y-16">
 
         <div class="flex flex-col gap-y-6 xl:gap-y-12">
-            <div class="text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
-                <img src="assets/images/blob-shape.svg" alt="⬟"/>
+            <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
+                <span class="section-kicker-blob" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.6313 0.884258C9.6594 0.304573 10.8197 0 12 0C13.1803 0 14.3406 0.304573 15.3687 0.884258C17.5927 2.34072 19.7291 3.92675 21.7668 5.63412C23.439 7.08816 24.3842 9.99624 23.851 12.1773C23.1831 14.7828 22.3659 17.3478 21.4033 19.8595C20.9109 20.9379 20.1518 21.8732 19.1978 22.577C18.2437 23.2808 17.1261 23.7301 15.9503 23.8823C13.3191 24.0392 10.6809 24.0392 8.04965 23.8823C5.86848 23.7369 3.42072 21.9194 2.59672 19.8595C1.63415 17.3478 0.816881 14.7828 0.148959 12.1773C-0.384217 9.99624 0.560958 7.08816 2.23319 5.63412C4.26307 3.92752 6.39135 2.34151 8.60706 0.884258H8.6313Z" fill="currentColor"/>
+                    </svg>
+                </span>
                 <span>My work</span>
             </div>
 
             <div class="flex flex-col gap-y-6 xl:gap-y-12">
-                <h1 class="section-header">
+                <h1 id="work-pos-lede" class="section-header intro-scroll-reveal">
                     From POS systems and e-commerce platforms to logistics dashboards and enterprise tools, I design for high-stakes environments where complexity meets real people.
                 </h1>
-                <p>
+                <p class="card-text">
                     I’ve built products that improved training speeds by 40%, reduced operational errors by over 70%, and increased sales by double digits. I’m proud that many are still in use years later, quietly making everyday work simpler for teams around the world.
                 </p>
             </div>
@@ -885,26 +1761,42 @@
         <div class="work-cards-stack flex flex-col gap-y-12 xl:gap-y-16">
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">End-to-end ux design</span>
                         <span class="badge">Restaurant training and operations</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/subway-main.png" alt="Subway Project" loading="lazy"/>
+                    <div class="group card-content">
+                        <a href="subway.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Subway case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/subway-main.png" alt="Subway Project" loading="lazy"/>
+                                </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Subway</h3>
+                            <a href="subway.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Subway</h3>
+                            </a>
 
                             <div class="card-paragraph">
                                 <p class="card-text">Led the design of two platforms that simplify employee learning and support franchisees from launch to growth.</p>
                                 <p class="card-text"><b>Impact:</b> 40% faster employee onboarding • 60% higher certification completion • 30% faster store launches • significant reduction in franchisee support calls.</p>
                             </div>
 
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="subway.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
 
                         </div>
                     </div>
@@ -915,27 +1807,43 @@
 
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">Product design</span>
                         <span class="badge">Startup</span>
                         <span class="badge">RFID Payments For Live Events</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/billfold-main.png" alt="Billfold POS Project" loading="lazy">
+                    <div class="group card-content">
+                        <a href="billfold.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Billfold POS case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/billfold-main.png" alt="Billfold POS Project" loading="lazy">
+                                </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Billfold POS</h3>
+                            <a href="billfold.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Billfold POS</h3>
+                            </a>
 
                             <div class="card-paragraph">
                                 <p class="card-text">Designed a complete POS ecosystem that keeps lines moving and revenue flowing when every second counts.</p>
                                 <p class="card-text"><b>Impact:</b> +30-50% higher sales at major events • up to 60% higher sales per person • 23% more transactions • now deployed worldwide.</p>
                             </div>
 
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="billfold.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     </div>
@@ -945,24 +1853,40 @@
 
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">Product Design</span>
                         <span class="badge">Logistics & Customer Operations</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/gazelkin-main.png" alt="Gazelkin Project" loading="lazy">
+                    <div class="group card-content">
+                        <a href="gazelkin.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Gazelkin case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/gazelkin-main.png" alt="Gazelkin Project" loading="lazy">
+                                </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Gazelkin</h3>
+                            <a href="gazelkin.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Gazelkin</h3>
+                            </a>
                             <div class="card-paragraph">
                                 <p class="card-text">Built a multi-product logistics ecosystem including driver and customer apps, plus end-to-end tools for dispatchers and operators.</p>
                                 <p class="card-text"><b>Impact:</b> 45% fewer dispatcher calls • 92% driver app adoption in 3 weeks • 65% fewer customer callbacks • 40% faster order processing.</p>
                             </div>
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="gazelkin.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     </div>
@@ -972,26 +1896,42 @@
 
             <div class="card-wrapper">
                 <div class="card">
-                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px]">
+                    <div class="work-card-surface flex flex-col gap-y-10 px-4 pt-14 pb-12 sm:px-8 sm:pt-16 sm:pb-13 xl:gap-y-14 xl:px-20 xl:pt-20 xl:pb-[104px] 2xl:px-[120px] 2xl:pt-[88px] 2xl:pb-[144px]">
                     <div class="card-badges">
                         <span class="badge">Leadership</span>
                         <span class="badge">Product Design</span>
                         <span class="badge">High-volume Retail Systems</span>
                     </div>
 
-                    <div class="card-content">
-                        <img class="card-image" src="assets/images/dreamkas-main.png" alt="Dreamkas Project" loading="lazy">
+                    <div class="group card-content">
+                        <a href="dreamkas.html" class="work-case-card-link block w-full shrink-0 sm:w-auto sm:max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Open Dreamkas POS case study — project image">
+                            <div class="card-image-frame">
+                                <div class="card-image-parallax-track">
+                                    <img class="card-image" src="assets/images/dreamkas-main.png" alt="Dreamkas Project" loading="lazy">
+                                </div>
+                                <div class="card-image-overlay" aria-hidden="true"></div>
+                            </div>
+                        </a>
                         <div class="card-description">
-                            <h3 class="card-title">Dreamkas POS</h3>
+                            <a href="dreamkas.html" class="work-case-card-link block w-fit max-w-full no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <h3 class="card-title intro-scroll-reveal">Dreamkas POS</h3>
+                            </a>
 
                             <div class="card-paragraph">
                                 <p class="card-text">Led the design of POS systems powering high-volume retail across major supermarket chains.</p>
                                 <p class="card-text"><b>Impact:</b> 25% faster checkout speed • 40% fewer user errors •  60% less cashier training time • deployed across major national retailers including Lenta, SPAR, OBI.</p>
                             </div>
-                            <div class="card-detail">
-                                <img src="assets/images/more-shape.svg" alt="->"/>
-                                <span class="card-detail-text">Dive into the case</span>
-                            </div>
+                            <a href="dreamkas.html" class="work-case-card-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                                <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Dive into the case</span></span>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     </div>
@@ -1009,33 +1949,43 @@
                         gap-y-12
                         xl:gap-y-16
                         max-w-[1280px]
+                        2xl:max-w-[1440px]
                         mx-auto
                         pt-14
                         xl:pt-[104px]
+                        pb-8
+                        md:pb-10
+                        xl:pb-12
                         px-4
                         sm:px-8
-                        xl:px-8">
+                        2xl:px-0">
 
             <div class="flex flex-col gap-y-6">
-                <div class="text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
-                    <img src="assets/images/blob-shape.svg" alt="⬟"/>
+                <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
+                    <span class="section-kicker-blob" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.6313 0.884258C9.6594 0.304573 10.8197 0 12 0C13.1803 0 14.3406 0.304573 15.3687 0.884258C17.5927 2.34072 19.7291 3.92675 21.7668 5.63412C23.439 7.08816 24.3842 9.99624 23.851 12.1773C23.1831 14.7828 22.3659 17.3478 21.4033 19.8595C20.9109 20.9379 20.1518 21.8732 19.1978 22.577C18.2437 23.2808 17.1261 23.7301 15.9503 23.8823C13.3191 24.0392 10.6809 24.0392 8.04965 23.8823C5.86848 23.7369 3.42072 21.9194 2.59672 19.8595C1.63415 17.3478 0.816881 14.7828 0.148959 12.1773C-0.384217 9.99624 0.560958 7.08816 2.23319 5.63412C4.26307 3.92752 6.39135 2.34151 8.60706 0.884258H8.6313Z" fill="currentColor"/>
+                        </svg>
+                    </span>
                     <span>Beyond Work</span>
                 </div>
 
-                <h1 class="section-header">
+                <h1 id="beyond-life-lede" class="section-header intro-scroll-reveal">
                     Design is a huge part of my life, but outside of it, I’m constantly making, exploring, and experimenting.
                 </h1>
 
-                <p>
+                <p class="card-text">
                     Here’s a peek at the other things that make me, me.
                 </p>
             </div>
 
             <div id="cards-beyond">
 
-                <div class="card-beyond">
-                    <div class="image-wrapper">
-                        <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                <div class="group card-beyond">
+                    <div class="image-wrapper 2xl:h-[468px]">
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
+                        </div>
                     </div>
 
                     <div class="card-description">
@@ -1043,18 +1993,56 @@
                             <span class="badge">My Other Medium</span>
                         </div>
 
-                        <p class="">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
+                        <p class="card-text">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
 
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Explore my art</span>
-                        </div>
+                        <a href="about.html" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
+                            </span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="card-beyond">
-                    <div class="image-wrapper">
-                        <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                <div class="group card-beyond">
+                    <div class="image-wrapper 2xl:h-[468px]">
+                        <div class="image-parallax-track">
+                            <img src="assets/images/gazelkin-results-dashboards-wide.png" alt="Vibe coding experiments"/>
+                        </div>
+                    </div>
+
+                    <div class="card-description">
+                        <div class="card-badges">
+                            <span class="badge">Vibe coding experiments</span>
+                        </div>
+
+                        <p class="card-text">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
+
+                        <a href="#work" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Look what I did">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">LOOK WHAT I DID</span></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hidden" aria-hidden="true">
+                <div class="group card-beyond">
+                    <div class="image-wrapper 2xl:h-[468px]">
+                        <div class="image-parallax-track">
+                            <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
+                        </div>
                     </div>
                     <div class="card-description">
                         <div class="card-badges">
@@ -1065,50 +2053,152 @@
                             At one point, I came close to launching my own eco-friendly kitchenware brand. UX research saved me a business headache, revealing why the market wasn’t the right fit.
                         </p>
 
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Story coming soon</span>
+                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
+                            <span class="work-card-cta">
+                                <span class="work-card-cta-icon" aria-hidden="true">
+                                    <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M22 18L28.25 24.25L22 30.5" stroke="white" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <img class="work-card-cta-arrow" src="assets/images/arrow-hover.svg" alt="" width="18" height="14"/>
+                                </span>
+                                <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Story coming soon</span></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group card-beyond card-beyond--more">
+                    <div class="beyond-more-shell">
+                        <div class="beyond-marquee-stack" aria-hidden="true">
+                            <span class="beyond-marquee-edge beyond-marquee-edge--left"></span>
+                            <span class="beyond-marquee-edge beyond-marquee-edge--right"></span>
+
+                            <div class="beyond-marquee-row">
+                                <div class="beyond-marquee-track">
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                </div>
+                            </div>
+
+                            <div class="beyond-marquee-row beyond-marquee-row--alt">
+                                <div class="beyond-marquee-track">
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                </div>
+                            </div>
+
+                            <div class="beyond-marquee-row">
+                                <div class="beyond-marquee-track">
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/DunningKruger.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Edge cases are not edge</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Heuristics.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Confusion is a design signal</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/IllusionOfObjectivity.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Iteration over perfection</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/AnchoringBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">I think in systems, not screens</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CognitiveDissonance.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Behavior over assumptions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/FalseAnalogy.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Designed for stress, not ideal conditions</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SlipperySlope.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Messy first, clear later</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/CentralTendency.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Good design removes stress, not just steps</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SimpsonsParadox.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Clarity over features</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/SelectionBias.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Real users are messy. Design should handle that</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/ScientificMethod.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What works in a demo can fail in reality</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/InterquartileRange.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">What users say is not what they do</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/LawOfLargeNumbers.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Logic before layout</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Overfitting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it doesn&#x27;t work in real life, it doesn&#x27;t work</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/MentalAccounting.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Validation over guessing</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/RegretAversion.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Mistakes are part of the flow</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/GameTheory.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">If it needs explanation, it&#x27;s not clear enough</span></div>
+                                    <div class="beyond-marquee-pill"><div class="beyond-marquee-pill-img"><img src="https://reasonal.co/assets/lessons/Astroturfing.webp" alt="" width="56" height="56" decoding="async"/></div><span class="beyond-marquee-pill-label">Complexity doesn&#x27;t disappear. It gets organized</span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card-beyond">
-                    <div class="image-wrapper">
-                        <img src="assets/images/MY%20OTHER%20MEDIUM.png" alt="My other medium"/>
-                    </div>
-
-                    <div class="card-description">
-                        <div class="card-badges">
-                            <span class="badge">My Other Medium</span>
-                        </div>
-
-                        <p class="">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
-
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Explore my art</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-beyond">
-                    <div class="image-wrapper">
-                        <img src="assets/images/MY%20entrepreneurial%20experiment.png" alt="My entrepreneurial experiment"/>
-                    </div>
-                    <div class="card-description">
-                        <div class="card-badges">
-                            <span class="badge">My entrepreneurial experiment</span>
-                        </div>
-
-                        <p class="card-text">
-                            At one point, I came close to launching my own eco-friendly kitchenware brand. UX research saved me a business headache, revealing why the market wasn’t the right fit.
-                        </p>
-
-                        <div class="card-detail">
-                            <img src="assets/images/more-shape.svg" alt="->"/>
-                            <span class="card-detail-text">Story coming soon</span>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -1116,51 +2206,65 @@
         </section>
 
         <section id="match"
-                 class="flex
-                        flex-col
-                        bg-primary-light
-                        gap-y-12
-                        items-center
-                        px-4 pt-36 pb-28
-                        text-center
-                        text-white
-                        triag-cut
-                        md:min-w-[552px]">
-            <h1 class="font-family-sofia font-normal text-7xl/[4.5rem] tracking-[-2px]">
-                Is it a match?
-            </h1>
+                 class="bg-primary-light
+                        px-4 py-24 text-center text-white triag-cut
+                        md:py-28 lg:py-32">
+            <img class="match-figma-stack"
+                 src="assets/images/match-figma-background.svg"
+                 alt=""
+                 aria-hidden="true"
+                 decoding="async"/>
+            <img class="match-figma-stack match-figma-stack--lines"
+                 src="assets/images/match-figma-mask.svg"
+                 alt=""
+                 aria-hidden="true"
+                 decoding="async"/>
 
-            <div class="match-xl-body flex flex-col gap-y-4 sm:hidden">
-                <p>
-                    Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
-                </p>
-                <p>
-                    Send me a message or email at: hello@peppered.design
-                </p>
-            </div>
-            <div class="match-xl-body hidden sm:flex sm:flex-col sm:gap-y-8 md:max-w-[522px] lg:max-w-[744px]">
-                <p>
-                    If you’re looking for a designer who can turn ambiguity into structure, ideas into flows, and research into intuitive product experiences, let’s talk.
-                </p>
-                <p>
-                    Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
-                </p>
-            </div>
+            <div class="match-inner">
+                <h1 class="match-heading w-full text-center">
+                    Is it a match?
+                </h1>
 
-            <div class="card-detail">
-                <img src="assets/images/more-shape.svg" alt="->"/>
-                <span class="!text-white">Send me a message</span>
+                <div class="match-xl-body flex flex-col gap-y-4 text-center sm:hidden">
+                    <p>
+                        Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
+                    </p>
+                    <p>
+                        Send me a message or email at: <a href="mailto:hello@peppered.design" class="text-inherit font-light no-underline hover:underline">hello@peppered.design</a>
+                    </p>
+                </div>
+                <div class="match-xl-body hidden sm:flex sm:flex-col sm:gap-y-8 sm:text-center w-full">
+                    <p>
+                        If you’re looking for a designer who can turn ambiguity into structure, ideas into flows, and research into intuitive product experiences, let’s talk.
+                    </p>
+                    <p>
+                        Feel free to reach out, I’m happy to share more about my projects or talk about how I can help your team.
+                    </p>
+                    <p>
+                        Send me a message or email me directly at: <a href="mailto:hello@peppered.design" class="text-inherit font-light no-underline hover:underline">hello@peppered.design</a>
+                    </p>
+                </div>
+
+                <a href="contact.html" class="match-cta no-underline">
+                    <span class="match-cta-icon" aria-hidden="true">
+                        <img class="match-cta-circle" src="assets/images/match-figma-cta-circle.svg" alt="" decoding="async"/>
+                        <img class="match-cta-send" src="assets/images/send-icon.svg" alt="" decoding="async"/>
+                    </span>
+                    <span class="match-cta-label">Send me a message</span>
+                </a>
             </div>
         </section>
 
-        <footer class="site-footer w-full bg-blue-dark text-white -mt-24 xl:-mt-26 h-[140px] flex items-center">
-            <div class="footer-inner flex
+        <footer class="site-footer w-full bg-blue-dark text-white -mt-24 xl:-mt-22 flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
+            <div class="footer-inner flex items-center
                         w-full
                         max-w-[1280px]
+                        2xl:max-w-[1440px]
                         mx-auto
                         flex-col
                         items-center
-                        gap-y-8
+                        
+                        gap-y-4
                         px-4
                         sm:px-8
                         lg:flex-row
@@ -1168,16 +2272,17 @@
                         lg:justify-between
                         lg:gap-y-0
                         xl:px-12
+                        2xl:px-[80px]
                         ">
                 <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
-                    <a class="no-underline hover:opacity-90" href="#work">Work</a>
-                    <a class="no-underline hover:opacity-90" href="#about">About</a>
-                    <a class="no-underline hover:opacity-90" href="#contact">Contact</a>
-                    <a class="no-underline hover:opacity-90" href="#resume">Resume</a>
+                    <a class="no-underline" href="#work">Work</a>
+                    <a class="no-underline" href="about.html">About</a>
+                    <a class="no-underline" href="contact.html">Contact</a>
+                    <a class="no-underline" href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
                 </nav>
-                <div class="footer-contact flex flex-col items-center gap-x-12 gap-y-8 md:flex-row md:items-center lg:gap-y-0">
-                    <div class="footer-email">hello@peppered.design</div>
-                    <a class="flex shrink-0 items-center leading-none" href="#linkedin">
+                <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
+                    <a class="footer-email" href="mailto:hello@peppered.design">hello@peppered.design</a>
+                    <a class="flex shrink-0 items-center leading-none" href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer">
                         <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
                     </a>
                 </div>
@@ -1191,6 +2296,11 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         gsap.registerPlugin(ScrollTrigger);
+
+        const isSafari = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(navigator.userAgent);
+        if (isSafari) {
+            document.documentElement.classList.add('is-safari');
+        }
 
         // Burger and Menu setup
         const menuTween = gsap.timeline({paused: true})
@@ -1250,6 +2360,68 @@
         });
         // End Burger setup
 
+        // About portrait: face / hand parallax + subtle 3D tilt toward cursor
+        const portraitFrame = document.querySelector(".about-portrait-frame");
+        const portraitTilt = portraitFrame?.querySelector(".about-portrait-tilt");
+        const portraitBack = portraitFrame?.querySelector(".about-portrait-back");
+        const portraitFront = portraitFrame?.querySelector(".about-portrait-front");
+        const portraitMotionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const portraitPointerFine = window.matchMedia("(pointer: fine)").matches;
+
+        if (portraitFrame && portraitTilt && portraitBack && portraitFront && portraitMotionOk && portraitPointerFine) {
+            const easeOut = "cubic-bezier(0.22, 1, 0.36, 1)";
+            const tiltMaxY = 4;
+            const tiltMaxX = 3;
+            const parallaxBack = 2.5;
+            const parallaxFront = 3.5;
+            const layerScale = 1.03;
+
+            function clamp(n, lo, hi) {
+                return Math.min(hi, Math.max(lo, n));
+            }
+
+            function clearPortraitTransitions() {
+                portraitTilt.style.transition = "";
+                portraitBack.style.transition = "";
+                portraitFront.style.transition = "";
+            }
+
+            function setPortraitPose(nx, ny) {
+                const rx = -ny * tiltMaxX;
+                const ry = nx * tiltMaxY;
+                portraitTilt.style.transform = `perspective(880px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+                portraitBack.style.transform =
+                    `translate3d(${nx * -parallaxBack}px, ${ny * -parallaxBack * 0.9}px, 0) scale(${layerScale})`;
+                portraitFront.style.transform =
+                    `translate3d(${nx * parallaxFront}px, ${ny * parallaxFront * 0.9}px, 0) scale(${layerScale})`;
+            }
+
+            function resetPortraitPose() {
+                portraitTilt.style.transition = `transform 0.5s ${easeOut}`;
+                portraitBack.style.transition = `transform 0.5s ${easeOut}`;
+                portraitFront.style.transition = `transform 0.5s ${easeOut}`;
+                portraitTilt.style.transform = "perspective(880px) rotateX(0deg) rotateY(0deg)";
+                portraitBack.style.transform = `translate3d(0, 0, 0) scale(${layerScale})`;
+                portraitFront.style.transform = `translate3d(0, 0, 0) scale(${layerScale})`;
+                const onEnd = (e) => {
+                    if (e.propertyName !== "transform") return;
+                    portraitTilt.removeEventListener("transitionend", onEnd);
+                    clearPortraitTransitions();
+                };
+                portraitTilt.addEventListener("transitionend", onEnd);
+            }
+
+            portraitFrame.addEventListener("mousemove", (e) => {
+                const rect = portraitFrame.getBoundingClientRect();
+                const nx = clamp(((e.clientX - rect.left) / rect.width) * 2 - 1, -1, 1);
+                const ny = clamp(((e.clientY - rect.top) / rect.height) * 2 - 1, -1, 1);
+                clearPortraitTransitions();
+                setPortraitPose(nx, ny);
+            });
+
+            portraitFrame.addEventListener("mouseleave", resetPortraitPose);
+        }
+
         // Hide logo on mobile when scrolling
         // let lastScrollTop = 0;
         // const logo = document.querySelector('#logo');
@@ -1276,8 +2448,145 @@
         //     }
         // });
 
-        // Work section: sticky stack, fade + scale (desktop only; demo pattern)
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /** Scroll-scrubbed vertical pan on card images (animates the track; img stays 100% cover inside). */
+        function setupCardImageParallax() {
+            if (reducedMotion) return;
+
+            const tracks = gsap.utils.toArray(
+                "#work .card-image-parallax-track, #cards-beyond .image-wrapper > .image-parallax-track"
+            );
+
+            tracks.forEach((track) => {
+                const trigger = track.closest(".card-image-frame") || track.closest(".image-wrapper");
+                if (!trigger) return;
+
+                const h = trigger.clientHeight || trigger.getBoundingClientRect().height;
+                if (!h) return;
+
+                /* ~±7.5% of frame height; track is 118% / -9% so ~9% slack each side avoids gaps */
+                const range = Math.max(22, Math.round(h * 0.075));
+
+                gsap.fromTo(
+                    track,
+                    { y: -range, force3D: true },
+                    {
+                        y: range,
+                        ease: "none",
+                        force3D: true,
+                        scrollTrigger: {
+                            trigger,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: 0.45,
+                            invalidateOnRefresh: true,
+                        },
+                    }
+                );
+            });
+        }
+
+        function introScrollRevealViewportBand() {
+            const h = window.innerHeight;
+            if (window.matchMedia("(max-width: 479px)").matches) {
+                return { startY: h * 0.96, endY: h * 0.26 };
+            }
+            if (window.matchMedia("(max-width: 767px)").matches) {
+                return { startY: h * 0.94, endY: h * 0.28 };
+            }
+            if (window.matchMedia("(max-width: 991px)").matches) {
+                return { startY: h * 0.92, endY: h * 0.26 };
+            }
+            return { startY: h * 0.9, endY: h * 0.22 };
+        }
+
+        const introScrollRevealTickers = [];
+
+        function setupIntroScrollReveal(el) {
+            if (!el || reducedMotion) return;
+            const endColor = getComputedStyle(el).color || "#302f2f";
+            const raw = el.textContent.trim().replace(/\s+/g, " ");
+            const escapeHtml = (s) =>
+                s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            el.innerHTML = raw
+                .split(" ")
+                .map((w) => `<span class="word">${escapeHtml(w)}</span>`)
+                .join(" ");
+            const words = gsap.utils.toArray(el.querySelectorAll(".word"));
+
+            gsap.set(words, { color: "#e5e5e5" });
+            const tl = gsap.timeline({ paused: true });
+            tl.to(words, {
+                color: endColor,
+                ease: "power3.inOut",
+                stagger: 0.65,
+                duration: 11,
+            });
+
+            function tick() {
+                const { startY, endY } = introScrollRevealViewportBand();
+                const rect = el.getBoundingClientRect();
+                const anchorY = rect.top + Math.min(rect.height * 0.15, 28);
+                const span = startY - endY;
+                let p = span === 0 ? 1 : (startY - anchorY) / span;
+                p = Math.max(0, Math.min(1, p));
+                tl.progress(p);
+            }
+
+            introScrollRevealTickers.push(tick);
+        }
+
+        function setupWorkCardTitleScrollReveal(el) {
+            if (!el || reducedMotion) return;
+            const raw = el.textContent.trim().replace(/\s+/g, " ");
+            const escapeHtml = (s) =>
+                s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            el.innerHTML = raw
+                .split(" ")
+                .map((w) => `<span class="word">${escapeHtml(w)}</span>`)
+                .join(" ");
+            const words = gsap.utils.toArray(el.querySelectorAll(".word"));
+
+            gsap.set(words, { opacity: 0.14 });
+            const tl = gsap.timeline({ paused: true });
+            tl.to(words, {
+                opacity: 1,
+                ease: "power3.inOut",
+                stagger: 0.65,
+                duration: 11,
+            });
+
+            function tick() {
+                const { startY, endY } = introScrollRevealViewportBand();
+                const rect = el.getBoundingClientRect();
+                const anchorY = rect.top + Math.min(rect.height * 0.15, 28);
+                const span = startY - endY;
+                let p = span === 0 ? 1 : (startY - anchorY) / span;
+                p = Math.max(0, Math.min(1, p));
+                tl.progress(p);
+            }
+
+            introScrollRevealTickers.push(tick);
+        }
+
+        setupIntroScrollReveal(document.getElementById("about-systems-lede"));
+        setupIntroScrollReveal(document.getElementById("work-pos-lede"));
+        setupIntroScrollReveal(document.getElementById("beyond-life-lede"));
+        document.querySelectorAll("#work .work-card-surface h3.card-title.intro-scroll-reveal").forEach((el) => {
+            setupWorkCardTitleScrollReveal(el);
+        });
+
+        if (introScrollRevealTickers.length) {
+            function tickAllIntroScrollReveals() {
+                introScrollRevealTickers.forEach((fn) => fn());
+            }
+            gsap.ticker.add(tickAllIntroScrollReveals);
+            window.addEventListener("resize", tickAllIntroScrollReveals, { passive: true });
+            tickAllIntroScrollReveals();
+        }
+
+        // Work section: sticky stack, fade + scale (desktop only; demo pattern)
         if (!reducedMotion) {
             ScrollTrigger.matchMedia({
                 "(min-width: 1280px)": function () {
@@ -1327,6 +2636,7 @@
         }
 
         window.addEventListener("load", () => {
+            setupCardImageParallax();
             ScrollTrigger.refresh();
         });
 
@@ -1374,8 +2684,37 @@
             });
         }
 
+        // Work card image — "View" cursor follower
+        const cardViewCursor = document.querySelector(".card-view-cursor");
+        const cardFrames = document.querySelectorAll("#work .card-image-frame");
+
+        if (cardViewCursor && cardFrames.length && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            gsap.set(cardViewCursor, { opacity: 0, scale: 0 });
+
+            cardFrames.forEach(frame => {
+                frame.addEventListener("mouseenter", () => {
+                    frame.style.cursor = "none";
+                    gsap.to(cardViewCursor, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
+                });
+                frame.addEventListener("mouseleave", () => {
+                    frame.style.cursor = "";
+                    gsap.to(cardViewCursor, { opacity: 0, scale: 0, duration: 0.2, ease: "power2.in" });
+                });
+            });
+
+            document.addEventListener("mousemove", e => {
+                gsap.set(cardViewCursor, {
+                    x: Math.round(e.clientX),
+                    y: Math.round(e.clientY),
+                    xPercent: -50,
+                    yPercent: -50
+                });
+            });
+        }
+
     });
 </script>
 <div class="hero-cursor"></div>
+<div class="card-view-cursor">VIEW</div>
 </body>
 </html>

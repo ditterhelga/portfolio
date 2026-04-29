@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground 11 — grid at breakpoint</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-neutral-100 p-6 text-neutral-800;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="../../assets/js/global-lenis.js" defer></script>
+</head>
+<body>
+<p class="mb-4 text-sm text-neutral-600">Below <code>md</code>: one column. From <code>md</code> up: two columns (like <code>#cards-beyond</code> at <code>xl</code> in your file — here we use <code>md</code> so you see it sooner).</p>
+<div class="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-6 max-w-4xl mx-auto">
+    <div class="rounded-xl bg-white p-6 shadow border border-neutral-200 min-h-[120px]">Column A / cell 1</div>
+    <div class="rounded-xl bg-white p-6 shadow border border-neutral-200 min-h-[120px]">Column B / cell 2</div>
+    <div class="rounded-xl bg-amber-50 p-6 shadow border border-amber-200 min-h-[80px] md:col-span-2">Try <code>md:grid-cols-3</code> on the parent and watch this row wrap.</div>
+</div>
+</body>
+</html>
