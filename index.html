@@ -433,6 +433,21 @@
                 xl:mt-0;
             }
 
+            /* Ensure only one About CTA variant is visible at a time. */
+            .about-button-mobile {
+                display: inline-flex;
+            }
+
+            @media (min-width: 80rem) {
+                .about-button-desktop {
+                    display: inline-flex !important;
+                }
+
+                .about-button-mobile {
+                    display: none !important;
+                }
+            }
+
             .about-portrait-stage {
                 position: absolute;
                 inset: 0;
@@ -481,6 +496,11 @@
             .about-portrait-front {
                 z-index: 2;
                 transform: scale(1.03);
+            }
+
+            /* Stacked / side-by-side layout — kill overlap margins from the legacy float overlap */
+            .about-visual-row .about-portrait-frame {
+                margin-top: 0 !important;
             }
 
         }
@@ -585,18 +605,18 @@
             cursor: pointer;
         }
 
-        /* Work card titles: solid brand blue; darken slightly when the card row is hovered or the title link is focused */
+        /* Work card titles: bright blue by default; darken on row hover/title focus */
         #work .work-card-surface h3.card-title.intro-scroll-reveal .word {
             display: inline-block;
-            color: #3b47c2;
-            -webkit-text-fill-color: #3b47c2;
+            color: #0016f2;
+            -webkit-text-fill-color: #0016f2;
             transition: color 0.2s ease, -webkit-text-fill-color 0.2s ease;
         }
 
         #work .card-content.group:hover h3.card-title.intro-scroll-reveal .word,
         #work a.work-case-card-link:has(> h3.card-title):focus-visible h3.card-title.intro-scroll-reveal .word {
-            color: #0016f2;
-            -webkit-text-fill-color: #0016f2;
+            color: #3b47c2;
+            -webkit-text-fill-color: #3b47c2;
         }
         #cards-beyond .beyond-card-cta-link {
             cursor: default;
@@ -1144,10 +1164,17 @@
 
         /* Footer — xs: hide physics cards layer, single column, tighter padding */
         @media (max-width: 639px) {
+            #hero .mask-screen {
+                mix-blend-mode: normal !important;
+                background: transparent !important;
+            }
+
             #hero .mask-screen h1 {
-                font-size: clamp(4.75rem, 21vw, 7rem) !important;
+                font-size: clamp(5.25rem, 22vw, 7.25rem) !important;
                 line-height: 0.88 !important;
                 letter-spacing: -0.16rem !important;
+                color: #0016f2 !important;
+                -webkit-text-fill-color: #0016f2 !important;
             }
 
             #hero .blob-layer {
@@ -1181,17 +1208,6 @@
                 margin-bottom: 1rem !important;
             }
 
-            #about .about-portrait-frame {
-                width: 182px !important;
-                height: 182px !important;
-                margin-top: -8.5rem !important;
-            }
-
-            #about .button-about {
-                margin-top: 1.5rem !important;
-                margin-left: 12.25rem !important;
-            }
-
             #cards-beyond .card-beyond:not(.card-beyond--more) .beyond-image-overlay {
                 opacity: 0 !important;
             }
@@ -1219,7 +1235,7 @@
             }
 
             #footer-match .footer-match-heading {
-                font-size: clamp(2.5rem, 12.5vw, 4rem) !important;
+                font-size: clamp(2.75rem, 13.5vw, 4.25rem) !important;
                 line-height: 0.92 !important;
                 margin-bottom: 1.5rem !important;
                 padding-top: 0.75rem !important;
@@ -1275,7 +1291,6 @@
 
             #footer-match .footer-match-nav-links a {
                 font-size: 15px !important;
-                letter-spacing: 0.12em !important;
                 line-height: 1.2 !important;
             }
 
@@ -1695,12 +1710,19 @@
             max-width: 100%;
         }
 
-        /* Blob layer: #2834B8 base so text reads as dark blue at rest */
+        /* Blob layer: bright blue base */
         #hero .blob-layer {
             position: absolute;
             inset: 0;
-            background: #2834B8;
+            background: #0A43FF;
             pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        #hero .hero-mask:hover .blob-layer,
+        #hero .hero-mask:focus-within .blob-layer {
+            opacity: 1;
         }
 
         #hero .blob-layer .blob {
@@ -1711,11 +1733,11 @@
             will-change: transform;
         }
 
-        /* bottom layer – largest, bright blue */
+        /* bottom layer – largest, dark blue */
         #hero .blob-1 {
             width: 690px; height: 690px;
             margin: -345px 0 0 -345px;
-            background: #0A43FF;
+            background: #2834B8;
         }
 
         /* middle layer – pink */
@@ -1741,9 +1763,15 @@
         }
 
         #hero .mask-screen h1 {
+            color: #0016F2;
+            -webkit-text-fill-color: #0016F2;
+            padding-right: 0.5rem;
+        }
+
+        #hero .hero-mask:hover .mask-screen h1,
+        #hero .hero-mask:focus-within .mask-screen h1 {
             color: #000;
             -webkit-text-fill-color: #000;
-            padding-right: 0.5rem;
         }
 
         /* Colophon — align with “Is it a match?” / #footer-match-main horizontal inset */
@@ -1839,7 +1867,7 @@
 
     <section id="about">
 
-        <div class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
+        <div class="flex flex-col gap-y-4 md:gap-y-8 xl:gap-y-12 min-w-0 flex-1">
             <h1 id="about-systems-lede" class="section-header intro-scroll-reveal">I create systems people want to use, not just tolerate.</h1>
 
             <div class="flex flex-col gap-y-2">
@@ -1849,7 +1877,7 @@
                     confidence.</p>
             </div>
 
-            <a href="about.html" class="button-about no-underline text-inherit" aria-label="About me">
+            <a href="about.html" class="button-about about-button-desktop hidden no-underline text-inherit xl:flex" aria-label="About me">
                 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500">
                     <title>Circular Text Path</title>
                     <defs>
@@ -1886,26 +1914,63 @@
             </a>
         </div>
 
-        <div class="about-portrait-frame">
-            <div class="about-portrait-stage">
-                <div class="about-portrait-tilt">
-                    <div class="about-portrait-stack">
-                        <img class="about-portrait-layer about-portrait-back"
-                             src="assets/images/me-pepper-back.png"
-                             alt=""
-                             width="384"
-                             height="384"
-                             decoding="async"
-                             aria-hidden="true"/>
-                        <img class="about-portrait-layer about-portrait-front"
-                             src="assets/images/me-pepper-front.png"
-                             alt="Olga Pertseva"
-                             width="384"
-                             height="384"
-                             decoding="async"/>
+        <div class="about-visual-row flex w-full flex-shrink-0 flex-row flex-wrap items-center justify-center gap-x-12 gap-y-4 max-xl:-mt-28 xl:contents">
+            <div class="about-portrait-frame !mt-0 h-[182px] w-[182px] shrink-0 md:h-[208px] md:w-[208px] xl:mt-0 xl:h-[384px] xl:w-[384px]">
+                <div class="about-portrait-stage">
+                    <div class="about-portrait-tilt">
+                        <div class="about-portrait-stack">
+                            <img class="about-portrait-layer about-portrait-back"
+                                 src="assets/images/me-pepper-back.png"
+                                 alt=""
+                                 width="384"
+                                 height="384"
+                                 decoding="async"
+                                 aria-hidden="true"/>
+                            <img class="about-portrait-layer about-portrait-front"
+                                 src="assets/images/me-pepper-front.png"
+                                 alt="Olga Pertseva"
+                                 width="384"
+                                 height="384"
+                                 decoding="async"/>
+                        </div>
                     </div>
                 </div>
             </div>
+            <a href="about.html" class="button-about about-button-mobile !ml-0 !mt-0 shrink-0 no-underline text-inherit md:hidden xl:hidden" aria-label="About me">
+                <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500">
+                    <title>Circular Text Path</title>
+                    <defs>
+                        <path id="text-circle-mobile"
+                              d="M250,420
+                                 a170,170 0 0,1 0,-340
+                                 a170,170 0 0,1 0,340"
+                              transform="rotate(12,250,250)" />
+                    </defs>
+                    <path id="text-circle-safari-mobile"
+                          d="M250,420
+                             a170,170 0 0,1 0,-340
+                             a170,170 0 0,1 0,340"
+                          transform="rotate(12,250,250)"
+                          fill="none"
+                          stroke="none"/>
+                    <circle cx="250" cy="250" r="140" fill="white"/>
+                    <g class="text-circle">
+                        <text textLength="1000">
+                            <textPath xlink:href="#text-circle-mobile" aria-label="Click if you're curious">
+                                Click if you're curious
+                            </textPath>
+                        </text>
+                    </g>
+                    <g class="text-circle-safari" aria-hidden="true">
+                        <text>
+                            <textPath xlink:href="#text-circle-safari-mobile" textLength="1000" lengthAdjust="spacing">
+                                Click if you're curious
+                            </textPath>
+                        </text>
+                    </g>
+                    <path class="arrow-icon" d="M225 275 L270 230 L235 230 M270 265 L270 230"  fill="none" stroke-linecap="square" stroke-linejoin="bevel"/>
+                </svg>
+            </a>
         </div>
 
     </section>
@@ -2355,10 +2420,10 @@
       pointer-events: auto;
     ">
       <div class="footer-match-nav-links" style="display: flex; flex-direction: column; align-items: flex-end; gap: 16px;">
-      <a href="#work"       style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Work</a>
-      <a href="about.html"  style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">About</a>
-      <a href="contact.html" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Contact</a>
-      <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Resume</a>
+      <a href="#work"       style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;text-transform:uppercase;color:#ffffff;text-decoration:none;">Work</a>
+      <a href="about.html"  style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;text-transform:uppercase;color:#ffffff;text-decoration:none;">About</a>
+      <a href="contact.html" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;text-transform:uppercase;color:#ffffff;text-decoration:none;">Contact</a>
+      <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;text-transform:uppercase;color:#ffffff;text-decoration:none;">Resume</a>
       </div>
       <a href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="
         margin-top: 4px;
@@ -2768,6 +2833,18 @@
                 isOverHeroMask = false;
                 if (heroCursor) heroCursor.style.display = "none";
                 heroMask.style.cursor = "";
+            });
+
+            // Safety net: if scrolling/tab changes skip mouseleave, hide the custom cursor.
+            const hideHeroCursor = () => {
+                isOverHeroMask = false;
+                if (heroCursor) heroCursor.style.display = "none";
+                heroMask.style.cursor = "";
+            };
+            window.addEventListener("scroll", hideHeroCursor, { passive: true });
+            window.addEventListener("blur", hideHeroCursor);
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) hideHeroCursor();
             });
 
             document.addEventListener("mousemove", (e) => {
