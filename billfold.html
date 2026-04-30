@@ -670,6 +670,26 @@
             white-space: normal;
         }
 
+        #footer-match .footer-match-nav-links a {
+            transition: color 0.25s ease;
+        }
+
+        #footer-match .footer-match-nav-links a:hover,
+        #footer-match .footer-match-nav-links a:focus-visible {
+            color: var(--color-pink-badge) !important;
+        }
+
+        #footer-match .footer-match-email a {
+            text-decoration: none !important;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.25s ease;
+        }
+
+        #footer-match .footer-match-email a:hover,
+        #footer-match .footer-match-email a:focus-visible {
+            border-bottom-color: var(--color-pink-badge);
+        }
+
         /* Footer — xs: hide physics cards layer, single column, tighter padding */
         @media (max-width: 639px) {
             #footer-match.site-footer {

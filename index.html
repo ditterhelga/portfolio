@@ -341,7 +341,7 @@
                 /*relative*/
                 @apply  inline-flex
                 border-none
-                bg-primary-dark
+                bg-primary-light
                 rounded-full
                 w-[120px] h-[120px]
                 mt-4
@@ -383,7 +383,7 @@
 
                 .arrow-icon {
                     stroke-width: 10;
-                    stroke: var(--color-primary-dark);
+                    stroke: var(--color-primary-light);
                     transition: stroke 300ms, transform 300ms;
                 }
 
@@ -550,7 +550,7 @@
             justify-content: center;
             width: 24px;
             height: 24px;
-            color: #363ccc;
+            color: #0016f2;
             transition: color 0.35s ease;
         }
 
@@ -1122,8 +1122,79 @@
             white-space: normal;
         }
 
+        #footer-match .footer-match-nav-links a {
+            transition: color 0.25s ease;
+        }
+
+        #footer-match .footer-match-nav-links a:hover,
+        #footer-match .footer-match-nav-links a:focus-visible {
+            color: var(--color-pink-badge) !important;
+        }
+
+        #footer-match .footer-match-email a {
+            text-decoration: none !important;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.25s ease;
+        }
+
+        #footer-match .footer-match-email a:hover,
+        #footer-match .footer-match-email a:focus-visible {
+            border-bottom-color: var(--color-pink-badge);
+        }
+
         /* Footer — xs: hide physics cards layer, single column, tighter padding */
         @media (max-width: 639px) {
+            #hero {
+                min-height: calc(100vh - 6.5rem);
+            }
+
+            #hero .mask-screen h1 {
+                font-size: clamp(7rem, 30vw, 9.75rem) !important;
+                line-height: 0.84 !important;
+                letter-spacing: -0.22rem !important;
+            }
+
+            #hero .rotating-words .phrases {
+                animation: none !important;
+                transform: translateY(0) !important;
+            }
+
+            #hero .rotating-words:hover .phrases {
+                animation: none !important;
+            }
+
+            #work .card-image-frame {
+                height: 322px !important;
+            }
+
+            #cards-beyond > .card-beyond:not(.card-beyond--more) > .image-wrapper {
+                height: 235px !important;
+            }
+
+            #work .card-description .card-detail {
+                margin-top: 1.25rem !important;
+                margin-bottom: 1.25rem !important;
+            }
+
+            #cards-beyond .card-beyond:not(.card-beyond--more) .card-description .card-detail {
+                margin-top: 1rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            #about .about-portrait-frame {
+                width: 182px !important;
+                height: 182px !important;
+                margin-top: -11.25rem !important;
+            }
+
+            #about .button-about {
+                margin-left: 12.25rem !important;
+            }
+
+            #cards-beyond .card-beyond:not(.card-beyond--more) .beyond-image-overlay {
+                opacity: 0 !important;
+            }
+
             #footer-match.site-footer {
                 height: auto !important;
                 min-height: 0 !important;
@@ -2678,18 +2749,39 @@
         const blobLayer  = document.querySelector("#hero .blob-layer");
         const blobs      = document.querySelectorAll("#hero .blob");
 
-        if (heroMask && blobLayer && blobs.length) {
+        if (
+            heroMask &&
+            blobLayer &&
+            blobs.length &&
+            window.matchMedia("(hover: hover) and (pointer: fine)").matches
+        ) {
+            let isOverHeroMask = false;
+
             heroMask.addEventListener("mouseenter", () => {
+                isOverHeroMask = true;
                 if (heroCursor) heroCursor.style.display = "block";
                 heroMask.style.cursor = "none";
             });
 
             heroMask.addEventListener("mouseleave", () => {
+                isOverHeroMask = false;
                 if (heroCursor) heroCursor.style.display = "none";
                 heroMask.style.cursor = "";
             });
 
             document.addEventListener("mousemove", (e) => {
+                // Bounds-check fallback: self-hide if mouseleave was missed on fast exit
+                if (!isOverHeroMask) {
+                    const r = heroMask.getBoundingClientRect();
+                    const inside = e.clientX >= r.left && e.clientX <= r.right &&
+                                   e.clientY >= r.top  && e.clientY <= r.bottom;
+                    if (!inside) {
+                        if (heroCursor) heroCursor.style.display = "none";
+                        heroMask.style.cursor = "";
+                        return;
+                    }
+                }
+
                 // Move custom cursor — xPercent/yPercent keep it centred
                 if (heroCursor) {
                     gsap.set(heroCursor, {
@@ -2723,18 +2815,36 @@
         if (cardViewCursor && cardFrames.length && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
             gsap.set(cardViewCursor, { opacity: 0, scale: 0 });
 
+            let isOverCard = false;
+
             cardFrames.forEach(frame => {
                 frame.addEventListener("mouseenter", () => {
+                    isOverCard = true;
                     frame.style.cursor = "none";
                     gsap.to(cardViewCursor, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
                 });
                 frame.addEventListener("mouseleave", () => {
+                    isOverCard = false;
                     frame.style.cursor = "";
                     gsap.to(cardViewCursor, { opacity: 0, scale: 0, duration: 0.2, ease: "power2.in" });
                 });
             });
 
             document.addEventListener("mousemove", e => {
+                // Bounds-check fallback: force-hide if mouseleave was missed on fast exit
+                if (!isOverCard) {
+                    const overAnyFrame = Array.from(cardFrames).some(frame => {
+                        const r = frame.getBoundingClientRect();
+                        return e.clientX >= r.left && e.clientX <= r.right &&
+                               e.clientY >= r.top  && e.clientY <= r.bottom;
+                    });
+                    if (!overAnyFrame) {
+                        gsap.to(cardViewCursor, { opacity: 0, scale: 0, duration: 0.2, ease: "power2.in", overwrite: "auto" });
+                        return;
+                    }
+                    isOverCard = true; // re-sync if mouseenter was missed
+                }
+
                 gsap.set(cardViewCursor, {
                     x: Math.round(e.clientX),
                     y: Math.round(e.clientY),

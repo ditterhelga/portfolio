@@ -201,6 +201,19 @@
             @apply text-[5.5rem] md:text-[12rem] md:tracking-[-8px];
         }
 
+        .contact-email-link {
+            color: var(--color-pink-badge);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.25s ease;
+        }
+
+        .contact-email-link:hover,
+        .contact-email-link:focus-visible {
+            border-bottom-color: var(--color-pink-badge);
+        }
+
         /* ── Contact form fields ─────────────────────────────────── */
         .contact-field {
             @apply flex flex-col gap-y-2;
@@ -439,7 +452,7 @@
                 <p>
                     Prefer email? Contact me at:
                     <a href="mailto:hello@peppered.design"
-                       class="text-pink-badge font-semibold no-underline hover:underline">hello@peppered.design</a>
+                       class="contact-email-link">hello@peppered.design</a>
                 </p>
             </div>
 
