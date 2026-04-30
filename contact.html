@@ -125,14 +125,14 @@
                 }
 
                 & nav .menulink[aria-current="page"]::after {
-                    transform: scaleX(1);
+                    transform: scaleX(0);
                 }
             }
 
             &.menu-open {
                 @apply fixed h-screen w-screen px-4 z-50 md:px-12;
                 inset: 0;
-                background: var(--color-primary-dark);
+                background: #0016F2;
 
                 & .logo, nav {
                     opacity: 1;
@@ -512,7 +512,7 @@
           flex-shrink: 0;
           box-sizing: border-box;
         ">
-          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
+          <span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
         </section>
 
 </div>
