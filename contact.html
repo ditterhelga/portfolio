@@ -119,6 +119,14 @@
                 & nav .menulink:hover {
                     color: #FDE4DF;
                 }
+
+                & nav .menulink[aria-current="page"] {
+                    color: #FDE4DF;
+                }
+
+                & nav .menulink[aria-current="page"]::after {
+                    transform: scaleX(1);
+                }
             }
 
             &.menu-open {
@@ -175,6 +183,10 @@
                 & .menulink:hover {
                     color: #FDC448;
                     transform: translateY(-5px);
+                }
+
+                & .menulink[aria-current="page"] {
+                    color: #FDE4DF;
                 }
             }
         }
@@ -358,6 +370,25 @@
             }
         }
 
+        /* Colophon — align with main footer strip / “Is it a match?” inset */
+        .footer-year-strip {
+            justify-content: flex-start !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+            box-sizing: border-box;
+        }
+
+        .footer-year-strip span {
+            text-align: left !important;
+        }
+
+        @media (min-width: 640px) {
+            .footer-year-strip {
+                padding-left: 96px !important;
+                padding-right: 96px !important;
+            }
+        }
+
     </style>
 </head>
 
@@ -376,7 +407,7 @@
             <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
                 <a href="index.html#work"   class="menulink">Work</a>
                 <a href="about.html"  class="menulink">About</a>
-                <a href="contact.html"      class="menulink">Contact</a>
+                <a href="contact.html"      class="menulink" aria-current="page">Contact</a>
                 <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="menulink" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
         </div>
@@ -465,13 +496,10 @@
           background: #040989;
           display: flex;
           align-items: center;
-          justify-content: flex-end;
           flex-shrink: 0;
-          padding-left: 96px;
-          padding-right: 96px;
           box-sizing: border-box;
         ">
-          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);text-align:right;line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
         </section>
 
 </div>

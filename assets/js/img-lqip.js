@@ -3,6 +3,8 @@
 
   function markLoaded(img) {
     img.classList.add("lqip-loaded");
+    var host = img.closest("[data-lqip-ref]");
+    if (host) host.style.backgroundImage = "none";
   }
 
   function bindImg(img) {

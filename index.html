@@ -1101,6 +1101,106 @@
             white-space: normal;
         }
 
+        /* Footer — xs: hide physics cards layer, single column, tighter padding */
+        @media (max-width: 639px) {
+            #footer-match.site-footer {
+                height: auto !important;
+                min-height: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            #footer-match > img[aria-hidden="true"] {
+                opacity: 0.05 !important;
+            }
+
+            #footer-gg-root {
+                display: none !important;
+                visibility: hidden !important;
+            }
+
+            #footer-match .footer-match-main {
+                grid-template-columns: 1fr !important;
+                padding: 3.75rem 1.25rem 0 !important;
+                row-gap: 2rem !important;
+                column-gap: 0 !important;
+            }
+
+            #footer-match .footer-match-heading {
+                font-size: clamp(2.5rem, 12.5vw, 4rem) !important;
+                line-height: 0.92 !important;
+                margin-bottom: 1.5rem !important;
+                padding-top: 0.75rem !important;
+                white-space: normal !important;
+            }
+
+            /* Same as body copy on case cards / Beyond Work (Inter 20 / 32) */
+            #footer-match .footer-match-main .footer-match-blurb {
+                font-size: 20px !important;
+                line-height: 32px !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            #footer-match .footer-match-main .footer-match-email {
+                font-size: 20px !important;
+                line-height: 32px !important;
+                margin-bottom: 2rem !important;
+            }
+
+            #footer-match .match-cta {
+                margin-top: 0.75rem !important;
+            }
+
+            #footer-match .match-cta-label {
+                font-size: 24px !important;
+                line-height: 24px !important;
+            }
+
+            #footer-match .footer-match-nav {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 12px !important;
+                flex-wrap: nowrap !important;
+                padding-top: 1.5rem !important;
+                padding-bottom: 1.5rem !important;
+                margin-top: 0.5rem !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.18);
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            #footer-match .footer-match-nav-links {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                gap: 0.5rem 0.75rem !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                justify-content: flex-start !important;
+            }
+
+            #footer-match .footer-match-nav-links a {
+                font-size: 15px !important;
+                letter-spacing: 0.12em !important;
+                line-height: 1.2 !important;
+            }
+
+            #footer-match .footer-match-nav > a[aria-label="LinkedIn"] {
+                margin-top: 0 !important;
+                flex-shrink: 0 !important;
+                align-self: center !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            #footer-match .footer-match-nav > a[aria-label="LinkedIn"] img {
+                width: 28px !important;
+                height: 28px !important;
+            }
+        }
+
         /* Match CTA — pill + icon (formerly #match section); reused in footer */
         #footer-match .match-cta {
             position: relative;
@@ -1348,9 +1448,17 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        [data-parallax-wrap] .lqip-parallax-host {
+            border-radius: 0;
+            overflow: visible;
         }
 
         .lqip-parallax-host > img.lqip-fadein {
+            display: block;
             opacity: 0;
             transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -1358,6 +1466,10 @@
         #work .lqip-parallax-host > img.lqip-fadein.lqip-loaded,
         #cards-beyond .lqip-parallax-host > img.lqip-fadein.lqip-loaded {
             opacity: 1;
+        }
+
+        .lqip-parallax-host:has(> img.lqip-fadein.lqip-loaded) {
+            background-image: none;
         }
 
         .about-portrait-wrap.lqip-portrait-host {
@@ -1540,6 +1652,26 @@
             -webkit-text-fill-color: #000;
             padding-right: 0.5rem;
         }
+
+        /* Colophon — align with “Is it a match?” / #footer-match-main horizontal inset */
+        .footer-year-strip {
+            justify-content: flex-start !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+            box-sizing: border-box;
+        }
+
+        .footer-year-strip span {
+            text-align: left !important;
+        }
+
+        @media (min-width: 640px) {
+            .footer-year-strip {
+                padding-left: 96px !important;
+                padding-right: 96px !important;
+            }
+        }
+
         /* ─────────────────────────────────────────────────────────────── */
 
     </style>
@@ -2082,7 +2214,7 @@
     flex-shrink: 0;
   ">
     <div class="footer-match-copy" style="max-width: 700px; pointer-events: auto; user-select: text; -webkit-user-select: text;">
-      <h2 style="
+      <h2 class="footer-match-heading" style="
         font-family: 'Sofia Sans Condensed', sans-serif;
         font-size: 148px;
         font-weight: 800;
@@ -2121,7 +2253,7 @@
     </div>
 
     <!-- Nav -->
-    <nav style="
+    <nav class="footer-match-nav" style="
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -2129,10 +2261,12 @@
       padding-top: 4px;
       pointer-events: auto;
     ">
+      <div class="footer-match-nav-links" style="display: flex; flex-direction: column; align-items: flex-end; gap: 16px;">
       <a href="#work"       style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Work</a>
       <a href="about.html"  style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">About</a>
       <a href="contact.html" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Contact</a>
       <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Resume</a>
+      </div>
       <a href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="
         margin-top: 4px;
         display: flex;
@@ -2158,13 +2292,10 @@
           background: #040989;
           display: flex;
           align-items: center;
-          justify-content: flex-end;
           flex-shrink: 0;
-          padding-left: 96px;
-          padding-right: 96px;
           box-sizing: border-box;
         ">
-          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);text-align:right;line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
         </section>
 
         </div>
@@ -2764,8 +2895,16 @@
   }
 
   /* Trigger when footer scrolls into view (within 400px of viewport bottom) */
+  var footerXsMq = window.matchMedia('(max-width: 639px)');
+
   function checkScroll() {
     if (hasTriggered) return;
+    /* XS only: hide physics layer (CSS also hides #footer-gg-root); do not set hasTriggered — wide loads still need cards */
+    if (footerXsMq.matches) {
+      if (root) root.style.display = 'none';
+      return;
+    }
+    if (root) root.style.display = '';
     var rect = footer.getBoundingClientRect();
     if (rect.top < window.innerHeight + 400) {
       hasTriggered = true;
@@ -2774,6 +2913,7 @@
   }
 
   window.addEventListener('scroll', checkScroll, { passive: true });
+  footerXsMq.addEventListener('change', checkScroll);
   checkScroll();
 })();
 </script>

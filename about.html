@@ -119,6 +119,14 @@
                 & nav .menulink:hover {
                     color: #0016F2;
                 }
+
+                & nav .menulink[aria-current="page"] {
+                    color: #0016F2;
+                }
+
+                & nav .menulink[aria-current="page"]::after {
+                    transform: scaleX(1);
+                }
             }
 
             &.menu-open {
@@ -176,6 +184,10 @@
                     color: #FDC448;
                     transform: translateY(-5px);
                 }
+
+                & .menulink[aria-current="page"] {
+                    color: #0016F2;
+                }
             }
         }
 
@@ -225,7 +237,7 @@
             line-height: 29px;
         }
 
-        /* Know Me Better — portrait crossfade to hover still */
+        /* Know Me Better — portrait swaps to hover still (no fade) */
         .about-portrait-wrap {
             position: relative;
             overflow: hidden;
@@ -245,7 +257,7 @@
             position: absolute;
             inset: 0;
             opacity: 0;
-            transition: opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: none;
             pointer-events: none;
         }
 
@@ -257,7 +269,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             .about-portrait-wrap .about-portrait--hover {
-                transition: opacity 0.12s ease;
+                transition: none;
             }
         }
 
@@ -807,15 +819,31 @@
             }
         }
 
+        /* Beyond Work — below md: shorter thumbnails so cards balance with copy (was 336px full-width). */
+        @media (max-width: 767px) {
+            #cards-beyond > .card-beyond:not(.card-beyond--more) > .image-wrapper {
+                height: min(220px, 58vw);
+                max-height: 240px;
+            }
+        }
+
         /* LQIP: --lqip behind image until img.lqip-fadein loads */
         .lqip-parallax-host {
             background-image: var(--lqip);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        [data-parallax-wrap] .lqip-parallax-host {
+            border-radius: 0;
+            overflow: visible;
         }
 
         .lqip-parallax-host > img.lqip-fadein {
+            display: block;
             opacity: 0;
             transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -823,6 +851,10 @@
         #work .lqip-parallax-host > img.lqip-fadein.lqip-loaded,
         #cards-beyond .lqip-parallax-host > img.lqip-fadein.lqip-loaded {
             opacity: 1;
+        }
+
+        .lqip-parallax-host:has(> img.lqip-fadein.lqip-loaded) {
+            background-image: none;
         }
 
         .about-portrait-wrap.lqip-portrait-host {
@@ -839,6 +871,10 @@
 
         .about-portrait-wrap.lqip-portrait-host .about-portrait--base.lqip-fadein.lqip-loaded {
             opacity: 1;
+        }
+
+        .about-portrait-wrap.lqip-portrait-host:has(.about-portrait--base.lqip-fadein.lqip-loaded) {
+            background-image: none;
         }
 
         .about-portrait-hover-slot {
@@ -1046,6 +1082,106 @@
             white-space: normal;
         }
 
+        /* Footer — xs: hide physics cards layer, single column, tighter padding */
+        @media (max-width: 639px) {
+            #footer-match.site-footer {
+                height: auto !important;
+                min-height: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            #footer-match > img[aria-hidden="true"] {
+                opacity: 0.05 !important;
+            }
+
+            #footer-gg-root {
+                display: none !important;
+                visibility: hidden !important;
+            }
+
+            #footer-match .footer-match-main {
+                grid-template-columns: 1fr !important;
+                padding: 3.75rem 1.25rem 0 !important;
+                row-gap: 2rem !important;
+                column-gap: 0 !important;
+            }
+
+            #footer-match .footer-match-heading {
+                font-size: clamp(2.5rem, 12.5vw, 4rem) !important;
+                line-height: 0.92 !important;
+                margin-bottom: 1.5rem !important;
+                padding-top: 0.75rem !important;
+                white-space: normal !important;
+            }
+
+            /* Same as body copy on case cards / Beyond Work (Inter 20 / 32) */
+            #footer-match .footer-match-main .footer-match-blurb {
+                font-size: 20px !important;
+                line-height: 32px !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            #footer-match .footer-match-main .footer-match-email {
+                font-size: 20px !important;
+                line-height: 32px !important;
+                margin-bottom: 2rem !important;
+            }
+
+            #footer-match .match-cta {
+                margin-top: 0.75rem !important;
+            }
+
+            #footer-match .match-cta-label {
+                font-size: 24px !important;
+                line-height: 24px !important;
+            }
+
+            #footer-match .footer-match-nav {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 12px !important;
+                flex-wrap: nowrap !important;
+                padding-top: 1.5rem !important;
+                padding-bottom: 1.5rem !important;
+                margin-top: 0.5rem !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.18);
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            #footer-match .footer-match-nav-links {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                gap: 0.5rem 0.75rem !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                justify-content: flex-start !important;
+            }
+
+            #footer-match .footer-match-nav-links a {
+                font-size: 15px !important;
+                letter-spacing: 0.12em !important;
+                line-height: 1.2 !important;
+            }
+
+            #footer-match .footer-match-nav > a[aria-label="LinkedIn"] {
+                margin-top: 0 !important;
+                flex-shrink: 0 !important;
+                align-self: center !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            #footer-match .footer-match-nav > a[aria-label="LinkedIn"] img {
+                width: 28px !important;
+                height: 28px !important;
+            }
+        }
+
         /* Match CTA — pill + icon (formerly #match section); reused in footer */
         #footer-match .match-cta {
             position: relative;
@@ -1212,6 +1348,25 @@
             opacity: 1;
         }
 
+        /* Colophon — align with “Is it a match?” / #footer-match-main horizontal inset */
+        .footer-year-strip {
+            justify-content: flex-start !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+            box-sizing: border-box;
+        }
+
+        .footer-year-strip span {
+            text-align: left !important;
+        }
+
+        @media (min-width: 640px) {
+            .footer-year-strip {
+                padding-left: 96px !important;
+                padding-right: 96px !important;
+            }
+        }
+
     </style>
 </head>
 
@@ -1230,7 +1385,7 @@
 
             <nav class="hidden flex-col w-full justify-center md:flex md:flex-row md:gap-x-16 md:w-auto md:ml-auto items-center">
                 <a href="index.html#work"   class="menulink">Work</a>
-                <a href="about.html"        class="menulink">About</a>
+                <a href="about.html"        class="menulink" aria-current="page">About</a>
                 <a href="contact.html"      class="menulink">Contact</a>
                 <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="menulink" target="_blank" rel="noopener noreferrer">Resume</a>
             </nav>
@@ -1251,9 +1406,9 @@
     <!-- ── Section 1: Know Me Better — 2xl: photo vertically centered vs full text block ─ -->
     <section class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
 
-        <div class="flex flex-col gap-y-[84px]">
+        <div class="flex flex-col gap-y-10 max-sm:gap-y-8 md:gap-y-[84px]">
             <div class="flex flex-col gap-y-12 md:flex-row md:items-start md:gap-x-16 md:gap-y-0 xl:gap-x-24">
-            <div class="about-portrait-wrap lqip-portrait-host w-[400px] h-[400px] max-w-full md:shrink-0" data-lqip-ref="assets/images/About-image.png">
+            <div class="about-portrait-wrap lqip-portrait-host max-sm:order-2 max-sm:mx-auto w-[400px] h-[400px] max-w-full md:shrink-0" data-lqip-ref="assets/images/About-image.png">
                 <img src="assets/images/About-image.png"
                      alt="Olga Pertseva"
                      class="about-portrait about-portrait--base lqip-fadein"
@@ -1271,7 +1426,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-y-6 flex-1 min-w-0">
+            <div class="flex flex-col gap-y-6 flex-1 min-w-0 max-sm:order-1">
                 <div class="section-kicker text-xl/[2rem] font-light uppercase flex flex-row gap-x-5 tracking-none items-center">
                     <span class="section-kicker-blob" aria-hidden="true">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1285,8 +1440,8 @@
             </div>
             </div>
 
-            <div class="flex flex-col gap-y-[84px]">
-                <div class="about-know-me-copy grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-12">
+            <div class="flex flex-col gap-y-10 max-sm:gap-y-8 md:gap-y-[84px]">
+                <div class="about-know-me-copy grid grid-cols-1 gap-y-4 max-sm:gap-y-3 md:gap-y-6 md:grid-cols-2 md:gap-x-12">
                     <div class="flex flex-col gap-y-6">
                         <p>For over a decade, I've designed digital products that live in the real world — <strong class="font-medium">POS systems, logistics platforms, payment tools, and enterprise software used daily by real people under real pressure</strong>, always focused on simplifying complexity, improving everyday interactions, and <strong class="font-medium">helping people achieve their goals with less friction and more confidence</strong>.</p>
                     </div>
@@ -1294,7 +1449,7 @@
                     <p>Throughout my career, <strong class="font-medium">I've worn many hats, often all at once.</strong> From leading design teams to taking full ownership as a team of one, <strong class="font-medium">I've designed products from the ground up</strong>, often in complex, fast-moving environments, <strong class="font-medium">leading the work from early research and problem framing to shipping things that actually work.</strong></p>
                 </div>
 
-                <div class="flex flex-col md:flex-row md:gap-x-[40px] gap-y-6 mb-10 md:mb-12">
+                <div class="flex flex-col md:flex-row md:gap-x-[40px] gap-y-6 mb-6 max-sm:mb-5 md:mb-12">
                     <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" class="about-cta-card no-underline text-inherit" target="_blank" rel="noopener noreferrer">
                         <div class="flex min-w-0 flex-1 flex-col gap-y-1">
                             <div class="flex items-center gap-x-4">
@@ -1649,7 +1804,7 @@
     flex-shrink: 0;
   ">
     <div class="footer-match-copy" style="max-width: 700px; pointer-events: auto; user-select: text; -webkit-user-select: text;">
-      <h2 style="
+      <h2 class="footer-match-heading" style="
         font-family: 'Sofia Sans Condensed', sans-serif;
         font-size: 148px;
         font-weight: 800;
@@ -1688,7 +1843,7 @@
         </div>
 
     <!-- Nav -->
-    <nav style="
+    <nav class="footer-match-nav" style="
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -1696,10 +1851,12 @@
       padding-top: 4px;
       pointer-events: auto;
     ">
+      <div class="footer-match-nav-links" style="display: flex; flex-direction: column; align-items: flex-end; gap: 16px;">
       <a href="index.html#work"       style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Work</a>
       <a href="about.html"  style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">About</a>
       <a href="contact.html" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Contact</a>
       <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Resume</a>
+      </div>
       <a href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="
         margin-top: 4px;
         display: flex;
@@ -1725,13 +1882,10 @@
           background: #040989;
           display: flex;
           align-items: center;
-          justify-content: flex-end;
           flex-shrink: 0;
-          padding-left: 96px;
-          padding-right: 96px;
           box-sizing: border-box;
         ">
-          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);text-align:right;line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
         </section>
 
         </div>
@@ -2127,8 +2281,16 @@
   }
 
   /* Trigger when footer scrolls into view (within 400px of viewport bottom) */
+  var footerXsMq = window.matchMedia('(max-width: 639px)');
+
   function checkScroll() {
     if (hasTriggered) return;
+    /* XS only: hide physics layer (CSS also hides #footer-gg-root); do not set hasTriggered — wide loads still need cards */
+    if (footerXsMq.matches) {
+      if (root) root.style.display = 'none';
+      return;
+    }
+    if (root) root.style.display = '';
     var rect = footer.getBoundingClientRect();
     if (rect.top < window.innerHeight + 400) {
       hasTriggered = true;
@@ -2137,6 +2299,7 @@
   }
 
   window.addEventListener('scroll', checkScroll, { passive: true });
+  footerXsMq.addEventListener('change', checkScroll);
   checkScroll();
 })();
 </script>

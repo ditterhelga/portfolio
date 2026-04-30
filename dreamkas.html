@@ -691,6 +691,106 @@
             white-space: normal;
         }
 
+        /* Footer — xs: hide physics cards layer, single column, tighter padding */
+        @media (max-width: 639px) {
+            #footer-match.site-footer {
+                height: auto !important;
+                min-height: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            #footer-match > img[aria-hidden="true"] {
+                opacity: 0.05 !important;
+            }
+
+            #footer-gg-root {
+                display: none !important;
+                visibility: hidden !important;
+            }
+
+            #footer-match .footer-match-main {
+                grid-template-columns: 1fr !important;
+                padding: 3.75rem 1.25rem 0 !important;
+                row-gap: 2rem !important;
+                column-gap: 0 !important;
+            }
+
+            #footer-match .footer-match-heading {
+                font-size: clamp(2.5rem, 12.5vw, 4rem) !important;
+                line-height: 0.92 !important;
+                margin-bottom: 1.5rem !important;
+                padding-top: 0.75rem !important;
+                white-space: normal !important;
+            }
+
+            /* Same as body copy on case cards / Beyond Work (Inter 20 / 32) */
+            #footer-match .footer-match-main .footer-match-blurb {
+                font-size: 20px !important;
+                line-height: 32px !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            #footer-match .footer-match-main .footer-match-email {
+                font-size: 20px !important;
+                line-height: 32px !important;
+                margin-bottom: 2rem !important;
+            }
+
+            #footer-match .match-cta {
+                margin-top: 0.75rem !important;
+            }
+
+            #footer-match .match-cta-label {
+                font-size: 24px !important;
+                line-height: 24px !important;
+            }
+
+            #footer-match .footer-match-nav {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 12px !important;
+                flex-wrap: nowrap !important;
+                padding-top: 1.5rem !important;
+                padding-bottom: 1.5rem !important;
+                margin-top: 0.5rem !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.18);
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            #footer-match .footer-match-nav-links {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                gap: 0.5rem 0.75rem !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                justify-content: flex-start !important;
+            }
+
+            #footer-match .footer-match-nav-links a {
+                font-size: 15px !important;
+                letter-spacing: 0.12em !important;
+                line-height: 1.2 !important;
+            }
+
+            #footer-match .footer-match-nav > a[aria-label="LinkedIn"] {
+                margin-top: 0 !important;
+                flex-shrink: 0 !important;
+                align-self: center !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            #footer-match .footer-match-nav > a[aria-label="LinkedIn"] img {
+                width: 28px !important;
+                height: 28px !important;
+            }
+        }
+
         /* Match CTA — physics footer (#footer-match), shared with index */
         #footer-match .match-cta {
             position: relative;
@@ -964,9 +1064,17 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        [data-parallax-wrap] .lqip-parallax-host {
+            border-radius: 0;
+            overflow: visible;
         }
 
         .lqip-parallax-host > img.lqip-fadein {
+            display: block;
             opacity: 0;
             transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -975,9 +1083,33 @@
             opacity: 1;
         }
 
+        /* Remove LQIP layer after load — bg “cover” vs img “object-cover” often misaligned (blurry strip on top/bottom). */
+        .lqip-parallax-host:has(> img.lqip-fadein.lqip-loaded) {
+            background-image: none;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .lqip-parallax-host > img.lqip-fadein {
                 transition: none;
+            }
+        }
+
+        /* Colophon — align with “Is it a match?” / #footer-match-main horizontal inset */
+        .footer-year-strip {
+            justify-content: flex-start !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+            box-sizing: border-box;
+        }
+
+        .footer-year-strip span {
+            text-align: left !important;
+        }
+
+        @media (min-width: 640px) {
+            .footer-year-strip {
+                padding-left: 96px !important;
+                padding-right: 96px !important;
             }
         }
 
@@ -1159,16 +1291,17 @@
                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">How I Approached It</span></span>
+                <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">HOW I APPROACHED IT</span></span>
             </button>
             <div id="my-part-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                 <div class="min-h-0 overflow-hidden">
                     <div id="my-part-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                         <div class="flex flex-col gap-y-4 font-light text-5/8">
-                            <div><span class="font-medium">Field research &amp; observation</span><br/>Shadowed cashiers and store owners on real shifts, capturing where legacy tools broke down under pressure.</div>
-                            <div><span class="font-medium">Rapid prototyping</span><br/>Turned weekly findings into flows we could test again in the field before locking UI.</div>
-                            <div><span class="font-medium">Cross-functional delivery</span><br/>Partnered with PM, engineering, and hardware so design decisions stayed tied to rollout and training.</div>
-                            <div><span class="font-medium">Design foundations</span><br/>Established patterns for language, touch targets, and edge cases that kept the POS consistent across devices.</div>
+                            <div><span class="font-medium">Led the full end-to-end design process</span><br/>Drove the entire UX and UI workflow from early discovery and concept development to interactive prototypes, wireframes, and final production interfaces. Focused on building clarity and consistency across every stage.</div>
+                            <div><span class="font-medium">Conducted in-depth research with real users</span><br/>Interviewed cashiers and business owners across Russia to uncover pain points, workflows, and mental models. Ran usability tests &mdash; including eye-tracking sessions &mdash; to identify friction points and improve interface readability under real retail pressure.</div>
+                            <div><span class="font-medium">Prototyped and iterated rapidly</span><br/>Built interactive prototypes to test core flows early and often. Incorporated continuous feedback from users, business stakeholders, and internal teams to refine the interface for speed, clarity, and trust.</div>
+                            <div><span class="font-medium">Collaborated closely with cross-functional teams</span><br/>Worked hand-in-hand with developers, 3D designers, hardware engineers, and marketing teams to align every interaction with device specifications, operational logic, and brand positioning.</div>
+                            <div><span class="font-medium">Established the foundation for future design</span><br/>Created the initial design system &mdash; including color, typography, spacing, and component logic &mdash; to support fast scaling of features and smooth onboarding of new designers as the team grew.</div>
                         </div>
                     </div>
                 </div>
@@ -1190,7 +1323,18 @@
             <div id="my-part-2-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                 <div class="min-h-0 overflow-hidden">
                     <div id="my-part-2-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
-                        <p class="font-light text-5/8">Beyond the POS product itself, I helped grow how Dreamkas practiced design: mentoring newer designers, introducing critique and documentation habits, and advocating for user research in roadmap conversations — so the team could keep shipping with clarity as the company scaled.</p>
+                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                            <p class="min-w-0">As the company scaled, so did my role. I became the go-to person for all things UX and design, helping shape not just one product, but the entire design direction across multiple teams and initiatives.</p>
+                            <div>Redesigned the company website and created a separate product site for Dreamkas POS</div>
+                            <div>Worked on the first self-checkout systems in Russia for major retailers like Lenta and Spar &mdash; with deep field testing and UX tailored for people unfamiliar with self-service</div>
+                            <div>Led hiring, onboarding, and mentoring of junior designers as we built out the team</div>
+                            <div>Introduced Sketch (yes, unfortunately not Figma) and transitioned the company away from Photoshop, streamlining the design-to-dev process</div>
+                            <div>Collaborated on branding efforts with marketing and 3D teams to help define product identity</div>
+                            <div>Created lightweight design systems to support consistency and speed across all projects</div>
+                            <div>Worked cross-functionally with sales and support to understand business needs and real-world user feedback</div>
+                            <div>Presented to stakeholders regularly, learning how to build trust, advocate for design, and move ideas forward in a complex organization</div>
+                            <p class="min-w-0">What started as a solo design role turned into a pivotal experience in team-building, systems thinking, and product ownership. I left company three years later knowing I had helped shape not just products, but a sustainable design culture that could grow without me.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1229,9 +1373,11 @@
                                 <div class="min-h-0 overflow-hidden">
                                     <div id="rd-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                                         <div class="flex flex-col gap-y-4 font-light text-5/8">
-                                            <div><span class="font-medium">Field observation</span><br/>Shadowed cashiers and spoke with owners on busy shifts to see where the old tools broke down.</div>
-                                            <div><span class="font-medium">Journey mapping</span><br/>Mapped checkout, refunds, and edge cases to find where confusion piled up under pressure.</div>
-                                            <div><span class="font-medium">Iteration with engineering</span><br/>Turned weekly findings into prototypes we could test again on the floor.</div>
+                                            <div><span class="font-medium">In-depth user interviews across diverse retail environments</span><br/>Conducted dozens of in-person interviews with cashiers and store managers in settings ranging from large retail chains to small family-run shops. Focused on understanding their daily routines, workarounds, and pain points to uncover real behavioral patterns.</div>
+                                            <div><span class="font-medium">Field observations and shadowing under real pressure</span><br/>Spent time in actual stores observing how cashiers used existing systems during live operations, especially at peak hours. These sessions revealed critical usability breakdowns that wouldn&rsquo;t surface in controlled environments.</div>
+                                            <div><span class="font-medium">Prototype testing in real and lab settings</span><br/>Ran testing sessions both on-site and in controlled spaces, including participants who had never used a POS system before. This helped evaluate learnability, error recovery, and the clarity of core workflows.</div>
+                                            <div><span class="font-medium">Contextual inquiry with internal experts</span><br/>Spoke with sales representatives, installers, and technical support teams to map out recurring confusion points. Their firsthand knowledge of user mistakes and questions provided valuable insights for refining flows and terminology.</div>
+                                            <div><span class="font-medium">Continuous alignment with cross-functional teams</span><br/>Held regular syncs with product owners, developers, and marketing to ensure research findings directly informed product priorities and business decisions.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1287,7 +1433,15 @@
                         <div id="uu-cash-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                             <div class="min-h-0 overflow-hidden">
                                 <div id="uu-cash-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-8 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
-                                    <p class="font-light text-5/8">Checkout had to stay fast when lines peaked; every confusing label or extra tap slowed everyone down.</p>
+                                    <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                        <div><span class="font-medium">Button-based systems that demanded memorization and perfection</span><br/>Cashiers had to remember codes, sequences, and button positions on monochrome screens. One wrong press could interrupt the transaction, slow the line, and trigger stress &mdash; especially during peak hours.</div>
+                                        <div><span class="font-medium">Interfaces that created hesitation instead of confidence</span><br/>Cluttered layouts and unclear labels forced users to stop, think, and double-check actions. Mis-taps were common, and every pause increased pressure and customer impatience.</div>
+                                        <div><span class="font-medium">Touch targets and feedback that worked against real-world speed</span><br/>Buttons were too small, spacing was tight, and feedback was inconsistent, making even simple actions feel risky. Under pressure, these micro-frictions added up to slower checkouts.</div>
+                                        <div><span class="font-medium">Desktop POS software built for experts, not frontline workers</span><br/>Many systems were text-heavy, complex, and overloaded with features. They required training, assumptions, and familiarity &mdash; all misaligned with fast retail environments and frequent staff turnover.</div>
+                                        <div><span class="font-medium">Too many separate devices slowing down every transaction</span><br/>Cashiers had to constantly navigate between scanner, keyboard, printer, and interface. The physical choreography added time, errors, and unnecessary effort to each customer interaction.</div>
+                                        <div><span class="font-medium">Manual processes that led to errors and unhappy customers</span><br/>Without clear automation or guided flows, calculations, discounts, and returns were prone to mistakes. Delays created tension for both customers and staff.</div>
+                                        <div><span class="font-medium">No safe way to recover from mistakes during peak pressure</span><br/>Hesitation was common because users feared irreversible actions. A lack of clear undo paths increased anxiety and reduced overall speed and confidence.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1310,7 +1464,12 @@
                         <div id="uu-own-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                             <div class="min-h-0 overflow-hidden">
                                 <div id="uu-own-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-8 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
-                                    <p class="font-light text-5/8">Owners needed confidence that staff could run compliant sales without constant supervision.</p>
+                                    <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                        <div><span class="font-medium">Paper-based tracking that created errors and compliance risks</span><br/>Many store owners still relied on handwritten receipts and manual records. These methods led to frequent mistakes, missing documentation, and exposure to fines and legal issues.</div>
+                                        <div><span class="font-medium">Systems that required specialists just to set up or change</span><br/>Configuring existing POS solutions was costly and time-consuming. Even small adjustments &mdash; prices, menus, taxes &mdash; often required external technicians, delaying operations and increasing expenses.</div>
+                                        <div><span class="font-medium">Training new staff that consumed time and productivity</span><br/>With confusing tools, owners and managers had to personally stand at the till and reteach basic actions again and again. This slowed daily work and pulled them away from running the business.</div>
+                                        <div><span class="font-medium">Reports that were hard to access, read, or use for decisions</span><br/>Sales data and daily summaries were buried, unclear, or spread across different systems. Extracting insights took unnecessary effort, making management harder and limiting growth visibility.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1333,7 +1492,12 @@
                         <div id="uu-hq-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
                             <div class="min-h-0 overflow-hidden">
                                 <div id="uu-hq-acc-panel" data-open="0" class="w-full max-w-full pt-4 pb-8 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100">
-                                    <p class="font-light text-5/8">Remote diagnostics and repeatable install steps reduced repeat visits and phone support load.</p>
+                                    <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                        <div><span class="font-medium">Systems that broke often and lacked predictable UI patterns</span><br/>Legacy tools were unstable and inconsistent, forcing support teams to troubleshoot issues that stemmed from unclear flows and mismatched interfaces rather than real technical faults.</div>
+                                        <div><span class="font-medium">Configuration differences that caused the same errors repeatedly</span><br/>Even small variations between stores led to recurring problems. Support teams spent their time solving identical issues across locations instead of preventing them at the system level.</div>
+                                        <div><span class="font-medium">Updates and fixes that required physical intervention</span><br/>Rolling out improvements was slow, manual, and disruptive. Technicians had to visit stores in person, delaying resolutions and increasing operational costs.</div>
+                                        <div><span class="font-medium">User pain points that support teams couldn&rsquo;t influence</span><br/>Support agents kept seeing the same mistakes, frustrations, and misunderstandings from cashiers and managers &mdash; yet had no way to address them because the root cause was baked into the interface itself.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1380,8 +1544,14 @@
                 <div class="min-h-0 overflow-hidden">
                     <div id="rtp-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                         <div class="flex flex-col gap-y-4 font-light text-5/8">
-                            <div><span class="font-medium">Shared design language</span><br/>Unified typography, spacing, and components across cashier and back-office tools.</div>
-                            <div><span class="font-medium">Error-proof flows</span><br/>Reduced destructive actions and clarified totals before payment.</div>
+                            <div><span class="font-medium">Simplicity was a survival strategy</span><br/>Every extra step, vague label, or tiny tap target added stress and slowed everything down. In real retail life, there was no patience for friction. The interface had to remove obstacles, not create new ones.</div>
+                            <div><span class="font-medium">Learnability had to happen within minutes</span><br/>There was no time or budget for training. Most cashiers were expected to pick up the system on their first day, often mid-shift, with a queue in front of them. The product had to explain itself through clear patterns and flows, not manuals.</div>
+                            <div><span class="font-medium">Pressure shaped every interaction</span><br/>Busy stores left zero room for hesitation. One wrong tap could stall the line, frustrate customers, and disrupt the entire checkout rhythm. Every screen and state had to support speed and confidence under pressure.</div>
+                            <div><span class="font-medium">User mental models were radically different</span><br/>Many users didn&rsquo;t understand common UI patterns like back buttons or modal windows. The system had to adapt to their logic, not expect them to adapt to ours.</div>
+                            <div><span class="font-medium">Error recovery needed to feel safe and obvious</span><br/>Mistakes caused real anxiety, especially when money was involved. Undoing or fixing an action needed to be instant and obvious. Safety wasn&rsquo;t a nice-to-have, it was essential for trust.</div>
+                            <div><span class="font-medium">Visual clarity was non-negotiable</span><br/>Big touch targets, clear labels, and immediate feedback were critical. In noisy, fast environments, the interface had to communicate at a glance, leaving no room for doubt.</div>
+                            <div><span class="font-medium">Store owners needed clarity, not complexity</span><br/>They spent too much time training new staff, fixing avoidable mistakes, and struggling with reports. Tools had to make daily operations smoother, not add another layer of frustration.</div>
+                            <div><span class="font-medium">Support teams needed consistency</span><br/>The same usability issues kept appearing across hundreds of stores. Standardized patterns and predictable flows were essential to reduce support tickets and keep rollouts manageable at scale.</div>
                         </div>
                     </div>
                 </div>
@@ -1429,8 +1599,12 @@
                 <div class="min-h-0 overflow-hidden">
                     <div id="cux-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                         <div class="flex flex-col gap-y-4 font-light text-5/8">
-                            <div><span class="font-medium">Large touch targets</span><br/>Kept primary actions within easy reach during long shifts.</div>
-                            <div><span class="font-medium">Forgiving flows</span><br/>Let staff correct mistakes without losing the sale.</div>
+                            <div><span class="font-medium">Checkout essentials done right</span><br/>Sales, returns, split payments, and discounts were streamlined for fast tapping and minimal cognitive load. Common actions were surfaced, edge cases tucked away but easy to find.</div>
+                            <div><span class="font-medium">Clear visual hierarchy</span><br/>Color, spacing, and iconography guided the eye without overwhelming it. The layout prioritized speed and readability, helping users make decisions in seconds, not minutes.</div>
+                            <div><span class="font-medium">Tailored layouts for different business types</span><br/>Caf&eacute;s needed quick table tracking, pharmacies needed expiration visibility, grocery stores valued simplicity above all. We adapted layouts to match real operational flows without fragmenting the system.</div>
+                            <div><span class="font-medium">Gentle handling of errors and edge cases</span><br/>Error states didn&rsquo;t shout or confuse &mdash; they calmed. Clear messaging, visible escape routes, and forgiving flows helped non-tech users recover without panic.</div>
+                            <div><span class="font-medium">A softer, more human interface</span><br/>We intentionally avoided the cold, machine-like look of legacy systems. Soft visuals and clean language made the interface approachable, even for first-time users.</div>
+                            <div><span class="font-medium">Simplified shift operations</span><br/>Essential tasks like drawer reconciliation, X/Z reports, and end-of-day summaries were redesigned to reduce steps and errors, while still giving managers control and oversight.</div>
                         </div>
                     </div>
                 </div>
@@ -1504,7 +1678,11 @@
                 <div class="min-h-0 overflow-hidden">
                     <div id="uh-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                         <div class="flex flex-col gap-y-4 font-light text-5/8">
-                            <div><span class="font-medium">Fiscal reporting</span><br/>Aligned screens with regulatory outputs so stores stayed audit-ready.</div>
+                            <div><span class="font-medium">Settings architecture built for power and simplicity</span><br/>Enabled deep customization &mdash; from tax logic to receipt formatting &mdash; without overloading the interface.</div>
+                            <div><span class="font-medium">Reliable update and sync flows</span><br/>Updates rolled out smoothly, even in low-connectivity areas, with offline mode and automatic recovery ensuring stores never went down mid-sale.</div>
+                            <div><span class="font-medium">Compliance and legal integration</span><br/>Alcohol tracking (EGAIS) and fiscal rules were embedded into the UX with smart defaults, reducing friction and errors for end users.</div>
+                            <div><span class="font-medium">Support tools for scale</span><br/>Quick diagnostics, error logs, and QR-based reporting gave tech teams fast visibility into problems without disrupting operations.</div>
+                            <div><span class="font-medium">Role management that matched real store hierarchies</span><br/>Different user types (cashiers, managers, admins) accessed exactly what they needed &mdash; no clutter, no risk.</div>
                         </div>
                     </div>
                 </div>
@@ -1577,9 +1755,10 @@
                                 <div class="min-h-0 overflow-hidden">
                                     <div id="res-cash-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                                         <div class="flex flex-col gap-y-4 font-light text-5/8">
-                                            <div><span class="font-medium">Faster checkout rhythm</span><br/>Streamlined steps cut time at the till during peak hours.</div>
-                                            <div><span class="font-medium">Fewer mis-taps</span><br/>Clear hierarchy and spacing reduced errors under pressure.</div>
-                                            <div><span class="font-medium">Easier onboarding</span><br/>New hires could follow on-screen guidance without manuals.</div>
+                                            <div><span class="font-medium">Onboarding in minutes, not days</span><br/>Training time dropped by 60%. Cashiers who once spent days memorizing codes and sequences were able to get up and running within minutes. Even staff with zero touchscreen experience could confidently complete transactions without manuals or supervision.</div>
+                                            <div><span class="font-medium">Speed under real pressure</span><br/>The redesigned flows were tested in live environments with long queues and peak-hour stress. Clear visual hierarchy and logical tap sequences enabled cashiers to work 25% faster on average, cutting wait times and improving service flow.</div>
+                                            <div><span class="font-medium">Fewer mistakes, calmer shifts</span><br/>Error-proof patterns, smart defaults, and forgiving flows reduced user errors by 40%, removing a major source of stress. Instead of fearing mistakes, cashiers could focus on the customer in front of them.</div>
+                                            <div><span class="font-medium">Interfaces they could trust</span><br/>By replacing cluttered black-and-white terminals with clear, human-centered UI, we built genuine confidence. Cashiers described the new system as &ldquo;simple,&rdquo; &ldquo;comfortable,&rdquo; and &ldquo;finally understandable.&rdquo;</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1662,8 +1841,13 @@
                                 <div class="min-h-0 overflow-hidden">
                                     <div id="res-biz-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
                                         <div class="flex flex-col gap-y-4 font-light text-5/8">
-                                            <div><span class="font-medium">Reporting in one place</span><br/>Sales and fiscal data aligned for audits and daily ops.</div>
-                                            <div><span class="font-medium">Less firefighting</span><br/>Clear signals replaced guesswork when something looked off.</div>
+                                            <div><span class="font-medium">Rapid nationwide rollout</span><br/>Dreamkas capitalized on new fiscal regulations and became a go-to POS solution for small and medium retailers.</div>
+                                            <div><span class="font-medium">Massive adoption</span><br/>Thousands of stores switched to Dreamkas Viki smart terminals during the 54-FZ transition, giving CSI broad market coverage.</div>
+                                            <div><span class="font-medium">Market leadership</span><br/>With 8 registered models, Dreamkas became one of the top POS manufacturers in the country, competing with Atol and Evotor.</div>
+                                            <div><span class="font-medium">Stronger business position</span><br/>Dreamkas helped CSI reach SMEs, diversify revenue, and solidify its position among the top retail IT suppliers.</div>
+                                            <div><span class="font-medium">Lower operational costs</span><br/>By making the system intuitive and stable, support requests dropped by 40%, freeing up tech teams to focus on growth instead of troubleshooting repetitive issues.</div>
+                                            <div><span class="font-medium">Strategic positioning</span><br/>The success of the rollout established CSI as a leading retail IT provider in the country, opening new revenue streams through compliance-ready features, cloud services, and partnerships.</div>
+                                            <div><span class="font-medium">Future-proof foundation</span><br/>The unified UX and system architecture laid the groundwork for future products, from self-checkouts to advanced reporting, without fragmenting the platform or retraining entire workforces.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1711,13 +1895,26 @@
                             </div>
                         </div>
                         <div class="flex w-full flex-col max-md:order-3 max-md:mb-10 mt-5 mb-0 md:order-3 md:mt-0 md:mb-0">
-                            <div class="group flex items-center gap-x-[14px]">
+                            <button type="button" id="learn-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="learn-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
-                                    <svg class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <svg id="learn-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path d="M17 12L13 16L9 12" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </span>
                                 <span class="case-acc-label-wrap flex min-h-[34px] items-center"><span class="case-acc-label font-family-sofia text-[1.5rem] font-normal uppercase leading-none tracking-wider text-primary-dark">MORE REFLECTIONS</span></span>
+                            </button>
+                            <div id="learn-acc-panel-wrap" data-open="0" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=1]:grid-rows-[1fr]">
+                                <div class="min-h-0 overflow-hidden">
+                                    <div id="learn-acc-panel" data-open="0" class="w-full max-w-full pt-10 pb-12 border-b border-[#E9E9E9] opacity-0 transition-opacity duration-300 ease-out data-[open=1]:opacity-100 xl:max-w-[856px] 2xl:max-w-[1048px]">
+                                        <div class="flex flex-col gap-y-4 font-light text-5/8">
+                                            <div><span class="font-medium">Designing for real, not ideal users</span><br/>Crafting interfaces for people with no touchscreen experience, under real pressure, required radical simplicity and empathy.</div>
+                                            <div><span class="font-medium">Bringing skeptical stakeholders along</span><br/>I turned &ldquo;maybe later&rdquo; into &ldquo;let&rsquo;s test it&rdquo; by grounding every decision in real field insights.</div>
+                                            <div><span class="font-medium">Balancing ambition with legal &amp; technical constraints</span><br/>Regulations were strict, timelines were tight &mdash; clarity and usability had to survive inside those limits.</div>
+                                            <div><span class="font-medium">Building trust through process, not slides</span><br/>Trust came from showing, testing, iterating, and bringing everyone into the loop.</div>
+                                            <div><span class="font-medium">Evolving from solo designer to team lead</span><br/>I built processes, onboarded new designers, and shaped a shared UX culture inside a tech-heavy environment.</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="flex w-full flex-col max-md:order-2 md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
@@ -1848,7 +2045,8 @@
                 { btnId: "cux-acc-btn", wrapId: "cux-acc-panel-wrap", panelId: "cux-acc-panel", arrowId: "cux-acc-arrow" },
                 { btnId: "uh-acc-btn", wrapId: "uh-acc-panel-wrap", panelId: "uh-acc-panel", arrowId: "uh-acc-arrow" },
                 { btnId: "res-cash-acc-btn", wrapId: "res-cash-acc-panel-wrap", panelId: "res-cash-acc-panel", arrowId: "res-cash-acc-arrow" },
-                { btnId: "res-biz-acc-btn", wrapId: "res-biz-acc-panel-wrap", panelId: "res-biz-acc-panel", arrowId: "res-biz-acc-arrow" }
+                { btnId: "res-biz-acc-btn", wrapId: "res-biz-acc-panel-wrap", panelId: "res-biz-acc-panel", arrowId: "res-biz-acc-arrow" },
+                { btnId: "learn-acc-btn", wrapId: "learn-acc-panel-wrap", panelId: "learn-acc-panel", arrowId: "learn-acc-arrow" }
             ];
             var accordions = cfgs.map(function (cfg) {
                 return {
@@ -2235,7 +2433,7 @@
     flex-shrink: 0;
   ">
     <div class="footer-match-copy" style="max-width: 700px; pointer-events: auto; user-select: text; -webkit-user-select: text;">
-      <h2 style="
+      <h2 class="footer-match-heading" style="
         font-family: 'Sofia Sans Condensed', sans-serif;
         font-size: 148px;
         font-weight: 800;
@@ -2274,7 +2472,7 @@
     </div>
 
     <!-- Nav -->
-    <nav style="
+    <nav class="footer-match-nav" style="
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -2282,10 +2480,12 @@
       padding-top: 4px;
       pointer-events: auto;
     ">
+      <div class="footer-match-nav-links" style="display: flex; flex-direction: column; align-items: flex-end; gap: 16px;">
       <a href="index.html#work"       style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Work</a>
       <a href="about.html"  style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">About</a>
       <a href="contact.html" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Contact</a>
       <a href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer" style="font-family:'Inter',sans-serif;font-size:20px;font-weight:300;letter-spacing:0.13em;text-transform:uppercase;color:#ffffff;text-decoration:none;">Resume</a>
+      </div>
       <a href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="
         margin-top: 4px;
         display: flex;
@@ -2311,13 +2511,10 @@
           background: #040989;
           display: flex;
           align-items: center;
-          justify-content: flex-end;
           flex-shrink: 0;
-          padding-left: 96px;
-          padding-right: 96px;
           box-sizing: border-box;
         ">
-          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);text-align:right;line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
         </section>
 
     </div>
@@ -2995,8 +3192,16 @@
   }
 
   /* Trigger when footer scrolls into view (within 400px of viewport bottom) */
+  var footerXsMq = window.matchMedia('(max-width: 639px)');
+
   function checkScroll() {
     if (hasTriggered) return;
+    /* XS only: hide physics layer (CSS also hides #footer-gg-root); do not set hasTriggered — wide loads still need cards */
+    if (footerXsMq.matches) {
+      if (root) root.style.display = 'none';
+      return;
+    }
+    if (root) root.style.display = '';
     var rect = footer.getBoundingClientRect();
     if (rect.top < window.innerHeight + 400) {
       hasTriggered = true;
@@ -3005,6 +3210,7 @@
   }
 
   window.addEventListener('scroll', checkScroll, { passive: true });
+  footerXsMq.addEventListener('change', checkScroll);
   checkScroll();
 })();
 </script>
