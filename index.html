@@ -1144,14 +1144,14 @@
 
         /* Footer — xs: hide physics cards layer, single column, tighter padding */
         @media (max-width: 639px) {
-            #hero {
-                min-height: calc(100vh - 6.5rem);
+            #hero .mask-screen h1 {
+                font-size: clamp(4.75rem, 21vw, 7rem) !important;
+                line-height: 0.88 !important;
+                letter-spacing: -0.16rem !important;
             }
 
-            #hero .mask-screen h1 {
-                font-size: clamp(7rem, 30vw, 9.75rem) !important;
-                line-height: 0.84 !important;
-                letter-spacing: -0.22rem !important;
+            #hero .blob-layer {
+                display: none !important;
             }
 
             #hero .rotating-words .phrases {
@@ -1164,7 +1164,7 @@
             }
 
             #work .card-image-frame {
-                height: 322px !important;
+                height: 235px !important;
             }
 
             #cards-beyond > .card-beyond:not(.card-beyond--more) > .image-wrapper {
@@ -1184,10 +1184,11 @@
             #about .about-portrait-frame {
                 width: 182px !important;
                 height: 182px !important;
-                margin-top: -11.25rem !important;
+                margin-top: -8.5rem !important;
             }
 
             #about .button-about {
+                margin-top: 1.5rem !important;
                 margin-left: 12.25rem !important;
             }
 
