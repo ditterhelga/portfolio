@@ -231,10 +231,10 @@
             letter-spacing: 0;
         }
 
-        /* Know Me Better — two-column intro (slightly smaller than main body 20/32) */
+        /* Know Me Better copy matches main body text styling */
         .about-main-stack > section .about-know-me-copy p {
-            font-size: 18px;
-            line-height: 29px;
+            font-size: 20px;
+            line-height: 32px;
         }
 
         /* Know Me Better — portrait swaps to hover still (no fade) */
@@ -588,8 +588,8 @@
             tracking-wider;
         }
 
-        #cards-beyond a.beyond-card-cta-link {
-            cursor: pointer;
+        #cards-beyond .beyond-card-cta-link {
+            cursor: default;
         }
 
         #cards-beyond .card-beyond.group .work-card-cta .card-detail-text {
@@ -631,13 +631,13 @@
                 background-color 0.35s ease;
         }
 
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta {
             padding-right: 32px;
         }
 
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta::before,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta::before {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta::before,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta::before {
             top: 0;
             margin-top: 0;
             width: 100%;
@@ -691,13 +691,13 @@
             pointer-events: none;
         }
 
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-chevron,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-chevron {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta-chevron,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-chevron {
             opacity: 0;
         }
 
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-arrow,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-arrow {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta-arrow,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-arrow {
             opacity: 1;
         }
 
@@ -1419,8 +1419,8 @@
     <!-- ── Section 1: Know Me Better — 2xl: photo vertically centered vs full text block ─ -->
     <section class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-12">
 
-        <div class="flex flex-col gap-y-10 max-sm:gap-y-8 md:gap-y-[84px]">
-            <div class="flex flex-col gap-y-12 md:flex-row md:items-start md:gap-x-16 md:gap-y-0 xl:gap-x-24">
+        <div class="flex flex-col gap-y-8 max-sm:gap-y-6 md:gap-y-12">
+            <div class="flex flex-col gap-y-12 md:flex-row md:items-center md:justify-center md:gap-x-10 md:gap-y-0 xl:gap-x-14">
             <div class="about-portrait-wrap lqip-portrait-host max-sm:order-2 max-sm:mx-auto w-[400px] h-[400px] max-w-full md:shrink-0" data-lqip-ref="assets/images/About-image.png">
                 <img src="assets/images/About-image.png"
                      alt="Olga Pertseva"
@@ -1449,17 +1449,17 @@
                     <span>KNOW ME BETTER</span>
                 </div>
 
-                <h1 id="about-know-me-lede" class="section-header intro-scroll-reveal">I'm Olga, a Product Designer who solves complex problems with a mix of engineer's logic, artist's intuition, and empath's insight.</h1>
+                <h1 id="about-know-me-lede" class="section-header intro-scroll-reveal">I'm Olga, a Product Designer who makes complex systems work for real people. Not in ideal conditions, but in real ones.</h1>
             </div>
             </div>
 
             <div class="flex flex-col gap-y-10 max-sm:gap-y-8 md:gap-y-[84px]">
                 <div class="about-know-me-copy grid grid-cols-1 gap-y-4 max-sm:gap-y-3 md:gap-y-6 md:grid-cols-2 md:gap-x-12">
                     <div class="flex flex-col gap-y-6">
-                        <p>For over a decade, I've designed digital products that live in the real world — <strong class="font-medium">POS systems, logistics platforms, payment tools, and enterprise software used daily by real people under real pressure</strong>, always focused on simplifying complexity, improving everyday interactions, and <strong class="font-medium">helping people achieve their goals with less friction and more confidence</strong>.</p>
+                        <p>For over a decade, my work has lived in the operational layer of everyday life. <strong class="font-medium">POS systems at supermarket checkouts, payment platforms at festivals, logistics tools for drivers and dispatchers</strong>, products where a confusing screen costs real time, real money, or real stress.</p>
                     </div>
 
-                    <p>Throughout my career, <strong class="font-medium">I've worn many hats, often all at once.</strong> From leading design teams to taking full ownership as a team of one, <strong class="font-medium">I've designed products from the ground up</strong>, often in complex, fast-moving environments, <strong class="font-medium">leading the work from early research and problem framing to shipping things that actually work.</strong></p>
+                    <p> From leading design teams to taking full ownership as a team of one, <strong class="font-medium">I've built complex products from the ground up in fast-moving environments, owning the work end-to-end,</strong> from early research and problem framing to shipping things that hold up under real pressure.</p>
                 </div>
 
                 <div class="flex flex-col md:flex-row md:gap-x-[40px] gap-y-6 mb-6 max-sm:mb-5 md:mb-12">
@@ -1534,7 +1534,7 @@
                     <div class="step-number-bg" style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">01</div>
                     <h3 class="step-title" style="position:relative;z-index:2;margin:0;line-height:1;">Start with People</h3>
                 </div>
-                <p>To design something meaningful, I need to understand not just the business goals, but the human story behind the interface. Real empathy means digging into context, listening deeply, and questioning assumptions before jumping to solutions. I uncover what people actually need, not what we think they need.</p>
+                <p>To design something meaningful, I need to understand not just the business goals, but the reality behind the interface. That means going where the work actually happens: talking to cashiers mid-shift, watching dispatchers handle a rush, piecing together reality from field recordings, staff feedback, and on-site reports.</p>
             </div>
 
             <div class="flex flex-col gap-y-4 2xl:gap-y-6">
@@ -1545,7 +1545,7 @@
                     <div class="step-number-bg" style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">02</div>
                     <h3 class="step-title" style="position:relative;z-index:2;margin:0;line-height:1;">Think by Making</h3>
                 </div>
-                <p>Once I know the story, I shift to hands-on exploration: rapid prototypes, user interviews, data analysis, and iterative testing — whatever brings clarity fastest. I'm flexible in tools but structured in thinking. The goal is always the same: test assumptions, measure impact, iterate fast.</p>
+                <p>Once I understand what's actually going on, I start making things to think with: rough prototypes, quick tests, small experiments. I'd rather put something unfinished in front of a real user early than spend two weeks perfecting a flow nobody has validated. The goal is to reduce uncertainty fast, not to produce perfect deliverables.</p>
             </div>
 
             <div class="flex flex-col gap-y-4 2xl:gap-y-6">
@@ -1556,7 +1556,7 @@
                     <div class="step-number-bg" style="font-family:'Sofia Sans Condensed',sans-serif;font-weight:900;font-size:152px;line-height:1;color:#FDE4DF;pointer-events:none;user-select:none;position:absolute;bottom:0;left:0;z-index:0;">03</div>
                     <h3 class="step-title" style="position:relative;z-index:2;margin:0;line-height:1;">Build together</h3>
                 </div>
-                <p>I involve developers, stakeholders, and users from the start. I believe ideas sharpen through friction, and good UX happens when everyone's part of the conversation. I adapt my approach to match the context — whether that's conducting field research with end users or presenting to execs, I adapt to the room.</p>
+                <p>I involve developers, stakeholders, and users from the start, because the best solutions come from people who understand different parts of the problem. I've seen better ideas come out of one honest conversation than weeks of solo work. That only happens when everyone is in the room early enough to actually change something.</p>
             </div>
 
         </div>
@@ -1682,7 +1682,7 @@
 
                         <p class="card-text">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
 
-                        <a href="about.html" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                        <span class="beyond-card-cta-link card-detail text-inherit">
                             <span class="work-card-cta">
                                 <span class="work-card-cta-icon" aria-hidden="true">
                                     <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1692,7 +1692,7 @@
                                 </span>
                                 <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
                             </span>
-                        </a>
+                        </span>
                     </div>
                 </div>
 
@@ -1713,7 +1713,7 @@
 
                         <p class="card-text">I’ve been deep in the AI rabbit hole for a while now — experimenting, breaking things, and figuring out what actually works. The result is a set of real projects built with real tools.</p>
 
-                        <a href="index.html#work" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="See what I built">
+                        <span class="beyond-card-cta-link card-detail text-inherit">
                             <span class="work-card-cta">
                                 <span class="work-card-cta-icon" aria-hidden="true">
                                     <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1723,7 +1723,7 @@
                                 </span>
                                 <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">SEE WHAT I BUILT</span></span>
                             </span>
-                        </a>
+                        </span>
                     </div>
                 </div>
 
@@ -1745,7 +1745,7 @@
                             At one point, I came close to launching my own eco-friendly kitchenware brand. UX research gave me a clear answer before I invested further — the market wasn’t the right fit.
                         </p>
 
-                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
+                        <span class="beyond-card-cta-link card-detail text-inherit">
                             <span class="work-card-cta">
                                 <span class="work-card-cta-icon" aria-hidden="true">
                                     <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1755,7 +1755,7 @@
                                 </span>
                                 <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">STORY COMING SOON</span></span>
                             </span>
-                        </a>
+                        </span>
                     </div>
                 </div>
 

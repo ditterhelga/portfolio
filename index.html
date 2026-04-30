@@ -598,8 +598,8 @@
             color: #0016f2;
             -webkit-text-fill-color: #0016f2;
         }
-        #cards-beyond a.beyond-card-cta-link {
-            cursor: pointer;
+        #cards-beyond .beyond-card-cta-link {
+            cursor: default;
         }
 
         /* Row layout: image link must not stay w-full at sm+ (would collapse the text column) */
@@ -676,14 +676,14 @@
         }
         #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta,
         #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta {
             padding-right: 32px;
         }
         #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta::before,
         #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta::before,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta::before,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta::before {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta::before,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta::before {
             top: 0;
             margin-top: 0;
             width: 100%;
@@ -740,14 +740,14 @@
         }
         #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta-chevron,
         #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta-chevron,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-chevron,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-chevron {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta-chevron,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-chevron {
             opacity: 0;
         }
         #work .card-content.group:has(a.work-case-card-link.card-detail:hover) .work-card-cta-arrow,
         #work .card-content.group:has(a.work-case-card-link.card-detail:focus-visible) .work-card-cta-arrow,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:hover) .work-card-cta-arrow,
-        #cards-beyond .card-beyond.group:has(a.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-arrow {
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:hover) .work-card-cta-arrow,
+        #cards-beyond .card-beyond.group:has(.beyond-card-cta-link.card-detail:focus-visible) .work-card-cta-arrow {
             opacity: 1;
         }
         @media (prefers-reduced-motion: reduce) {
@@ -1847,7 +1847,7 @@
                     From POS systems and e-commerce platforms to logistics dashboards and enterprise tools, I design for high-stakes environments where complexity meets real people.
                 </h1>
                 <p class="card-text">
-                    I’ve built products that improved training speeds by 40%, reduced operational errors by over 70%, and increased sales by double digits. I’m proud that many are still in use years later, quietly making everyday work simpler for teams around the world.
+                    I’ve built products that improved training speeds by 40%, reduced operational errors by over 70%, and increased sales by double digits. Many of them are still in use years later, quietly making everyday work simpler for teams around the world.
                 </p>
             </div>
         </div>
@@ -2092,7 +2092,7 @@
 
                         <p class="card-text">I’ve been drawing since I can remember. It’s my way to explore emotions, humor, and the strange corners of everyday life. Below is a glimpse into this side of me.</p>
 
-                        <a href="about.html" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]">
+                        <span class="beyond-card-cta-link card-detail text-inherit">
                             <span class="work-card-cta">
                                 <span class="work-card-cta-icon" aria-hidden="true">
                                     <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2102,7 +2102,7 @@
                                 </span>
                                 <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">Explore my art</span></span>
                             </span>
-                        </a>
+                        </span>
                     </div>
                 </div>
 
@@ -2123,7 +2123,7 @@
 
                         <p class="card-text">I’ve been deep in the AI rabbit hole for a while now — experimenting, breaking things, and figuring out what actually works. The result is a set of real projects built with real tools.</p>
 
-                        <a href="#work" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="See what I built">
+                        <span class="beyond-card-cta-link card-detail text-inherit">
                             <span class="work-card-cta">
                                 <span class="work-card-cta-icon" aria-hidden="true">
                                     <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2133,7 +2133,7 @@
                                 </span>
                                 <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">SEE WHAT I BUILT</span></span>
                             </span>
-                        </a>
+                        </span>
                     </div>
                 </div>
 
@@ -2155,7 +2155,7 @@
                             At one point, I came close to launching my own eco-friendly kitchenware brand. UX research gave me a clear answer before I invested further — the market wasn’t the right fit.
                         </p>
 
-                        <a href="#beyond" class="beyond-card-cta-link card-detail no-underline text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0016F2]" aria-label="Story coming soon">
+                        <span class="beyond-card-cta-link card-detail text-inherit">
                             <span class="work-card-cta">
                                 <span class="work-card-cta-icon" aria-hidden="true">
                                     <svg class="work-card-cta-chevron" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2165,7 +2165,7 @@
                                 </span>
                                 <span class="card-detail-text flex min-h-[48px] items-center"><span class="work-card-cta-label">STORY COMING SOON</span></span>
                             </span>
-                        </a>
+                        </span>
                     </div>
                 </div>
 
