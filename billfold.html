@@ -650,6 +650,19 @@
 
         #footer-match .footer-match-main .footer-match-copy {
             min-width: 0;
+            max-width: 700px;
+        }
+
+        @media (min-width: 80rem) {
+            #footer-match .footer-match-main .footer-match-copy {
+                max-width: 880px;
+            }
+        }
+
+        @media (min-width: 96rem) {
+            #footer-match .footer-match-main .footer-match-copy {
+                max-width: 1048px;
+            }
         }
 
         #footer-match .footer-match-main .footer-match-blurb,
@@ -699,11 +712,11 @@
             #footer-match .footer-match-main .footer-match-email {
                 font-size: 20px !important;
                 line-height: 32px !important;
-                margin-bottom: 2rem !important;
+                margin-bottom: 2.75rem !important;
             }
 
             #footer-match .match-cta {
-                margin-top: 0.75rem !important;
+                margin-top: 0 !important;
             }
 
             #footer-match .match-cta-label {
@@ -2390,7 +2403,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
     pointer-events: none;
     flex-shrink: 0;
   ">
-    <div class="footer-match-copy" style="max-width: 700px; pointer-events: auto; user-select: text; -webkit-user-select: text;">
+    <div class="footer-match-copy" style="pointer-events: auto; user-select: text; -webkit-user-select: text;">
       <h2 class="footer-match-heading" style="
         font-family: 'Sofia Sans Condensed', sans-serif;
         font-size: 148px;
@@ -2417,7 +2430,7 @@ At peak hours, a single extra tap or a confusing screen could slow the entire li
         font-weight: 300;
         color: #ffffff;
         line-height: 1.6;
-        margin-bottom: 36px;
+        margin-bottom: 64px;
       " class="footer-match-email">Send me a message or email me directly at: <a href="mailto:hello@peppered.design" style="color:#FDE4DF;text-decoration:none;font-weight:300;pointer-events:auto;">hello@peppered.design</a></p>
 
       <a href="contact.html" class="match-cta no-underline">
