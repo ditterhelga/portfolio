@@ -434,6 +434,10 @@
             }
 
             /* Ensure only one About CTA variant is visible at a time. */
+            .about-button-desktop {
+                display: none;
+            }
+
             .about-button-mobile {
                 display: inline-flex;
             }
@@ -1212,6 +1216,21 @@
                 opacity: 0 !important;
             }
 
+            #about .about-visual-row {
+                margin-top: -5.5rem !important;
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                column-gap: 1.5rem !important;
+            }
+
+            #about .about-visual-row .button-about,
+            #about .about-visual-row .about-portrait-frame {
+                margin: 0 !important;
+                flex: 0 0 auto;
+            }
+
             #footer-match.site-footer {
                 height: auto !important;
                 min-height: 0 !important;
@@ -1235,7 +1254,7 @@
             }
 
             #footer-match .footer-match-heading {
-                font-size: clamp(2.75rem, 13.5vw, 4.25rem) !important;
+                font-size: clamp(3rem, 15vw, 4.75rem) !important;
                 line-height: 0.92 !important;
                 margin-bottom: 1.5rem !important;
                 padding-top: 0.75rem !important;
@@ -1265,10 +1284,10 @@
             }
 
             #footer-match .footer-match-nav {
-                flex-direction: row !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                gap: 12px !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                justify-content: flex-start !important;
+                gap: 0.75rem !important;
                 flex-wrap: nowrap !important;
                 padding-top: 1.5rem !important;
                 padding-bottom: 1.5rem !important;
@@ -1281,26 +1300,30 @@
             #footer-match .footer-match-nav-links {
                 display: flex !important;
                 flex-direction: row !important;
-                flex-wrap: wrap !important;
+                flex-wrap: nowrap !important;
                 align-items: center !important;
-                gap: 0.5rem 0.75rem !important;
-                flex: 1 1 auto !important;
+                gap: 0.75rem !important;
+                flex: 1 1 100% !important;
                 min-width: 0 !important;
-                justify-content: flex-start !important;
+                width: 100% !important;
+                justify-content: space-between !important;
             }
 
             #footer-match .footer-match-nav-links a {
                 font-size: 15px !important;
                 line-height: 1.2 !important;
+                flex: 1 1 0 !important;
+                text-align: center !important;
             }
 
             #footer-match .footer-match-nav > a[aria-label="LinkedIn"] {
-                margin-top: 0 !important;
+                margin-top: 0.25rem !important;
                 flex-shrink: 0 !important;
                 align-self: center !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
+                width: 100% !important;
             }
 
             #footer-match .footer-match-nav > a[aria-label="LinkedIn"] img {
@@ -1936,7 +1959,7 @@
                     </div>
                 </div>
             </div>
-            <a href="about.html" class="button-about about-button-mobile !ml-0 !mt-0 shrink-0 no-underline text-inherit md:hidden xl:hidden" aria-label="About me">
+            <a href="about.html" class="button-about about-button-mobile !ml-0 !mt-0 shrink-0 no-underline text-inherit" aria-label="About me">
                 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500">
                     <title>Circular Text Path</title>
                     <defs>
