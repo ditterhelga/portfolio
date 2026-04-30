@@ -17,7 +17,6 @@
 
     <!-- GSAP -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 
     <!-- tools -->
     <script src="https://cdn.jsdelivr.net/npm/es-toolkit@%5E1"></script>
@@ -93,7 +92,7 @@
             @media (min-width: 768px) {
                 & nav .menulink {
                     position: relative;
-                    font-weight: 400;
+                    font-weight: 300;
                     font-family: var(--font-family-inter);
                     color: white;
                     text-decoration: none;
@@ -163,7 +162,7 @@
                 & .menulink {
                     font-family: 'Sofia Sans Condensed', sans-serif;
                     font-size: 4rem;
-                    font-weight: 700;
+                    font-weight: 500;
                     color: white;
                     text-decoration: none;
                     text-transform: uppercase;
@@ -226,50 +225,137 @@
             }
         }
 
-        /* ── CTA button — mirrors .card-detail but white text ────── */
-        .card-detail {
-            @apply flex flex-row items-center gap-x-4 uppercase font-family-sofia
-                   text-white font-normal text-[1.5rem]/6 tracking-wider;
+        /* ── Submit CTA — same hover as footer #footer-match .match-cta ─ */
+        .contact-match-cta {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 1rem;
+            width: fit-content;
+            max-width: 100%;
+            margin: 0;
+            margin-left: 0;
+            margin-right: 0;
+            padding: 0;
+            padding-right: 32px;
+            box-sizing: border-box;
+            cursor: pointer;
+            pointer-events: auto;
+            appearance: none;
+            border: none;
+            background: none;
+            -webkit-appearance: none;
         }
 
-        /* ── Footer (identical to site-wide) ────────────────────── */
-        footer.site-footer .footer-inner a,
-        footer.site-footer .footer-inner .footer-email {
-            font-family: 'Inter', sans-serif;
-            font-size: 20px;
-            line-height: 32px;
-            font-weight: 300;
-            letter-spacing: 0;
+        .contact-match-cta::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 48px;
+            height: 48px;
+            margin-top: -24px;
+            border-radius: 9999px;
+            background-color: var(--color-accent-yellow);
+            z-index: 0;
+            pointer-events: none;
+            transition:
+                width 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                height 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                margin-top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                top 0.4s cubic-bezier(0.33, 1, 0.32, 1),
+                background-color 0.35s ease;
         }
 
-        footer.site-footer .footer-inner nav {
+        .contact-match-cta:hover::before,
+        .contact-match-cta:focus-visible::before {
+            top: 0;
+            margin-top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-pink-badge);
+        }
+
+        .contact-match-cta .match-cta-icon {
+            position: relative;
+            z-index: 1;
             display: flex;
             align-items: center;
-            min-height: 32px;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
         }
 
-        footer.site-footer .footer-inner nav a {
-            display: inline-flex;
-            align-items: center;
-            min-height: 32px;
-            transition: color 0.3s ease;
-        }
-
-        footer.site-footer .footer-inner .footer-email {
-            display: inline-flex;
-            align-items: center;
-            min-height: 32px;
-            transition: color 0.3s ease;
-        }
-
-        footer.site-footer .footer-inner .footer-contact img {
+        .contact-match-cta .match-cta-circle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            width: 48px;
+            height: 48px;
             display: block;
         }
 
-        footer.site-footer .footer-inner nav a:hover,
-        footer.site-footer .footer-inner .footer-email:hover {
-            color: #FDE4DF;
+        .contact-match-cta .match-cta-send {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 23px;
+            height: 23px;
+            max-width: none;
+            object-fit: contain;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-match-cta:hover .match-cta-circle,
+        .contact-match-cta:focus-visible .match-cta-circle {
+            opacity: 0;
+        }
+
+        .contact-match-cta:hover .match-cta-send,
+        .contact-match-cta:focus-visible .match-cta-send {
             opacity: 1;
+        }
+
+        .contact-match-cta .match-cta-label {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-family-sofia);
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            transform: translateY(1px);
+            transition: color 0.35s ease;
+        }
+
+        .contact-match-cta:hover .match-cta-label,
+        .contact-match-cta:focus-visible .match-cta-label {
+            color: var(--color-primary-light);
+        }
+
+        .contact-match-cta:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .contact-match-cta::before,
+            .contact-match-cta .match-cta-circle,
+            .contact-match-cta .match-cta-send,
+            .contact-match-cta .match-cta-label {
+                transition: none;
+            }
         }
 
     </style>
@@ -347,10 +433,12 @@
                     <textarea id="contact-message" name="message" rows="4"></textarea>
                 </div>
 
-                <button type="submit" class="card-detail cursor-pointer border-none bg-transparent p-0 w-fit
-                                             transition-opacity hover:opacity-75">
-                    <img src="assets/images/more-shape.svg" alt="" aria-hidden="true"/>
-                    <span>Send a message</span>
+                <button type="submit" class="contact-match-cta w-fit">
+                    <span class="match-cta-icon" aria-hidden="true">
+                        <img class="match-cta-circle" src="assets/images/match-figma-cta-circle.svg" alt="" decoding="async"/>
+                        <img class="match-cta-send" src="assets/images/send-icon.svg" alt="" decoding="async"/>
+                    </span>
+                    <span class="match-cta-label">Send a message</span>
                 </button>
 
             </form>
@@ -365,47 +453,31 @@
 
     </main>
 
-    <!-- ── Footer — full-bleed dark blue ──────────────────────── -->
-    <div class="full-bleed">
-        <footer class="site-footer w-full bg-blue-dark text-white flex items-center pt-10 pb-6 lg:pt-0 lg:pb-0 lg:h-[152px] lg:items-center">
-            <div class="footer-inner flex items-center
-                        w-full
-                        max-w-[1280px]
-                        2xl:max-w-[1440px]
-                        mx-auto
-                        flex-col
-                        items-center
-                        gap-y-4
-                        px-4
-                        sm:px-8
-                        lg:flex-row
-                        lg:items-center
-                        lg:justify-between
-                        lg:gap-y-0
-                        xl:px-12
-                        2xl:px-[80px]">
-                <nav class="flex flex-row flex-wrap items-center gap-x-10 gap-y-4 justify-center lg:justify-start">
-                    <a class="no-underline" href="index.html#work">Work</a>
-                    <a class="no-underline" href="about.html">About</a>
-                    <a class="no-underline" href="contact.html">Contact</a>
-                    <a class="no-underline" href="assets/docs/2026_Olga_Pertseva_Product_Designer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
-                </nav>
-                <div class="footer-contact flex flex-col items-center gap-x-6 gap-y-4 md:flex-row md:items-center lg:gap-y-0">
-                    <a class="footer-email" href="mailto:hello@peppered.design">hello@peppered.design</a>
-                    <a class="flex shrink-0 items-center leading-none" href="https://www.linkedin.com/in/olga-pertseva/" target="_blank" rel="noopener noreferrer">
-                        <img class="size-6 max-w-6 aspect-square" src="assets/images/linkedin-icon.svg" alt="LinkedIn"/>
-                    </a>
-                </div>
-            </div>
-        </footer>
-    </div>
+        <!-- Pull colophon up by 40% of (main bottom padding + column gap) at each breakpoint -->
+        <section class="footer-year-strip full-bleed -mt-[3.8rem] md:-mt-[4.4rem] xl:-mt-[5.4rem] 2xl:-mt-[6.2rem]" aria-label="Site colophon" style="
+          position: relative;
+          width: 100vw;
+          left: 50%;
+          transform: translateX(-50%);
+          min-height: 64px;
+          padding-top: 0.75rem;
+          padding-bottom: 0.75rem;
+          background: #040989;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          flex-shrink: 0;
+          padding-left: 96px;
+          padding-right: 96px;
+          box-sizing: border-box;
+        ">
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:rgba(255,255,255,0.7);text-align:right;line-height:1.35;">© 2026 · Hand-coded from scratch. No templates, just curiosity.</span>
+        </section>
 
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        gsap.registerPlugin(ScrollTrigger);
-
         const isSafari = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(navigator.userAgent);
         if (isSafari) {
             document.documentElement.classList.add('is-safari');
