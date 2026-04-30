@@ -104,7 +104,7 @@
             @media (min-width: 768px) {
     & nav .menulink {
         position: relative;
-        font-weight: 300;
+        font-weight: 400;
         font-family: var(--font-family-inter);
         transition: color 0.25s ease;
     }
@@ -865,11 +865,19 @@
                 overflow-y: auto;
                 overflow-x: hidden;
                 -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
                 /* Shrink toward overlap with next card (bottom pinned) so top/sides stay readable */
                 transform-origin: 50% 100%;
                 will-change: transform, opacity;
                 /* Lifts the front card slightly; scales with transform on the same layer */
                 box-shadow: 0 -4px 20px rgba(227, 233, 239, 0.4);
+            }
+
+            #work .work-cards-stack .work-card-surface::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+                display: none;
             }
 
             /* GSAP ScrollTrigger pin wrapper (when present) */
