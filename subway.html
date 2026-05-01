@@ -1267,16 +1267,16 @@
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 max-md:gap-y-0 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-8 md:gap-y-6 xl:gap-y-8 max-md:gap-y-0 max-md:overflow-visible md:overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
-                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] xl:contents 2xl:contents">
-                <h2 class="section-header w-full xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
+                <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] max-md:contents xl:contents 2xl:contents">
+                <h2 class="section-header w-full max-md:order-0 xl:col-span-2 2xl:col-span-2 2xl:row-start-1">The Challenge</h2>
 
                 <div class="flex w-full min-w-0 flex-col gap-y-4 md:gap-y-4 xl:gap-y-6 2xl:gap-y-[40px] xl:min-w-0 2xl:row-start-2 max-md:contents 2xl:grid 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px] 2xl:gap-y-0">
                 <div class="overview-text-1 font-light text-5/8 min-w-0 max-md:order-1 2xl:min-w-0">
                     <p class="min-w-0"><span class="font-medium">No system, high stakes.</span> I had to design from zero: no existing system, no baseline flows, and no digital learning culture. The audience was often not tech-savvy, working on mixed devices in very different store contexts. On top of this, all research and testing had to be done remotely during the pandemic.</p>
                 </div>
-                <div class="overview-text-2 font-light text-5/8 min-w-0 max-md:order-3 2xl:min-w-0">
+                <div class="overview-text-2 font-light text-5/8 min-w-0 max-md:order-3 md:order-2 2xl:min-w-0">
                     <p class="min-w-0"><span class="font-medium">Two audiences, very different needs.</span> Employees, often in their first jobs, needed quick, motivating lessons to perform effectively from day one. Franchise owners, investing in new businesses, needed structure, reliable resources, and clear guidance to avoid costly mistakes when opening and running their stores.</p>
                 </div>
                 </div>
@@ -1297,7 +1297,7 @@
 
                 <img src="assets/images/subway-challenge-main.png"
                      alt="Designing Subway Russia's training and franchise platforms for remote onboarding during the pandemic"
-                     class="max-md:order-2 mt-8 max-md:mt-2 w-full rounded-[20px] object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
+                     class="max-md:order-2 mt-8 max-md:my-6 w-full min-w-0 max-w-full rounded-[20px] max-md:h-auto max-md:object-contain max-md:aspect-auto object-cover aspect-[288/184] md:aspect-auto md:object-cover md:mt-6 xl:col-start-1 xl:row-start-3 xl:mt-8 2xl:col-start-1 2xl:row-start-3 2xl:mt-[24px]"/>
 
             </div>
 
@@ -1368,7 +1368,7 @@
         </section>
 
         <section id="menu-subway" data-parallax-wrap class="-mt-[38px] max-md:rounded-[20px] max-md:overflow-hidden md:-mt-[32px] xl:-mt-[51px] 2xl:-mt-[64px] md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-transition-map.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-transition-map.png" alt="Journey map connecting Subway Russia employees, franchisees, and HQ around training and operations"/></div>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-transition-map.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover aspect-[288/184] h-auto md:aspect-auto md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-transition-map.png" alt="Journey map connecting Subway Russia employees, franchisees, and HQ around training and operations"/></div>
         </section>
 
         <!-- #research: same layout rhythm as #my-part; my-part-style accordions x2 + image -->
@@ -1506,7 +1506,7 @@
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
                         <p><span class="font-medium">Instead of building skills, the process crushed motivation.</span> New hires got lost in confusing materials, failed tests, and repeated mistakes, while managers kept reteaching the same basics. Hours were lost, turnover rose, and stores paid the price in productivity and profit.</p>
-                        <div class="flex w-full flex-col mt-5">
+                        <div class="flex w-full flex-col mt-5 max-md:mt-[1.375rem]">
                             <button type="button" id="ecosystem-emp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="ecosystem-emp-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                     <svg id="ecosystem-emp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1565,7 +1565,7 @@
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
                         <p><span class="font-medium">Franchisees described the journey as confusing, stressful, and lonely.</span> Steps weren't clear, updates got buried, and constant calls to HQ slowed launches, increased risks, and cost revenue on both sides.</p>
-                        <div class="flex w-full flex-col mt-5">
+                        <div class="flex w-full flex-col mt-5 max-md:mt-[1.375rem]">
                             <button type="button" id="ecosystem-fran-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="ecosystem-fran-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                     <svg id="ecosystem-fran-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1616,7 +1616,7 @@
                     </div>
                     <div class="flex min-w-0 w-full flex-col gap-y-[16px] font-light text-5/8">
                         <p><span class="font-medium">HQ carried the weight of broken processes every day.</span> Teams spent hours answering repeat questions and resending documents instead of focusing on growth. Valuable time and resources drained into support, making scaling slower and more expensive.</p>
-                        <div class="flex w-full flex-col mt-5">
+                        <div class="flex w-full flex-col mt-5 max-md:mt-[1.375rem]">
                             <button type="button" id="ecosystem-hqfind-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="ecosystem-hqfind-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                     <svg id="ecosystem-hqfind-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1657,7 +1657,7 @@
                 <div class="min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
-                            mt-2 md:mt-4 xl:mt-0
+                            mt-[0.4rem] md:mt-[0.8rem] xl:mt-0
                             xl:col-start-2 xl:row-start-2 xl:row-span-4
                             2xl:col-start-2 2xl:row-start-2 2xl:row-span-4 2xl:w-[352px] 2xl:min-w-[352px] 2xl:shrink-0 2xl:flex-none 2xl:grid 2xl:grid-cols-1 2xl:gap-y-6
                             2xl:px-[56px] 2xl:pt-[56px] 2xl:pb-[64px]">
@@ -1679,14 +1679,14 @@
         </section>
 
         <section id="dashboard-subway" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-transition-learning.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-transition-learning.png" alt="Employee learning experience: dashboards, courses, and progress in the Subway Russia training platform"/></div>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-transition-learning.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover aspect-[288/184] h-auto md:aspect-auto md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-transition-learning.png" alt="Employee learning experience: dashboards, courses, and progress in the Subway Russia training platform"/></div>
         </section>
 
         <section id="learning" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 max-md:overflow-visible md:overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                     <h2 class="section-header w-full">Clear Learning Journey</h2>
@@ -1694,9 +1694,9 @@
 
                 <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Clear Learning Journey</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-8 max-md:contents md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
-                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 max-md:order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">I created a guided <span class="font-medium">dashboard that replaces guesswork with clarity,</span> showing progress, upcoming exams, and next steps in one place. Employees no longer waste time searching or waiting for managers to explain what to do.</p>
                 </div>
 
@@ -1705,7 +1705,7 @@
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col order-4 mt-5 max-md:mb-7 md:order-3 md:mt-0 md:mb-0">
+                <div class="flex w-full flex-col order-4 mt-5 max-md:order-4 max-md:mt-[1.375rem] max-md:mb-[25.2px] md:order-3 md:mt-0 md:mb-0">
             <button type="button" id="vendor-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="vendor-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="vendor-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1746,11 +1746,11 @@
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
-                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-learning-main.png"><img src="assets/images/subway-learning-main.png"
+                <div class="lqip-parallax-host min-w-0 max-md:order-2 max-md:my-6" data-lqip-ref="assets/images/subway-learning-main.png"><img src="assets/images/subway-learning-main.png"
                      alt="Employee training dashboard and course modules in the Subway Russia learning platform"
-                     class="overview-img-1 order-2 max-md:order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
+                     class="overview-img-1 order-2 mt-0 w-full min-w-0 max-w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
-                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                <div class="order-5 flex w-full flex-col gap-y-8 max-md:order-5 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[400px_1fr] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <img src="assets/images/subway-learning-side-1.png"
                              alt="Employee reviewing training on a phone during a Subway shift"
                              class="hidden md:block overview-img-2 aspect-[288/184] w-full shrink-0 rounded-[20px] object-cover md:flex-none md:h-[320px] md:w-[320px] xl:h-[328px] xl:w-[328px] xl:flex-none xl:aspect-square 2xl:h-[400px] 2xl:w-[400px] 2xl:flex-none"/>
@@ -1761,6 +1761,7 @@
                 </div>
                 </div>
                 <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:order-6 max-md:mt-2
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
                             md:order-3 md:mt-4 xl:mt-0
@@ -1782,7 +1783,7 @@
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 max-md:overflow-visible md:overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                     <h2 class="section-header w-full">Motivation &amp; Gamification</h2>
@@ -1790,9 +1791,9 @@
 
                 <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Motivation &amp; Gamification</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-8 max-md:contents md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
-                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 max-md:order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">I added a <span class="font-medium">motivation layer to keep training engaging.</span> Instead of another chore, it became something people wanted to complete: with "Sub" points to collect, milestone badges to unlock, and progress worth celebrating.</p>
                 </div>
 
@@ -1801,7 +1802,7 @@
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col order-4 mt-5 max-md:mb-7 md:order-3 md:mt-0 md:mb-0">
+                <div class="flex w-full flex-col order-4 mt-5 max-md:order-4 max-md:mt-[1.375rem] max-md:mb-[25.2px] md:order-3 md:mt-0 md:mb-0">
             <button type="button" id="guest-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="guest-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="guest-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1842,11 +1843,11 @@
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:gap-y-[16px] md:order-4 xl:gap-y-[16px] 2xl:gap-y-[16px]">
-                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-gamification-main.png"><img src="assets/images/subway-gamification-main.png"
+                <div class="lqip-parallax-host min-w-0 max-md:order-2 max-md:my-6" data-lqip-ref="assets/images/subway-gamification-main.png"><img src="assets/images/subway-gamification-main.png"
                      alt="Gamification in training: Sub points, badges, and exam feedback in the employee app"
-                     class="overview-img-1 order-2 max-md:order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
+                     class="overview-img-1 order-2 mt-0 w-full min-w-0 max-w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
 
-                <div class="order-5 flex w-full flex-col gap-y-8 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
+                <div class="order-5 flex w-full flex-col gap-y-8 max-md:order-5 md:gap-y-[16px] xl:gap-y-[16px] 2xl:gap-y-[16px] md:order-5 mt-5 md:mt-0 md:flex-row md:gap-x-4 md:gap-y-0 md:items-stretch md:items-start xl:mt-0 2xl:grid 2xl:w-full 2xl:grid-cols-[1fr_400px] 2xl:gap-x-[16px] 2xl:gap-y-0">
                         <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-gamification-side-1.png"><img src="assets/images/subway-gamification-side-1.png"
                              alt="Regional leaderboards encouraging friendly competition between Subway stores"
                              class="overview-img-2 aspect-[288/184] w-full rounded-[20px] object-cover md:w-auto md:h-[320px] md:min-w-0 md:flex-1 xl:h-[328px] xl:flex-1 xl:min-w-0 2xl:h-[400px] 2xl:w-full 2xl:object-cover lqip-fadein"/></div>
@@ -1858,6 +1859,7 @@
                 </div>
 
                 <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:order-6 max-md:mt-2
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
                             md:order-3 md:mt-4 xl:mt-0
@@ -1876,14 +1878,14 @@
         </section>
 
         <section id="employee-office-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/employee-office-subway.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/employee-office-subway.png" alt="Subway restaurant staff collaborating during daily operations"/></div>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/employee-office-subway.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover aspect-[288/184] h-auto md:aspect-auto md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/employee-office-subway.png" alt="Subway restaurant staff collaborating during daily operations"/></div>
         </section>
 
         <section id="operations" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
 
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
 
-            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+            <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 max-md:overflow-visible md:overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
 
                 <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                     <h2 class="section-header w-full">Operational Clarity</h2>
@@ -1891,9 +1893,9 @@
 
                 <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Operational Clarity</h2>
 
-                <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                <div class="flex w-full min-w-0 flex-col gap-y-8 max-md:contents md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                 <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
-                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 max-md:order-1 md:order-1 2xl:min-w-0">
                     <p class="min-w-0">Without the system, <span class="font-medium">opening a new store felt like solving a puzzle without the picture.</span> Instructions were buried in scattered PDFs, long email chains, and phone calls to HQ. Franchisees lost weeks chasing answers and never felt sure what step came next.</p>
                 </div>
 
@@ -1902,7 +1904,7 @@
                 </div>
                 </div>
 
-                <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
+                <div class="flex w-full flex-col order-4 mt-5 mb-10 max-md:order-4 md:order-3 md:mt-0 md:mb-0">
             <button type="button" id="kiosk-exp-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="kiosk-exp-acc-panel">
                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                     <svg id="kiosk-exp-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1939,13 +1941,14 @@
                 </div>
 
                 <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
-                <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-operations-main.png"><img src="assets/images/subway-operations-main.png"
+                <div class="lqip-parallax-host min-w-0 max-md:order-2 max-md:my-6" data-lqip-ref="assets/images/subway-operations-main.png"><img src="assets/images/subway-operations-main.png"
                      alt="Franchisee portal: knowledge base, courses, and webinars for store opening and daily operations"
-                     class="overview-img-1 order-2 max-md:order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
+                     class="overview-img-1 order-2 mt-0 w-full min-w-0 max-w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
                 </div>
                 </div>
 
                 <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                            max-md:order-6 max-md:mt-2
                             max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                             flex flex-col gap-y-6
                             md:order-3 md:mt-4 xl:mt-0
@@ -1971,14 +1974,14 @@
 
         <section id="branding" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
-                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 max-md:overflow-visible md:overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
                     <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                         <h2 class="section-header w-full">One Brand, One Standard</h2>
                     </div>
 
                     <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">One Brand, One Standard</h2>
 
-                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 max-md:contents md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                         <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:gap-y-[40px] 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
                             <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
                                 <p class="min-w-0">Each store once interpreted brand standards differently. Marketing materials, training quality, and compliance <span class="font-medium">varied from region to region, leading to a fragmented customer experience.</span></p>
@@ -1992,7 +1995,7 @@
                         <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
                             <img src="assets/images/subway-branding-main.png"
                                  alt="Subway branding standards"
-                                 class="overview-img-1 order-4 max-md:order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
+                                 class="overview-img-1 order-4 max-md:order-2 mt-0 w-full min-w-0 max-w-full rounded-[20px] max-md:my-6 max-md:h-auto max-md:object-contain max-md:aspect-auto object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full"/>
                         </div>
                     </div>
                 </div>
@@ -2000,7 +2003,7 @@
         </section>
 
         <section id="branding-long-image" data-parallax-wrap class="max-md:rounded-[20px] max-md:overflow-hidden md:full-bleed xl:full-bleed 2xl:full-bleed">
-            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-branding-long.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover h-[300px] md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-branding-long.png" alt="Subway branding in use"/></div>
+            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/subway-branding-long.png"><img data-parallax-image class="w-full rounded-[20px] max-md:rounded-[20px] object-cover aspect-[288/184] h-auto md:aspect-auto md:h-[504px] md:rounded-none xl:h-[600px] 2xl:h-[676px] lqip-fadein" src="assets/images/subway-branding-long.png" alt="Subway branding in use"/></div>
         </section>
 
         <section id="results-real-world" class="flex flex-col gap-y-10 md:gap-y-12 xl:gap-y-14">
@@ -2198,25 +2201,31 @@
 
         <section id="reflections" class="mb-[16px] md:mb-0 xl:mb-[16px] 2xl:mb-0">
             <div class="w-full flex flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px]">
-                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
+                <div class="flex w-full min-w-0 max-w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 max-md:overflow-visible md:overflow-hidden md:flex md:flex-col xl:grid xl:grid-cols-[856px_320px] xl:items-start xl:gap-x-10 2xl:grid-cols-[1048px_352px] 2xl:gap-x-[40px] 2xl:gap-y-[40px]">
                     <div class="flex w-full flex-col gap-y-4 md:gap-y-6 xl:gap-y-8 2xl:gap-y-[40px] md:hidden">
                         <h2 class="section-header w-full">Reflections &amp; Learnings</h2>
                     </div>
 
                     <h2 class="section-header hidden w-full md:order-0 md:block xl:col-span-2 2xl:col-span-2 2xl:row-start-1">Reflections &amp; Learnings</h2>
 
-                    <div class="flex w-full min-w-0 flex-col gap-y-8 md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
+                    <div class="flex w-full min-w-0 flex-col gap-y-8 max-md:contents md:gap-y-[48px] xl:min-w-0 xl:flex-col xl:gap-y-[48px] xl:col-start-1 xl:row-start-2 2xl:gap-y-[48px] 2xl:row-start-2">
                         <div class="max-md:contents md:flex md:flex-col md:gap-y-4 xl:flex-col xl:gap-y-6 2xl:grid 2xl:w-full 2xl:grid-cols-[504px_504px] 2xl:gap-x-[40px]">
-                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 md:order-1 2xl:min-w-0">
+                            <div class="overview-text-1 font-light text-5/8 min-w-0 block order-1 max-md:order-1 md:order-1 2xl:min-w-0">
                                 <p class="min-w-0">I’ve always believed <span class="font-medium">design is about helping people.</span> Not in an abstract sense, but in the small, everyday ways that make work less frustrating and more meaningful. For me, <span class="font-medium">the best projects are the ones where I can take away friction, make someone’s job easier, or give them the confidence to grow.</span></p>
                             </div>
 
-                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 md:order-2 2xl:min-w-0">
+                            <div class="overview-text-2 order-3 block font-light text-5/8 min-w-0 max-md:order-3 md:order-2 2xl:min-w-0">
                                 <p class="min-w-0">Subway showed me that design goes deeper than tasks and screens — it shapes trust, motivation, and culture. Supporting employees while giving franchisees confidence wasn’t just a design challenge, <span class="font-medium">it reminded me why I love this work: to make jobs easier and workplaces stronger.</span></p>
                             </div>
                         </div>
 
-                        <div class="flex w-full flex-col order-4 mt-5 mb-10 md:order-3 md:mt-0 md:mb-0">
+                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
+                            <div class="lqip-parallax-host min-w-0 max-md:order-2 max-md:my-6" data-lqip-ref="assets/images/girl-food-subway.png"><img src="assets/images/girl-food-subway.png"
+                                 alt="Subway team member serving guests — design aimed at frontline confidence and consistency"
+                                 class="overview-img-1 order-2 mt-0 w-full min-w-0 max-w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
+                        </div>
+
+                        <div class="flex w-full flex-col order-4 mt-5 max-md:mb-[34px] max-md:order-4 max-md:mt-[calc(1.375rem*1.1)] md:order-3 md:mt-0 md:mb-0">
                             <button type="button" id="reflections-acc-btn" class="group flex cursor-pointer items-center gap-x-[14px] border-0 bg-transparent p-0 text-left" aria-expanded="false" aria-controls="reflections-acc-panel">
                                 <span class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-accent-yellow transition-colors duration-300 ease-out group-hover:bg-primary-light" aria-hidden="true">
                                     <svg id="reflections-acc-arrow" class="h-6 w-6 shrink-0 transition-transform duration-300 ease-out" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2255,15 +2264,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="max-md:contents md:flex md:w-full md:min-w-0 md:flex-col md:order-4">
-                            <div class="lqip-parallax-host min-w-0" data-lqip-ref="assets/images/girl-food-subway.png"><img src="assets/images/girl-food-subway.png"
-                                 alt="Subway team member serving guests — design aimed at frontline confidence and consistency"
-                                 class="overview-img-1 order-2 mt-0 w-full rounded-[20px] object-cover aspect-[288/184] md:order-none md:aspect-[1048/656] xl:aspect-[1048/656] 2xl:w-full lqip-fadein"/></div>
-                        </div>
                     </div>
 
                     <div class="order-3 min-w-0 w-full rounded-[20px] bg-[#ECF1F4]
+                                max-md:order-6 max-md:mt-2
                                 max-md:px-[40px] max-md:pt-[48px] max-md:pb-[56px] px-[56px] pt-[56px] pb-[64px]
                                 flex flex-col gap-y-6
                                 md:order-3 md:mt-4 xl:mt-0
@@ -2333,7 +2337,7 @@
         </section>
 
         <!-- #next-project: previous / next project navigation -->
-        <section id="next-project" class="flex flex-col gap-y-6 md:gap-y-8 mb-0">
+        <section id="next-project" class="-mt-[1.35rem] md:-mt-[1.8rem] xl:-mt-[1.95rem] 2xl:-mt-[36px] flex flex-col gap-y-6 md:gap-y-8 mb-0">
             <nav class="next-project-nav flex flex-col gap-y-6 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8" aria-label="Adjacent projects">
                 <a class="next-project-link next-project-prev card-detail no-underline" href="#"></a>
                 <a class="next-project-link next-project-next card-detail no-underline sm:text-right" href="#"></a>
