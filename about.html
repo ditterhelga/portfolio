@@ -356,8 +356,8 @@
         .about-cta-card__arrow {
             position: relative;
             flex-shrink: 0;
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             opacity: 0;
             transform: translateX(12px);
             pointer-events: none;
@@ -374,8 +374,8 @@
 
         .about-cta-card-more-shape {
             display: block;
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             pointer-events: none;
         }
 
@@ -622,9 +622,9 @@
             position: absolute;
             left: 0;
             top: 50%;
-            width: 48px;
-            height: 48px;
-            margin-top: -24px;
+            width: 40px;
+            height: 40px;
+            margin-top: -20px;
             border-radius: 9999px;
             background-color: var(--color-accent-yellow);
             z-index: 0;
@@ -662,8 +662,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
         }
 
@@ -677,16 +677,16 @@
             inset: 0;
             margin: auto;
             display: block;
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
             overflow: visible;
         }
 
         #cards-beyond .work-card-cta-arrow {
             position: absolute;
-            left: 23px;
-            top: 17px;
+            left: 19px;
+            top: 13px;
             width: 18px;
             height: 14px;
             max-width: none;
@@ -1004,16 +1004,8 @@
 
         #about-how-more-about .beyond-marquee-row {
             @apply relative overflow-hidden;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
             touch-action: pan-y;
             cursor: grab;
-        }
-
-        #about-how-more-about .beyond-marquee-row::-webkit-scrollbar {
-            display: none;
         }
 
         #about-how-more-about .beyond-marquee-row.is-dragging {
@@ -1021,26 +1013,12 @@
             user-select: none;
         }
 
-        #about-how-more-about .beyond-marquee-row.is-dragging .beyond-marquee-track {
-            animation-play-state: paused;
-        }
-
-        /* Match reasonal.co marquee: linear infinite; LTR drift (see index beyond-marquee-scroll-ltr). */
+        /* Animation is now JS RAF-driven; CSS animation removed to avoid dual-coordinate conflicts. */
         #about-how-more-about .beyond-marquee-track {
             @apply flex w-max gap-4 md:gap-5;
             will-change: transform;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            animation: beyond-marquee-scroll-ltr var(--beyond-marquee-dur, 140s) linear infinite;
-        }
-
-        #about-how-more-about .beyond-marquee-row--alt .beyond-marquee-track {
-            animation-direction: reverse;
-            --beyond-marquee-dur: 210s;
-        }
-
-        #about-how-more-about .beyond-marquee-stack > .beyond-marquee-row:last-child .beyond-marquee-track {
-            --beyond-marquee-dur: 155s;
         }
 
         #about-how-more-about .beyond-marquee-pill {
@@ -1071,21 +1049,7 @@
             white-space: nowrap;
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            #about-how-more-about .beyond-marquee-track {
-                animation: none;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes beyond-marquee-scroll-ltr {
-            from {
-                transform: translateX(-50%);
-            }
-            to {
-                transform: translateX(0);
-            }
-        }
+        /* beyond-marquee-scroll-ltr keyframes removed — animation is now JS RAF-driven */
 
         /* ── "Is it a match?" — chevron matches Figma (76.9792 / 739) ─── */
         .triag-cut {
@@ -1274,9 +1238,9 @@
             position: absolute;
             left: 0;
             top: 50%;
-            width: 48px;
-            height: 48px;
-            margin-top: -24px;
+            width: 40px;
+            height: 40px;
+            margin-top: -20px;
             border-radius: 9999px;
             background-color: var(--color-accent-yellow);
             z-index: 0;
@@ -1304,8 +1268,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
         }
 
@@ -1315,8 +1279,8 @@
             top: 50%;
             transform: translate(-50%, -50%);
             transition: opacity 0.3s ease;
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             display: block;
         }
 
@@ -1527,7 +1491,7 @@
                             <p class="about-cta-card__sub font-light">See my experience</p>
                         </div>
                         <span class="about-cta-card__arrow" aria-hidden="true">
-                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="48" height="48" decoding="async"/>
+                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="40" height="40" decoding="async"/>
                         </span>
                     </a>
 
@@ -1540,7 +1504,7 @@
                             <p class="about-cta-card__sub font-light">Let's connect</p>
                         </div>
                         <span class="about-cta-card__arrow" aria-hidden="true">
-                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="48" height="48" decoding="async"/>
+                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="40" height="40" decoding="async"/>
                         </span>
                     </a>
 
@@ -1553,7 +1517,7 @@
                             <p class="about-cta-card__sub font-light">hello@peppered.design</p>
                         </div>
                         <span class="about-cta-card__arrow" aria-hidden="true">
-                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="48" height="48" decoding="async"/>
+                            <img class="about-cta-card-more-shape" src="assets/images/more-shape.svg" alt="" width="40" height="40" decoding="async"/>
                         </span>
                     </a>
                 </div>
@@ -2069,30 +2033,56 @@
         setupIntroScrollReveal(document.getElementById("about-how-i-work-lede"));
         setupIntroScrollReveal(document.getElementById("beyond-life-lede"));
 
-        // Beyond Work statements marquee: drag-to-scroll with seamless loop wrap
+        // Statements marquee: single-system RAF auto-scroll + drag (no CSS animation conflict)
         const aboutHowMoreAbout = document.getElementById("about-how-more-about");
-        if (aboutHowMoreAbout) {
-            const marqueeRows = aboutHowMoreAbout.querySelectorAll(".beyond-marquee-row");
+        if (aboutHowMoreAbout && !reducedMotion) {
+            // px/ms auto-scroll speeds per row (top, middle, bottom)
+            const rowSpeeds = [0.036, -0.024, 0.031];
 
-            marqueeRows.forEach((row) => {
+            aboutHowMoreAbout.querySelectorAll(".beyond-marquee-row").forEach((row, rowIndex) => {
+                const track = row.querySelector(".beyond-marquee-track");
+                if (!track) return;
+
+                const speed = rowSpeeds[rowIndex] ?? 0.05;
+                let offset = 0;
+                let loopWidth = 0;
                 let isDraggingRow = false;
                 let dragStartX = 0;
-                let dragStartScrollLeft = 0;
-                const track = row.querySelector(".beyond-marquee-track");
-                const getLoopWidth = () => (track ? track.scrollWidth / 2 : 0);
+                let dragStartOffset = 0;
+                let lastTimestamp = null;
 
-                const wrapRowScroll = (candidateScrollLeft) => {
-                    const loopWidth = getLoopWidth();
-                    if (!loopWidth || loopWidth <= 0) return candidateScrollLeft;
-                    return ((candidateScrollLeft % loopWidth) + loopWidth) % loopWidth;
+                const updateLoopWidth = () => {
+                    loopWidth = track.scrollWidth / 2;
                 };
+
+                const wrap = (x) => {
+                    if (!loopWidth) return x;
+                    return ((x % loopWidth) + loopWidth) % loopWidth;
+                };
+
+                const applyOffset = () => {
+                    track.style.transform = `translateX(${-offset}px)`;
+                };
+
+                const rafTick = (timestamp) => {
+                    if (!loopWidth) updateLoopWidth();
+                    if (!isDraggingRow) {
+                        const dt = lastTimestamp !== null ? timestamp - lastTimestamp : 0;
+                        offset = wrap(offset + speed * dt);
+                        applyOffset();
+                    }
+                    lastTimestamp = timestamp;
+                    requestAnimationFrame(rafTick);
+                };
+
+                requestAnimationFrame(rafTick);
+                window.addEventListener("resize", updateLoopWidth, { passive: true });
 
                 row.addEventListener("pointerdown", (event) => {
                     if (event.pointerType !== "mouse" && event.pointerType !== "pen") return;
-
                     isDraggingRow = true;
                     dragStartX = event.clientX;
-                    dragStartScrollLeft = row.scrollLeft;
+                    dragStartOffset = offset;
                     row.classList.add("is-dragging");
                     row.setPointerCapture(event.pointerId);
                     event.preventDefault();
@@ -2101,26 +2091,23 @@
                 row.addEventListener("pointermove", (event) => {
                     if (!isDraggingRow) return;
                     const dragDeltaX = event.clientX - dragStartX;
-                    const nextScrollLeft = wrapRowScroll(dragStartScrollLeft - dragDeltaX);
-                    row.scrollLeft = nextScrollLeft;
+                    offset = wrap(dragStartOffset - dragDeltaX);
+                    applyOffset();
                 });
 
                 const stopRowDrag = (event) => {
                     if (!isDraggingRow) return;
                     isDraggingRow = false;
-                    row.scrollLeft = wrapRowScroll(row.scrollLeft);
+                    lastTimestamp = null;
                     row.classList.remove("is-dragging");
-                    if (row.hasPointerCapture(event.pointerId)) {
+                    if (event && row.hasPointerCapture(event.pointerId)) {
                         row.releasePointerCapture(event.pointerId);
                     }
                 };
 
                 row.addEventListener("pointerup", stopRowDrag);
                 row.addEventListener("pointercancel", stopRowDrag);
-                row.addEventListener("lostpointercapture", () => {
-                    isDraggingRow = false;
-                    row.classList.remove("is-dragging");
-                });
+                row.addEventListener("lostpointercapture", () => stopRowDrag(null));
             });
         }
 
