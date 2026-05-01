@@ -188,6 +188,12 @@
                 & .menulink[aria-current="page"] {
                     color: #0016F2;
                 }
+
+                @media (max-width: 639px) {
+                    & .menulink[aria-current="page"] {
+                        color: #FDE4DF;
+                    }
+                }
             }
         }
 
@@ -998,6 +1004,25 @@
 
         #about-how-more-about .beyond-marquee-row {
             @apply relative overflow-hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            touch-action: pan-y;
+            cursor: grab;
+        }
+
+        #about-how-more-about .beyond-marquee-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        #about-how-more-about .beyond-marquee-row.is-dragging {
+            cursor: grabbing;
+            user-select: none;
+        }
+
+        #about-how-more-about .beyond-marquee-row.is-dragging .beyond-marquee-track {
+            animation-play-state: paused;
         }
 
         /* Match reasonal.co marquee: linear infinite; LTR drift (see index beyond-marquee-scroll-ltr). */
@@ -2043,6 +2068,61 @@
         setupIntroScrollReveal(document.getElementById("about-know-me-lede"));
         setupIntroScrollReveal(document.getElementById("about-how-i-work-lede"));
         setupIntroScrollReveal(document.getElementById("beyond-life-lede"));
+
+        // Beyond Work statements marquee: drag-to-scroll with seamless loop wrap
+        const aboutHowMoreAbout = document.getElementById("about-how-more-about");
+        if (aboutHowMoreAbout) {
+            const marqueeRows = aboutHowMoreAbout.querySelectorAll(".beyond-marquee-row");
+
+            marqueeRows.forEach((row) => {
+                let isDraggingRow = false;
+                let dragStartX = 0;
+                let dragStartScrollLeft = 0;
+                const track = row.querySelector(".beyond-marquee-track");
+                const getLoopWidth = () => (track ? track.scrollWidth / 2 : 0);
+
+                const wrapRowScroll = (candidateScrollLeft) => {
+                    const loopWidth = getLoopWidth();
+                    if (!loopWidth || loopWidth <= 0) return candidateScrollLeft;
+                    return ((candidateScrollLeft % loopWidth) + loopWidth) % loopWidth;
+                };
+
+                row.addEventListener("pointerdown", (event) => {
+                    if (event.pointerType !== "mouse" && event.pointerType !== "pen") return;
+
+                    isDraggingRow = true;
+                    dragStartX = event.clientX;
+                    dragStartScrollLeft = row.scrollLeft;
+                    row.classList.add("is-dragging");
+                    row.setPointerCapture(event.pointerId);
+                    event.preventDefault();
+                });
+
+                row.addEventListener("pointermove", (event) => {
+                    if (!isDraggingRow) return;
+                    const dragDeltaX = event.clientX - dragStartX;
+                    const nextScrollLeft = wrapRowScroll(dragStartScrollLeft - dragDeltaX);
+                    row.scrollLeft = nextScrollLeft;
+                });
+
+                const stopRowDrag = (event) => {
+                    if (!isDraggingRow) return;
+                    isDraggingRow = false;
+                    row.scrollLeft = wrapRowScroll(row.scrollLeft);
+                    row.classList.remove("is-dragging");
+                    if (row.hasPointerCapture(event.pointerId)) {
+                        row.releasePointerCapture(event.pointerId);
+                    }
+                };
+
+                row.addEventListener("pointerup", stopRowDrag);
+                row.addEventListener("pointercancel", stopRowDrag);
+                row.addEventListener("lostpointercapture", () => {
+                    isDraggingRow = false;
+                    row.classList.remove("is-dragging");
+                });
+            });
+        }
 
         function randomOrganicBlobRadius() {
             const T = Math.PI * 2;
